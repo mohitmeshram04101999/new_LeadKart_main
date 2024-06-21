@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:go_router/go_router.dart';
 import 'package:leadkart/component/custom_button.dart';
 import 'package:leadkart/helper/dimention.dart';
 
@@ -345,7 +346,7 @@ class _CampaignSettingState extends State<CampaignSetting> {
 
             CustomButton(
               text: 'Proceed to payment', onPressed: () {
-              // context.pushNamed("homePage");
+              context.pushNamed("imageEditor");
               // Navigator.push(context, MaterialPageRoute(builder: (context)=> CampaignSetting()));
             },
             ),

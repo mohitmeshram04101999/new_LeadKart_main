@@ -11,9 +11,18 @@ ThemeData AppTheme()
     brightness: Brightness.light,
     primaryColor: MyHelper.appConstent.primeryColor,
 secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
+    iconTheme: IconThemeData(
+      color: Colors.black,
+      size: SC.fromWidth(20)
+    ),
+    checkboxTheme: CheckboxThemeData(
+      fillColor: MaterialStateProperty.resolveWith((states) => MyHelper.appConstent.checkBoxColor),
+      checkColor: MaterialStateProperty.resolveWith((states) => Colors.white),
+    ),
     textTheme: TextTheme(
       displayMedium: MyHelper.textStyls.mediumText,
       displaySmall: MyHelper.textStyls.smallText,
+      bodyMedium: MyHelper.textStyls.onBordingMainText,
     ),
 
     appBarTheme: AppBarTheme(
@@ -24,8 +33,8 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
     outlinedButtonTheme: OutlinedButtonThemeData(
       
       style: ButtonStyle(
-        iconSize: MaterialStateProperty.resolveWith((states) => SC.from_width(20)),
-        padding:MaterialStateProperty.resolveWith((states) => EdgeInsets.symmetric(horizontal: SC.from_width(10))),
+        iconSize: MaterialStateProperty.resolveWith((states) => SC.fromWidth(20)),
+        padding:MaterialStateProperty.resolveWith((states) => EdgeInsets.symmetric(horizontal: SC.fromWidth(10))),
           shape: MaterialStateProperty.resolveWith((states) =>RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           )),
