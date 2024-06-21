@@ -22,10 +22,12 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
     textTheme: TextTheme(
       displayMedium: MyHelper.textStyls.mediumText,
       displaySmall: MyHelper.textStyls.smallText,
-      bodyMedium: MyHelper.textStyls.onBordingMainText,
+      displayLarge: MyHelper.textStyls.onBordingMainText,
     ),
 
     appBarTheme: AppBarTheme(
+      titleSpacing: 0,
+      foregroundColor: Colors.white,
       backgroundColor: MyHelper.appConstent.primeryColor
     ),
 
@@ -38,7 +40,7 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
           shape: MaterialStateProperty.resolveWith((states) =>RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           )),
-        side:MaterialStateProperty.resolveWith((states) => BorderSide(color: Colors.red))
+        side:MaterialStateProperty.resolveWith((states) => BorderSide(color: MyHelper.appConstent.primeryColor))
       ),
     ),
 

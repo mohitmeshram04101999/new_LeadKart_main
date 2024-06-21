@@ -58,24 +58,28 @@ class InfoCard extends StatelessWidget {
 
 
 class HelpButton extends StatelessWidget {
-  const HelpButton({super.key});
+  String title;
+  IconData? icon;
+
+  HelpButton({this.title ="Help?",this.icon,super.key});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: SC.from_height(30),
-      width: SC.from_width(90),
-      child: OutlinedButton(child: Row(
+      height: SC.from_height(35),
+      child: OutlinedButton(
+        child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(Icons.call),
+          Icon(icon??Icons.call_outlined),
           SizedBox(width: SC.from_width(5),),
-          Text('Help?', style: MyHelper.textStyls.leadTileWhiteText,),
+          Text(title, style: MyHelper.textStyls.leadTileWhiteText,),
         ],
-      ), onPressed: () {},   style: ButtonStyle(
-        padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 10, vertical: 5)),
+      ), onPressed: () {},
+        style: ButtonStyle(
+        padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal:0, vertical: 5)),
         backgroundColor: MaterialStatePropertyAll( MyHelper.appConstent.primeryColor),
         foregroundColor: MaterialStateProperty.resolveWith((states) => Colors.white),
         fixedSize: MaterialStatePropertyAll(Size(120, 25)),
