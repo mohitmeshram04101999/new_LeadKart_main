@@ -52,7 +52,7 @@ String otp = '';
     // Simulate a delay before navigating
     Future.delayed(Duration(seconds: 2), () {
       // Navigate to the next screen
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MyBottomNavigationBar()),
       ).then((_) {
