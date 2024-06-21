@@ -2,6 +2,9 @@
 import "dart:ui";
 
 import "package:flutter/material.dart";
+import "package:leadkart/login_pages/login_screen.dart";
+import "package:leadkart/my%20custom%20assets%20dart%20file/roun%20animation%20configration.dart";
+
 
 import "my_math.dart";
 
@@ -12,30 +15,36 @@ import "my_math.dart";
 
 double Screen_height =0;
 double Screen_width = 0;
-
-void getScreen(BuildContext context)
-{
-  Screen_height = MediaQuery.of(context).size.height;
-  Screen_width = MediaQuery.of(context).size.width;
-}
-
-double from_width(double n)
-{
-  double fgh = 395;
-  double pr = (n*100)/fgh;
-  double ans = (Screen_width/100)*pr;
-
-  return ans;
-}
-
-
-double from_height(double n)
-{
-  double fgw = 734;
-  double pr = (n*100)/fgw;
-  double ans = (Screen_height/100)*pr;
-  return ans;
-}
+//
+// void getScreen(BuildContext context)
+// {
+//   print(MediaQuery.of(context).size.height);
+//   print(MediaQuery.of(context).size.width);
+//
+//   Screen_height = MediaQuery.of(context).size.height;
+//   Screen_width = MediaQuery.of(context).size.width;
+//
+//   print(Screen_height);
+//   print(Screen_width);
+// }
+//
+// double from_width(double n)
+// {
+//   double fgh = 375;
+//   double pr = (n*100)/fgh;
+//   double ans = (Screen_width/100)*pr;
+//
+//   return ans;
+// }
+//
+//
+// double from_height(double n)
+// {
+//   double fgw = 812;
+//   double pr = (n*100)/fgw;
+//   double ans = (Screen_height/100)*pr;
+//   return ans;
+// }
 
 //--------------Clips---------------------------------------
 class myclip extends CustomClipper<Path>{
@@ -64,15 +73,16 @@ class myclip extends CustomClipper<Path>{
 }
 
 //---------Route----------------------------------------------------
-Route createPageRoute(Widget page,{required Duration duration,Curve curve = Curves.linear}) {
+Route createPageRoute(Widget Function(Animation,Animation) page,{RoutAnimationConfiguration configuration = const RoutAnimationConfiguration()}) {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => page,
-    transitionDuration :duration,
-    reverseTransitionDuration: duration,
+    transitionDuration: configuration.transitioDuration,
+    reverseTransitionDuration: configuration.reversDuration,
+    pageBuilder: (context, animation, secondaryAnimation) => page(animation,secondaryAnimation),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(1.0, 0.0); // Start off the screen to the right
       const end = Offset.zero;
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      const curve = Curves.easeInOut;
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: configuration.curve));
       var offsetAnimation = animation.drive(tween);
       return SlideTransition(
         position: offsetAnimation,
@@ -82,16 +92,21 @@ Route createPageRoute(Widget page,{required Duration duration,Curve curve = Curv
   );
 }
 
-Route createPageRouteSlidDown(Widget page,{required Duration duration,Curve curve = Curves.linear}) {
+Route createPageRouteSlidDown(Widget Function(Animation,Animation) page,{RoutAnimationConfiguration configuration = const RoutAnimationConfiguration()}) {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => page,
-    transitionDuration :duration,
-    reverseTransitionDuration: duration,
+    transitionDuration: configuration.transitioDuration,
+    reverseTransitionDuration: configuration.reversDuration,
+    pageBuilder: (context, animation, secondaryAnimation) => page(animation,secondaryAnimation),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+
+      //AnimationOne
       const begin = Offset(0, -1); // Start off the screen to the right
       const end = Offset.zero;
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      const curve = Curves.easeInOut;
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: configuration.curve));
       var offsetAnimation = animation.drive(tween);
+
+
       return SlideTransition(
         position: offsetAnimation,
         child: child,
@@ -100,15 +115,16 @@ Route createPageRouteSlidDown(Widget page,{required Duration duration,Curve curv
   );
 }
 
-Route createPageRouteSlidRight(Widget page,{required Duration duration,Curve curve = Curves.linear}) {
+Route createPageRouteSlidRight(Widget Function(Animation,Animation) page,{RoutAnimationConfiguration configuration = const RoutAnimationConfiguration()}) {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => page,
-    transitionDuration :duration,
-    reverseTransitionDuration: duration,
+    transitionDuration: configuration.transitioDuration,
+    reverseTransitionDuration: configuration.reversDuration,
+    pageBuilder: (context, animation, secondaryAnimation) => page(animation,secondaryAnimation),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(-1, 0); // Start off the screen to the right
       const end = Offset.zero;
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      const curve = Curves.easeInOut;
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: configuration.curve));
       var offsetAnimation = animation.drive(tween);
       return SlideTransition(
         position: offsetAnimation,
@@ -119,16 +135,16 @@ Route createPageRouteSlidRight(Widget page,{required Duration duration,Curve cur
 }
 
 
-Route createPageRouteSlidUp(Widget page,{required Duration duration,Curve curve = Curves.linear}) {
+Route createPageRouteSlidUp(Widget Function(Animation,Animation) page,{RoutAnimationConfiguration configuration = const RoutAnimationConfiguration()}) {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => page,
-    transitionDuration :duration,
-    reverseTransitionDuration: duration,
+    transitionDuration: configuration.transitioDuration,
+    reverseTransitionDuration: configuration.reversDuration,
+    pageBuilder: (context, animation, secondaryAnimation) => page(animation,secondaryAnimation),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0, 1); // Start off the screen to the right
       const end = Offset.zero;
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      const curve = Curves.easeInOut;
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: configuration.curve));
       var offsetAnimation = animation.drive(tween);
       return SlideTransition(
         position: offsetAnimation,
@@ -140,18 +156,16 @@ Route createPageRouteSlidUp(Widget page,{required Duration duration,Curve curve 
 
 
 
-Route createPageRouteFade(Widget page,{required Duration duration,Curve curve = Curves.linear}) {
+Route createPageRouteFade(Widget Function(Animation,Animation) page,{RoutAnimationConfiguration configuration = const RoutAnimationConfiguration()}) {
   return PageRouteBuilder(
-    transitionDuration: duration,
-    reverseTransitionDuration: duration,
-    pageBuilder: (context, animation, secondaryAnimation) => page,
+    transitionDuration: configuration.transitioDuration,
+    reverseTransitionDuration: configuration.reversDuration,
+    pageBuilder: (context, animation, secondaryAnimation) => page(animation,secondaryAnimation),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       double b = 0;
       double e = 1;
-
-      Tween<double> tween = Tween(begin: b, end:e);
+      var tween = Tween(begin: b, end:e).chain(CurveTween(curve: configuration.curve));
       var opacityAnimation = tween.animate(animation);
-
       return FadeTransition(
         opacity:opacityAnimation,
         child: child,
@@ -162,15 +176,15 @@ Route createPageRouteFade(Widget page,{required Duration duration,Curve curve = 
 
 
 
-Route createPageRouteScale(Widget page,{required Duration duration,Curve curve = Curves.linear}) {
+Route createPageRouteScale(Widget Function(Animation,Animation) page,{RoutAnimationConfiguration configuration = const RoutAnimationConfiguration()}) {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => page,
-    transitionDuration :duration,
-    reverseTransitionDuration: duration,
+    transitionDuration: configuration.transitioDuration,
+    reverseTransitionDuration: configuration.reversDuration,
+    pageBuilder: (context, animation, secondaryAnimation) => page(animation,secondaryAnimation),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       double begin = 0; // Start off the screen to the right
       double end = 1;
-
+      Curve curve = configuration.curve;
       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
       var offsetAnimation = animation.drive(tween);
       return ScaleTransition(
@@ -182,22 +196,20 @@ Route createPageRouteScale(Widget page,{required Duration duration,Curve curve =
 }
 
 
-Route createPageRouteRotation(Widget page,{required Duration duration,Curve curve = Curves.linear}) {
+Route createPageRouteRotation(Widget Function(Animation,Animation) page,{RoutAnimationConfiguration configuration = const RoutAnimationConfiguration()}) {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => page,
-    transitionDuration :duration,
-    reverseTransitionDuration: duration,
+    transitionDuration: configuration.transitioDuration,
+    reverseTransitionDuration: configuration.reversDuration,
+    pageBuilder: (context, animation, secondaryAnimation) => page(animation,secondaryAnimation),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = 0.0; // Start off the screen to the right
       const end = 1.0;
+      Curve curve = configuration.curve;
       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
       var offsetAnimation = animation.drive(tween);
-      return ScaleTransition(
-        scale: offsetAnimation,
-        child: RotationTransition(
-          turns: offsetAnimation,
-          child: child,
-        ),
+      return RotationTransition(
+        turns: offsetAnimation,
+        child: child,
       );
     },
   );
@@ -214,47 +226,43 @@ enum RoutAnimation{
 }
 
 
-dynamic RoutTo(
-
-
-    BuildContext context,
+//Apun ka Tag
+dynamic RouteTo(
+    BuildContext context, 
     {
-      required Widget child,
-      RoutAnimation animation = RoutAnimation.fade,
-      Duration? duration,
-      Curve curve = Curves.linear
+      required Widget Function(Animation,Animation) child,
+      RoutAnimation animation = RoutAnimation.slid,
+      RoutAnimationConfiguration configuration = const RoutAnimationConfiguration()
     })async{
 
-
   var result;
-  duration = duration??Duration(milliseconds: 300);
   if(animation == RoutAnimation.fade)
   {
-    result = await Navigator.of(context).push(createPageRouteFade(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).push(createPageRouteFade(child,configuration:configuration));
   }
   if(animation == RoutAnimation.slid)
   {
-    result = await Navigator.of(context).push(createPageRoute(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).push(createPageRoute(child,configuration:configuration));
   }
   if(animation == RoutAnimation.scale)
   {
-    result = await Navigator.of(context).push(createPageRouteScale(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).push(createPageRouteScale(child,configuration:configuration));
   }
   if(animation == RoutAnimation.rotate)
   {
-    result = await Navigator.of(context).push(createPageRouteRotation(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).push(createPageRouteRotation(child,configuration:configuration));
   }
   if(animation == RoutAnimation.slidDown)
   {
-    result = await Navigator.of(context).push(createPageRouteSlidDown(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).push(createPageRouteSlidDown(child,configuration:configuration),);
   }
   if(animation == RoutAnimation.slidUp)
   {
-    result = await Navigator.of(context).push(createPageRouteSlidUp(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).push(createPageRouteSlidUp(child,configuration:configuration));
   }
   if(animation == RoutAnimation.slidRight)
   {
-    result = await Navigator.of(context).push(createPageRouteSlidRight(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).push(createPageRouteSlidRight(child,configuration:configuration));
   }
   return result;
 }
@@ -266,36 +274,39 @@ dynamic RoutTo(
 
 
 
-dynamic ReplaceTo(BuildContext context,{required Widget child,RoutAnimation animation = RoutAnimation.fade,Duration? duration,Curve curve = Curves.linear})async{
+dynamic ReplaceTo(BuildContext context,{
+  required Widget Function(Animation,Animation) child,
+  RoutAnimation animation = RoutAnimation.fade,
+  RoutAnimationConfiguration configuration =const RoutAnimationConfiguration(),
+})async{
   var result;
-  duration = duration??Duration(milliseconds: 300);
   if(animation == RoutAnimation.fade)
   {
-    result = await Navigator.of(context).pushReplacement(createPageRouteFade(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).pushReplacement(createPageRouteFade(child,configuration: configuration));
   }
   if(animation == RoutAnimation.slid)
   {
-    result = await Navigator.of(context).pushReplacement(createPageRoute(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).pushReplacement(createPageRoute(child,configuration: configuration));
   }
   if(animation == RoutAnimation.scale)
   {
-    result = await Navigator.of(context).pushReplacement(createPageRouteScale(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).pushReplacement(createPageRouteScale(child,configuration: configuration));
   }
   if(animation == RoutAnimation.rotate)
   {
-    result = await Navigator.of(context).pushReplacement(createPageRouteRotation(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).pushReplacement(createPageRouteRotation(child,configuration: configuration));
   }
   if(animation == RoutAnimation.slidDown)
   {
-    result = await Navigator.of(context).pushReplacement(createPageRouteSlidDown(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).pushReplacement(createPageRouteSlidDown(child,configuration: configuration));
   }
   if(animation == RoutAnimation.slidUp)
   {
-    result = await Navigator.of(context).pushReplacement(createPageRouteSlidUp(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).pushReplacement(createPageRouteSlidUp(child,configuration: configuration));
   }
   if(animation == RoutAnimation.slidRight)
   {
-    result = await Navigator.of(context).pushReplacement(createPageRouteSlidRight(child,duration:duration,curve: curve));
+    result = await Navigator.of(context).pushReplacement(createPageRouteSlidRight(child,configuration: configuration));
   }
   return result;
 }
@@ -324,32 +335,6 @@ class JumpAppearAnimation extends StatelessWidget {
           padding: EdgeInsets.only(bottom:PerraBolaEq(value)*jumpHeight*4),
           child: this.child,
         );
-      },
-
-    );
-  }
-}
-
-
-
-class Fadeappear extends StatelessWidget {
-  Widget? child;
-  double jumpHeight;
-  Curve? curve;
-  Duration? duration;
-    Fadeappear({this.duration,this.curve,this.jumpHeight = 60,this.child});
-
-  Tween<double > fade= Tween<double >(begin:0,end: 1);
-
-  @override
-  Widget build(BuildContext context) {
-    var  animation = CurveTween(curve: Curves.linear,);
-    return TweenAnimationBuilder(
-      tween: fade,
-      curve: curve??Curves.bounceOut,
-      duration: duration??Duration(milliseconds: 1000),
-      builder: (context,value,child){
-        return  Opacity(opacity: value,child: this.child);
       },
 
     );
@@ -708,7 +693,7 @@ class MyInkWell extends StatelessWidget {
       decoration: decoration,
       child: Card(
         shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.circular(0)
+            borderRadius: BorderRadius.circular(0)
         ),
         margin: EdgeInsets.zero,
         elevation: 0,
@@ -725,9 +710,9 @@ class MyInkWell extends StatelessWidget {
             ),
             onTap: (){
               if(onTap!=null)
-                {
-                  onTap!();
-                }
+              {
+                onTap!();
+              }
             },
           ),
         ),
@@ -742,96 +727,3 @@ class MyInkWell extends StatelessWidget {
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------
-
-
-//Glass Button
-
-class GlassContainer extends StatelessWidget {
-
-  //peramiter
-  Widget child;
-  BorderRadius? borderRadius;
-  void Function()? onTap;
-  Color? splashColor;
-  Offset? blur;
-  double elevation;
-  Offset? shadowOffset;
-  EdgeInsets? paddin;
-  EdgeInsets? margin;
-  InteractiveInkFeatureFactory? splashFectory;
-  BlendMode? blenMode;
-  Color shadowColor;
-  Color? glassColor;
-
-
-
-
-  //cunstructot
-  GlassContainer({
-    super.key,
-    required this.child,
-    this.borderRadius,
-    this.onTap,
-    this.splashColor,
-    this.blur,
-    this.elevation = 3,
-    this.shadowOffset,
-    this.paddin,
-    this.splashFectory,
-    this.blenMode,
-    this.margin,
-    this.shadowColor = Colors.black,
-    this.glassColor
-  });
-
-  @override
-  Widget build(BuildContext context) {
-
-    borderRadius = borderRadius??BorderRadius.circular(8);
-    blur = blur??Offset(3, 3);
-    shadowOffset = shadowOffset??Offset(0, 0);
-    blenMode = blenMode??BlendMode.srcOver;
-
-    //build
-    return Container(
-      margin: margin,
-      decoration: BoxDecoration(
-        borderRadius: borderRadius,
-        boxShadow: [
-          BoxShadow(
-
-            offset: shadowOffset!,
-            blurRadius: elevation,
-            blurStyle: BlurStyle.outer,
-            color: shadowColor,
-          )
-        ]
-      ),
-      child: Card(
-        margin: EdgeInsets.zero,
-
-        shape: OutlineInputBorder(
-          borderRadius: borderRadius!,
-              borderSide: BorderSide.none
-        ),
-        
-        
-        color: glassColor??Colors.transparent,
-        elevation: 0,
-        clipBehavior: Clip.hardEdge,
-        child: InkWell(
-          splashColor: splashColor,
-          splashFactory: splashFectory,
-          onTap: onTap,
-          child: BackdropFilter(
-            blendMode: blenMode!,
-            filter: ImageFilter.blur(sigmaY: blur!.dy,sigmaX: blur!.dx,tileMode: TileMode.decal),
-              child: SizedBox(child: Padding(
-                padding: paddin??EdgeInsets.zero,
-                child: child,
-              ))),
-        ),
-      ),
-    );
-  }
-}

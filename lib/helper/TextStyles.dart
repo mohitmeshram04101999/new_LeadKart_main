@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leadkart/helper/dimention.dart';
+import 'package:leadkart/helper/helper.dart';
 
 
 class TextStyles
@@ -11,4 +12,7 @@ class TextStyles
   TextStyle leadTileWhiteText = TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.w400,color: Colors.white);
   TextStyle mediumText = TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.w400,color: Colors.black);
   TextStyle smallText = TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w400,color: Color.fromRGBO(98, 98, 98, 1));
+  TextStyle smallBoldText = TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.bold,color: Color.fromRGBO(98, 98, 98, 1));
+  TextStyle greenMediumText = TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.bold,color: MyHelper.appConstent.primeryColor);
+  TextStyle blackSmallText = TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w400,color: Colors.grey);
 }

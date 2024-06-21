@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 
 class MyactionButton extends StatefulWidget {
-  Duration duretion;
+  Duration? duretion;
   Widget? child;
   double height;
   Curve? curve;
   double? width;
-  Function(dynamic) onActionComplit;
+  Function(dynamic)? onActionComplit;
   Function action;
   Widget? activeChild;
   BoxDecoration? decoration;
@@ -16,13 +16,13 @@ class MyactionButton extends StatefulWidget {
     this.curve,
     this.height = 50,
     this.width,
-    required this.onActionComplit,
+    this.onActionComplit,
     required this.action,
     this.child,
     this.activeChild,
     this.decoration,
     this.activeDecoration,
-    required this.duretion,
+    this.duretion,
     super.key
   });
 
@@ -56,22 +56,33 @@ class _MyactionButtonState extends State<MyactionButton> {
             });
             try{
               dynamic returnData = await widget.action();
-              widget.onActionComplit(returnData);
+              if(widget.onActionComplit!=null)
+                {
+                  widget.onActionComplit!(returnData);
+                }
             }
             catch(ex)
             {
+              dynamic returnData = await widget.action();
+              if(widget.onActionComplit!=null)
+              {
+                widget.onActionComplit!(returnData);
+              }
               throw ex;
-            }
-            loding = false;
-            setState(() {
 
-            });
+            }
+            finally{
+              loding = false;
+              setState(() {
+
+              });
+            }
           }
 
         },
         child: AnimatedContainer(
           curve:widget.curve?? Curves.easeInOut,
-          duration: widget.duretion,
+          duration: widget.duretion??Duration(milliseconds: 300),
           height: widget.height,
           width: loding?widget.height:widget.width??MediaQuery.of(context).size.width-30,
           child: Center(child: loding?

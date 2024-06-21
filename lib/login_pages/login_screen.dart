@@ -1,12 +1,20 @@
+
 import 'package:animations/animations.dart';
+
+import 'dart:developer';
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:leadkart/component/custom_button.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
 
 import 'package:leadkart/login_pages/otp_screen.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
 
 import '../helper/dimention.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,9 +24,27 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LogInPageState();
 }
 
+//login with facebook
 class _LogInPageState extends State<LoginScreen> {
+  loginWithFacebook() async {
+    final LoginResult result = await FacebookAuth.i.login(
+      loginBehavior: LoginBehavior.webOnly,
+      permissions: ['email', 'public_profile'],
+    ); // by default we request the email and the public profile
+// or FacebookAuth.i.login()
+    if (result.status == LoginStatus.success) {
+      // you are logged
+      final AccessToken accessToken = result.accessToken!;
+      log('Access Token: ${accessToken.token}');
+    } else {
+      log('Error');
+      log(result.status.toString());
+      log(result.message.toString());
+    }
+  }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
 
 
@@ -86,7 +112,7 @@ class _LogInPageState extends State<LoginScreen> {
                     height: SC.from_height(47),
                     padding: EdgeInsets.symmetric(horizontal: SC.from_height(20)), // Optional padding to give some space around the TextField
                     child: TextFormField(
-
+controller: Controllers.authController.phonController ,
                       keyboardType: TextInputType.number,
                       cursorColor: Colors.grey,
                       inputFormatters: [LengthLimitingTextInputFormatter(10)],
@@ -110,9 +136,12 @@ class _LogInPageState extends State<LoginScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(height: SC.from_height(30),),
 
+                  MyactionButton(child: Text("LogIn",style: TextStyle(color: Colors.white),),action:()=>Controllers.authController.login(context), duretion: Duration(milliseconds: 300)),
 
                   SizedBox(height: SC.from_height(30),),
+
 
                   // LOGIN //
                   Padding(
@@ -153,6 +182,19 @@ class _LogInPageState extends State<LoginScreen> {
                     },
                     ),
                   ),
+
+                  //    COUNTINUE //
+
+                  // Padding(
+                  //   padding:  EdgeInsets.symmetric(horizontal: 25),
+                  //   child: CustomButton(
+                  //     text: 'Continue', onPressed: () {
+                  //     // context.pushNamed("homePage");
+                  //     Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpScreen()));
+                  //   },
+                  //   ),
+                  // ),
+
 
 
                  // ROW //
@@ -195,14 +237,17 @@ class _LogInPageState extends State<LoginScreen> {
                           width: 10,
                         ),
                         Expanded(
-                          child: Container(
-                            // width:  SC.from_height(150),
-                            height:  SC.from_height(54),
-                            decoration: BoxDecoration(border: Border.all(color: Colors.grey),borderRadius: BorderRadius.circular(10)),
-                            child: Center(child: Container(
-                                width:  SC.from_height(32),
-                                height:  SC.from_height(32),
-                                child: Image.asset('assets/facebook.png',fit: BoxFit.cover,))),
+                          child: InkWell(
+                            onTap: () => loginWithFacebook(),
+                            child: Container(
+                              // width:  SC.from_height(150),
+                              height:  SC.from_height(54),
+                              decoration: BoxDecoration(border: Border.all(color: Colors.grey),borderRadius: BorderRadius.circular(10)),
+                              child: Center(child: Container(
+                                  width:  SC.from_height(32),
+                                  height:  SC.from_height(32),
+                                  child: Image.asset('assets/facebook.png',fit: BoxFit.cover,))),
+                            ),
                           ),
                         ),
                       ],

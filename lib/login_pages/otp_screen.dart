@@ -6,7 +6,10 @@ import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/component/bottom_navigation_screen.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
+import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -17,7 +20,7 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-
+String otp = '';
 
   final defaultPinTheme = PinTheme(
     width:  SC.from_height(58),  // Increased width
@@ -136,7 +139,9 @@ class _OtpScreenState extends State<OtpScreen> {
                   separatorBuilder: (index) => SizedBox(width:  SC.from_height(20)),
                   // Space between the PIN fields
                   onChanged: (value) {
-                    print('PIN changed: $value');
+                    setState(() {
+                      otp = value;
+                    });
                   },
                   onCompleted: (pin) {
                     print('PIN completed: $pin');
@@ -163,30 +168,8 @@ class _OtpScreenState extends State<OtpScreen> {
 
 
             Center(
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
-                height: SC.from_height(45), // Adjust as needed
-                width: SC.from_height(340),  // Adjust as needed
-                child: _isLoading
-                    ? SpinKitCircle(
-                  color: Color.fromRGBO(36, 238, 221, 1), // Customize the color of the spinner
-                  size: 50.0, // Adjust the size of the spinner
-                )
-                    : ElevatedButton(
-                  onPressed: _handleButtonTap,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(36, 238, 221, 1), // Background color
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Verify OTP',
-                      style: TextStyle(color: Colors.white,fontSize: SC.from_height(17.5)),
-                    ),
-                  ),
-                ),
+              child: MyactionButton(
+                action:()=> Controllers.authController.verifyOtp(otp, context),
               ),
             ),
           ],
