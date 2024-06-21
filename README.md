@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # lead_kart_clone
 
 A new Flutter project.
@@ -14,3 +15,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+# lead_kart_clone
+>>>>>>> 0a460eabdc199440b0eb387d85433b87d72f5144
+<<<<<<< HEAD
+Your local changes
+=======
+Remote changes
+>>>>>>> FETCH_HEAD
