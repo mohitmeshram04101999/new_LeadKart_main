@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/add_images/campaign_setting_page.dart';
+import 'package:leadkart/business_pages/growBusinessFaster.dart';
 // import 'package:leadkart/business_pages/growBusinessFaster.dart';
 
 import 'package:leadkart/leads/add_detail_screen.dart';
@@ -59,7 +60,7 @@ class GoRouterConfig {
             builder: (context, state) => GetNewLeads(),
           ),
           GoRoute(path: 'campaignSettings', name: 'campaignSettings', builder: (context, state) => CampaignSetting()),
-          // GoRoute(path: 'growBusinessFaster', name: 'growBusinessFaster', builder: (context, state) => GrowBusinessFaster()),
+          GoRoute(path: 'growBusinessFaster', name: 'growBusinessFaster', builder: (context, state) => GrowBusinessFaster()),
           GoRoute(path: 'imageEditor', name: 'imageEditor', builder: (context, state) => ImageEditor()),
         ],
       ),

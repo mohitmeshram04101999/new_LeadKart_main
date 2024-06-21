@@ -12,16 +12,17 @@ class ReuseableBusinesContainer extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: double.infinity,
-        height: SC.from_height(50),
+        padding: EdgeInsets.only(top: SC.fromWidth(30),bottom: SC.fromWidth(30)),
+        // width: double.infinity,
+        // height: SC.from_height(50),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(SC.from_height(10)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.shade300, // Shadow color
-              spreadRadius: 1, // Spread radius
-              blurRadius: 5, // Blur radius
+              spreadRadius: 0.5, // Spread radius
+              blurRadius: 3, // Blur radius
               offset: Offset(0, 1), // Offset in x and y direction
             ),
           ],

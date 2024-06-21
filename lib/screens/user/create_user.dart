@@ -1,7 +1,9 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:leadkart/component/custom_button.dart';
+import 'package:leadkart/component/custom_page_route.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/leads/busines_category.dart';
@@ -224,7 +226,11 @@ class _CreateUserState extends State<CreateUser> {
               CustomButton(
                 text: 'Create', onPressed: () {
                 // context.pushNamed("homePage");
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> BusinesCategory()));
+                // Navigator.push(context, MaterialPageRoute(builder: (context)=> BusinesCategory()));
+                Navigator.push(
+                  context,
+                  CustomPageRoute(page: BusinesCategory()),
+                );
               },
               ),
 

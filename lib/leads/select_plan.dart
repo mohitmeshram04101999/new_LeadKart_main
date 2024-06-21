@@ -1,6 +1,8 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:leadkart/component/custom_button.dart';
+import 'package:leadkart/component/custom_page_route.dart';
 import 'package:leadkart/component/select_plan_widget.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -132,11 +134,18 @@ class _SelectPlanState extends State<SelectPlan> {
 
 
           SizedBox(height: SC.from_height(20),),
-          // GFBUTTON //
+          // CustomButton //
 
           CustomButton(
             text: 'Proceed to Payment', onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentDetails()));
+              // Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentDetails()));
+
+            Navigator.push(
+              context,
+              CustomAnimation(page: PaymentDetails(), transitionType: TransitionType.FadeThrough),
+            );
+
+
           },
           ),
 

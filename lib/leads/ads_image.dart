@@ -1,6 +1,8 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:leadkart/component/custom_page_route.dart';
 import 'package:leadkart/component/demo_ad_widget.dart';
 import 'package:leadkart/component/recommendation_widget.dart';
 import 'package:leadkart/helper/dimention.dart';
@@ -282,12 +284,22 @@ class _AdsPageState extends State<AdsPage> {
                     leads: recommendation['leads'],
                     reach: recommendation['reach'],
                     platforms: recommendation['platforms'],
+
                     onTap: () {
+
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SelectPlan()),
+                        CustomAnimation(page: SelectPlan(), transitionType: TransitionType.FadeThrough),
                       );
+
                     },
+
+                    // onTap: () {
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(builder: (context) => SelectPlan()),
+                    //   );
+                    // },
                   ),
                 );
               },

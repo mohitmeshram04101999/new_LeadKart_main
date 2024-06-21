@@ -1,4 +1,8 @@
+
+import 'package:animations/animations.dart';
+
 import 'dart:developer';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -55,14 +59,14 @@ class _LogInPageState extends State<LoginScreen> {
               // decoration: BoxDecoration(border: Border.all()),
 
               width: double.infinity,
-              height: SC.from_height(360),
+              // height: SC.from_height(360),
 
               child: Image.asset('assets/2.png',fit: BoxFit.cover,),
             ),
 
             Container(
               width: double.infinity,
-              height:SC.from_height(450) ,
+              // height:SC.from_height(450),
               decoration: BoxDecoration(
                 // border: Border.all(),
                 color: Colors.white,
@@ -136,7 +140,9 @@ controller: Controllers.authController.phonController ,
 
                   MyactionButton(child: Text("LogIn",style: TextStyle(color: Colors.white),),action:()=>Controllers.authController.login(context), duretion: Duration(milliseconds: 300)),
 
-                  SizedBox(height: SC.from_height(30),),
+
+
+
 
                   //    COUNTINUE //
 
@@ -207,7 +213,8 @@ controller: Controllers.authController.phonController ,
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  SizedBox(height: SC.from_height(30),),
 
                 ],
               ),

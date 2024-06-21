@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/business_pages/additional_detail.dart';
 import 'package:leadkart/component/busines_reuseable_widget.dart';
+import 'package:leadkart/component/custom_page_route.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/leads/add_detail_screen.dart';
 import 'package:leadkart/leads/create_add_setting.dart';
 import 'package:leadkart/screens/user/create_user.dart';
 
@@ -47,8 +49,9 @@ class _BusinessDetailState extends State<BusinessDetail> {
 
               SizedBox(height: SC.from_height(22),),
               Container(
+                padding: EdgeInsets.only(bottom: SC.fromWidth(26)),
                 width: double.infinity,
-                height: SC.from_height(165),
+                // height: SC.from_height(165),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(SC.from_height(10)),
@@ -85,7 +88,7 @@ class _BusinessDetailState extends State<BusinessDetail> {
                     ),
                     SizedBox(height: SC.from_height(12),),
                     Text('Pawan Kumar',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize:SC.from_height(19) ),),
-                    SizedBox(height: SC.from_height(5),),
+
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: SC.from_height(28)),
                       child: RichText(overflow: TextOverflow.ellipsis,
@@ -117,41 +120,15 @@ class _BusinessDetailState extends State<BusinessDetail> {
 
               SizedBox(height: SC.from_height(22),),
 
-
-
-
           //   Campaign Settings //
               ReuseableBusinesContainer(
                 onTap: () {
+
                   Navigator.push(
                     context,
-                    PageRouteBuilder(
-                      reverseTransitionDuration: Duration(seconds: 1),
-                      transitionDuration: Duration(seconds: 1),
-                      pageBuilder: (context, animation, secondaryAnimation) => AddCreation(),
-                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                        // Define custom slide transition from left to right
-                        var begin = Offset(-1.0, 0.0);
-                        var end = Offset.zero;
-                        var curve = Curves.ease;
-
-
-                        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                        var offsetAnimation = animation.drive(tween);
-
-
-                        // Combine with FadeThroughTransition
-                        return FadeThroughTransition(
-                          animation: animation,
-                          secondaryAnimation: secondaryAnimation,
-                          child: SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          ),
-                        );
-                      },
-                    ),
+                    CustomPageRoute(page: AddCreation()),
                   );
+
                 },
                 child: Row(
                   children: [
@@ -189,17 +166,16 @@ class _BusinessDetailState extends State<BusinessDetail> {
            //        ],
            //      ),
            //    ),
-
               SizedBox(height: SC.from_height(11),),
 
               //Billing Details //
-
-
-
-
               ReuseableBusinesContainer(
                 onTap: () {
-                  context.pushNamed('AddDetailScreeen');
+                  Navigator.push(
+                    context,
+                    CustomPageRoute(page: AddDetailScreen()),
+                  );
+
                 },
                 child: Row(
                   children: [
@@ -222,9 +198,15 @@ class _BusinessDetailState extends State<BusinessDetail> {
 
               //Payment & Invoices //
               ReuseableBusinesContainer(
+
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateUser()));
+                  Navigator.push(
+                    context,
+                    CustomPageRoute(page: CreateUser()),
+                  );
+
                 },
+
                 child: Row(
                   children: [
                     SizedBox(width: SC.from_height(10)),
@@ -246,9 +228,15 @@ class _BusinessDetailState extends State<BusinessDetail> {
 
               // Manage Website //
               ReuseableBusinesContainer(
+
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>AdditionalDetail()));
+                  Navigator.push(
+                    context,
+                    CustomPageRoute(page: AdditionalDetail()),
+                  );
+
                 },
+
                 child: Row(
                   children: [
                     SizedBox(width: SC.from_height(10)),
@@ -271,7 +259,10 @@ class _BusinessDetailState extends State<BusinessDetail> {
               // Notification //
               ReuseableBusinesContainer(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>AdditionalDetail()));
+                  // Navigator.push(
+                  //   context, CustomPageRoute(page: AdditionalDetail()),
+                  // );
+
                 },
                 child: Row(
                   children: [
@@ -295,7 +286,11 @@ class _BusinessDetailState extends State<BusinessDetail> {
               // Logout  //
               ReuseableBusinesContainer(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>AdditionalDetail()));
+                  // Navigator.push(
+                  //   context,
+                  //   CustomPageRoute(page: AdditionalDetail()),
+                  // );
+
                 },
                 child: Row(
                   children: [
