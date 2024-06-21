@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:leadkart/helper/dimention.dart';
 
 class ImageRow extends StatelessWidget {
@@ -15,13 +16,18 @@ class ImageRow extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(imagePaths.length, (index) {
-            return Container(
-              margin: EdgeInsets.all(SC.from_height(4)),
-              width: SC.from_height(125),
-              height: SC.from_height(125),
-              child: Image.asset(
-                imagePaths[index],
-                fit: BoxFit.cover,
+            return InkWell(
+              onTap: () {
+                context.pushNamed('imageEditor');
+              },
+              child: Container(
+                margin: EdgeInsets.all(SC.from_height(4)),
+                width: SC.from_height(125),
+                height: SC.from_height(125),
+                child: Image.asset(
+                  imagePaths[index],
+                  fit: BoxFit.cover,
+                ),
               ),
             );
           }),
