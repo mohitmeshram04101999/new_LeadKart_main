@@ -20,6 +20,7 @@ samples, guidance on mobile development, and a full API reference.
 >>>>>>> 0a460eabdc199440b0eb387d85433b87d72f5144
 <<<<<<< HEAD
 Your local changes
+> this change is from mohit
 =======
 Remote changes
 >>>>>>> FETCH_HEAD
