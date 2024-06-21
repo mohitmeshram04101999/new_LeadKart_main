@@ -278,7 +278,6 @@ InkWell(
               child: Image.asset('assets/home_images/img_4.png',fit: BoxFit.cover,)),
 
 
-
           SizedBox(height: SC.from_height(20),),
 
           SizedBox(height: SC.from_height(10),),
