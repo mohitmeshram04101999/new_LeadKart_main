@@ -20,6 +20,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LogInPageState();
 }
 
+//login with facebook
 class _LogInPageState extends State<LoginScreen> {
   loginWithFacebook() async {
     final LoginResult result = await FacebookAuth.i.login(
