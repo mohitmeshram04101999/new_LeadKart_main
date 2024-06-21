@@ -13,7 +13,7 @@ class AddREquirmentTile extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: SC.from_width(8)),
       onTap: () {
-        context.pushNamed('growBusinessFaster');
+        context.pushNamed('getNewLeads');
       },
       leading: CircleAvatar(
         child: Center(child: icon),
