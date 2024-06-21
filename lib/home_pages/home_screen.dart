@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -179,6 +180,48 @@ class _HomeScreenState extends State<HomeScreen> {
 
           SizedBox(height: SC.from_height(15),),
 
+          // Center(
+          //   child: CarouselSlider(
+          //     options: CarouselOptions(
+          //       aspectRatio: 16 / 9,
+          //       viewportFraction: 1,
+          //       initialPage: 0,
+          //       enableInfiniteScroll: true,
+          //       reverse: false,
+          //       autoPlay: true,
+          //       autoPlayInterval: Duration(seconds: 3),
+          //       autoPlayAnimationDuration: Duration(milliseconds: 800),
+          //       autoPlayCurve: Curves.fastOutSlowIn,
+          //       enlargeCenterPage: true,
+          //       scrollDirection: Axis.horizontal,
+          //     ),
+          //     items: [
+          //       GestureDetector(
+          //         onTap: () {
+          //           // Handle onTap event
+          //           // Navigator.push(context, MaterialPageRoute(builder: (context) => TopFeaturedPropety()));
+          //           // Get.to(DetailGalleryScreen());
+          //         },
+          //         child: Container(
+          //           clipBehavior: Clip.hardEdge,
+          //           decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(8), // Replace SC.from_height(8) with a fixed value
+          //           ),
+          //           margin: EdgeInsets.only(
+          //            // Replace ScreenDim.from_width(10) with a fixed value
+          //             top: 5, // Replace ScreenDim.from_width(5) with a fixed value
+          //             bottom: 10, // Replace ScreenDim.from_width(10) with a fixed value
+          //           ),
+          //           child: Image.asset(
+          //             'assets/home_images/img_3.png',
+          //             fit: BoxFit.cover,
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+
           Container(
             clipBehavior: Clip.hardEdge,
             child:
@@ -209,7 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: Container(margin: EdgeInsets.only(top: SC.from_height(15),left: SC.from_height(2),right: SC.from_height(2)),
                   width: double.infinity,
-                  height: SC.from_height(85),
+                  // height: SC.from_height(85),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     // border: Border.all(),

@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -32,14 +33,14 @@ class _LogInPageState extends State<LoginScreen> {
               // decoration: BoxDecoration(border: Border.all()),
 
               width: double.infinity,
-              height: SC.from_height(360),
+              // height: SC.from_height(360),
 
               child: Image.asset('assets/2.png',fit: BoxFit.cover,),
             ),
 
             Container(
               width: double.infinity,
-              height:SC.from_height(450) ,
+              // height:SC.from_height(450),
               decoration: BoxDecoration(
                 // border: Border.all(),
                 color: Colors.white,
@@ -113,18 +114,45 @@ class _LogInPageState extends State<LoginScreen> {
 
                   SizedBox(height: SC.from_height(30),),
 
-                  //    COUNTINUE //
-
+                  // LOGIN //
                   Padding(
                     padding:  EdgeInsets.symmetric(horizontal: 25),
                     child: CustomButton(
-                      text: 'Continue', onPressed: () {
+                      text: 'Login', onPressed: () {
                       // context.pushNamed("homePage");
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpScreen()));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpScreen()));
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          reverseTransitionDuration: Duration(seconds: 1),
+                          transitionDuration: Duration(seconds: 1),
+                          pageBuilder: (context, animation, secondaryAnimation) => OtpScreen(),
+                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            // Define custom slide transition from left to right
+                            var begin = Offset(-1.0, 0.0);
+                            var end = Offset.zero;
+                            var curve = Curves.ease;
+
+
+                            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
+
+
+                            // Combine with FadeThroughTransition
+                            return FadeThroughTransition(
+                              animation: animation,
+                              secondaryAnimation: secondaryAnimation,
+                              child: SlideTransition(
+                                position: offsetAnimation,
+                                child: child,
+                              ),
+                            );
+                          },
+                        ),
+                      );
                     },
                     ),
                   ),
-
 
 
                  // ROW //
@@ -179,7 +207,8 @@ class _LogInPageState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  SizedBox(height: SC.from_height(30),),
 
                 ],
               ),
