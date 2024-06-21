@@ -147,6 +147,7 @@ import 'package:leadkart/home_pages/home_screen.dart';
 import 'package:leadkart/leads/ads_image.dart';
 import 'package:leadkart/leads/create_ads_page.dart';
 import 'package:animations/animations.dart';
+import 'package:leadkart/screens/newLead%20Screen/LeadeScreen.dart';
 
 
 class MyBottomNavigationBar extends StatefulWidget {
@@ -165,7 +166,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
     HomeScreen(),
     AddImages(),
     AdsPage(),
-    CreateAds(),
+    LeadeScreen(),
     BusinessDetail(),
   ];
 

@@ -12,7 +12,9 @@ class On1 extends StatelessWidget {
 
     return OnBordingPage(
       pageController: pageController,
-      child: SizedBox(),
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
       mainText: "Welcome to Leadkart.ai",
       subTitle: "We help you to create, manage ads and generate leads.",
     );
