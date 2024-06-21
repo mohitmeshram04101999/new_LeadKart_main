@@ -140,48 +140,9 @@ controller: Controllers.authController.phonController ,
 
                   MyactionButton(child: Text("LogIn",style: TextStyle(color: Colors.white),),action:()=>Controllers.authController.login(context), duretion: Duration(milliseconds: 300)),
 
-                  SizedBox(height: SC.from_height(30),),
 
 
-                  // LOGIN //
-                  Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: 25),
-                    child: CustomButton(
-                      text: 'Login', onPressed: () {
-                      // context.pushNamed("homePage");
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpScreen()));
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          reverseTransitionDuration: Duration(seconds: 1),
-                          transitionDuration: Duration(seconds: 1),
-                          pageBuilder: (context, animation, secondaryAnimation) => OtpScreen(),
-                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                            // Define custom slide transition from left to right
-                            var begin = Offset(-1.0, 0.0);
-                            var end = Offset.zero;
-                            var curve = Curves.ease;
 
-
-                            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                            var offsetAnimation = animation.drive(tween);
-
-
-                            // Combine with FadeThroughTransition
-                            return FadeThroughTransition(
-                              animation: animation,
-                              secondaryAnimation: secondaryAnimation,
-                              child: SlideTransition(
-                                position: offsetAnimation,
-                                child: child,
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                    ),
-                  ),
 
                   //    COUNTINUE //
 

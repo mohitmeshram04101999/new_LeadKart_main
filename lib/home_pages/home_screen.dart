@@ -1,4 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -276,7 +276,6 @@ InkWell(
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
               child: Image.asset('assets/home_images/img_4.png',fit: BoxFit.cover,)),
-
 
 
           SizedBox(height: SC.from_height(20),),
