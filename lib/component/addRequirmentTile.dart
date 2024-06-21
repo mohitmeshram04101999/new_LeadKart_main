@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../helper/dimention.dart';
 
@@ -11,6 +12,9 @@ class AddREquirmentTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: SC.from_width(8)),
+      onTap: () {
+        context.pushNamed('getNewLeads');
+      },
       leading: CircleAvatar(
         child: Center(child: icon),
 

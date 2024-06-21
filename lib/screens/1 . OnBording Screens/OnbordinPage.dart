@@ -68,7 +68,9 @@ class _OnBordingPageState extends State<OnBordingPage> {
                 children: [
 
                   InkWell(
-                    onTap: (){},
+                    onTap: (){
+                      context.pushNamed("logInScreen");
+                    },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Skip",style: TextStyle(fontSize: SC.from_width(14),fontWeight: FontWeight.w500),),
