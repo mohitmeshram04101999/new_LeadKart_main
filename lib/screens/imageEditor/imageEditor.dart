@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/component/adjustImageView.dart';
+import 'package:leadkart/component/helpButton.dart';
 import 'package:leadkart/component/imagePickerDialog.dart';
 import 'package:leadkart/component/imageView.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
@@ -27,24 +28,13 @@ class _ImageEditorState extends State<ImageEditor> {
         title: Text('Select frame'),
         foregroundColor: Colors.white,
         actions: [
-          OutlinedButton(
-            onPressed: () {},
-            style: ButtonStyle(
-              fixedSize:
-                  MaterialStateProperty.resolveWith((states) => Size(100, 20)),
-              backgroundColor: MaterialStateProperty.resolveWith(
-                  (states) => Theme.of(context).primaryColor),
-              side: MaterialStateProperty.resolveWith(
-                  (states) => BorderSide(color: Colors.white)),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: HelpButton(
+             title: 'Next',
+              icon: null,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text('Next', style: TextStyle(color: Colors.white)),
-                Icon(Icons.arrow_forward, color: Colors.white),
-              ],
-            ),
-          ),
+          )
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -250,89 +240,91 @@ AdjustOption(text: 'Contrast', onTap: () {
               ),
             ],
           )),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                  child: Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.share, color: Colors.black),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                InkWell(
-                  child: Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.download, color: Colors.black),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    child: Container(
+                      width: 38,
+                      height: 38,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.share, color: Colors.black),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(width: 10),
+                  InkWell(
+                    child: Container(
+                      width: 38,
+                      height: 38,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.download, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 10),
-         !imageController.isAdjustClicked.value? ImageView():AdjustImageView(),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                  child: Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset('assets/undo.png', width: 25),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                InkWell(
-                  child: Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset('assets/redo.png', width: 25),
+            SizedBox(height: 10),
+           !imageController.isAdjustClicked.value? ImageView():AdjustImageView(),
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    child: Container(
+                      width: 38,
+                      height: 38,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset('assets/undo.png', width: 25),
+                      ),
                     ),
                   ),
-                )
-              ],
-            ),
-          )
-        ],
+                  SizedBox(width: 10),
+                  InkWell(
+                    child: Container(
+                      width: 38,
+                      height: 38,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset('assets/redo.png', width: 25),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
