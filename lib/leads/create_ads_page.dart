@@ -17,7 +17,10 @@ class CreateAds extends StatefulWidget {
 }
 
 class _CreateAdsState extends State<CreateAds> {
+
+  String? selectedOption;
   bool lights = false;
+
   void _updateUserApi(String fromTime, String toTime, String isContact) {
     // Placeholder for your update user API call
     print(
@@ -41,42 +44,65 @@ class _CreateAdsState extends State<CreateAds> {
             height: SC.from_height(15),
           ),
 
-          // SELECT CAMPAIGN   DROPDOWN//
-          Container(
-            width: double.infinity,
-            height: SC.from_height(45),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(SC.from_height(7)),
-            ),
-            child: DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                border: InputBorder.none, // Remove the default underline
-                contentPadding: EdgeInsets.symmetric(
-                    horizontal: SC.from_height(10)), // Adjust padding
-                hintText: 'Select Campaign',
-                hintStyle: TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 )// Add hint text
-              ),
-              items: <String>['Option 1', 'Option 2', 'Option 3', 'Option 4']
-                  .map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                // Handle change
-              },
-              icon: Transform.rotate(
-                angle: 1.5708, // 90 degrees in radians (π/2 or 1.5708 radians)
-                child: Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: Colors.black.withOpacity(0.8),
-                  size: SC.from_height(17),
+        //  SELECT CAMPAIGN   DROPDOWN//
+
+          GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => BottomSheet(
+                  clipBehavior: Clip.hardEdge,
+                  onClosing: () {},
+                  builder: (context) => ListView(
+                    children: [
+                      for (int i = 0; i < 5; i++)
+                        ListTile(
+                          title: Text(
+                            "Option $i",
+                            style:TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 ,fontWeight: FontWeight.w500),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              selectedOption = "Option $i";
+                            });
+                            Navigator.pop(context); // Close the bottom sheet
+                          },
+                        )
+                    ],
+                  ),
                 ),
+              );
+            },
+            child: Container(
+              width: double.infinity,
+              height: SC.from_height(45),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(7),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    selectedOption ?? 'Select Campaign',
+                    style: TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700,fontWeight: FontWeight.w500 )
+                  ),
+                  Transform.rotate(
+                    angle: 1.5708,  // Rotate 90 degrees clockwise (π/2 radians)
+                    child: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Colors.black.withOpacity(0.8),
+                      size: SC.from_height(17),
+                    ),
+                  ),
+
+                ],
               ),
             ),
           ),
+          
+
           SizedBox(
             height: SC.from_height(15),
           ),
@@ -320,84 +346,128 @@ class _CreateAdsState extends State<CreateAds> {
           SizedBox(
             height: SC.from_height(15),
           ),
-          Container(
-            width: double.infinity,
-            height: SC.from_height(45),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(SC.from_height(7)),
-            ),
-            child: DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                border: InputBorder.none, // Remove the default underline
-                contentPadding: EdgeInsets.symmetric(
-                    horizontal: SC.from_height(10)), // Adjust padding
-                hintText: 'Select a Call to Action',
-                hintStyle: TextStyle(fontSize:SC.from_height(15) ,color: Colors.grey.shade700)// Add hint text
-              ),
-              items: <String>['Option 1', 'Option 2', 'Option 3', 'Option 4']
-                  .map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                // Handle change
-              },
-              icon: Transform.rotate(
-                angle: 1.5708, // 90 degrees in radians (π/2 or 1.5708 radians)
-                child: Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: Colors.black.withOpacity(0.8),
-                  size: SC.from_height(17),
+          GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => BottomSheet(
+                  clipBehavior: Clip.hardEdge,
+                  onClosing: () {},
+                  builder: (context) => ListView(
+                    children: [
+                      for (int i = 0; i < 5; i++)
+                        ListTile(
+                          title: Text(
+                            "Option $i",
+                            style:TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 ,fontWeight: FontWeight.w500),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              selectedOption = "Option $i";
+                            });
+                            Navigator.pop(context); // Close the bottom sheet
+                          },
+                        )
+                    ],
+                  ),
                 ),
+              );
+            },
+            child: Container(
+              width: double.infinity,
+              height: SC.from_height(45),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(7),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                      selectedOption ?? 'Select a Call to Action',
+                      style:  TextStyle(fontSize:SC.from_height(15) ,color: Colors.grey.shade700,fontWeight: FontWeight.w500)
+                  ),
+                  Transform.rotate(
+                    angle: 1.5708,  // Rotate 90 degrees clockwise (π/2 radians)
+                    child: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Colors.black.withOpacity(0.8),
+                      size: SC.from_height(17),
+                    ),
+                  ),
+
+                ],
               ),
             ),
+          ),
+
+          SizedBox(
+            height: SC.from_height(8),
           ),
 
           // DESTINATION URL   DROPDOWN//
           SizedBox(
             height: SC.from_height(15),
           ),
-          Container(
-            width: double.infinity,
-            height: SC.from_height(45),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(SC.from_height(7)),
-            ),
-            child: DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                border: InputBorder.none, // Remove the default underline
-                contentPadding: EdgeInsets.symmetric(
-                    horizontal: SC.from_height(10)), // Adjust padding
-                hintText: 'Destination URL', // Add hint text
-                hintStyle: TextStyle(fontSize:SC.from_height(15),color: Colors.grey.shade700 )
-              ),
-              items: <String>['Option 1', 'Option 2', 'Option 3', 'Option 4']
-                  .map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                // Handle change
-              },
-              icon: Transform.rotate(
-                angle: 1.5708, // 90 degrees in radians (π/2 or 1.5708 radians)
-                child: Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: Colors.black.withOpacity(0.8),
-                  size: SC.from_height(17),
+          GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => BottomSheet(
+                  clipBehavior: Clip.hardEdge,
+                  onClosing: () {},
+                  builder: (context) => ListView(
+                    children: [
+                      for (int i = 0; i < 5; i++)
+                        ListTile(
+                          title: Text(
+                            "Option $i",
+                            style:TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 ,fontWeight: FontWeight.w500),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              selectedOption = "Option $i";
+                            });
+                            Navigator.pop(context); // Close the bottom sheet
+                          },
+                        )
+                    ],
+                  ),
                 ),
+              );
+            },
+            child: Container(
+              width: double.infinity,
+              height: SC.from_height(45),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(7),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                      selectedOption ?? 'Destination Url',
+                      style:  TextStyle(fontSize:SC.from_height(15) ,color: Colors.grey.shade700,fontWeight: FontWeight.w500)
+                  ),
+                  Transform.rotate(
+                    angle: 1.5708,  // Rotate 90 degrees clockwise (π/2 radians)
+                    child: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Colors.black.withOpacity(0.8),
+                      size: SC.from_height(17),
+                    ),
+                  ),
+
+                ],
               ),
             ),
           ),
 
           SizedBox(
-            height: SC.from_height(15),
+            height: SC.from_height(8),
           ),
 
           // ADD AUDIENCEE //

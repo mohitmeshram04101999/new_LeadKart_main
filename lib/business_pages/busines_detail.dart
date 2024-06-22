@@ -9,6 +9,7 @@ import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/leads/add_detail_screen.dart';
 import 'package:leadkart/leads/create_add_setting.dart';
+import 'package:leadkart/leads/digital_ads_package.dart';
 import 'package:leadkart/screens/user/create_user.dart';
 
 class BusinessDetail extends StatefulWidget {
@@ -19,6 +20,8 @@ class BusinessDetail extends StatefulWidget {
 }
 
 class _BusinessDetailState extends State<BusinessDetail> {
+
+
 
 
   final List<Map<String, dynamic>> items = [
@@ -258,10 +261,12 @@ class _BusinessDetailState extends State<BusinessDetail> {
 
               // Notification //
               ReuseableBusinesContainer(
-                onTap: () {
-                  // Navigator.push(
-                  //   context, CustomPageRoute(page: AdditionalDetail()),
-                  // );
+
+                  onTap: () {
+                Navigator.push(
+                context,
+                CustomPageRoute(page: DigitalAdsPackage()),
+                );
 
                 },
                 child: Row(
