@@ -17,7 +17,7 @@ class GetNewLeads extends StatelessWidget {
         backgroundColor: MyHelper.appConstent.primeryColor,
         foregroundColor: Colors.white,
         title: const Text('Get New Leads'),
-        actions: [const HelpButton()],
+        actions: [  HelpButton()],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 0.0),
@@ -396,26 +396,8 @@ class HelpButton extends StatelessWidget {
     return SizedBox(
 
       height: SC.from_height(35),
-      child: OutlinedButton(
-        child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(icon??Icons.call_outlined),
-          SizedBox(width: SC.from_width(5),),
-          Text(title, style: MyHelper.textStyls.leadTileWhiteText,),
-        ],
-      ), onPressed: () {},
-        style: ButtonStyle(
-        padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal:0, vertical: 5)),
-        backgroundColor: MaterialStatePropertyAll( MyHelper.appConstent.primeryColor),
-        foregroundColor: MaterialStateProperty.resolveWith((states) => Colors.white),
-        fixedSize: MaterialStatePropertyAll(Size(120, 25)),
-        side: MaterialStatePropertyAll( BorderSide(color: Colors.white)),
-      ), ),
 
-      height: SC.from_width(30),
+
       width: SC.from_width(90),
       child: OutlinedButton(
         child: Row(
