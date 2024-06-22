@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/component/adjustImageView.dart';
+import 'package:leadkart/component/helpButton.dart';
 import 'package:leadkart/component/imagePickerDialog.dart';
 import 'package:leadkart/component/imageView.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
@@ -27,24 +28,13 @@ class _ImageEditorState extends State<ImageEditor> {
         title: Text('Select frame'),
         foregroundColor: Colors.white,
         actions: [
-          OutlinedButton(
-            onPressed: () {},
-            style: ButtonStyle(
-              fixedSize:
-                  MaterialStateProperty.resolveWith((states) => Size(100, 20)),
-              backgroundColor: MaterialStateProperty.resolveWith(
-                  (states) => Theme.of(context).primaryColor),
-              side: MaterialStateProperty.resolveWith(
-                  (states) => BorderSide(color: Colors.white)),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: HelpButton(
+             title: 'Next',
+              icon: null,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text('Next', style: TextStyle(color: Colors.white)),
-                Icon(Icons.arrow_forward, color: Colors.white),
-              ],
-            ),
-          ),
+          )
         ],
       ),
       bottomNavigationBar: BottomAppBar(

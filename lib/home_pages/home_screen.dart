@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:leadkart/component/HelpButtonWhite.dart';
 import 'package:leadkart/component/addRequirmentTile.dart';
+import 'package:leadkart/component/helpButton.dart';
 import 'package:leadkart/helper/dimention.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -44,39 +45,40 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: SizedBox(),
         leadingWidth: 0,
 
-        title: Container(
-          clipBehavior: Clip.hardEdge,
-          width: SC.from_width(40),
-          height: SC.from_height(30),
-          decoration: BoxDecoration(
-            // border: Border.all(),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Image.asset(
-            'assets/home_images/img.png',
-          ),
-        ),
-        actions: [
-InkWell(
+        title: Row(
+          children: [
+            Container(
+              clipBehavior: Clip.hardEdge,
+              width: SC.from_width(40),
+              height: SC.from_height(30),
+              decoration: BoxDecoration(
+                // border: Border.all(),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Image.asset(
+                'assets/home_images/img.png',
+              ),
+            ),
+            InkWell(
               onTap: () {
                 showModalBottomSheet(context: context,
                   showDragHandle: true,
                   builder: (context) {
-                  return Container(
-                    height: 300,
-                    child: ListView.builder(
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text('SK e solution $index'),
-                          onTap: () {
-                            Navigator.pop(context, {'index': index});
-                          },
-                        );
-                      },
-                    ),
-                  );
-                },);
+                    return Container(
+                      height: 300,
+                      child: ListView.builder(
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text('SK e solution $index'),
+                            onTap: () {
+                              Navigator.pop(context, {'index': index});
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  },);
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -85,31 +87,39 @@ InkWell(
                     " SK e solution  ",
                     style: TextStyle(color: Colors.white, fontSize: SC.from_height(18)),
                   ),
+                  Icon(Icons.arrow_drop_down, color: Colors.white),
                 ],
               ),
             ),
+Spacer(),
+            // SizedBox(width: SC.from_width(50)),
 
-          SizedBox(width: SC.from_width(50)),
-
-          HelpButtonWhite(),
-
-          // Container(
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: [
-          //       Icon(Icons.search,size:  SC.from_height(17),color: Colors.white,),
-          //       SizedBox(width: SC.from_height(4),),
-          //       Center(child: Text('Search',style: TextStyle(fontSize: SC.from_height(16),color: Colors.white),),),
-          //     ],
-          //   ),
-          //   width: SC.from_height(85),
-          //   height: SC.from_height(30),
-          //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(SC.from_height(15)),border: Border.all(
-          //       color: Colors.white,width: 1.5
-          //   )),
-          // ),
-          SizedBox(width: SC.from_height(20)),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: HelpButton(),
+            ),
+          ],
+        ),
+        // actions: [
+        //
+        //
+        //   // Container(
+        //   //   child: Row(
+        //   //     mainAxisAlignment: MainAxisAlignment.center,
+        //   //     children: [
+        //   //       Icon(Icons.search,size:  SC.from_height(17),color: Colors.white,),
+        //   //       SizedBox(width: SC.from_height(4),),
+        //   //       Center(child: Text('Search',style: TextStyle(fontSize: SC.from_height(16),color: Colors.white),),),
+        //   //     ],
+        //   //   ),
+        //   //   width: SC.from_height(85),
+        //   //   height: SC.from_height(30),
+        //   //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(SC.from_height(15)),border: Border.all(
+        //   //       color: Colors.white,width: 1.5
+        //   //   )),
+        //   // ),
+        //   SizedBox(width: SC.from_height(20)),
+        // ],
       ),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal:SC.from_height(18) ),

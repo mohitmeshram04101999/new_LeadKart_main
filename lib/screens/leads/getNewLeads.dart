@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:leadkart/business_pages/growBusinessFaster.dart';
 import 'package:leadkart/component/select_plan_widget.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/them/constents.dart';
@@ -19,11 +20,14 @@ class GetNewLeads extends StatelessWidget {
         foregroundColor: Colors.white,
         title: const Text('Get New Leads'),
  
-        actions: [  HelpButton()],
+        actions: [  Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: HelpButton(),
+        )],
  
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Stack(
           children: [
             SingleChildScrollView(
@@ -52,7 +56,7 @@ class GetNewLeads extends StatelessWidget {
                     height: SC.from_width(10),
                   ),
                   Row(
-                    // mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Checkbox(value: true, onChanged: (value) {}),
                       BudgetSelecter(
@@ -66,6 +70,7 @@ class GetNewLeads extends StatelessWidget {
                     height: SC.from_width(10),
                   ),
                   Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Checkbox(value: true, onChanged: (value) {}),
                       BudgetSelecter(
@@ -75,31 +80,79 @@ class GetNewLeads extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: SC.from_width(10),
+                    height: SC.fromContextWidth(context, 20),
                   ),
                   Text("OR"),
                   SizedBox(
-                    height: SC.from_width(10),
+                    height: SC.fromContextWidth(context, 20),
                   ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Select a Package",style: Theme.of(context).textTheme.displayMedium,),
-                      ),
-                    ],
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Select a Plan",style: Theme.of(context).textTheme.displayMedium,),
+                    ),
                   ),
                   SizedBox(
-                    height: SC.from_width(10),
+                    height: 5,
+                  ),
+                  LeadSelecter(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Package includes",style: Theme.of(context).textTheme.displayMedium,),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                   ConstrainedBox(
+                     // height:200,
+                     constraints: BoxConstraints(
+                         maxHeight: 200,
+                         minHeight: 200,
+                       ),
+                     child: PackageCards(),
+                   ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  ExtimateResultCard(),
+SizedBox(
+                    height: 5,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Package Frequently asked Questions",style: Theme.of(context).textTheme.displayMedium,),
+                    ),
                   ),
                   ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
+                    shrinkWrap: true, // Prevent excessive scrolling
+                    physics: const NeverScrollableScrollPhysics(), // Disable scrolling if needed
                     itemCount: 10,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: LeadSelecter(),
-                    ),)
+                    itemBuilder: (context, index) {
+
+                      return ExpansionTile(
+                        title: Text('Where will my ad be shown?'),
+                        children: [
+                          ListTile(
+                            title: Text('No where!'),
+                          ),
+                        ],
+                      );
+                    },
+
+
+        ),
+                  SizedBox(
+                    height: 100,
+                  )
                 ],
               ),
             ),
@@ -107,29 +160,13 @@ class GetNewLeads extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
-              child: Container(
-                width: SC.Screen_width,
-                // height: SC.from_width(50),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.white.withOpacity(0),
-                      Colors.white.withOpacity(0.5),
-                      Colors.grey.withOpacity(0.5),
-                      Colors.grey,
-                    ],
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      context.pushNamed('imageEditor');
-                    },
-                    child: Text('Next'),
-                  ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                child: ElevatedButton(
+                  onPressed: () {
+                    context.pushNamed('imageEditor');
+                  },
+                  child: Text('Next'),
                 ),
               ),
             ),
@@ -160,54 +197,17 @@ class _LeadSelecterState extends State<LeadSelecter> {
         'assets/add_images/insta.png',
       ],
       'aiImages': 5,
-    },
-    {
+    },    {
       'isRecommendation': false,
-      'duration': '15 days',
-      'price': 1000.0, // Ensure this is a double
-      'leads': 100,
-      'reach': 25000,
+      'duration': '30 days',
+      'price': 2000.0, // Ensure this is a double
+      'leads': 200,
+      'reach': 50000,
       'platforms': [
         'assets/facebook.png',
         'assets/add_images/insta.png',
       ],
-      'aiImages': 3,
-    },
-    {
-      'isRecommendation': false,
-      'duration': '15 days',
-      'price': 1000.0, // Ensure this is a double
-      'leads': 100,
-      'reach': 25000,
-      'platforms': [
-        'assets/facebook.png',
-        'assets/add_images/insta.png',
-      ],
-      'aiImages': 3,
-    },
-    {
-      'isRecommendation': false,
-      'duration': '15 days',
-      'price': 1000.0, // Ensure this is a double
-      'leads': 100,
-      'reach': 25000,
-      'platforms': [
-        'assets/facebook.png',
-        'assets/add_images/insta.png',
-      ],
-      'aiImages': 3,
-    },
-    {
-      'isRecommendation': false,
-      'duration': '15 days',
-      'price': 1000.0, // Ensure this is a double
-      'leads': 100,
-      'reach': 25000,
-      'platforms': [
-        'assets/facebook.png',
-        'assets/add_images/insta.png',
-      ],
-      'aiImages': 3,
+      'aiImages': 5,
     },
     // Add more containers as needed
   ];
@@ -246,6 +246,69 @@ class _LeadSelecterState extends State<LeadSelecter> {
   }
 }
 
+class PackageCards extends StatelessWidget {
+  const PackageCards({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> cardData =  [
+      {
+        'image':"assets/add_images/img_3.png",
+        'title':"AI Images",
+        'desc':"Our AI generative tool will create images for your business"
+      },
+      {
+        'image':"assets/add_images/img_3.png",
+        'title':"AI Content",
+        'desc':"Our AI tool will generate tittle, call to action and suggested audience."
+      }
+      // Add more containers as needed
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListView.builder(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        // physics: NeverScrollableScrollPhysics(),
+        itemCount: cardData.length,
+        itemBuilder: (context,index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: 200,
+
+              decoration: BoxDecoration(
+                color:Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 0,
+                    blurRadius: 5,
+                  ),
+                ]
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset("${cardData[index]['image']}", width: 40,),
+                    Text("${cardData[index]['title']}", style:MyHelper.textStyls.greenMediumText),
+                    Flexible(child: Text("${cardData[index]['desc']}", style:MyHelper.textStyls.leadTileSubTitle))
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+      ),
+    );
+  }
+}
+
+
 class BudgetSelecter extends StatefulWidget {
   String icon;
   String budget;
@@ -258,86 +321,94 @@ class BudgetSelecter extends StatefulWidget {
 class _BudgetSelecterState extends State<BudgetSelecter> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.8,
-      decoration: BoxDecoration(
-        border: Border.all(color:Colors.grey),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: const EdgeInsets.symmetric(
-          horizontal: 0, vertical: 0),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-              decoration:  BoxDecoration(
-                  border: Border(
-                      right: BorderSide(color: Colors.grey))),
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 10, vertical: 10),
-              child: Image.asset(
-                widget.icon,
-                height: SC.from_width(20),
-              )),
-          Expanded(child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(widget.budget,style: Theme.of(context).textTheme.displaySmall,),
-          )),
-          Container(
-            height: SC.from_width(27),
-            decoration:  BoxDecoration(
+    return Expanded(
+      child: Container(
+        // width: SC.fromContextWidth(context, 1.25),
+        decoration: BoxDecoration(
+          border: Border.all(color:Colors.grey),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: const EdgeInsets.symmetric(
+            horizontal: 0, vertical: 0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+                decoration:  BoxDecoration(
+                    border: Border(
+                        right: BorderSide(color: Colors.grey))),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10, vertical: 10),
+                child: Image.asset(
+                  widget.icon,
+                  height: SC.from_width(20),
+                )),
+            Expanded(child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(widget.budget,style: Theme.of(context).textTheme.displaySmall,),
+            )),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.grey)),
-            padding: const EdgeInsets.symmetric(
-                horizontal: 0, vertical: 0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                GestureDetector(
-                  onTap: (){
-                    setState(() {
-                      widget.budget= (int.parse(widget.budget)-1).toString();
-                    });
-                  },
-                  child: Container(
-                    decoration: const BoxDecoration(),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
-                      child: Image.asset(
-                        'assets/minus.png',
-                        width: SC.from_width(15),
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      widget.budget= (int.parse(widget.budget)+1).toString();
-                    });
-                  },
-                  child: Container(
-                    decoration:  BoxDecoration(
-                      // color: Theme.of(context).iconTheme.color,
-                        border: Border(
-                            left: BorderSide(color: Colors.grey))),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Center(
-                          child: Image.asset(
-                            'assets/add.png',
-                            width: SC.from_width(15),
+                child: Container(
+                  height: SC.from_width(27),
+                  decoration:  BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.grey)),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 0, vertical: 0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            widget.budget= (int.parse(widget.budget)-1).toString();
+                          });
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
+                            child: Image.asset(
+                              'assets/minus.png',
+                              width: SC.from_width(15),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            widget.budget= (int.parse(widget.budget)+1).toString();
+                          });
+                        },
+                        child: Container(
+                          decoration:  BoxDecoration(
+                            color: Theme.of(context).colorScheme.onSecondary,
+                              border: Border(
+                                  left: BorderSide(color: Colors.grey))),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Center(
+                                child: Image.asset(
+                                  'assets/add.png',
+                                  width: SC.from_width(15),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          )
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -352,36 +423,38 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          color: MyHelper.appConstent.infoContainerColor,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        padding: EdgeInsets.symmetric(
-            horizontal: SC.from_width(10), vertical: SC.from_width(10)),
-        margin: EdgeInsets.symmetric(vertical: SC.from_width(10)),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(Icons.info_outline_rounded, color: Colors.black,),
-            SizedBox(
-              width: SC.from_width(10),
-            ),
-            SizedBox(
-              width: SC.Screen_width * 0.82,
-              child: RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                        text: title,
-                        style: Theme.of(context).textTheme.displayMedium),
-                    TextSpan(
-                        text: subTitle,
-                        style: Theme.of(context).textTheme.displaySmall),
-                  ])),
-            ),
-          ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: MyHelper.appConstent.infoContainerColor,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          padding: EdgeInsets.symmetric(
+              horizontal: SC.from_width(10), vertical: SC.from_width(10)),
+          // margin: EdgeInsets.symmetric(vertical: SC.from_width(10)),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(Icons.info_outline_rounded, color: Colors.black,),
+              SizedBox(
+                width: SC.from_width(10),
+              ),
+              Flexible(
+                child: RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                          text: title,
+                          style: Theme.of(context).textTheme.displayMedium),
+                      TextSpan(
+                          text: subTitle,
+                          style: Theme.of(context).textTheme.displaySmall),
+                    ])),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -389,50 +462,4 @@ class InfoCard extends StatelessWidget {
 }
 
 
-class HelpButton extends StatelessWidget {
-  String title;
-  IconData? icon;
-
-  HelpButton({this.title ="Help?",this.icon,super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-
-      height: SC.from_height(35),
-
-
-      width: SC.from_width(90),
-      child: OutlinedButton(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Icon(Icons.call),
-            SizedBox(
-              width: SC.from_width(5),
-            ),
-            Text(
-              title??"Help?",
-              style: MyHelper.textStyls.leadTileWhiteText,
-            ),
-          ],
-        ),
-        onPressed: () {},
-        style: ButtonStyle(
-          padding: const MaterialStatePropertyAll(
-              EdgeInsets.symmetric(horizontal: 10, vertical: 5)),
-          backgroundColor:
-          MaterialStatePropertyAll(MyHelper.appConstent.primeryColor),
-          foregroundColor:
-          MaterialStateProperty.resolveWith((states) => Colors.white),
-          fixedSize: const MaterialStatePropertyAll(Size(120, 25)),
-          side: const MaterialStatePropertyAll(BorderSide(color: Colors.white)),
-        ),
-      ),
-
-    );
-  }
-}
 

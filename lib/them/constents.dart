@@ -13,5 +13,6 @@ class AppConstent
   Color leadTiletagColor = const Color.fromRGBO(74, 157, 238, .6);
   Color checkBoxColor = const Color.fromRGBO(87, 42, 200, 1);
   Color dottedBorderColor = const Color.fromRGBO(217, 217, 217, 1);
+  Color secondaryColor = const Color.fromRGBO(235, 240, 253, 1);
   EdgeInsets horizontalPedding = EdgeInsets.symmetric(horizontal: SC.fromWidth(20));
 }

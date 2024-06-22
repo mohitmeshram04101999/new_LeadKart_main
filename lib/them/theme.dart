@@ -49,6 +49,7 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
     //ColorScheme
     colorScheme: ColorScheme.light(
       primary: MyHelper.appConstent.primeryColor,
+      onSecondary: MyHelper.appConstent.secondaryColor,
     ),
     
     //Eleveted Button THeme

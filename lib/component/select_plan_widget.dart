@@ -57,7 +57,7 @@ class CustomContainerWidget extends StatelessWidget {
                 ),
               ),
               height: SC.from_height(28),
-              width: SC.from_height(120),
+              width: SC.fromContextWidth(context, 2.5),
               child: Center(
                 child: Text(
                   'Recommendation',
@@ -107,12 +107,21 @@ class CustomContainerWidget extends StatelessWidget {
               bottom: SC.from_height(10),
             ),
             child: Row(
+              // mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildInfoColumn('Lead', leads.toString()),
-                _buildInfoColumn('Reach', reach.toString()),
-                _buildPlatformIconsColumn('Platform', platforms),
-                _buildInfoColumn('AI Images', aiImages.toString()),
+                SizedBox(
+                    height: SC.fromContextWidth(context, 6.5),
+                    child: _buildInfoColumn('Lead', leads.toString(), context)),
+                SizedBox(
+                    height: SC.fromContextWidth(context, 6.5),
+                    child: _buildInfoColumn('Reach', reach.toString(), context)),
+                SizedBox(
+                    height: SC.fromContextWidth(context, 6.5),
+                    child: _buildPlatformIconsColumn('Platform', platforms,context)),
+                SizedBox(
+                    height: SC.fromContextWidth(context, 6.5),
+                    child: _buildInfoColumn('AI Images', aiImages.toString(), context)),
               ],
             ),
           ),
@@ -122,52 +131,60 @@ class CustomContainerWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoColumn(String label, String value) {
+  Widget _buildInfoColumn(String label, String value,BuildContext context) {
     return Column(
       children: [
         Text(
           label,
           style: TextStyle(
             fontWeight: FontWeight.w500,
-            color: Colors.black54,
-            fontSize: SC.fromWidth(23),
+            color: Colors.black87,
+            fontSize: SC.fromContextWidth(context, 26),
           ),
         ),
         SizedBox(height: SC.from_height(5)),
-        Text(
+      label=='Reach' ? Text(
+          '> $value',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: SC.fromContextWidth(context, 26),
+          ),
+        ):Text(
           value,
           style: TextStyle(
             color: Colors.black,
-            fontWeight: FontWeight.w600,
-            fontSize: SC.fromWidth(23),
+            fontWeight: FontWeight.bold,
+            fontSize: SC.fromContextWidth(context, 26),
           ),
-        ),
+        )
       ],
     );
   }
 
-  Widget _buildPlatformIconsColumn(String label, List<String> icons) {
+  Widget _buildPlatformIconsColumn(String label, List<String> icons, BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
           style: TextStyle(
             fontWeight: FontWeight.w500,
-            color: Colors.black54,
-            fontSize: SC.fromWidth(23),
+            color: Colors.black87,
+            fontSize: SC.fromContextWidth(context, 26)
           ),
         ),
         SizedBox(height: SC.from_height(5)),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: icons.map((icon) {
-            return Padding(
-              padding: EdgeInsets.only(right: SC.from_height(13)),
-              child: Container(
-                width: SC.fromWidth(22),
-                height: SC.fromWidth(22),
-                child: Image.asset(icon),
-              ),
-            );
+            return SizedBox(
+                width: SC.fromContextWidth(context, 20),
+                child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Image.asset(icon),
+                ));
           }).toList(),
         ),
       ],
