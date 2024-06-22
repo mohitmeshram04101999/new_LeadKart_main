@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:leadkart/component/helpButton.dart';
 import 'package:leadkart/component/image_row.dart';
 import 'package:leadkart/helper/dimention.dart';
 
@@ -47,74 +48,84 @@ class _AddImagesState extends State<AddImages> {
         leading: SizedBox(),
         leadingWidth: 0,
 
-        title: Container(
-          clipBehavior: Clip.hardEdge,
-          width: SC.from_height(30),
-          height: SC.from_height(30),
-          decoration: BoxDecoration(
-
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Image.asset(
-            'assets/home_images/img.png',
-          ),
-        ),
-        actions: [
-          DropdownButton<String>(
-            dropdownColor: Color.fromRGBO(36, 238, 221, 0.6),
-            hint: Text(
-              " SK e solution  ",
-              style: TextStyle(color: Colors.white, fontSize: SC.from_height(18)),
+        title: Row(
+          children: [
+            Container(
+              clipBehavior: Clip.hardEdge,
+              width: SC.from_width(40),
+              height: SC.from_height(30),
+              decoration: BoxDecoration(
+                // border: Border.all(),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Image.asset(
+                'assets/home_images/img.png',
+              ),
             ),
-            value: dropdownValue,
-            icon: Transform.rotate(
-              angle: 1.5708, // 90 degrees in radians (π/2 or 1.5708 radians)
-              child: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white,size: SC.from_height(17)),
+            InkWell(
+              onTap: () {
+                showModalBottomSheet(context: context,
+                  showDragHandle: true,
+                  builder: (context) {
+                    return Container(
+                      height: 300,
+                      child: ListView.builder(
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text('SK e solution $index'),
+                            onTap: () {
+                              Navigator.pop(context, {'index': index});
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  },);
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    " SK e solution  ",
+                    style: TextStyle(color: Colors.white, fontSize: SC.from_height(18)),
+                  ),
+                  Icon(Icons.arrow_drop_down, color: Colors.white),
+                ],
+              ),
             ),
-            iconSize: SC.from_height(22),
-            elevation: 16,
-            style: TextStyle(color: Colors.black),
-            underline: Container(), // Remove the underline
-            onChanged: (String? newValue) {
-              setState(() {
-                dropdownValue = newValue;
-                // Handle the selected option here
-                print('Selected: $dropdownValue');
-              });
-            },
+            Spacer(),
+            // SizedBox(width: SC.from_width(50)),
 
-            items: <String>['SK e solution 1 ', 'SK e solution 2 ', 'SK e solution 3 ']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-
-                value: value,
-                child: Text(
-                  value,
-                  style: TextStyle(color: Colors.white, fontSize: SC.from_height(19.5)),
-                ),
-              );
-            }).toList(),
-          ),
-
-          SizedBox(width: SC.from_width(50)),
-
-    Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.search,size:  SC.from_height(17),color: Colors.white,),
-              SizedBox(width: SC.from_height(4),),
-              Center(child: Text('Search',style: TextStyle(fontSize: SC.from_height(16),color: Colors.white),),),
-            ],
-          ),
-          width: SC.from_height(85),
-          height: SC.from_height(30),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(SC.from_height(15)),border: Border.all(
-              color: Colors.white,width: 1.5
-          )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: HelpButton(
+                title: 'Search?',
+                icon: Icons.search,
+              ),
+            ),
+          ],
         ),
-        SizedBox(width: SC.from_height(20)),
-        ],
+        // actions: [
+        //
+        //
+        //   // Container(
+        //   //   child: Row(
+        //   //     mainAxisAlignment: MainAxisAlignment.center,
+        //   //     children: [
+        //   //       Icon(Icons.search,size:  SC.from_height(17),color: Colors.white,),
+        //   //       SizedBox(width: SC.from_height(4),),
+        //   //       Center(child: Text('Search',style: TextStyle(fontSize: SC.from_height(16),color: Colors.white),),),
+        //   //     ],
+        //   //   ),
+        //   //   width: SC.from_height(85),
+        //   //   height: SC.from_height(30),
+        //   //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(SC.from_height(15)),border: Border.all(
+        //   //       color: Colors.white,width: 1.5
+        //   //   )),
+        //   // ),
+        //   SizedBox(width: SC.from_height(20)),
+        // ],
       ),
 
 
