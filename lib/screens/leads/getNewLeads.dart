@@ -4,6 +4,7 @@ import 'package:leadkart/component/select_plan_widget.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/them/constents.dart';
 
+import '../../component/helpButton.dart';
 import '../../helper/dimention.dart';
 
 class GetNewLeads extends StatelessWidget {
@@ -17,7 +18,9 @@ class GetNewLeads extends StatelessWidget {
         backgroundColor: MyHelper.appConstent.primeryColor,
         foregroundColor: Colors.white,
         title: const Text('Get New Leads'),
+ 
         actions: [  HelpButton()],
+ 
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 0.0),
@@ -385,6 +388,7 @@ class InfoCard extends StatelessWidget {
   }
 }
 
+
 class HelpButton extends StatelessWidget {
   String title;
   IconData? icon;
@@ -431,3 +435,4 @@ class HelpButton extends StatelessWidget {
     );
   }
 }
+
