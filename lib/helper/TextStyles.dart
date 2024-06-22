@@ -15,4 +15,5 @@ class TextStyles
   TextStyle smallBoldText = TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.bold,color: Color.fromRGBO(98, 98, 98, 1));
   TextStyle greenMediumText = TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.bold,color: MyHelper.appConstent.primeryColor);
   TextStyle blackSmallText = TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w400,color: Colors.grey);
+  TextStyle actionButtonStyle =  TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: SC.from_width(19));
 }

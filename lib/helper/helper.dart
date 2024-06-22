@@ -23,12 +23,22 @@ class MyHelper
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         elevation: 0,
         behavior:SnackBarBehavior.floating,
-        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 7),
-        margin:EdgeInsets.symmetric(horizontal: 30,vertical: 8),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-        backgroundColor: Colors.red,
+        // margin:EdgeInsets.symmetric(horizontal: 30,vertical: 8),
+        backgroundColor: Colors.transparent,
 
         //Container
-        content: Center(child: Text(descriptioin,textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w400,fontSize: SC.from_width(13)),))));
+        content: Center(child: Container(
+          padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(.6),
+                  blurRadius: 2,offset: Offset(1,2),
+                )
+              ],
+              color: Colors.red,
+            ),
+            child: Text(descriptioin,textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w400,fontSize: SC.from_width(17)),)))));
   }
 }
