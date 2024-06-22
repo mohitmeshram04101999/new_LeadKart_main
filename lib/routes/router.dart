@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/add_images/campaign_setting_page.dart';
 import 'package:leadkart/business_pages/growBusinessFaster.dart';
+import 'package:leadkart/controllers/authController.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
+import 'package:leadkart/helper/helper.dart';
 // import 'package:leadkart/business_pages/growBusinessFaster.dart';
 
 import 'package:leadkart/leads/add_detail_screen.dart';
@@ -12,15 +15,33 @@ import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.
 import 'package:leadkart/screens/imageEditor/imageEditor.dart';
 import 'package:leadkart/screens/leads/getNewLeads.dart';
 import 'package:leadkart/screens/leads/getNewLeads.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../component/bottom_navigation_screen.dart';
 import '../screens/1 . OnBording Screens/OnBordingnavigation.dart';
 // import '../screens/onBoardingScreens/OnBordingnavigation.dart';
+
+// Authcontroller authcontroller = Authcontroller();
+// bool user= authcontroller.isUser.value;
 class GoRouterConfig {
   static final router = GoRouter(
-    initialLocation: '/',
-    redirect: (context, state) {
+    initialLocation: '/loginScreen',
+    redirect: (context, state) async{
+      // SharedPreferences preferences = await SharedPreferences.getInstance();
+      // if(preferences.getBool("first")==null)
+      //   {
+      //     preferences.setBool("first", true);
+      //     return "/";
+      //   }
 
+     // bool user =  await Controllers.authController.checkUserLogInOrNot(context);
+     //  if(user==true){
+     //    return '/homePage';
+     //  }
+     //  else
+     //    {
+     //      return '/logInScreen';
+     //    }
     },
     routes: [
       GoRoute(
@@ -29,6 +50,7 @@ class GoRouterConfig {
       ),
 
       GoRoute(
+        
         name: 'logInScreen',
         path: '/logInScreen',
         builder: (context, state) => LoginScreen(),

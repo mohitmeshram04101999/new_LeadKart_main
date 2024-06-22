@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/helper/dimention.dart';
 
@@ -15,9 +16,46 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
       color: Colors.black,
       size: SC.fromWidth(20)
     ),
+
+    //inputDecoration
+    inputDecorationTheme: InputDecorationTheme(
+
+      hintStyle: TextStyle(
+        fontSize: SC.from_width(17),
+        fontWeight: FontWeight.w400
+      ),
+
+      labelStyle: TextStyle(
+        color: Colors.grey.shade700,
+        fontWeight: FontWeight.w500,
+        fontSize: SC.from_width(17)
+      ),
+
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey.shade700),
+        borderRadius: BorderRadius.circular(10)
+      ),
+
+      border: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey.shade700),
+          borderRadius: BorderRadius.circular(10)
+      )
+    ),
+    
+    
     checkboxTheme: CheckboxThemeData(
-      fillColor: MaterialStateProperty.resolveWith((states) => MyHelper.appConstent.checkBoxColor),
-      checkColor: MaterialStateProperty.resolveWith((states) => Colors.white),
+      
+      side: BorderSide(
+        color: MyHelper.appConstent.primeryColor,
+        width: 2
+      ),
+      
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4),
+      ),
+
+      fillColor: WidgetStateProperty.resolveWith((state)=>Colors.white),
+      checkColor: MaterialStateProperty.resolveWith((states) =>MyHelper.appConstent.primeryColor),
     ),
     textTheme: TextTheme(
       displayMedium: MyHelper.textStyls.mediumText,
@@ -30,6 +68,8 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
       foregroundColor: Colors.white,
       backgroundColor: MyHelper.appConstent.primeryColor
     ),
+
+
 
 
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -50,6 +90,7 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
     //ColorScheme
     colorScheme: ColorScheme.light(
       primary: MyHelper.appConstent.primeryColor,
+      onSecondary: MyHelper.appConstent.secondaryColor,
     ),
     
     //Eleveted Button THeme

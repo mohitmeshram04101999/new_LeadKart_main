@@ -37,7 +37,7 @@ class UserApi
       VerifyOtpModel data = VerifyOtpModel.fromJson(_d.data);
       return CustomResponce(
         statusCode: _d.statusCode!,
-        data: data.userCred,
+        data: data,
         message: data.message!,
       );
 

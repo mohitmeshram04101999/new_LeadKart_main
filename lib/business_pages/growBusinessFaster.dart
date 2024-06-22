@@ -96,76 +96,101 @@ class ExtimateResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text("Estimated Result", style: MyHelper.textStyls.mediumText),
-              SizedBox(
-                width: 10,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+            color:Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 0,
+                blurRadius: 5,
               ),
-              Icon(Icons.info_outline_rounded, color: Colors.blue),
-            ],
-          ),
+            ]
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text("Estimated Result", style: MyHelper.textStyls.mediumText),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Icon(Icons.info_outline_rounded, color: Colors.blue),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 35,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Image.asset('assets/eyes.png', width: 25, height: 25),
+                          ),),
+                  SizedBox(
+                      width: 10,
+                    ),
+                      Text("28K", style: MyHelper.textStyls.smallBoldText),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text("VIEWS", style: MyHelper.textStyls.smallText),
+                    ],
+                  ),
           SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 35,
-                    height: 35,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Image.asset('assets/eyes.png', width: 25, height: 25),
-                      ),),
-              SizedBox(
-                  width: 10,
-                ),
-                  Text("28K", style: MyHelper.textStyls.smallBoldText),
-                  SizedBox(
-                    width: 10,
+                    width: 20,
                   ),
-                  Text("views", style: MyHelper.textStyls.smallText),
-                ],
-              ),
-SizedBox(
-                width: 20,
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: 35,
-                    height: 35,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: Image.asset('assets/eyes.png', width: 25, height: 25),
-                    ),),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text("28K", style: MyHelper.textStyls.smallBoldText),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text("views", style: MyHelper.textStyls.smallText),
-                ],
-              )
+                  Row(
+                    children: [
+                      Container(
+                        width: 35,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Image.asset('assets/eyes.png', width: 25, height: 25),
+                        ),),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text("28K", style: MyHelper.textStyls.smallBoldText),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text("Leads", style: MyHelper.textStyls.smallText),
+                    ],
+                  )
 
+                ],
+              ),
+              RichText(text: TextSpan(
+                children: [
+                  TextSpan(text: "You will spend only ", style: MyHelper.textStyls.smallText),
+                  TextSpan(text: "₹4000", style: MyHelper.textStyls.mediumText.copyWith(fontWeight: FontWeight.bold)),
+                  TextSpan(text: " in total and ad will run for ", style: MyHelper.textStyls.smallText),
+                  TextSpan(text: "6 days", style: MyHelper.textStyls.mediumText.copyWith(fontWeight: FontWeight.bold))
+                ]
+              ))
             ],
           ),
-        ],
+        ),
       ),
     );
   }

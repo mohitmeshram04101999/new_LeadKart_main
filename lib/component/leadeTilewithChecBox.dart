@@ -1,33 +1,55 @@
 
+
 import 'package:flutter/material.dart';
-import 'package:leadkart/component/HelpButtonWhite.dart';
 import 'package:leadkart/component/sheder%20Iocn.dart';
-import 'package:leadkart/helper/dimention.dart';
-import 'package:leadkart/helper/helper.dart';
+
+import '../helper/dimention.dart';
+import '../helper/helper.dart';
 
 
-class LeadeTile extends StatelessWidget {
+
+class LeadeTile2 extends StatefulWidget {
   double elevation;
+  void Function(bool?)? onChnage;
   void Function()? onTap;
-  LeadeTile({this.onTap,this.elevation = .5,super.key});
+  LeadeTile2({this.onChnage,this.onTap,this.elevation = .5,super.key});
+
+  @override
+  State<LeadeTile2> createState() => _LeadeTile2State();
+}
+
+class _LeadeTile2State extends State<LeadeTile2> {
+  bool active = false;
 
   @override
   Widget build(BuildContext context) {
 
     return Card(
-      elevation:elevation,
+      elevation:widget.elevation,
       surfaceTintColor: Colors.transparent,
       color: Colors.white,
       clipBehavior: Clip.hardEdge,
-      margin: EdgeInsets.symmetric(horizontal: SC.from_width(12),vertical:5),
+      margin: EdgeInsets.symmetric(horizontal: SC.from_width(12),vertical: 5),
       child: InkWell(
         splashColor: MyHelper.appConstent.leadsBannerColor,
-        onTap: onTap,
+        onTap: widget.onTap,
         child: Container(
           height: SC.from_width(80),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+
+              Checkbox(
+                value: active, onChanged: (v){
+                active=!active;
+                if(widget.onChnage!=null)
+                  {
+                    widget.onChnage!(v);
+                  }
+                setState(() {
+
+                });
+              },),
 
               //Leading
               Container(
@@ -50,7 +72,7 @@ class LeadeTile extends StatelessWidget {
                         width: double.infinity,
                         alignment: Alignment.center,
                         child: Text("See detail",
-                        style: TextStyle(fontSize: SC.from_width(8.7),color: Colors.white),),
+                          style: TextStyle(fontSize: SC.from_width(8.7),color: Colors.white),),
                       ),
                     )
 
@@ -87,17 +109,17 @@ class LeadeTile extends StatelessWidget {
                         child: Text("New Lead",style: TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w500),),
                         decoration: BoxDecoration(
                             color: MyHelper.appConstent.leadTiletagColor,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(32)
-                          )
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(32)
+                            )
                         ),
                       ),
                       Expanded(
-                        child: ShederIcon(iconData: Icons.call_outlined,)
+                          child: ShederIcon(iconData: Icons.call_outlined,)
                       ),
                     ],
                   ))
-             ],
+            ],
           ),
         ),
       ),

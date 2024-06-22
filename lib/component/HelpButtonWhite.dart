@@ -22,6 +22,7 @@ class HelpButtonWhite extends StatelessWidget {
 
           //Icon and Text
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 Icons.call_outlined,
