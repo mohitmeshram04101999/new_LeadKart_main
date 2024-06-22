@@ -18,7 +18,9 @@ class GetNewLeads extends StatelessWidget {
         backgroundColor: MyHelper.appConstent.primeryColor,
         foregroundColor: Colors.white,
         title: const Text('Get New Leads'),
-        actions: [HelpButton()],
+ 
+        actions: [  HelpButton()],
+ 
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 0.0),
@@ -382,6 +384,54 @@ class InfoCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+
+class HelpButton extends StatelessWidget {
+  String title;
+  IconData? icon;
+
+  HelpButton({this.title ="Help?",this.icon,super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+
+      height: SC.from_height(35),
+
+
+      width: SC.from_width(90),
+      child: OutlinedButton(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Icon(Icons.call),
+            SizedBox(
+              width: SC.from_width(5),
+            ),
+            Text(
+              title??"Help?",
+              style: MyHelper.textStyls.leadTileWhiteText,
+            ),
+          ],
+        ),
+        onPressed: () {},
+        style: ButtonStyle(
+          padding: const MaterialStatePropertyAll(
+              EdgeInsets.symmetric(horizontal: 10, vertical: 5)),
+          backgroundColor:
+          MaterialStatePropertyAll(MyHelper.appConstent.primeryColor),
+          foregroundColor:
+          MaterialStateProperty.resolveWith((states) => Colors.white),
+          fixedSize: const MaterialStatePropertyAll(Size(120, 25)),
+          side: const MaterialStatePropertyAll(BorderSide(color: Colors.white)),
+        ),
+      ),
+
     );
   }
 }
