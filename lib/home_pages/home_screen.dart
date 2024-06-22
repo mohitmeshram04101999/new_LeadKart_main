@@ -91,7 +91,7 @@ InkWell(
 
           SizedBox(width: SC.from_width(50)),
 
-          HelpButton(),
+          HelpButtonWhite(),
 
           // Container(
           //   child: Row(
