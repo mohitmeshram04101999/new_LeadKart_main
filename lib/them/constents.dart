@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leadkart/helper/dimention.dart';
 
 class AppConstent
@@ -13,5 +14,5 @@ class AppConstent
   Color leadTiletagColor = const Color.fromRGBO(74, 157, 238, .6);
   Color checkBoxColor = const Color.fromRGBO(87, 42, 200, 1);
   Color dottedBorderColor = const Color.fromRGBO(217, 217, 217, 1);
-  EdgeInsets horizontalPedding = EdgeInsets.symmetric(horizontal: SC.fromWidth(20));
+  EdgeInsets horizontalPedding = EdgeInsets.symmetric(horizontal: SC.fromWidth(20),vertical: SC.from_width(10));
 }

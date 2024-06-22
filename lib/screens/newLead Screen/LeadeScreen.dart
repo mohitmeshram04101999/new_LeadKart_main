@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:leadkart/component/leadeTile.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
 import 'package:leadkart/screens/leads/getNewLeads.dart';
+import 'package:leadkart/screens/newLead%20Screen/assign_Leads.dart';
 
 import '../../component/helpButton.dart';
 
@@ -66,7 +68,7 @@ class _LeadeScreenState extends State<LeadeScreen> {
 
           //Loop For Leads
           for(int i =0;i<12;i++)
-            LeadeTile(onTap: (){},)
+            LeadeTile(onTap: (){RouteTo(context, child:(a,b) =>AssaignLeads());},)
         ],
       ),
 

@@ -88,7 +88,10 @@ class _MyactionButtonState extends State<MyactionButton> {
           child: Center(child: loding?
           CircularProgressIndicator(
             color: Colors.white,
-          ):widget.child??Text("Press",style: TextStyle(color: Colors.white,fontSize: 20),)),
+          ):widget.child!=null?
+              widget.child
+              :Text("Press",style: TextStyle(color: Colors.white,fontSize: 20),)
+          ),
           decoration: !loding?
           widget.decoration??BoxDecoration(
               color: Theme.of(context).primaryColor,

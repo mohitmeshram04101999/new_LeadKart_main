@@ -41,7 +41,7 @@ class _OnBordingPageState extends State<OnBordingPage> {
             clipper: OnbordingAppBarClip(),
             child: Container(
               width: double.infinity,
-              height: SC.from_width(500),
+              height: MediaQuery.of(context).size.height/2,
               color: MyHelper.appConstent.OnbordingAppBar,
               child: widget.child,
             ),
