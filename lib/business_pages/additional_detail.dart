@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:leadkart/component/custom_textfield.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -16,9 +17,13 @@ class AdditionalDetail extends StatefulWidget {
 
 class _AdditionalDetailState extends State<AdditionalDetail> {
 
+  String? selectedOption;
+
   SpeechToText speechToText = SpeechToText();
   bool isListening = false;
   TextEditingController textEditingController = TextEditingController();
+
+  TextEditingController _businessContactController = TextEditingController();
 
   @override
   void initState() {
@@ -121,97 +126,75 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                     // Your Business Name //
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: SC.from_height(0)),
-                      child: Container(
-                        width: SC.from_height(230),
-                        child: TextFormField(
-                          controller: textEditingController,
-                          cursorColor: Colors.grey,
-                          decoration: InputDecoration(
-                            prefixIcon: GestureDetector(
-                              onTap: startListening,
-                              child: isListening ? Icon(Icons.record_voice_over) : Icon(Icons.mic),
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(SC.from_height(7)),
-                              borderSide:
-                              BorderSide(color: Colors.grey.shade400), // Set border color
-                            ),
-                            labelText: 'Your Business Name', // Add label text
-                            labelStyle:
-                            TextStyle(color:Colors.grey.shade700,fontWeight: FontWeight.w500,fontSize: SC.from_height(16)), // Customize label text style
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: SC.from_height(12),
-                                horizontal: SC.from_height(10)), // Adjust padding
-                            filled: true,
-                            fillColor: Colors
-                                .white, // Optional: Set background color of the text field
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(SC.from_height(7)),
-                              borderSide:
-                              BorderSide(color: Colors.grey.shade400), // Set border color
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(SC.from_height(7)),
-                              borderSide: BorderSide(
-                                  color: Colors.grey.shade400), // Set border color when focused
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Name cannot be empty';
-                            }
-                            if (value.length < 1) {
-                              return 'Name must be at least 2 characters long';
-                            }
-                            if (value.length > 1000) {
-                              return 'Name must be less than 50 characters';
-                            }
-                            final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                            if (!nameExp.hasMatch(value)) {
-                              return 'Name contains invalid characters';
-                            }
-                            return null;
-                          },
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                        ),
+                      child:  CustomTextField(
+                        controller: _businessContactController,
+                        labelText: 'Your Business Name',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Business Contact No. cannot be empty';
+                          }
+                          // Additional validation logic if needed
+                          return null;
+                        },
                       ),
                     ),
 
                     SizedBox(height: SC.from_height(20),),
 
-                    // Industry   DROPDOWN//
-                    Container(
-                      width: SC.from_height(230),
-                      height: SC.from_height(45),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade400),
-                        borderRadius: BorderRadius.circular(SC.from_height(7)),
-                      ),
-                      child: DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                            border: InputBorder.none, // Remove the default underline
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: SC.from_height(10)), // Adjust padding
-                            hintText: 'Industry',
-                            hintStyle: TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 )// Add hint text
-                        ),
-                        items: <String>['Option 1', 'Option 2', 'Option 3', 'Option 4']
-                            .map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          // Handle change
-                        },
-                        icon: Transform.rotate(
-                          angle: 1.5708, // 90 degrees in radians (π/2 or 1.5708 radians)
-                          child: Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            color: Colors.black.withOpacity(0.8),
-                            size: SC.from_height(17),
+                    // Industry   DROPDOWN//.
+
+                    GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => BottomSheet(
+                            clipBehavior: Clip.hardEdge,
+                            onClosing: () {},
+                            builder: (context) => ListView(
+                              children: [
+                                for (int i = 0; i < 5; i++)
+                                  ListTile(
+                                    title: Text(
+                                      "Option $i",
+                                      style:TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 ,fontWeight: FontWeight.w500),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        selectedOption = "Option $i";
+                                      });
+                                      Navigator.pop(context); // Close the bottom sheet
+                                    },
+                                  )
+                              ],
+                            ),
                           ),
+                        );
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: SC.from_height(45),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(7),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                                selectedOption ?? 'Industry ',
+                                style:   TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700,fontWeight: FontWeight.w500 )
+                            ),
+                            Transform.rotate(
+                              angle: 1.5708,  // Rotate 90 degrees clockwise (π/2 radians)
+                              child: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.black.withOpacity(0.8),
+                                size: SC.from_height(17),
+                              ),
+                            ),
+
+                          ],
                         ),
                       ),
                     ),
@@ -414,592 +397,166 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
             ),
 
 
-            SizedBox(height: SC.from_height(20),),
+            SizedBox(height: SC.from_height(15),),
 
 
             // Business Contact No. //
-            TextFormField(
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                labelText: 'Business Contact No.', // Add label text
-                labelStyle:
-                TextStyle(color:Colors.grey.shade700,fontWeight: FontWeight.w500,fontSize: SC.from_height(16)), // Customize label text style
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: SC.from_height(12),
-                    horizontal: SC.from_height(10)), // Adjust padding
-                filled: true,
-                fillColor: Colors
-                    .white, // Optional: Set background color of the text field
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide: BorderSide(
-                      color: Colors.grey.shade400), // Set border color when focused
-                ),
-              ),
+            CustomTextField(
+              controller: _businessContactController,
+              labelText: 'Business Contact No.',
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Name cannot be empty';
+                  return 'Business Contact No. cannot be empty';
                 }
-                if (value.length < 2) {
-                  return 'Name must be at least 2 characters long';
-                }
-                if (value.length > 50) {
-                  return 'Name must be less than 50 characters';
-                }
-                final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                if (!nameExp.hasMatch(value)) {
-                  return 'Name contains invalid characters';
-                }
+                // Additional validation logic if needed
                 return null;
               },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
-            SizedBox(height: SC.from_height(20),),
+
+            SizedBox(height: SC.from_height(15),),
 
             // Add WhatsApp No.. //
-            TextFormField(
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                labelText: 'Add WhatsApp No.', // Add label text
-                labelStyle:
-                TextStyle(color:Colors.grey.shade700,fontWeight: FontWeight.w500,fontSize: SC.from_height(16)), // Customize label text style
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: SC.from_height(12),
-                    horizontal: SC.from_height(10)), // Adjust padding
-                filled: true,
-                fillColor: Colors
-                    .white, // Optional: Set background color of the text field
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide: BorderSide(
-                      color: Colors.grey.shade400), // Set border color when focused
-                ),
-              ),
+            CustomTextField(
+              controller: _businessContactController,
+              labelText: 'Add WhatsApp No.. ',
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Name cannot be empty';
+                  return 'Business Contact No. cannot be empty';
                 }
-                if (value.length < 2) {
-                  return 'Name must be at least 2 characters long';
-                }
-                if (value.length > 50) {
-                  return 'Name must be less than 50 characters';
-                }
-                final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                if (!nameExp.hasMatch(value)) {
-                  return 'Name contains invalid characters';
-                }
+                // Additional validation logic if needed
                 return null;
               },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
 
 
-            SizedBox(height: SC.from_height(20),),
+            SizedBox(height: SC.from_height(15),),
             // State //
-            TextFormField(
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                labelText: 'State', // Add label text
-                labelStyle:
-                TextStyle(color:Colors.grey.shade700,fontWeight: FontWeight.w500,fontSize: SC.from_height(16)), // Customize label text style
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: SC.from_height(12),
-                    horizontal: SC.from_height(10)), // Adjust padding
-                filled: true,
-                fillColor: Colors
-                    .white, // Optional: Set background color of the text field
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide: BorderSide(
-                      color: Colors.grey.shade400), // Set border color when focused
-                ),
-              ),
+            CustomTextField(
+              controller: _businessContactController,
+              labelText: 'State ',
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Name cannot be empty';
+                  return 'Business Contact No. cannot be empty';
                 }
-                if (value.length < 2) {
-                  return 'Name must be at least 2 characters long';
-                }
-                if (value.length > 50) {
-                  return 'Name must be less than 50 characters';
-                }
-                final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                if (!nameExp.hasMatch(value)) {
-                  return 'Name contains invalid characters';
-                }
+                // Additional validation logic if needed
                 return null;
               },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
 
-            SizedBox(height: SC.from_height(20),),
+            SizedBox(height: SC.from_height(15),),
             // City //
-            TextFormField(
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                labelText: 'City', // Add label text
-                labelStyle:
-                TextStyle(color:Colors.grey.shade700,fontWeight: FontWeight.w500,fontSize: SC.from_height(16)), // Customize label text style
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: SC.from_height(12),
-                    horizontal: SC.from_height(10)), // Adjust padding
-                filled: true,
-                fillColor: Colors
-                    .white, // Optional: Set background color of the text field
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide: BorderSide(
-                      color: Colors.grey.shade400), // Set border color when focused
-                ),
-              ),
+            CustomTextField(
+              controller: _businessContactController,
+              labelText: 'City ',
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Name cannot be empty';
+                  return 'Business Contact No. cannot be empty';
                 }
-                if (value.length < 2) {
-                  return 'Name must be at least 2 characters long';
-                }
-                if (value.length > 50) {
-                  return 'Name must be less than 50 characters';
-                }
-                final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                if (!nameExp.hasMatch(value)) {
-                  return 'Name contains invalid characters';
-                }
+                // Additional validation logic if needed
                 return null;
               },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
 
-
-            SizedBox(height: SC.from_height(20),),
-            // Business Name //
-            Container(
-
-              height: SC.from_height(45),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade400),
-                borderRadius: BorderRadius.circular(SC.from_height(7)),
-              ),
-              child: DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                    border: InputBorder.none, // Remove the default underline
-                    contentPadding: EdgeInsets.symmetric(
-                        horizontal: SC.from_height(10)), // Adjust padding
-                    hintText: 'Industry',
-                    hintStyle: TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 )// Add hint text
-                ),
-                items: <String>['Option 1', 'Option 2', 'Option 3', 'Option 4']
-                    .map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  // Handle change
-                },
-                icon: Transform.rotate(
-                  angle: 1.5708, // 90 degrees in radians (π/2 or 1.5708 radians)
-                  child: Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: Colors.black.withOpacity(0.8),
-                    size: SC.from_height(17),
-                  ),
-                ),
-              ),
-            ),
-
-            SizedBox(height: SC.from_height(20),),
+            SizedBox(height: SC.from_height(15),),
             // Website Link //
-            TextFormField(
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                labelText: 'Website link', // Add label text
-                labelStyle:
-                TextStyle(color:Colors.grey.shade700,fontWeight: FontWeight.w500,fontSize: SC.from_height(16)), // Customize label text style
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: SC.from_height(12),
-                    horizontal: SC.from_height(10)), // Adjust padding
-                filled: true,
-                fillColor: Colors
-                    .white, // Optional: Set background color of the text field
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide: BorderSide(
-                      color: Colors.grey.shade400), // Set border color when focused
-                ),
-              ),
+            CustomTextField(
+              controller: _businessContactController,
+              labelText: 'Website Link ',
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Name cannot be empty';
+                  return 'Business Contact No. cannot be empty';
                 }
-                if (value.length < 2) {
-                  return 'Name must be at least 2 characters long';
-                }
-                if (value.length > 50) {
-                  return 'Name must be less than 50 characters';
-                }
-                final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                if (!nameExp.hasMatch(value)) {
-                  return 'Name contains invalid characters';
-                }
+                // Additional validation logic if needed
                 return null;
               },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
 
 
-            SizedBox(height: SC.from_height(20),),
+            SizedBox(height: SC.from_height(15),),
             // Instagram Link //
-            TextFormField(
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                labelText: 'Instagram link', // Add label text
-                labelStyle:
-                TextStyle(color:Colors.grey.shade700,fontWeight: FontWeight.w500,fontSize: SC.from_height(16)), // Customize label text style
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: SC.from_height(12),
-                    horizontal: SC.from_height(10)), // Adjust padding
-                filled: true,
-                fillColor: Colors
-                    .white, // Optional: Set background color of the text field
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide: BorderSide(
-                      color: Colors.grey.shade400), // Set border color when focused
-                ),
-              ),
+            CustomTextField(
+              controller: _businessContactController,
+              labelText: 'Instagram Link ',
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Name cannot be empty';
+                  return 'Business Contact No. cannot be empty';
                 }
-                if (value.length < 2) {
-                  return 'Name must be at least 2 characters long';
-                }
-                if (value.length > 50) {
-                  return 'Name must be less than 50 characters';
-                }
-                final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                if (!nameExp.hasMatch(value)) {
-                  return 'Name contains invalid characters';
-                }
+                // Additional validation logic if needed
                 return null;
               },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
 
 
-            SizedBox(height: SC.from_height(20),),
+            SizedBox(height: SC.from_height(15),),
             // Twitter Link //
-            TextFormField(
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                labelText: 'Twitter link', // Add label text
-                labelStyle:
-                TextStyle(color:Colors.grey.shade700,fontWeight: FontWeight.w500,fontSize: SC.from_height(16)), // Customize label text style
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: SC.from_height(12),
-                    horizontal: SC.from_height(10)), // Adjust padding
-                filled: true,
-                fillColor: Colors
-                    .white, // Optional: Set background color of the text field
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide: BorderSide(
-                      color: Colors.grey.shade400), // Set border color when focused
-                ),
-              ),
+            CustomTextField(
+              controller: _businessContactController,
+              labelText: 'Twitter Link  ',
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Name cannot be empty';
+                  return 'Business Contact No. cannot be empty';
                 }
-                if (value.length < 2) {
-                  return 'Name must be at least 2 characters long';
-                }
-                if (value.length > 50) {
-                  return 'Name must be less than 50 characters';
-                }
-                final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                if (!nameExp.hasMatch(value)) {
-                  return 'Name contains invalid characters';
-                }
+                // Additional validation logic if needed
                 return null;
               },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
 
-            SizedBox(height: SC.from_height(20),),
+            SizedBox(height: SC.from_height(15),),
             // Youtube Link //
-            TextFormField(
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                labelText: 'Youtube link', // Add label text
-                labelStyle:
-                TextStyle(color:Colors.grey.shade700,fontWeight: FontWeight.w500,fontSize: SC.from_height(16)), // Customize label text style
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: SC.from_height(12),
-                    horizontal: SC.from_height(10)), // Adjust padding
-                filled: true,
-                fillColor: Colors
-                    .white, // Optional: Set background color of the text field
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide: BorderSide(
-                      color: Colors.grey.shade400), // Set border color when focused
-                ),
-              ),
+            CustomTextField(
+              controller: _businessContactController,
+              labelText: 'Youtube Link  ',
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Name cannot be empty';
+                  return 'Business Contact No. cannot be empty';
                 }
-                if (value.length < 2) {
-                  return 'Name must be at least 2 characters long';
-                }
-                if (value.length > 50) {
-                  return 'Name must be less than 50 characters';
-                }
-                final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                if (!nameExp.hasMatch(value)) {
-                  return 'Name contains invalid characters';
-                }
+                // Additional validation logic if needed
                 return null;
               },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
 
-            SizedBox(height: SC.from_height(20),),
+            SizedBox(height: SC.from_height(15),),
             // Facebook Link //
-            TextFormField(
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                labelText: 'Facbook link', // Add label text
-                labelStyle:
-                TextStyle(color:Colors.grey.shade700,fontWeight: FontWeight.w500,fontSize: SC.from_height(16)), // Customize label text style
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: SC.from_height(12),
-                    horizontal: SC.from_height(10)), // Adjust padding
-                filled: true,
-                fillColor: Colors
-                    .white, // Optional: Set background color of the text field
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide: BorderSide(
-                      color: Colors.grey.shade400), // Set border color when focused
-                ),
-              ),
+            CustomTextField(
+              controller: _businessContactController,
+              labelText: 'Facebook Link ',
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Name cannot be empty';
+                  return 'Business Contact No. cannot be empty';
                 }
-                if (value.length < 2) {
-                  return 'Name must be at least 2 characters long';
-                }
-                if (value.length > 50) {
-                  return 'Name must be less than 50 characters';
-                }
-                final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                if (!nameExp.hasMatch(value)) {
-                  return 'Name contains invalid characters';
-                }
+                // Additional validation logic if needed
                 return null;
               },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
 
 
-            SizedBox(height: SC.from_height(20),),
+            SizedBox(height: SC.from_height(15),),
             // Address //
-            TextFormField(
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                labelText: 'Address', // Add label text
-                labelStyle:
-                TextStyle(color:Colors.grey.shade700,fontWeight: FontWeight.w500,fontSize: SC.from_height(16)), // Customize label text style
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: SC.from_height(12),
-                    horizontal: SC.from_height(10)), // Adjust padding
-                filled: true,
-                fillColor: Colors
-                    .white, // Optional: Set background color of the text field
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide: BorderSide(
-                      color: Colors.grey.shade400), // Set border color when focused
-                ),
-              ),
+            CustomTextField(
+              controller: _businessContactController,
+              labelText: 'Address ',
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Name cannot be empty';
+                  return 'Business Contact No. cannot be empty';
                 }
-                if (value.length < 2) {
-                  return 'Name must be at least 2 characters long';
-                }
-                if (value.length > 50) {
-                  return 'Name must be less than 50 characters';
-                }
-                final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                if (!nameExp.hasMatch(value)) {
-                  return 'Name contains invalid characters';
-                }
+                // Additional validation logic if needed
                 return null;
               },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
 
-            SizedBox(height: SC.from_height(20),),
+            SizedBox(height: SC.from_height(15),),
             // Tagline //
-            TextFormField(
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                labelText: 'Tagline', // Add label text
-                labelStyle:
-                TextStyle(color:Colors.grey.shade700,fontWeight: FontWeight.w500,fontSize: SC.from_height(16)), // Customize label text style
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: SC.from_height(12),
-                    horizontal: SC.from_height(10)), // Adjust padding
-                filled: true,
-                fillColor: Colors
-                    .white, // Optional: Set background color of the text field
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide:
-                  BorderSide(color: Colors.grey.shade400), // Set border color
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(SC.from_height(7)),
-                  borderSide: BorderSide(
-                      color: Colors.grey.shade400), // Set border color when focused
-                ),
-              ),
+            CustomTextField(
+              controller: _businessContactController,
+              labelText: 'Tagline ',
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Name cannot be empty';
+                  return 'Business Contact No. cannot be empty';
                 }
-                if (value.length < 2) {
-                  return 'Name must be at least 2 characters long';
-                }
-                if (value.length > 50) {
-                  return 'Name must be less than 50 characters';
-                }
-                final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                if (!nameExp.hasMatch(value)) {
-                  return 'Name contains invalid characters';
-                }
+                // Additional validation logic if needed
                 return null;
               },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
-
-
-
 
             SizedBox(height: SC.from_height(20),),
           ],

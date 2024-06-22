@@ -73,10 +73,11 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
 
 
     outlinedButtonTheme: OutlinedButtonThemeData(
-      
+
       style: ButtonStyle(
-        iconSize: MaterialStateProperty.resolveWith((states) => SC.fromWidth(20)),
-        padding:MaterialStateProperty.resolveWith((states) => EdgeInsets.symmetric(horizontal: SC.fromWidth(10))),
+
+          iconSize: MaterialStateProperty.resolveWith((states) => SC.fromWidth(20)),
+        padding:MaterialStateProperty.resolveWith((states) => EdgeInsets.symmetric(horizontal: SC.fromWidth(25))),
           shape: MaterialStateProperty.resolveWith((states) =>RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           )),

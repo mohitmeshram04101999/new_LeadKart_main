@@ -126,24 +126,26 @@ class RecommendationWidget extends StatelessWidget {
             ),
           ),
           SizedBox(height: SC.from_height(15)),
-          InkWell(
-            onTap: () => onTap(),
-            child: Container(
-    decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: MyHelper.appConstent.primeryColor),
+          Center(
+            child: InkWell(
+              onTap: () => onTap(),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: MyHelper.appConstent.primeryColor),
 
-              ),
-              margin: EdgeInsets.symmetric(horizontal: SC.from_height(12)),
-              height: SC.from_height(42), // Adjust as needed
-              width: SC.from_height(340),
-              child: Center(
-                child: Text(
-                  'Choose Package',
-                  style: TextStyle(
-                    color:  MyHelper.appConstent.primeryColor, // Replace with your primary color
-                    fontSize: SC.from_height(14),
+                ),
+                margin: EdgeInsets.symmetric(horizontal: SC.from_height(12)),
+                height: SC.from_height(42), // Adjust as needed
+                width: SC.from_height(340),
+                child: Center(
+                  child: Text(
+                    'Choose Package',
+                    style: TextStyle(
+                      color:  MyHelper.appConstent.primeryColor, // Replace with your primary color
+                      fontSize: SC.from_height(14),
+                    ),
                   ),
                 ),
               ),

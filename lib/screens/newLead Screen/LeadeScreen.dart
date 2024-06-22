@@ -56,7 +56,7 @@ class _LeadeScreenState extends State<LeadeScreen> {
                 children: [
                   for(String i in filters)
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: OutlinedButton(onPressed: (){}, child: Text(i,
                       
                       style: TextStyle(fontWeight: FontWeight.w600,fontSize: SC.from_width(16),color:Colors.grey.shade700))),
@@ -65,7 +65,7 @@ class _LeadeScreenState extends State<LeadeScreen> {
               ),
             ),
           ),
-          SizedBox(height: 10,),
+          SizedBox(height: SC.fromHeight(70),),
 
           //Loop For Leads
           for(int i =0;i<12;i++)

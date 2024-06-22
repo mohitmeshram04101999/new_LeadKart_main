@@ -19,7 +19,7 @@ class LeadeTile extends StatelessWidget {
       surfaceTintColor: Colors.transparent,
       color: Colors.white,
       clipBehavior: Clip.hardEdge,
-      margin: EdgeInsets.symmetric(horizontal: SC.from_width(12),vertical: 5),
+      margin: EdgeInsets.symmetric(horizontal: SC.from_width(12),vertical:5),
       child: InkWell(
         splashColor: MyHelper.appConstent.leadsBannerColor,
         onTap: onTap,

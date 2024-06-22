@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:leadkart/component/custom_button.dart';
+import 'package:leadkart/component/custom_textfield.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 
@@ -14,6 +15,7 @@ class FollowUpDate extends StatefulWidget {
 
 class _FollowUpDateState extends State<FollowUpDate> {
 
+  TextEditingController textEditingController = TextEditingController();
   Future<DateTime?> _selectDate(BuildContext context) async {
     // Implement your date selection logic, e.g., using showDatePicker
     DateTime? selectedDate = await showDatePicker(
@@ -146,58 +148,20 @@ class _FollowUpDateState extends State<FollowUpDate> {
             SizedBox(height: SC.from_height(22),),
 
             // Write a note here... //
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: SC.from_height(0)), // Adjust padding if needed
-              child: TextFormField(
-                cursorColor: Colors.grey,
-                maxLines: null, // Allow multiline input
-                keyboardType: TextInputType.multiline, // Allow multiline keyboard
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(SC.from_height(7)),
-                    borderSide:
-                    BorderSide(color: Colors.grey,), // Set border color
-                  ),
-                  labelText: 'Write a note here...', // Add label text
-                  labelStyle:
-                  TextStyle(color: Colors.grey.shade600,fontSize: SC.from_height(16)), // Customize label text style
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: SC.from_height(12),
-                      horizontal: SC.from_height(10)), // Adjust padding
-                  filled: true,
-                  fillColor: Colors
-                      .white, // Optional: Set background color of the text field
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(SC.from_height(7)),
-                    borderSide:
-                    BorderSide(color: Colors.grey.shade400), // Set border color
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(SC.from_height(7)),
-                    borderSide: BorderSide(
-                        color: Colors.grey.shade400), // Set border color when focused
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Name cannot be empty';
-                  }
-                  if (value.length < 2) {
-                    return 'Name must be at least 2 characters long';
-                  }
-                  if (value.length > 50) {
-                    return 'Name must be less than 50 characters';
-                  }
-                  final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                  if (!nameExp.hasMatch(value)) {
-                    return 'Name contains invalid characters';
-                  }
-                  return null;
-                },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-              ),
+
+
+            CustomTextField(
+              controller: textEditingController,
+              labelText: 'Write a note here... ',
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Business Contact No. cannot be empty';
+                }
+                // Additional validation logic if needed
+                return null;
+              },
             ),
+
 
             SizedBox(height: SC.from_height(35),),
 

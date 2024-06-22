@@ -6,6 +6,7 @@ import 'package:leadkart/component/HelpButtonWhite.dart';
 import 'package:leadkart/component/addRequirmentTile.dart';
 import 'package:leadkart/component/custom_button.dart';
 import 'package:leadkart/component/custom_page_route.dart';
+import 'package:leadkart/component/custom_textfield.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/screens/user/follow_up_data.dart';
@@ -18,6 +19,7 @@ class BusinesCategory extends StatefulWidget {
 }
 
 class _BusinesCategoryState extends State<BusinesCategory> {
+  TextEditingController textEditingController = TextEditingController();
 
 
   // List of category names
@@ -72,51 +74,16 @@ class _BusinesCategoryState extends State<BusinesCategory> {
             // Busines Name //
             Padding(
               padding: EdgeInsets.symmetric(horizontal: SC.from_height(0)),
-              child: TextFormField(
-                cursorColor: Colors.grey,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(SC.from_height(7)),
-                    borderSide:
-                    BorderSide(color: Colors.grey), // Set border color
-                  ),
-                  labelText: 'Busines Name', // Add label text
-                  labelStyle:
-                  TextStyle(color: Colors.grey.shade700,fontSize: SC.from_height(16)), // Customize label text style
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: SC.from_height(12),
-                      horizontal: SC.from_height(10)), // Adjust padding
-                  filled: true,
-                  fillColor: Colors
-                      .white, // Optional: Set background color of the text field
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(SC.from_height(7)),
-                    borderSide:
-                    BorderSide(color: Colors.grey), // Set border color
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(SC.from_height(7)),
-                    borderSide: BorderSide(
-                        color: Colors.grey), // Set border color when focused
-                  ),
-                ),
+              child:     CustomTextField(
+                controller: textEditingController,
+                labelText: 'Busines Name',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Name cannot be empty';
+                    return 'Business Contact No. cannot be empty';
                   }
-                  if (value.length < 2) {
-                    return 'Name must be at least 2 characters long';
-                  }
-                  if (value.length > 50) {
-                    return 'Name must be less than 50 characters';
-                  }
-                  final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                  if (!nameExp.hasMatch(value)) {
-                    return 'Name contains invalid characters';
-                  }
+                  // Additional validation logic if needed
                   return null;
                 },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
             ),
             SizedBox(height: SC.from_height(18),),
