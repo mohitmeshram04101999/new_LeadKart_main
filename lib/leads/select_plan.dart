@@ -92,7 +92,7 @@ class _SelectPlanState extends State<SelectPlan> {
         backgroundColor: MyHelper.appConstent.primeryColor,
         title: Text('Select a Plan',style: TextStyle(fontSize: SC.from_height(21)),),
         actions: [
-          HelpButton(),
+          HelpButtonWhite(),
           SizedBox(width: SC.from_height(21),)
         ],
       ),

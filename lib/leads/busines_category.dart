@@ -45,7 +45,7 @@ class _BusinesCategoryState extends State<BusinesCategory> {
         title: Text('Busines Category',),
         actions: [
 
-          HelpButton(),
+          HelpButtonWhite(),
            SizedBox(width: SC.from_height(20)),
         ],
       ),

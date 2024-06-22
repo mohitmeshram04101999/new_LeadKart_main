@@ -41,7 +41,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
         backgroundColor: MyHelper.appConstent.primeryColor,
         title: Text('Payment details',style: TextStyle(fontSize: SC.from_height(21)),),
         actions: [
-          HelpButton(),
+          HelpButtonWhite(),
           SizedBox(width: SC.from_height(21),)
         ],
       ),
