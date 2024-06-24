@@ -48,7 +48,7 @@ class _ImageEditorState extends State<ImageEditor> {
                   shrinkWrap: true,
                   children: [
                     AdjustOption(text: 'Brightness', onTap: () {
-                      showModalBottomSheet(context: context, builder: (context) {
+                      MyHelper.mybottomPanel(context: context, builder: (context,d) {
                         return StatefulBuilder(
                           builder: (context, setState) =>  Container(
                             height: 150,
@@ -79,7 +79,7 @@ class _ImageEditorState extends State<ImageEditor> {
                       },);
                     }),
                     AdjustOption(text: 'Saturation', onTap: () {
-                      showModalBottomSheet(context: context, builder: (context) {
+                      MyHelper.mybottomPanel(context: context, builder: (context,d) {
                         return StatefulBuilder(
                           builder: (context, setState) =>  Container(
                             height: 150,
@@ -110,7 +110,7 @@ class _ImageEditorState extends State<ImageEditor> {
                       },);
                     }),
                     AdjustOption(text: 'Hue', onTap: () {
-                      showModalBottomSheet(context: context, builder: (context) {
+                      MyHelper.mybottomPanel(context: context, builder: (context,d) {
                         return StatefulBuilder(
                           builder: (context, setState) =>  Container(
                             height: 150,
@@ -141,7 +141,7 @@ class _ImageEditorState extends State<ImageEditor> {
                       },);
                     }),
 AdjustOption(text: 'Contrast', onTap: () {
-                      showModalBottomSheet(context: context, builder: (context) {
+                      MyHelper.mybottomPanel(context: context, builder: (context,d) {
                         return StatefulBuilder(
                           builder: (context, setState) =>  Container(
                             height: 150,
@@ -172,7 +172,7 @@ AdjustOption(text: 'Contrast', onTap: () {
                       },);
                     }),
                     AdjustOption(text: 'Blur', onTap: () {
-                      showModalBottomSheet(context: context, builder: (context) {
+                      MyHelper.mybottomPanel(context: context, builder: (context,d) {
                         return StatefulBuilder(
                           builder: (context, setState) =>  Container(
                             height: 150,
@@ -215,7 +215,7 @@ AdjustOption(text: 'Contrast', onTap: () {
                   setState(() {
                     imageController.isAdjustClicked.value = false;
                   });
-                  showModalBottomSheet(context: context, builder: (context) {
+                  MyHelper.mybottomPanel(context: context, builder: (context,d) {
                     return TextFieldPickerDialog();
                   },);
                 }),

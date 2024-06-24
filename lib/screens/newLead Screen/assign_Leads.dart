@@ -37,19 +37,17 @@ class _AssaignLeadsState extends State<AssaignLeads> {
             padding: MyHelper.appConstent.horizontalPedding,
             child: InkWell(
               onTap: (){
-                showModalBottomSheet(
-
-                    context: context, builder: (context)=>BottomSheet(
-                  clipBehavior: Clip.hardEdge,
-                    onClosing: (){}, builder: (context)=>ListView(
-                  children: [
-                    for(int i =0;i<5;i++)
-                      Padding(
-                        padding: MyHelper.appConstent.horizontalPedding,
-                        child: Text("Option $i",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 15),),
-                      )
-                  ],
-                )));
+                MyHelper.mybottomPanel(
+                    context: context,
+                    builder: (context,d)=>ListView(
+                      children: [
+                        for(int i =0;i<5;i++)
+                          Padding(
+                            padding: MyHelper.appConstent.horizontalPedding,
+                            child: Text("Option $i",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 15),),
+                          )
+                      ],
+                    ));
               },
 
               child: DropdownButtonFormField(

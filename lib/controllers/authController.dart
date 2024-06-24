@@ -36,14 +36,9 @@ class Authcontroller extends GetxController
 
     if(resp.statusCode==201)
     {
-      print("1");
       Map<String,dynamic> _d = resp.data;
-      print("2");
       _otp = _d["data"].toString();
-      print("3");
       context.pushNamed("otpScreen");
-      print("4");
-
     }
     else
     {
@@ -71,6 +66,7 @@ class Authcontroller extends GetxController
       CurruntUser user =  v.userCred!;
       await preference.saveUser(user);
       MyHelper.mySnakebar(context, "Log In SuccesFull");
+      _phonNumController.clear();
       await Future.delayed(Duration(milliseconds: 500));
       context.pushNamed('homePage');
     }
