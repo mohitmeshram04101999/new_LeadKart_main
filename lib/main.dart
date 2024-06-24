@@ -5,9 +5,14 @@ import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/routes/router.dart';
 import 'package:leadkart/them/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main()
-{
+async{
+  WidgetsFlutterBinding.ensureInitialized();
+  final userPreferenceController = Controllers.userPreferenceController;
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  userPreferenceController.prefs.value = preferences;
   runApp(MyApp());
 }
 
@@ -25,30 +30,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
 
     SC.getScreen(context);
-    return  DevicePreview(
-      builder: (context)=>
+    return
      GetMaterialApp.router(
-       builder: (context, child) {
-         return Stack(
-           children: [
-             child!,
-             Positioned(
-               left: _offset.dx,
-               top: _offset.dy,
-               child: GestureDetector(
-                 onPanUpdate: (d) => setState(() => _offset += Offset(d.delta.dx, d.delta.dy)),
-                 child: FloatingActionButton(
-                   onPressed: ()async{
-                     await Controllers.authController.logOut(context);
-                   },
-                   backgroundColor: Colors.black,
-                   child: Icon(Icons.logout),
-                 ),
-               ),
-             ),
-           ],
-         );
-       },
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
         theme:Theme.of(context).brightness==Brightness.light? AppTheme():AppTheme(),
@@ -56,7 +39,7 @@ class _MyAppState extends State<MyApp> {
         routerDelegate: GoRouterConfig.router.routerDelegate,
         backButtonDispatcher: GoRouterConfig.router.backButtonDispatcher,
         routeInformationParser: GoRouterConfig.router.routeInformationParser,
-      ),
+
     );
   }
 }

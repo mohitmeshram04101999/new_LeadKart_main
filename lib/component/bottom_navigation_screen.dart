@@ -140,8 +140,10 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:leadkart/add_images/add_images.dart';
 import 'package:leadkart/business_pages/busines_detail.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/home_pages/home_screen.dart';
 import 'package:leadkart/leads/ads_image.dart';
@@ -210,6 +212,29 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
             );
           },
           child: pages[currentPage],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: ()async{
+            showDialog(context: context, builder: (context) {
+              return AlertDialog(
+                title: Text("Are you sure you want to logout?"),
+                actions: [
+                  TextButton(onPressed: (){
+                    Controllers.authController.logOut(context);
+                    context.pop();
+                  }, child: Text("Yes", style: TextStyle(color: Colors.redAccent, fontSize: SC.fromContextWidth(context, 20)))),
+                  TextButton(onPressed: (){
+                    context.pop();
+                  }, child: Text("No", style: TextStyle(
+                      fontSize: SC.fromContextWidth(context, 20)
+                  ),)),
+                ],
+              );
+            },);
+          },
+          backgroundColor: Colors.redAccent,
+          label: Text("Logout"),
+          icon: Icon(Icons.logout),
         ),
         bottomNavigationBar: BottomAppBar(
           padding: EdgeInsets.only(top: 3),

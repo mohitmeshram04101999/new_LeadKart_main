@@ -18,7 +18,7 @@ class MyHelper
   static Dio dio = Dio(
     BaseOptions(baseUrl: "https://server.leadkart.dsmacademy.in/api/"),
   );
-  static mySnakebar(BuildContext context,String descriptioin)
+  static mySnakebar(BuildContext context,String descriptioin, {Color color = Colors.red})
   {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         elevation: 0,
@@ -37,7 +37,7 @@ class MyHelper
                   blurRadius: 2,offset: Offset(1,2),
                 )
               ],
-              color: Colors.red,
+              color: color,
             ),
             child: Text(descriptioin,textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w400,fontSize: SC.from_width(17)),)))));
   }

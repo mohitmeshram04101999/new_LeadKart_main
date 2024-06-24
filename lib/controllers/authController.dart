@@ -69,10 +69,13 @@ class Authcontroller extends GetxController
     {
       VerifyOtpModel v  = _d.data;
       CurruntUser user =  v.userCred!;
-      await preference.saveUser(user);
-      MyHelper.mySnakebar(context, "Log In SuccesFull");
-      await Future.delayed(Duration(milliseconds: 500));
-      context.pushNamed('homePage');
+      await preference.saveUser(user).then((value) {
+        if(value) {
+          MyHelper.mySnakebar(context, "Logged in successfully", color: Colors.green);
+          context.goNamed('homePage');
+        }
+      },);
+
     }
     else
     {
@@ -99,10 +102,10 @@ RxBool isUser= false.obs;
   }
 
 
-  Future<void> logOut(BuildContext context) async
+  logOut(BuildContext context)
   {
     preference.removeUser().then((v){
-      MyHelper.mySnakebar(context, "Log out Success");
+      MyHelper.mySnakebar(context, "Logged out successfully");
       context.goNamed("logInScreen");
     });
 

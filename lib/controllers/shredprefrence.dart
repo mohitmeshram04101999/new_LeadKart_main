@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserPreference{
+class UserPreference extends GetxController{
+
+  Rxn<SharedPreferences> prefs= Rxn<SharedPreferences>();
   Future<bool> saveUser (CurruntUser user)async{
     SharedPreferences sp = await SharedPreferences.getInstance();
     String _data = jsonEncode(user.toJson());
