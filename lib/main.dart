@@ -2,8 +2,11 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
+import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
+import 'package:leadkart/leads/busines_category.dart';
 
 import 'package:leadkart/routes/router.dart';
 import 'package:leadkart/them/theme.dart';
@@ -16,7 +19,12 @@ async{
   final userPreferenceController = Controllers.userPreferenceController;
   SharedPreferences preferences = await SharedPreferences.getInstance();
   userPreferenceController.prefs.value = preferences;
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => CreateBusinessProvider()),
+      ChangeNotifierProvider(create: (context) => BussnissCategoryProvider()),
+    ],
+      child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -43,7 +51,7 @@ class _MyAppState extends State<MyApp> {
         routerDelegate: GoRouterConfig.router.routerDelegate,
         backButtonDispatcher: GoRouterConfig.router.backButtonDispatcher,
         routeInformationParser: GoRouterConfig.router.routeInformationParser,
-
+     )
     );
   }
 }

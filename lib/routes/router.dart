@@ -28,8 +28,6 @@ class GoRouterConfig {
         if (user.token != null && (state.matchedLocation == '/logInScreen'||state.matchedLocation == '/'||state.matchedLocation == '/otpScreen')) {
           return '/homePage';
         }
-      }else{
-          return '/logInScreen';
       }
       return null;
     },
@@ -38,7 +36,9 @@ class GoRouterConfig {
         path: '/',
         builder: (context, state) => OnBordingMain(),
       ),
+
       GoRoute(
+
         name: 'logInScreen',
         path: '/logInScreen',
         builder: (context, state) => LoginScreen(),
@@ -46,46 +46,35 @@ class GoRouterConfig {
           GoRoute(
             name: 'otpScreen',
             path: 'otpScreen',
-            builder: (context, state) {
+            builder: (context, state){
               final data = jsonEncode(state.pathParameters);
-              return OtpScreen();
-            },
+              return OtpScreen();},
           ),
-        ],
+        ]
       ),
       GoRoute(
         name: 'homePage',
         path: '/homePage',
-        builder: (context, state) => MyBottomNavigationBar(),
+        builder: (context, state) =>MyBottomNavigationBar(),
+
         routes: [
           GoRoute(
             path: 'AddDetailScreen',
             name: 'AddDetailScreen',
-            builder: (context, state) => AddDetailScreen(),
+            builder: (context,state)=>AddDetailScreen(),
+
           ),
           GoRoute(
             name: 'getNewLeads',
             path: 'getNewLeads',
             builder: (context, state) => GetNewLeads(),
           ),
-          GoRoute(
-            path: 'campaignSettings',
-            name: 'campaignSettings',
-            builder: (context, state) => CampaignSetting(),
-          ),
-          GoRoute(
-            path: 'growBusinessFaster',
-            name: 'growBusinessFaster',
-            builder: (context, state) => GrowBusinessFaster(),
-          ),
-          GoRoute(
-            path: 'imageEditor',
-            name: 'imageEditor',
-            builder: (context, state) => ImageEditor(),
-          ),
+          GoRoute(path: 'campaignSettings', name: 'campaignSettings', builder: (context, state) => CampaignSetting()),
+          GoRoute(path: 'growBusinessFaster', name: 'growBusinessFaster', builder: (context, state) => GrowBusinessFaster()),
+          GoRoute(path: 'imageEditor', name: 'imageEditor', builder: (context, state) => ImageEditor()),
         ],
       ),
+
     ],
   );
-
 }

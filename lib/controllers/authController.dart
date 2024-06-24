@@ -36,9 +36,14 @@ class Authcontroller extends GetxController
 
     if(resp.statusCode==201)
     {
+      print("1");
       Map<String,dynamic> _d = resp.data;
+      print("2");
       _otp = _d["data"].toString();
+      print("3");
       context.pushNamed("otpScreen");
+      print("4");
+
     }
     else
     {
