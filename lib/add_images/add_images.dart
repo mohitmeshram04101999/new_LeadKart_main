@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:leadkart/component/helpButton.dart';
 import 'package:leadkart/component/image_row.dart';
 import 'package:leadkart/helper/dimention.dart';
+import 'package:leadkart/helper/helper.dart';
 
 class AddImages extends StatefulWidget {
   const AddImages({Key? key}) : super(key: key);
@@ -64,12 +65,11 @@ class _AddImagesState extends State<AddImages> {
             ),
             InkWell(
               onTap: () {
-                showModalBottomSheet(context: context,
-                  showDragHandle: true,
-                  builder: (context) {
+                MyHelper.mybottomPanel(context: context,
+                  builder: (context,d) {
                     return Container(
-                      height: 300,
                       child: ListView.builder(
+                        controller: d,
                         itemCount: 3,
                         itemBuilder: (context, index) {
                           return ListTile(

@@ -2,14 +2,18 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:getwidget/components/button/gf_button.dart';
+import 'package:leadkart/component/BussneCategoryTile.dart';
 import 'package:leadkart/component/HelpButtonWhite.dart';
 import 'package:leadkart/component/addRequirmentTile.dart';
 import 'package:leadkart/component/custom_button.dart';
 import 'package:leadkart/component/custom_page_route.dart';
 import 'package:leadkart/component/custom_textfield.dart';
+import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/screens/user/follow_up_data.dart';
+import 'package:provider/provider.dart';
 
 class BusinesCategory extends StatefulWidget {
   const BusinesCategory({Key? key}) : super(key: key);
@@ -39,7 +43,16 @@ class _BusinesCategoryState extends State<BusinesCategory> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Controllers.bussnissCategoryProvider(context,listen: false).lode(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar:  AppBar(
         foregroundColor: Colors.white,
@@ -75,7 +88,7 @@ class _BusinesCategoryState extends State<BusinesCategory> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: SC.from_height(0)),
               child:     CustomTextField(
-                controller: textEditingController,
+                controller: Controllers.createBusinessProvider(context,listen: false).businessNameController,
                 labelText: 'Busines Name',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -104,25 +117,9 @@ class _BusinesCategoryState extends State<BusinesCategory> {
                 cursorColor: Colors.grey,
                 decoration: InputDecoration(
                   hintText: 'Select busines category',
-                  hintStyle: TextStyle(fontSize: SC.from_height(16.5),color: Colors.grey.shade700),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(SC.from_height(7)),
-                    borderSide: BorderSide(color: Colors.grey), // Set border color
-                  ),
-                  prefixIcon: Icon(Icons.search, color: Colors.grey.shade700,), // Add search icon
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: SC.from_height(12),
-                      horizontal: SC.from_height(10)), // Adjust padding
+                  prefixIcon: Icon(Icons.search, color: Colors.grey.shade700,), // Add search icon// Adjust padding
                   filled: true,
                   fillColor: Colors.white, // Optional: Set background color of the text field
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(SC.from_height(7)),
-                    borderSide: BorderSide(color: Colors.grey), // Set border color
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(SC.from_height(7)),
-                    borderSide: BorderSide(color: Colors.grey), // Set border color when focused
-                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -148,42 +145,35 @@ class _BusinesCategoryState extends State<BusinesCategory> {
 
 
             // Grid of containers
-            GridView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisExtent: SC.fromHeight(8),
-                crossAxisSpacing: SC.from_height(15),
-                mainAxisSpacing: SC.from_height(15),
-                // childAspectRatio: (SC.from_width(50) / SC.from_height(80)), // Adjust the aspect ratio as needed
-              ),
-              itemCount: categoryNames.length, // Number of containers you want to display
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade400),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: SC.from_height(50),
-                        height: SC.from_height(40),
-                        child: Image.asset('assets/edit.png'),
-                      ),
-                      SizedBox(height: SC.from_height(10)),
-                      Text(
-                        categoryNames[index], // Use the name from the list
-                        style: TextStyle(color: Colors.grey.shade700, fontSize: SC.fromWidth(30)),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+            Consumer<BussnissCategoryProvider>(builder: (a,p,c){
+              if(p.loding)
+                {
+                  return Center(child: CircularProgressIndicator());
+                }
+              return GridView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisExtent: SC.fromHeight(8),
+                  crossAxisSpacing: SC.from_height(15),
+                  mainAxisSpacing: SC.from_height(15),
+                  // childAspectRatio: (SC.from_width(50) / SC.from_height(80)), // Adjust the aspect ratio as needed
+                ),
+
+                //Childredn
+                children: [
+
+                  for(var i in p.allCategory)
+                    BussneCategoryTile(category: i,onTap: (){
+                      Controllers.createBusinessProvider(context,listen: false).setCategoryId(i);
+                      p.upDate();
+                      },)
+
+                ],
+
+              );
+            }),
 
             SizedBox(height: SC.from_height(25),),
 

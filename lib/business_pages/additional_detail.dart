@@ -1,10 +1,17 @@
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:go_router/go_router.dart';
 import 'package:leadkart/component/custom_textfield.dart';
+import 'package:leadkart/component/myChipWidget.dart';
+import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
+import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 
@@ -89,478 +96,328 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
         backgroundColor: MyHelper.appConstent.primeryColor,
         title: Text('Additional Detail',style: TextStyle(fontSize: SC.from_height(21)),),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: SC.from_height(15)),
-        child: ListView(
-          children: [
-            SizedBox(height: SC.from_height(15),),
-            Row(
-              children: [
-
-              // SELECT AN IMAGE //
-              DottedBorder(
-                strokeWidth: 1,
-                dashPattern: [8],
-                color: Colors.grey,
-                child: Container(
-                  width: SC.from_height(105),
-                  height: SC.from_height(110),
-                  decoration: BoxDecoration(
-                    // border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(SC.from_height(5))),
-                  child:  Center(
-                    child: Text(
-                      'Business \n   Logo',
-                      style: TextStyle(
-                          color: Colors.grey.shade700, fontSize: SC.from_height(17),fontWeight: FontWeight.w500),
-                    ),
-                  )
-                ),
-              ),
-                SizedBox(width: SC.from_height(10),),
-
-              // TEXTFIELDS OF 'BUSINESS NAME' OR 'INDUSTRY'
-              Expanded(
-                child: Column(
-                  children: [
-                    // Your Business Name //
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: SC.from_height(0)),
-                      child:  CustomTextField(
-                        controller: _businessContactController,
-                        labelText: 'Your Business Name',
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Business Contact No. cannot be empty';
-                          }
-                          // Additional validation logic if needed
-                          return null;
-                        },
-                      ),
-                    ),
-
-                    SizedBox(height: SC.from_height(20),),
-
-                    // Industry   DROPDOWN//.
-
-                    GestureDetector(
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (context) => BottomSheet(
-                            clipBehavior: Clip.hardEdge,
-                            onClosing: () {},
-                            builder: (context) => ListView(
-                              children: [
-                                for (int i = 0; i < 5; i++)
-                                  ListTile(
-                                    title: Text(
-                                      "Option $i",
-                                      style:TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 ,fontWeight: FontWeight.w500),
-                                    ),
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = "Option $i";
-                                      });
-                                      Navigator.pop(context); // Close the bottom sheet
-                                    },
-                                  )
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: SC.from_height(45),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(7),
-                        ),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                                selectedOption ?? 'Industry ',
-                                style:   TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700,fontWeight: FontWeight.w500 )
-                            ),
-                            Transform.rotate(
-                              angle: 1.5708,  // Rotate 90 degrees clockwise (π/2 radians)
-                              child: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                color: Colors.black.withOpacity(0.8),
-                                size: SC.from_height(17),
-                              ),
-                            ),
-
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],),
-
-            SizedBox(height: SC.from_height(15),),
-
-            // Container(
-            //   padding: EdgeInsets.all(5),
-            //   decoration: BoxDecoration(
-            //     color: Colors.white,
-            //     border: Border.all(color: Colors.grey),
-            //     borderRadius: BorderRadius.circular(7),
-            //   ),
-            //   width: double.infinity,
-            //   height: double.infinity,
-            //   child: GridView.builder(
-            //     shrinkWrap: true,
-            //     padding: EdgeInsets.all(10),
-            //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //       crossAxisCount: 2, // Number of columns
-            //       crossAxisSpacing: 10,
-            //       mainAxisSpacing: 10,
-            //     ),
-            //     itemCount: items.length,
-            //     itemBuilder: (context, index) {
-            //       return Chip(
-            //         label: Text(
-            //           items[index],
-            //           style: TextStyle(color: Colors.grey.shade700, fontSize: 15),
-            //         ),
-            //         backgroundColor: Colors.white,
-            //         shape: RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.circular(15),
-            //           side: BorderSide(color: Colors.grey),
-            //         ),
-            //         onDeleted: () {
-            //           // Handle chip deletion or button click action
-            //           print('${items[index]} chip deleted');
-            //         },
-            //         deleteIcon: Icon(Icons.cancel, color: Colors.grey),
-            //         deleteButtonTooltipMessage: 'Remove',
-            //       );
-            //     },
-            //   ),
-            // ),
-
-            // ADD AUDIENCEE //
-
-            //  SERVICES //
-
-            Container(
-              // padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                // border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(SC.from_height(7)),
-              ),
-              width: double.infinity,
-              height: SC.from_height(140),
-              child: Stack(
-                alignment: Alignment.bottomCenter,
+      body: Consumer<CreateBusinessProvider>(
+        builder: (a,p,c){
+          return ListView(
+            padding: EdgeInsets.symmetric(horizontal: SC.from_height(15)),
+            children: [
+              SizedBox(height: SC.from_height(15),),
+              Row(
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    height: SC.from_height(110),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.grey.shade400),
-                      borderRadius: BorderRadius.circular(SC.from_height(10)),
+
+                  // SELECT AN IMAGE //
+                  DottedBorder(
+                    strokeWidth: 1,
+                    dashPattern: [8],
+                    color: Colors.grey,
+                    child: Container(
+                        width: SC.from_height(105),
+                        height: SC.from_height(110),
+                        decoration: BoxDecoration(
+                          // border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(SC.from_height(5))),
+                        child:  Center(
+                          child: Text(
+                            'Business \n   Logo',
+                            style: TextStyle(
+                                color: Colors.grey.shade700, fontSize: SC.from_height(17),fontWeight: FontWeight.w500),
+                          ),
+                        )
                     ),
+                  ),
+                  SizedBox(width: SC.from_height(10),),
+
+                  // TEXTFIELDS OF 'BUSINESS NAME' OR 'INDUSTRY'
+                  Expanded(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                             // Optional: Add some space before the chip
-                            Flexible(
-                              child: Chip(
-                                label: Text(
-                                  'App Development',
-                                  style: TextStyle(color: Colors.grey.shade700,fontSize:SC.fromWidth(26) ),
-                                ),
-                                backgroundColor:
-                                Colors.white, // Customize chip background color
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      SC.from_height(
-                                          15)), // Match container border radius
-                                  side: BorderSide(
-                                      color: Colors
-                                          .grey), // Optional: Match container border color
-                                ),
+                        // Your Business Name //
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: SC.from_height(0)),
+                          child:  CustomTextField(
 
-                                // Optional: Add an icon to the chip
-                                onDeleted: () {
-                                  // Handle chip deletion or button click action
-                                  print('Chip button pressed');
-                                },
-                                deleteIcon: Icon(Icons.cancel,
-                                    color: Colors
-                                        .grey), // Optional: Customize delete icon
-                                deleteButtonTooltipMessage:
-                                'Remove', // Tooltip for the delete button
-                              ),
-                            ),
-                            SizedBox(width: SC.from_height(10)),
-                            Flexible(
-                              child: Chip(
-                                label: Text(
-                                  'UI UX Design',
-                                  style: TextStyle(color: Colors.grey.shade700,fontSize:SC.from_height(15) ),
-                                ),
-                                backgroundColor:
-                                Colors.white, // Customize chip background color
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      SC.from_height(
-                                          15)), // Match container border radius
-                                  side: BorderSide(
-                                      color: Colors
-                                          .grey), // Optional: Match container border color
-                                ),
-                              
-                                // Optional: Add an icon to the chip
-                                onDeleted: () {
-                                  // Handle chip deletion or button click action
-                                  print('Chip button pressed');
-                                },
-                                deleteIcon: Icon(Icons.cancel,
-                                    color: Colors
-                                        .grey), // Optional: Customize delete icon
-                                deleteButtonTooltipMessage:
-                                'Remove', // Tooltip for the delete button
-                              ),
-                            ),
-
-                          ],
-                        ),
-
-                        SizedBox(
-                            width: SC.from_height(
-                                10)), // Optional: Add some space before the chip
-                        Flexible(
-                          child: Chip(
-                            label: Text(
-                              'Website Development',
-                              style: TextStyle(color: Colors.grey.shade700,fontSize:SC.fromWidth(26) ),
-                            ),
-                            backgroundColor:
-                            Colors.white, // Customize chip background color
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  SC.from_height(
-                                      15)), // Match container border radius
-                              side: BorderSide(
-                                  color: Colors
-                                      .grey), // Optional: Match container border color
-                            ),
-                          
-                            // Optional: Add an icon to the chip
-                            onDeleted: () {
-                              // Handle chip deletion or button click action
-                              print('Chip button pressed');
+                            controller: p.businessNameController,
+                            labelText: 'Your Business Name',
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Business Contact No. cannot be empty';
+                              }
+                              // Additional validation logic if needed
+                              return null;
                             },
-                            deleteIcon: Icon(Icons.cancel,
-                                color: Colors
-                                    .grey), // Optional: Customize delete icon
-                            deleteButtonTooltipMessage:
-                            'Remove', // Tooltip for the delete button
                           ),
                         ),
+
+                        SizedBox(height: SC.from_height(20),),
+
+                        // Industry   DROPDOWN//.
+
+                       Consumer<BussnissCategoryProvider>(builder: (a,p2,c){
+                         return  GestureDetector(
+                           onTap: () {
+                             MyHelper.mybottomPanel(context: context,
+                               builder: (c,a){
+                                 return ListView.builder(
+                                     controller: a,
+                                     itemCount: p2.allCategory.length,
+                                     itemBuilder: (a,index)=>ListTile(
+                                       title: Text("${p2.allCategory[index].title}"),
+                                       onTap: (){
+                                         p.setCategoryId(p2.allCategory[index]);
+                                         context.pop();
+                                       },
+                                     ));
+                               },);
+                           },
+                           child: TextFormField(
+                             enabled: false,
+                             controller:p.businessCatTitleController ,
+
+                             style: TextStyle(color: Colors.grey.shade700),
+                             decoration: InputDecoration(
+
+                               label: Text("Industry"),
+                               suffixIcon: Icon(Icons.keyboard_arrow_down_rounded),
+                               contentPadding: EdgeInsets.symmetric(horizontal: 7),
+                             ),
+                           ),
+                         );
+                       }),
 
                       ],
                     ),
-                  ),
-                  Positioned(
-                    top: SC.from_height(19),
-                    left: SC.from_height(20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        // border: Border.all(),
-                        borderRadius: BorderRadius.circular(SC.from_height(7)),
-                        color: Colors.white,
-                      ),
-                      child: Text(
-                        ' Services ',
-                        style: TextStyle(
-                            color: Colors.grey.shade700, fontSize: SC.fromWidth(26)),
+                  )
+                ],),
+
+              SizedBox(height: SC.from_height(15),),
+
+
+              Container(
+                // padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(SC.from_height(7)),
+                ),
+                width: double.infinity,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Consumer<BussnissCategoryProvider>(
+                      builder:(a,p3,c)=> Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Wrap(
+                          children: [
+                            for(var chip in p3.allCategory)
+                              Mychipwidget(category: chip,onDeleted: (){},)
+                          ],
+                        ),
                       ),
                     ),
-                  )
+                    Positioned(
+                      top: -10,
+                      left: 5,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          // border: Border.all(),
+                          borderRadius: BorderRadius.circular(SC.from_height(7)),
+                          color: Colors.white,
+                        ),
+                        child: Text(
+                          ' Services ',
+                          style: TextStyle(
 
-                ],
+                              color: Colors.grey.shade700, fontSize: SC.fromWidth(26)),
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
               ),
-            ),
 
 
-            SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(15),),
 
 
-            // Business Contact No. //
-            CustomTextField(
-              controller: _businessContactController,
-              labelText: 'Business Contact No.',
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Business Contact No. cannot be empty';
-                }
-                // Additional validation logic if needed
-                return null;
-              },
-            ),
-
-            SizedBox(height: SC.from_height(15),),
-
-            // Add WhatsApp No.. //
-            CustomTextField(
-              controller: _businessContactController,
-              labelText: 'Add WhatsApp No.. ',
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Business Contact No. cannot be empty';
-                }
-                // Additional validation logic if needed
-                return null;
-              },
-            ),
 
 
-            SizedBox(height: SC.from_height(15),),
-            // State //
-            CustomTextField(
-              controller: _businessContactController,
-              labelText: 'State ',
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Business Contact No. cannot be empty';
-                }
-                // Additional validation logic if needed
-                return null;
-              },
-            ),
 
-            SizedBox(height: SC.from_height(15),),
-            // City //
-            CustomTextField(
-              controller: _businessContactController,
-              labelText: 'City ',
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Business Contact No. cannot be empty';
-                }
-                // Additional validation logic if needed
-                return null;
-              },
-            ),
+              // Business Contact No. //
+              CustomTextField(
+                format: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(10)],
+                textInputType: TextInputType.number,
+                controller: p.businessPhoneNumberController,
+                labelText: 'Business Contact No.',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return null;
+                  }
+                  if(value.length<10)
+                    {
+                      return "Enter Velid Nnumber";
+                    }
+                  // Additional validation logic if needed
 
-            SizedBox(height: SC.from_height(15),),
-            // Website Link //
-            CustomTextField(
-              controller: _businessContactController,
-              labelText: 'Website Link ',
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Business Contact No. cannot be empty';
-                }
-                // Additional validation logic if needed
-                return null;
-              },
-            ),
+                  return null;
+                },
+              ),
 
+              SizedBox(height: SC.from_height(15),),
 
-            SizedBox(height: SC.from_height(15),),
-            // Instagram Link //
-            CustomTextField(
-              controller: _businessContactController,
-              labelText: 'Instagram Link ',
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Business Contact No. cannot be empty';
-                }
-                // Additional validation logic if needed
-                return null;
-              },
-            ),
+              // Add WhatsApp No.. //
+              CustomTextField(
+                format: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(10)],
+                textInputType: TextInputType.number,
+                controller: p.businessWatsAppNumberController,
+                labelText: 'Add WhatsApp No.. ',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return null;
+                  }
+                  if(value.length!=10)
+                    {
+                      return "Enter valid number";
+                    }
+                  // Additional validation logic if needed
+                  return null;
+                },
+              ),
 
 
-            SizedBox(height: SC.from_height(15),),
-            // Twitter Link //
-            CustomTextField(
-              controller: _businessContactController,
-              labelText: 'Twitter Link  ',
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Business Contact No. cannot be empty';
-                }
-                // Additional validation logic if needed
-                return null;
-              },
-            ),
+              SizedBox(height: SC.from_height(15),),
+              // State //
+              CustomTextField(
+                controller: _businessContactController,
+                labelText: 'State ',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Business Contact No. cannot be empty';
+                  }
+                  // Additional validation logic if needed
+                  return null;
+                },
+              ),
 
-            SizedBox(height: SC.from_height(15),),
-            // Youtube Link //
-            CustomTextField(
-              controller: _businessContactController,
-              labelText: 'Youtube Link  ',
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Business Contact No. cannot be empty';
-                }
-                // Additional validation logic if needed
-                return null;
-              },
-            ),
+              SizedBox(height: SC.from_height(15),),
+              // City //
+              CustomTextField(
+                controller: _businessContactController,
+                labelText: 'City ',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Business Contact No. cannot be empty';
+                  }
+                  // Additional validation logic if needed
+                  return null;
+                },
+              ),
 
-            SizedBox(height: SC.from_height(15),),
-            // Facebook Link //
-            CustomTextField(
-              controller: _businessContactController,
-              labelText: 'Facebook Link ',
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Business Contact No. cannot be empty';
-                }
-                // Additional validation logic if needed
-                return null;
-              },
-            ),
+              SizedBox(height: SC.from_height(15),),
+              // Website Link //
+              CustomTextField(
+                controller: p.webLinkController,
+                labelText: 'Website Link ',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Business Contact No. cannot be empty';
+                  }
+                  // Additional validation logic if needed
+                  return null;
+                },
+              ),
 
 
-            SizedBox(height: SC.from_height(15),),
-            // Address //
-            CustomTextField(
-              controller: _businessContactController,
-              labelText: 'Address ',
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Business Contact No. cannot be empty';
-                }
-                // Additional validation logic if needed
-                return null;
-              },
-            ),
+              SizedBox(height: SC.from_height(15),),
+              // Instagram Link //
+              CustomTextField(
+                controller:p.instaLinkController,
+                labelText: 'Instagram Link ',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Business Contact No. cannot be empty';
+                  }
+                  // Additional validation logic if needed
+                  return null;
+                },
+              ),
 
-            SizedBox(height: SC.from_height(15),),
-            // Tagline //
-            CustomTextField(
-              controller: _businessContactController,
-              labelText: 'Tagline ',
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Business Contact No. cannot be empty';
-                }
-                // Additional validation logic if needed
-                return null;
-              },
-            ),
 
-            SizedBox(height: SC.from_height(20),),
-          ],
-        ),
+              SizedBox(height: SC.from_height(15),),
+              // Twitter Link //
+              CustomTextField(
+                controller: p.twitterLinkController,
+                labelText: 'Twitter Link  ',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Business Contact No. cannot be empty';
+                  }
+                  // Additional validation logic if needed
+                  return null;
+                },
+              ),
+
+              SizedBox(height: SC.from_height(15),),
+              // Youtube Link //
+              CustomTextField(
+                controller: p.youTubeLinkController,
+                labelText: 'Youtube Link  ',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Business Contact No. cannot be empty';
+                  }
+                  // Additional validation logic if needed
+                  return null;
+                },
+              ),
+
+              SizedBox(height: SC.from_height(15),),
+              // Facebook Link //
+              CustomTextField(
+                controller: p.faceBookLinkController,
+                labelText: 'Facebook Link ',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Business Contact No. cannot be empty';
+                  }
+                  // Additional validation logic if needed
+                  return null;
+                },
+              ),
+
+
+              SizedBox(height: SC.from_height(15),),
+              // Address //
+              CustomTextField(
+                controller: p.addressController,
+                labelText: 'Address ',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Business Contact No. cannot be empty';
+                  }
+                  // Additional validation logic if needed
+                  return null;
+                },
+              ),
+
+              SizedBox(height: SC.from_height(15),),
+              // Tagline //
+              CustomTextField(
+                controller: p.tagLinecontroller,
+                labelText: 'Tagline ',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Business Contact No. cannot be empty';
+                  }
+                  // Additional validation logic if needed
+                  return null;
+                },
+              ),
+
+              SizedBox(height: SC.from_height(20),),
+            ],
+          );
+        },
       ),
     );
   }

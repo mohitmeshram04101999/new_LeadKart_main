@@ -1,11 +1,14 @@
+
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
+
 import 'package:leadkart/routes/router.dart';
 import 'package:leadkart/them/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 void main()
 async{
@@ -30,7 +33,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
 
     SC.getScreen(context);
-    return
+    return  DevicePreview(
+      builder: (context)=>
      GetMaterialApp.router(
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,

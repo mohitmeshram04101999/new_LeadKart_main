@@ -11,6 +11,7 @@ import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/component/helpButton.dart';
 
 import 'package:leadkart/helper/dimention.dart';
+import 'package:leadkart/helper/helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -65,24 +66,24 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             InkWell(
               onTap: () {
-                showModalBottomSheet(context: context,
-                  showDragHandle: true,
-                  builder: (context) {
-                    return Container(
-                      height: 300,
-                      child: ListView.builder(
-                        itemCount: 3,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text('SK e solution $index'),
-                            onTap: () {
-                              Navigator.pop(context, {'index': index});
-                            },
-                          );
-                        },
-                      ),
-                    );
-                  },);
+                MyHelper.mybottomPanel(context: context,
+                    builder: (context,d) {
+                      return Container(
+                        height: 300,
+                        child: ListView.builder(
+                          controller: d,
+                          itemCount: 3,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text('SK e solution $index'),
+                              onTap: () {
+                                Navigator.pop(context, {'index': index});
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    });
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,

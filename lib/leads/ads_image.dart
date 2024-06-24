@@ -95,9 +95,8 @@ class _AdsPageState extends State<AdsPage> {
             ),
             InkWell(
               onTap: () {
-                showModalBottomSheet(context: context,
-                  showDragHandle: true,
-                  builder: (context) {
+                MyHelper.mybottomPanel(context: context,
+                  builder: (context,d) {
                     return Container(
                       height: 300,
                       child: ListView.builder(

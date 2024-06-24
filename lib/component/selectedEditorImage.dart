@@ -8,6 +8,7 @@ import 'package:leadkart/component/positionedButton.dart';
 import 'package:leadkart/controllers/imageEditorController.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/enums.dart';
+import 'package:leadkart/helper/helper.dart';
 
 class SelectedEditorWidgetView extends StatefulWidget {
    Widget child;
@@ -224,7 +225,7 @@ Size scaledSize = Size(0, 0);
             children: [
               InkWell(
                 onTap: () {
-showModalBottomSheet(context: context, builder: (context) {
+MyHelper.mybottomPanel(context: context, builder: (context,c) {
   return Container(
     color: Colors.white,
     child: Column(
