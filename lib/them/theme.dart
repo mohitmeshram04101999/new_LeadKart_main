@@ -20,10 +20,17 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
     //inputDecoration
     inputDecorationTheme: InputDecorationTheme(
 
+        disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Colors.grey.shade400)
+        ),
+
       hintStyle: TextStyle(
         fontSize: SC.from_width(17),
         fontWeight: FontWeight.w400
       ),
+
+
 
       labelStyle: TextStyle(
         color: Colors.grey.shade700,

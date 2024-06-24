@@ -27,21 +27,6 @@ class GoRouterConfig {
   static final router = GoRouter(
     initialLocation: '/loginScreen',
     redirect: (context, state) async{
-      // SharedPreferences preferences = await SharedPreferences.getInstance();
-      // if(preferences.getBool("first")==null)
-      //   {
-      //     preferences.setBool("first", true);
-      //     return "/";
-      //   }
-
-     // bool user =  await Controllers.authController.checkUserLogInOrNot(context);
-     //  if(user==true){
-     //    return '/homePage';
-     //  }
-     //  else
-     //    {
-     //      return '/logInScreen';
-     //    }
     },
     routes: [
       GoRoute(

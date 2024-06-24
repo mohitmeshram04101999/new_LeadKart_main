@@ -48,28 +48,25 @@ class _CreateAdsState extends State<CreateAds> {
 
           GestureDetector(
             onTap: () {
-              showModalBottomSheet(
+              MyHelper.mybottomPanel(
                 context: context,
-                builder: (context) => BottomSheet(
-                  clipBehavior: Clip.hardEdge,
-                  onClosing: () {},
-                  builder: (context) => ListView(
-                    children: [
-                      for (int i = 0; i < 5; i++)
-                        ListTile(
-                          title: Text(
-                            "Option $i",
-                            style:TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 ,fontWeight: FontWeight.w500),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              selectedOption = "Option $i";
-                            });
-                            Navigator.pop(context); // Close the bottom sheet
-                          },
-                        )
-                    ],
-                  ),
+                builder: (context,d) =>  ListView(
+                  controller: d,
+                  children: [
+                    for (int i = 0; i < 5; i++)
+                      ListTile(
+                        title: Text(
+                          "Option $i",
+                          style:TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 ,fontWeight: FontWeight.w500),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            selectedOption = "Option $i";
+                          });
+                          Navigator.pop(context); // Close the bottom sheet
+                        },
+                      )
+                  ],
                 ),
               );
             },
@@ -348,12 +345,9 @@ class _CreateAdsState extends State<CreateAds> {
           ),
           GestureDetector(
             onTap: () {
-              showModalBottomSheet(
+              MyHelper.mybottomPanel(
                 context: context,
-                builder: (context) => BottomSheet(
-                  clipBehavior: Clip.hardEdge,
-                  onClosing: () {},
-                  builder: (context) => ListView(
+                  builder: (context,d) => ListView(
                     children: [
                       for (int i = 0; i < 5; i++)
                         ListTile(
@@ -370,7 +364,6 @@ class _CreateAdsState extends State<CreateAds> {
                         )
                     ],
                   ),
-                ),
               );
             },
             child: Container(
@@ -412,12 +405,9 @@ class _CreateAdsState extends State<CreateAds> {
           ),
           GestureDetector(
             onTap: () {
-              showModalBottomSheet(
+              MyHelper.mybottomPanel(
                 context: context,
-                builder: (context) => BottomSheet(
-                  clipBehavior: Clip.hardEdge,
-                  onClosing: () {},
-                  builder: (context) => ListView(
+                  builder: (context,d) => ListView(
                     children: [
                       for (int i = 0; i < 5; i++)
                         ListTile(
@@ -434,7 +424,6 @@ class _CreateAdsState extends State<CreateAds> {
                         )
                     ],
                   ),
-                ),
               );
             },
             child: Container(

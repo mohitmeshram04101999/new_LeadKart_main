@@ -674,6 +674,8 @@ class wavePainter extends CustomPainter
 
 
 class MyInkWell extends StatelessWidget {
+  Color? splasColor;
+  Color? overLayColor;
   Function? onTap;
   double? height;
   EdgeInsets? margin;
@@ -681,7 +683,7 @@ class MyInkWell extends StatelessWidget {
   double? width;
   Widget? child;
   BoxDecoration? decoration;
-  MyInkWell({this.onTap,this.padding,this.margin,this.child,this.decoration,this.height,this.width});
+  MyInkWell({this.overLayColor,this.splasColor,this.onTap,this.padding,this.margin,this.child,this.decoration,this.height,this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -704,6 +706,8 @@ class MyInkWell extends StatelessWidget {
           width: width,
           decoration: decoration,
           child: InkWell(
+            splashColor: splasColor,
+            overlayColor: WidgetStateProperty.resolveWith((s)=>overLayColor),
             child: Padding(
               padding:(padding!=null)?padding!:EdgeInsets.all(0),
               child: child,

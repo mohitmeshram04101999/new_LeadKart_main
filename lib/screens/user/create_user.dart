@@ -86,12 +86,9 @@ class _CreateUserState extends State<CreateUser> {
 
               GestureDetector(
                 onTap: () {
-                  showModalBottomSheet(
+                  MyHelper.mybottomPanel(
                     context: context,
-                    builder: (context) => BottomSheet(
-                      clipBehavior: Clip.hardEdge,
-                      onClosing: () {},
-                      builder: (context) => ListView(
+                      builder: (context,d) => ListView(
                         children: [
                           for (int i = 0; i < 5; i++)
                             ListTile(
@@ -108,7 +105,6 @@ class _CreateUserState extends State<CreateUser> {
                             )
                         ],
                       ),
-                    ),
                   );
                 },
                 child: Container(

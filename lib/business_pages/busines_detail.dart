@@ -149,26 +149,6 @@ class _BusinessDetailState extends State<BusinessDetail> {
                   ],
                 ),
               ),
-           //    ReuseableBusinesContainer(
-           //      onTap: () {
-           //        Navigator.push(context, MaterialPageRoute(builder: (context) => AddCreation()));
-           //      },
-           //      child: Row(
-           //        children: [
-           //          SizedBox(width: SC.from_height(10)),
-           //          Icon(Icons.description, color: Colors.grey, size: SC.from_height(24)),
-           //          SizedBox(width: SC.from_height(10)),
-           //          Text(
-           //            'Campaign Settings',
-           //            style: TextStyle(
-           //              color: Colors.grey.shade700,
-           //              fontWeight: FontWeight.w500,
-           //              fontSize: SC.from_height(16),
-           //            ),
-           //          ),
-           //        ],
-           //      ),
-           //    ),
               SizedBox(height: SC.from_height(11),),
 
               //Billing Details //
