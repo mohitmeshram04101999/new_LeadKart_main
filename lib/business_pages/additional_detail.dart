@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -110,19 +113,22 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                     strokeWidth: 1,
                     dashPattern: [8],
                     color: Colors.grey,
-                    child: Container(
-                        width: SC.from_height(105),
-                        height: SC.from_height(110),
-                        decoration: BoxDecoration(
-                          // border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(SC.from_height(5))),
-                        child:  Center(
-                          child: Text(
-                            'Business \n   Logo',
-                            style: TextStyle(
-                                color: Colors.grey.shade700, fontSize: SC.from_height(17),fontWeight: FontWeight.w500),
-                          ),
-                        )
+                    child: InkWell(
+                      onTap: ()=>p.selectbusinessImage(context),
+                      child: Container(
+                          width: SC.from_height(105),
+                          height: SC.from_height(110),
+                          decoration: BoxDecoration(
+                            // border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(SC.from_height(5))),
+                          child: p.businessImage!=null?Image.file(File(p.businessImage.toString()),fit: BoxFit.cover,) :  Center(
+                            child: Text(
+                              'Business \n   Logo',
+                              style: TextStyle(
+                                  color: Colors.grey.shade700, fontSize: SC.from_height(17),fontWeight: FontWeight.w500),
+                            ),
+                          )
+                      ),
                     ),
                   ),
                   SizedBox(width: SC.from_height(10),),
@@ -415,6 +421,9 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
               ),
 
               SizedBox(height: SC.from_height(20),),
+              MyactionButton(action:()=> p.createBusiness(context)),
+              SizedBox(height: SC.from_height(20),),
+
             ],
           );
         },
