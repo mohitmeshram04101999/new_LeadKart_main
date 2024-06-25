@@ -52,7 +52,7 @@ class BussnissApi
       }
 
 
-  //get business by category id
+  //get business by user id
   Future<CustomResponce> getBusinessByUserId({
     required String userId,
   }) async
@@ -103,4 +103,102 @@ class BussnissApi
     }
 
   }
+
+  // get single business by id
+
+  Future<CustomResponce> getSingleBusinessById({
+    required String businessId,
+  }) async
+  {
+    try {
+      // /business/getBusinessByCategory?categoryId=60b9b3b3b3b3b3b3b3b3b3&userId=66446389926d794e368c8f6c&page=1&title=&businessId=
+      String uri = "/business/getByIdBussiness/$businessId";
+
+      final CurrentUser? _user = await Controllers.userPreferenceController
+          .getUser();
+      var resp = await MyHelper.dio.get(uri, options: Options(
+        headers: {
+          "Authorization": "${_user!.token}",
+        },
+      ));
+
+      if (resp.statusCode == 200) {
+        final BusinessModel business = BusinessModel.fromMap(resp.data['data']);
+        MyHelper.logger.i(business);
+        return CustomResponce(
+          statusCode: resp.statusCode!,
+          message: resp.data["message"].toString(),
+          data: business,
+        );
+      }else{
+        MyHelper.logger.e(resp.statusCode);
+        MyHelper.logger.e(resp.data);
+        return CustomResponce(
+          statusCode: resp.statusCode!,
+          errorStatus: true,
+          errorMessage: resp.data.toString(),
+        );
+      }
+    }
+    catch(e)
+    {
+      MyHelper.logger.e(e.toString());
+      return CustomResponce(
+        statusCode: 500,
+        errorStatus: true,
+        errorMessage: e.toString(),
+      );
+    }
+
+  }
+
+  // disable business by category id
+
+  Future<CustomResponce> disableBusinessById({
+    required String businessId,
+  }) async
+  {
+    try {
+      // /business/getBusinessByCategory?categoryId=60b9b3b3b3b3b3b3b3b3b3&userId=66446389926d794e368c8f6c&page=1&title=&businessId=
+      String uri = "/business/disableBusiness/$businessId";
+
+      final CurrentUser? _user = await Controllers.userPreferenceController
+          .getUser();
+      var resp = await MyHelper.dio.get(uri, options: Options(
+        headers: {
+          "Authorization": "${_user!.token}",
+        },
+      ));
+
+      if (resp.statusCode == 200) {
+        final BusinessModel business = BusinessModel.fromMap(resp.data['data']);
+        MyHelper.logger.i(business);
+        return CustomResponce(
+          statusCode: resp.statusCode!,
+          message: resp.data["message"].toString(),
+          data: business,
+        );
+      }else{
+        MyHelper.logger.i(resp.statusCode);
+        MyHelper.logger.i(resp.data);
+        return CustomResponce(
+          statusCode: resp.statusCode!,
+          errorStatus: true,
+          errorMessage: resp.data.toString(),
+        );
+      }
+    }
+    catch(e)
+    {
+      MyHelper.logger.e(e.toString());
+      return CustomResponce(
+        statusCode: 500,
+        errorStatus: true,
+        errorMessage: e.toString(),
+      );
+    }
+
+  }
+
+
 }

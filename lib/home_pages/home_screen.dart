@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             return ListTile(
                               title: Text('SK e solution $index'),
                               onTap: () {
-                                MyHelper.bussnissApi.getBusinessByUserId(userId: '666fe777a960488a26b13a53');
+                                MyHelper.bussnissApi.disableBusinessById(businessId: '66713814ddf0cd9f460c6043');
                               },
                             );
                           },

@@ -1,6 +1,7 @@
 
 
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/Models/BusnissCateforyModel.dart';
@@ -51,7 +52,11 @@ class CreateBusinessProvider with ChangeNotifier
   //select Image
 Future<void> selectbusinessImage () async
 {
-
+FilePickerResult? result = await FilePicker.platform.pickFiles();
+if(result != null) {
+  _businessImage = result.files.single.path;
+  notifyListeners();
+  }
 }
 
 void upDate()=>notifyListeners();

@@ -42,8 +42,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
 
     SC.getScreen(context);
-    return  DevicePreview(
-      builder: (context)=>
+    return
      GetMaterialApp.router(
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
@@ -52,7 +51,7 @@ class _MyAppState extends State<MyApp> {
         routerDelegate: GoRouterConfig.router.routerDelegate,
         backButtonDispatcher: GoRouterConfig.router.backButtonDispatcher,
         routeInformationParser: GoRouterConfig.router.routeInformationParser,
-     )
+
     );
   }
 }
