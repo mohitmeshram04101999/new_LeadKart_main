@@ -14,7 +14,7 @@ class Controllers
   static final useraPrefrenc = UserPreference();
   static final imageEditorController = Get.put(ImageEditorController());
   static final authController = Get.put(Authcontroller());
-  static final userPreferenceController = Get.put(UserPreference());
+  static final userPreferencesController = Get.put(UserPreference());
   static CreateBusinessProvider createBusinessProvider(BuildContext context,{bool listen = true}) => Provider.of<CreateBusinessProvider>(context,listen: false);
   static BussnissCategoryProvider bussnissCategoryProvider(BuildContext context,{bool listen = true}) => Provider.of<BussnissCategoryProvider>(context,listen: false);
 }
