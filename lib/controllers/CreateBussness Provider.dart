@@ -1,10 +1,18 @@
 
 
 
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:leadkart/Models/BusnissCateforyModel.dart';
+import 'package:leadkart/Models/MycustomResponce.dart';
+import 'package:leadkart/component/imagePickerDialog.dart';
+import 'package:leadkart/helper/helper.dart';
+
 
 
 class CreateBusinessProvider with ChangeNotifier
@@ -23,10 +31,11 @@ class CreateBusinessProvider with ChangeNotifier
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _tagLineController = TextEditingController();
   String? _businessImage;
+  File? imageFile;
   String? _businessCategoryId;
   int? _stateId;
   String? _cityId;
-  List<String> _service_ids= [];
+  List<String> _service_ids= ["664482f4c7cda5618d2edede"];
 
 
   //Getters ----
@@ -47,16 +56,39 @@ class CreateBusinessProvider with ChangeNotifier
   String? get cityId=>_cityId;
   List<String> get service_ids=> _service_ids;
 
+  void clear()
+  {
+    _businessNameController.clear();
+    _businessCatTitleController.clear();
+    _businessPhoneNumberController.clear();
+    _businessWatsAppNumberController.clear();
+    _webLinkController.clear();
+    _instaLinkController.clear();
+    _twitterLinkController.clear();
+    _youTubeLinkController.clear();
+    _faceBookLinkController.clear();
+    _addressController.clear();
+    _tagLineController.clear();
+    _businessImage = null;
+    _businessCategoryId = null;
+    _stateId = null;
+    _cityId = null;
+    _service_ids = ["664482f4c7cda5618d2edede"];
+  }
+
 
   //setters---------
   //select Image
-Future<void> selectbusinessImage () async
+Future<void> selectbusinessImage (BuildContext context) async
 {
-FilePickerResult? result = await FilePicker.platform.pickFiles();
-if(result != null) {
-  _businessImage = result.files.single.path;
-  notifyListeners();
-  }
+  var pickedFile = await FilePicker.platform.pickFiles(type: FileType.custom,allowMultiple: false, allowedExtensions: [
+'jpeg','png'
+  ]);
+  if(pickedFile!=null)
+    {
+      _businessImage = pickedFile.files.single.path;
+      notifyListeners();
+    }
 }
 
 void upDate()=>notifyListeners();
@@ -84,10 +116,25 @@ void removeServiceId(String id) {_service_ids.removeWhere((v)=>v==id);notifyList
 
 
 
-  Future<void> createBussness() async
+  Future<void> createBusiness(BuildContext context) async
   {
-   print("(${_businessNameController.text})");
-   print("(${_businessCategoryId})");
+    var  responce = await MyHelper.bussnissApi.createBusiness(
+      logo: _businessImage,
+      businessName: _businessNameController.text,
+      businessCategoryId: _businessCategoryId,
+      serviceId: _service_ids,
+      businessContactNum: _businessPhoneNumberController.text.trim(),
+      whatAppNum: _businessWatsAppNumberController.text.trim(),
+      webLink: _webLinkController.text.trim(),
+      instaLink: _instaLinkController.text.trim(),
+      twitterLink: _twitterLinkController.text.trim(),
+      youTubeLink: _youTubeLinkController.text.trim(),
+      faceBookLink: _faceBookLinkController.text.trim(),
+      address: _addressController.text.trim(),
+      tagLine: _tagLineController.text.trim(),
+    );
+
+
   }
 
 

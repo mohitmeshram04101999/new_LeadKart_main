@@ -18,7 +18,7 @@ class GoRouterConfig {
   static final router = GoRouter(
     initialLocation: '/',
     // redirect: (context, state) {
-    //   final prefs = Controllers.userPreferenceController.prefs;
+    //   final prefs = Controllers.userPreferencesController.prefs;
     //   String? _data = prefs.value?.getString("currentUser");
     //   CurrentUser? user;
     //

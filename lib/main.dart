@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 void main()
 async{
   WidgetsFlutterBinding.ensureInitialized();
-  final userPreferenceController = Controllers.userPreferenceController;
+  final userPreferenceController = Controllers.userPreferencesController;
   SharedPreferences preferences = await SharedPreferences.getInstance();
   userPreferenceController.prefs.value = preferences;
 
