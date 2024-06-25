@@ -20,11 +20,11 @@ class GoRouterConfig {
     redirect: (context, state) {
       final prefs = Controllers.userPreferenceController.prefs;
       String? _data = prefs.value?.getString("currentUser");
-      CurruntUser? user;
+      CurrentUser? user;
 
       if (_data != null) {
         var decode = jsonDecode(_data);
-        user = CurruntUser.fromJson(decode);
+        user = CurrentUser.fromJson(decode);
         if (user.token != null && (state.matchedLocation == '/logInScreen'||state.matchedLocation == '/'||state.matchedLocation == '/otpScreen')) {
           return '/homePage';
         }

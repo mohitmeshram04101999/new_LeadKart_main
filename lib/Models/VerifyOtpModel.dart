@@ -11,7 +11,7 @@ String verifyOtpModelToJson(VerifyOtpModel data) => json.encode(data.toJson());
 class VerifyOtpModel {
   bool? success;
   String? message;
-  CurruntUser? userCred;
+  CurrentUser? userCred;
 
   VerifyOtpModel({
     this.success,
@@ -22,7 +22,7 @@ class VerifyOtpModel {
   factory VerifyOtpModel.fromJson(Map<String, dynamic> json) => VerifyOtpModel(
     success: json["success"],
     message: json["message"],
-    userCred: json["data"] == null ? null : CurruntUser.fromJson(json["data"]),
+    userCred: json["data"] == null ? null : CurrentUser.fromJson(json["data"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -32,7 +32,7 @@ class VerifyOtpModel {
   };
 }
 
-class CurruntUser {
+class CurrentUser {
   String? id;
   dynamic name;
   int? mobile;
@@ -50,7 +50,7 @@ class CurruntUser {
   int? v;
   String? token;
 
-  CurruntUser({
+  CurrentUser({
     this.id,
     this.name,
     this.mobile,
@@ -69,7 +69,7 @@ class CurruntUser {
     this.token,
   });
 
-  factory CurruntUser.fromJson(Map<String, dynamic> json) => CurruntUser(
+  factory CurrentUser.fromJson(Map<String, dynamic> json) => CurrentUser(
     id: json["_id"],
     name: json["name"],
     mobile: json["mobile"],

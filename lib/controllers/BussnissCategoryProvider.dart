@@ -25,7 +25,7 @@ class BussnissCategoryProvider with ChangeNotifier
 
   Future<void> lode(BuildContext context)async{
 
-    CurruntUser? user = await Controllers.useraPrefrenc.getUser();
+    CurrentUser? user = await Controllers.useraPrefrenc.getUser();
 
     _loding = true;
     notifyListeners();
@@ -47,7 +47,7 @@ class BussnissCategoryProvider with ChangeNotifier
 
 Future<void> lodeService(BCategory category,BuildContext context) async
 {
-  CurruntUser? user = await Controllers.useraPrefrenc.getUser();
+  CurrentUser? user = await Controllers.useraPrefrenc.getUser();
   CustomResponce _d = await MyHelper.bussnissApi.getAllCategory(userId:user!.id!,categoryId: category.id);
   if(_d.data!=null)
     {

@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserPreference extends GetxController{
 
   Rxn<SharedPreferences> prefs= Rxn<SharedPreferences>();
-  Future<bool> saveUser (CurruntUser user)async{
+  Future<bool> saveUser (CurrentUser user)async{
     SharedPreferences sp = await SharedPreferences.getInstance();
     String _data = jsonEncode(user.toJson());
     sp.setString("currentUser", _data);
@@ -16,13 +16,13 @@ class UserPreference extends GetxController{
 
 
 
-  Future<CurruntUser?> getUser()async{
+  Future<CurrentUser?> getUser()async{
     SharedPreferences sp = await SharedPreferences.getInstance();
     var _data = sp.getString("currentUser");
     if(_data!=null)
       {
         var decode = jsonDecode(_data);
-        CurruntUser user = CurruntUser.fromJson(decode);
+        CurrentUser user = CurrentUser.fromJson(decode);
         return user;
       }
   }

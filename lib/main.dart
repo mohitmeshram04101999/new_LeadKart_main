@@ -19,6 +19,7 @@ async{
   final userPreferenceController = Controllers.userPreferenceController;
   SharedPreferences preferences = await SharedPreferences.getInstance();
   userPreferenceController.prefs.value = preferences;
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => CreateBusinessProvider()),

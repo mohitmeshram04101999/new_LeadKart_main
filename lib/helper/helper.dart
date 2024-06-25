@@ -11,6 +11,7 @@ import 'package:leadkart/controllers/imageEditorController.dart';
 import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/them/constents.dart';
+import 'package:logger/logger.dart';
 
 class MyHelper
 {
@@ -18,6 +19,13 @@ class MyHelper
   static TextStyles textStyls = TextStyles();
   static UserApi userApi = UserApi();
   static BussnissApi bussnissApi = BussnissApi();
+  static Logger logger = Logger(
+    printer: PrettyPrinter(
+      colors: true,
+      printEmojis: true,
+      printTime: true,
+    ),
+  );
   static Dio dio = Dio(
     BaseOptions(baseUrl: "https://server.leadkart.dsmacademy.in/api/"),
   );

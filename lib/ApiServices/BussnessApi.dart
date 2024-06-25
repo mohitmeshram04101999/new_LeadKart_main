@@ -1,8 +1,16 @@
 
 
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:leadkart/Models/BusnissCateforyModel.dart';
 import 'package:leadkart/Models/MycustomResponce.dart';
+import 'package:leadkart/Models/VerifyOtpModel.dart';
+import 'package:leadkart/Models/business_model.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:logger/logger.dart';
 
 class BussnissApi
 {
@@ -32,9 +40,9 @@ class BussnissApi
       }
     else
       {
-        print("${'-'*10} Responce from allCategory api ${'-'*10}");
-        print(resp.statusCode);
-        print(resp.data);
+        MyHelper.logger.i("${'-'*10} Responce from allCategory api ${'-'*10}");
+        MyHelper.logger.i(resp.statusCode);
+        MyHelper.logger.i(resp.data);
       }
         return CustomResponce(
           statusCode: resp.statusCode!,
@@ -43,4 +51,56 @@ class BussnissApi
         );
       }
 
+
+  //get business by category id
+  Future<CustomResponce> getBusinessByUserId({
+    required String userId,
+  }) async
+  {
+    try {
+      // /business/getBusinessByCategory?categoryId=60b9b3b3b3b3b3b3b3b3b3b3&userId=66446389926d794e368c8f6c&page=1&title=&businessId=
+      String uri = "/business/getAllBussinessByUserId/$userId";
+
+      final CurrentUser? _user = await Controllers.userPreferenceController
+          .getUser();
+      var resp = await MyHelper.dio.get(uri, options: Options(
+        headers: {
+          "Authorization": "${_user!.token}",
+        },
+      ));
+
+      if (resp.statusCode == 200) {
+        final List<BusinessModel> businessList = (resp.data['data'] as List)
+            .map((e) {
+          return BusinessModel.fromMap(e);
+        }).toList();
+        MyHelper.logger.i(businessList);
+        return CustomResponce(
+          statusCode: resp.statusCode!,
+          message: resp.data["message"].toString(),
+          data: businessList,
+        );
+      }else{
+        MyHelper.logger.e("${'-' * 10} Responce from allCategory api ${'-' * 10}");
+        MyHelper.logger.e(resp.statusCode);
+        MyHelper.logger.e(resp.data);
+        return CustomResponce(
+          statusCode: resp.statusCode!,
+          errorStatus: true,
+          errorMessage: resp.data.toString(),
+        );
+      }
+    }
+    catch(e)
+    {
+      MyHelper.logger.e("${'-'*10} Responce from allCategory api ${'-'*10}");
+      MyHelper.logger.e(e.toString());
+      return CustomResponce(
+        statusCode: 500,
+        errorStatus: true,
+        errorMessage: e.toString(),
+      );
+    }
+
+  }
 }

@@ -68,7 +68,7 @@ class Authcontroller extends GetxController
     if(_d.statusCode==200&&_d.data!=null)
     {
       VerifyOtpModel v  = _d.data;
-      CurruntUser user =  v.userCred!;
+      CurrentUser user =  v.userCred!;
       await preference.saveUser(user).then((value) {
         if(value) {
           MyHelper.mySnakebar(context, "Logged in successfully", color: Colors.green);
@@ -88,7 +88,7 @@ RxBool isUser= false.obs;
   //CheckUser is loggedIn or Not
  Future<bool> checkUserLogInOrNot(BuildContext context) async
   {
-    CurruntUser? user =await preference.getUser();
+    CurrentUser? user =await preference.getUser();
     if(user!=null)
       {
         return true;
