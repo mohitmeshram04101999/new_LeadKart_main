@@ -3,6 +3,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:leadkart/ApiServices/api%20Path.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
 
 import '../Models/MycustomResponce.dart';
@@ -58,6 +59,51 @@ class UserApi
       );
     }
 
+  }
+
+  // get user by id
+   getUserById(String userId) async
+  {
+    try{
+      final CurrentUser? _user = await Controllers.userPreferencesController
+          .getUser();
+    var resp = await MyHelper.dio.get('user/getByIdUser/$userId', options: Options(
+      headers: {
+        "Authorization": "${_user!.token}",
+      }
+    ));
+    CurrentUser user = CurrentUser.fromJson(resp.data);
+    MyHelper.logger.i(user);
+    return resp;
+    }
+    catch(e)
+    {
+      MyHelper.logger.e(e);
+    }
+  }
+
+
+  // update user profile
+   updateUserProfile(String userId) async
+  {
+    try{
+      final CurrentUser? _user = await Controllers.userPreferencesController
+          .getUser();
+    var resp = await MyHelper.dio.put('/user/updateProfile/$userId',data: {
+      "email":"hjghghwghweg@heefe.com"
+    }, options: Options(
+      headers: {
+        "Authorization": "${_user!.token}",
+      }
+    ));
+    CurrentUser user = CurrentUser.fromJson(resp.data);
+    MyHelper.logger.i(resp.data);
+    return resp;
+    }
+    catch(e)
+    {
+      MyHelper.logger.e(e);
+    }
   }
 
 
