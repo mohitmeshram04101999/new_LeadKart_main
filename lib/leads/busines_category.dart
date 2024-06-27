@@ -166,7 +166,7 @@ class _BusinesCategoryState extends State<BusinesCategory> {
 
                   for(var i in p.allCategory)
                     BussneCategoryTile(category: i,onTap: (){
-                      Controllers.createBusinessProvider(context,listen: false).setCategoryId(i);
+                      Controllers.createBusinessProvider(context,listen: false).setCategoryId(i,context);
                       p.upDate();
                       },)
 

@@ -34,6 +34,19 @@ class UserPreference extends GetxController{
     return success;
   }
 
+  getHeader()async
+  {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    var _data = sp.getString("currentUser");
+    if(_data!=null)
+    {
+      var decode = jsonDecode(_data);
+      CurrentUser user = CurrentUser.fromJson(decode);
+      return {"Authorization":user.token};
+    }
+
+  }
+
 
 
 }

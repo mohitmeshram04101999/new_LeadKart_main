@@ -9,6 +9,7 @@ import '../helper/dimention.dart';
 class BussneCategoryTile extends StatelessWidget {
   BCategory category;
   Function? onTap;
+
   BussneCategoryTile({this.onTap,required this.category,super.key});
 
   @override
@@ -18,8 +19,8 @@ class BussneCategoryTile extends StatelessWidget {
       onTap: onTap,
       padding: EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: Controllers.createBusinessProvider(context,listen:false).businessCategoryId==category.id?MyHelper.appConstent.primeryColor.withOpacity(.2):null,
-        border: Border.all(color: Controllers.createBusinessProvider(context,listen:false).businessCategoryId==category.id?MyHelper.appConstent.primeryColor:Colors.grey.shade400,width: .5),
+        color: Controllers.createBusinessProvider(context,listen:false).businessCategoryId?.id==category.id?MyHelper.appConstent.primeryColor.withOpacity(.2):null,
+        border: Border.all(color: Controllers.createBusinessProvider(context,listen:false).businessCategoryId!.id==category.id?MyHelper.appConstent.primeryColor:Colors.grey.shade400,width: .5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(

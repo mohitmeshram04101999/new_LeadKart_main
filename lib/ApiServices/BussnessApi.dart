@@ -8,9 +8,11 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:leadkart/ApiServices/api%20Path.dart';
+import 'package:leadkart/Models/AllStateMosel.dart';
 import 'package:leadkart/Models/BusnissCateforyModel.dart';
 import 'package:leadkart/Models/MycustomResponce.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
+import 'package:leadkart/Models/getAllCityModelREsponce.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:leadkart/Models/business_model.dart';
@@ -245,8 +247,8 @@ class BussnissApi
     "servicesId": serviceId,
     "businessContact":businessContactNum,
     "whatsappNumber":whatAppNum,
-    // "stateId": stateId,
-    // "cityId":cityId,
+    "stateId": stateId,
+    "cityId":cityId,
     "websiteLink":webLink,
     "instagramLink":instaLink,
     "twitterLink":twitterLink,
@@ -294,6 +296,58 @@ class BussnissApi
 
 }
 
+
+//Get Coty
+ Future<GetAllCityResponceModel?> getAllCity({
+    required userId,
+   int page = 1,
+   String stateId  = "664493e6bda98d4d03a5faec",
+
+})async
+ {
+   String uri = "/city/getAllCity?userId=${userId}";
+   var head  =await Controllers.useraPrefrenc.getHeader();
+   var resp = await MyHelper.dio.get(uri,options: Options(headers: head));
+
+   if(resp.statusCode==200)
+     {
+       GetAllCityResponceModel _mod = GetAllCityResponceModel.fromJson(resp.data);
+       MyHelper.logger.i("Get ALl City");
+       return _mod;
+
+     }
+   else
+     {
+       MyHelper.logger.e(resp.data);
+     }
+
+   
+ }
+
+
+  Future<GetAllStateResponceModel?> getAllState({
+    int page = 1,
+    String countryId  = "66448f447decec06b739c215",
+  })async
+  {
+    String uri = "/state/getAllState?countryId=${countryId}";
+    var head  =await Controllers.useraPrefrenc.getHeader();
+    var resp = await MyHelper.dio.get(uri,options: Options(headers: head));
+
+    if(resp.statusCode==200)
+    {
+      GetAllStateResponceModel _mod = GetAllStateResponceModel.fromJson(resp.data);
+      MyHelper.logger.i("Get ALl City");
+      return _mod;
+
+    }
+    else
+    {
+      MyHelper.logger.e(resp.data);
+    }
+
+
+  }
 
 
 }

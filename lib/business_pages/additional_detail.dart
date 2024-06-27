@@ -6,11 +6,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:getwidget/components/shimmer/gf_shimmer.dart';
 import 'package:go_router/go_router.dart';
+import 'package:leadkart/component/MyDropDownFeild.dart';
 import 'package:leadkart/component/custom_textfield.dart';
 import 'package:leadkart/component/myChipWidget.dart';
 import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
@@ -94,6 +97,13 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+
+      floatingActionButton:FloatingActionButton(onPressed: ()async{
+        var usr = await Controllers.useraPrefrenc.getUser();
+        MyHelper.bussnissApi.getAllCity(userId: usr!.id);
+      },),
+
       appBar:  AppBar(
         foregroundColor: Colors.white,
         backgroundColor: MyHelper.appConstent.primeryColor,
@@ -159,35 +169,21 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                         // Industry   DROPDOWN//.
 
                        Consumer<BussnissCategoryProvider>(builder: (a,p2,c){
-                         return  GestureDetector(
-                           onTap: () {
-                             MyHelper.mybottomPanel(context: context,
-                               builder: (c,a){
-                                 return ListView.builder(
-                                     controller: a,
-                                     itemCount: p2.allCategory.length,
-                                     itemBuilder: (a,index)=>ListTile(
-                                       title: Text("${p2.allCategory[index].title}"),
-                                       onTap: (){
-                                         p.setCategoryId(p2.allCategory[index]);
-                                         context.pop();
-                                       },
-                                     ));
-                               },);
-                           },
-                           child: TextFormField(
-                             enabled: false,
-                             controller:p.businessCatTitleController ,
-
-                             style: TextStyle(color: Colors.grey.shade700),
-                             decoration: InputDecoration(
-
-                               label: Text("Industry"),
-                               suffixIcon: Icon(Icons.keyboard_arrow_down_rounded),
-                               contentPadding: EdgeInsets.symmetric(horizontal: 7),
-                             ),
-                           ),
-                         );
+                         return MyDropDownField(
+                           lebale: "Industry",
+                             value: p.businessCategoryId?.title??"",
+                             builder: (c,a){
+                           return ListView.builder(
+                               controller: a,
+                               itemCount: p2.allCategory.length,
+                               itemBuilder: (a,index)=>ListTile(
+                                 title: Text("${p2.allCategory[index].title}"),
+                                 onTap: (){
+                                   p.setCategoryId(p2.allCategory[index],context);
+                                   context.pop();
+                                 },
+                               ));
+                         });
                        }),
 
                       ],
@@ -197,9 +193,9 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
 
               SizedBox(height: SC.from_height(15),),
 
-
+              if(p.businessCategoryId!=null)
               Container(
-                // padding: EdgeInsets.all(10),
+                padding: EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.grey),
@@ -210,18 +206,51 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   clipBehavior: Clip.none,
                   children: [
                     Consumer<BussnissCategoryProvider>(
-                      builder:(a,p3,c)=> Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Wrap(
-                          children: [
-                            for(var chip in p3.allCategory)
-                              Mychipwidget(category: chip,onDeleted: (){},)
-                          ],
-                        ),
-                      ),
+                      builder:(a,p3,c){
+                        //if Loading
+                         if (p3.lodingSevics)
+                          {
+                            return Center(child: Text("Loding....",style: MyHelper.textStyls.smallBoldText,));
+                          }
+
+                        //if List id empty
+                        else if (p3.allSrvices.length ==0)
+                          {
+                            return Center(child: Text("No Services Found",style: MyHelper.textStyls.smallBoldText,));
+                          }
+
+                        //returning final data
+                        return Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Wrap(
+                            children: [
+                              for(var chip in p.service_ids)
+                                Mychipwidget(category: chip),
+                              
+                              //PopUpMenuButton to add Service
+                              if(p.service_ids.length !=p3.allSrvices.length)
+                                PopupMenuButton(
+                                icon: Icon(Icons.add,size: 30,),
+                                  itemBuilder: (context){
+                                  return [
+                                    for(var i in p3.allSrvices)
+                                      if(p.service_ids.every((elemt)=>elemt.id==i.id))
+                                        PopupMenuItem(
+                                          onTap: (){
+                                            Controllers.createBusinessProvider(context,listen: false).addService(i);
+                                          },
+                                            child: Text(i.title!,style: TextStyle(fontSize: SC.from_width(17)),))
+                                  ];
+                                  }),
+                              //-----
+                              
+                            ],
+                          ),
+                        );
+                      },
                     ),
                     Positioned(
-                      top: -10,
+                      top: -20,
                       left: 5,
                       child: Container(
                         decoration: BoxDecoration(
@@ -289,35 +318,47 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   return null;
                 },
               ),
-
-
               SizedBox(height: SC.from_height(15),),
+
               // State //
-              CustomTextField(
-                controller: _businessContactController,
-                labelText: 'State ',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Business Contact No. cannot be empty';
-                  }
-                  // Additional validation logic if needed
-                  return null;
-                },
-              ),
 
+              Consumer<BussnissCategoryProvider>(builder: (a,p2,c){
+                return MyDropDownField(
+                    lebale: "State",
+                    value: p.stateId?.name??"",
+                    builder: (c,a){
+                      return ListView.builder(
+                          controller: a,
+                          itemCount: p2.allState.length,
+                          itemBuilder: (a,index)=>ListTile(
+                            title: Text("${p2.allState[index].name}"),
+                            onTap: (){
+                              p.setStateId(p2.allState[index]);
+                              context.pop();
+                            },
+                          ));
+                    });
+              }),
               SizedBox(height: SC.from_height(15),),
+
               // City //
-              CustomTextField(
-                controller: _businessContactController,
-                labelText: 'City ',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Business Contact No. cannot be empty';
-                  }
-                  // Additional validation logic if needed
-                  return null;
-                },
-              ),
+              Consumer<BussnissCategoryProvider>(builder: (a,p2,c){
+                return MyDropDownField(
+                    lebale: "City",
+                    value: p.cityId?.name??"",
+                    builder: (c,a){
+                      return ListView.builder(
+                          controller: a,
+                          itemCount: p2.allCity.length,
+                          itemBuilder: (a,index)=>ListTile(
+                            title: Text("${p2.allCity[index].name}"),
+                            onTap: (){
+                              p.setCityId(p2.allCity[index]);
+                              context.pop();
+                            },
+                          ));
+                    });
+              }),
 
               SizedBox(height: SC.from_height(15),),
               // Website Link //
@@ -335,6 +376,8 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
 
 
               SizedBox(height: SC.from_height(15),),
+
+
               // Instagram Link //
               CustomTextField(
                 controller:p.instaLinkController,
@@ -347,9 +390,8 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   return null;
                 },
               ),
-
-
               SizedBox(height: SC.from_height(15),),
+
               // Twitter Link //
               CustomTextField(
                 controller: p.twitterLinkController,
@@ -362,8 +404,8 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   return null;
                 },
               ),
-
               SizedBox(height: SC.from_height(15),),
+
               // Youtube Link //
               CustomTextField(
                 controller: p.youTubeLinkController,
@@ -376,8 +418,8 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   return null;
                 },
               ),
-
               SizedBox(height: SC.from_height(15),),
+
               // Facebook Link //
               CustomTextField(
                 controller: p.faceBookLinkController,
@@ -390,9 +432,8 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   return null;
                 },
               ),
-
-
               SizedBox(height: SC.from_height(15),),
+
               // Address //
               CustomTextField(
                 controller: p.addressController,
@@ -405,8 +446,8 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   return null;
                 },
               ),
-
               SizedBox(height: SC.from_height(15),),
+
               // Tagline //
               CustomTextField(
                 controller: p.tagLinecontroller,

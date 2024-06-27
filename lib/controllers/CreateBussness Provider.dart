@@ -3,14 +3,19 @@
 
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter/widgets.dart';
+
+import 'package:image_picker/image_picker.dart';
+import 'package:leadkart/Models/AllStateMosel.dart';
 import 'package:leadkart/Models/BusnissCateforyModel.dart';
-import 'package:leadkart/Models/MycustomResponce.dart';
-import 'package:leadkart/component/imagePickerDialog.dart';
+import 'package:leadkart/Models/getAllCityModelREsponce.dart';
+import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
+
 import 'package:leadkart/helper/helper.dart';
 
 
@@ -32,10 +37,10 @@ class CreateBusinessProvider with ChangeNotifier
   final TextEditingController _tagLineController = TextEditingController();
   String? _businessImage;
   File? imageFile;
-  String? _businessCategoryId;
-  int? _stateId;
-  String? _cityId;
-  List<String> _service_ids= ["664482f4c7cda5618d2edede"];
+  BCategory? _businessCategoryId;
+  StateCity? _stateId;
+  City? _cityId;
+  List<BCategory> _service_ids= [];
 
 
   //Getters ----
@@ -51,10 +56,10 @@ class CreateBusinessProvider with ChangeNotifier
   TextEditingController get addressController  => _addressController;
   TextEditingController get tagLinecontroller  => _tagLineController;
   String? get businessImage => _businessImage;
-  String? get businessCategoryId => _businessCategoryId;
-  int? get stateId => _stateId;
-  String? get cityId=>_cityId;
-  List<String> get service_ids=> _service_ids;
+  BCategory? get businessCategoryId => _businessCategoryId;
+  StateCity? get stateId => _stateId;
+  City? get cityId=>_cityId;
+  List<BCategory> get service_ids=> _service_ids;
 
   void clear()
   {
@@ -73,20 +78,21 @@ class CreateBusinessProvider with ChangeNotifier
     _businessCategoryId = null;
     _stateId = null;
     _cityId = null;
-    _service_ids = ["664482f4c7cda5618d2edede"];
+    _service_ids = [];
   }
+
+
 
 
   //setters---------
   //select Image
 Future<void> selectbusinessImage (BuildContext context) async
 {
-  var pickedFile = await FilePicker.platform.pickFiles(type: FileType.custom,allowMultiple: false, allowedExtensions: [
-'jpeg','png'
-  ]);
-  if(pickedFile!=null)
+  ImagePicker picker = ImagePicker();
+  XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery,imageQuality: 1);
+  if(pickedFile !=null)
     {
-      _businessImage = pickedFile.files.single.path;
+      _businessImage = pickedFile.path;
       notifyListeners();
     }
 }
@@ -94,24 +100,35 @@ Future<void> selectbusinessImage (BuildContext context) async
 void upDate()=>notifyListeners();
 
 //set CategoryId
- void setCategoryId(BCategory category){
-  _businessCategoryId=category.id;
+ void setCategoryId(BCategory category,BuildContext context) async {
+   var _serviece  = Controllers.bussnissCategoryProvider(context,listen: false);
+  _businessCategoryId=category;
+   await _serviece.lodeService(category, context);
+   if(_serviece.allSrvices.length!=0)
+     {
+       _service_ids = [];
+       _service_ids.addAll(_serviece.allSrvices);
+     }
+   else
+     {
+       _service_ids = [];
+     }
   _businessCatTitleController.text = category.title??"";
   notifyListeners();
 
 }
 
 //set Stateid
-void setStateId(int? id)  {_stateId = id;notifyListeners();}
+void setStateId(StateCity? state)  {_stateId = state;notifyListeners();}
 
 //set cityId
-void setCityId(String? id) {_cityId=id;notifyListeners();}
+void setCityId(City? city) {_cityId=city;notifyListeners();}
 
   //add Service Id
-void addService(String id) {_service_ids.add(id);notifyListeners();}
+void addService(BCategory service) {_service_ids.add(service);notifyListeners();}
 
   //Remove id
-void removeServiceId(String id) {_service_ids.removeWhere((v)=>v==id);notifyListeners();}
+void removeServiceId(String id) {_service_ids.removeWhere((v)=>v.id==id);notifyListeners();}
 
 
 
@@ -120,9 +137,12 @@ void removeServiceId(String id) {_service_ids.removeWhere((v)=>v==id);notifyList
   {
     var  responce = await MyHelper.bussnissApi.createBusiness(
       logo: _businessImage,
+      cityId: _cityId?.id??"",
+      stateId: _stateId?.id??"",
       businessName: _businessNameController.text,
-      businessCategoryId: _businessCategoryId,
-      serviceId: _service_ids,
+      businessCategoryId: _businessCategoryId?.id??"",
+      // serviceId: _service_ids,
+      serviceId: _service_ids.map((e)=>e.id!).toList(),
       businessContactNum: _businessPhoneNumberController.text.trim(),
       whatAppNum: _businessWatsAppNumberController.text.trim(),
       webLink: _webLinkController.text.trim(),

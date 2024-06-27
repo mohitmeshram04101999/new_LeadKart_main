@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leadkart/Models/BusnissCateforyModel.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
 
 import '../helper/dimention.dart';
 
@@ -14,6 +15,7 @@ class Mychipwidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 3),
       child: Chip(
+
         label: Text(
           category.title.toString(),
           style: TextStyle(color: Colors.grey.shade700,fontSize:SC.fromWidth(26) ),
@@ -30,7 +32,13 @@ class Mychipwidget extends StatelessWidget {
         ),
 
         // Optional: Add an icon to the chip
-        onDeleted:onDeleted,
+        onDeleted:(){
+          Controllers.createBusinessProvider(context,listen: false).removeServiceId(category.id!);
+          if(onDeleted!=null)
+            {
+              onDeleted!();
+            }
+        },
         deleteIcon: Icon(Icons.cancel,
             color: Colors
                 .grey), // Optional: Customize delete icon

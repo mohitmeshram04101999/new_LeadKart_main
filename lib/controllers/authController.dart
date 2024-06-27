@@ -6,8 +6,11 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/Models/MycustomResponce.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
+import 'package:leadkart/Models/business_model.dart';
 import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/leads/busines_category.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -69,10 +72,30 @@ class Authcontroller extends GetxController
     {
       VerifyOtpModel v  = _d.data;
       CurrentUser user =  v.userCred!;
-      await preference.saveUser(user).then((value) {
+      await preference.saveUser(user).then((value)async{
         if(value) {
           MyHelper.mySnakebar(context, "Logged in successfully", color: Colors.green);
-          context.goNamed('homePage');
+
+          CustomResponce _d  = await MyHelper.bussnissApi.getBusinessByUserId(userId: user.id!);
+          if(_d.statusCode==200)
+            {
+              List<BusinessModel> lis= _d.data;
+              if(lis.length>0)
+                {
+                  context.goNamed('homePage');
+                }
+              else
+                {
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BusinesCategory()), (v)=>false);
+                }
+            }
+          else
+            {
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BusinesCategory()), (v)=>false);
+            }
+
+
+          // context.goNamed('homePage');
         }
       },);
 

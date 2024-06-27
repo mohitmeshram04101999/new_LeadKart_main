@@ -1,9 +1,12 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:leadkart/Models/AllStateMosel.dart';
 import 'package:leadkart/Models/BusnissCateforyModel.dart';
 import 'package:leadkart/Models/MycustomResponce.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
+import 'package:leadkart/Models/getAllCityModelREsponce.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
 
@@ -15,11 +18,18 @@ class BussnissCategoryProvider with ChangeNotifier
   //Vars
   List<BCategory> _allCategiry =[];
   List<BCategory> _allService =[];
+  List<City> _allCity = [];
+  List<StateCity> _allState = [];
   bool _loding = true;
+  bool _lodingSevics = false;
 
 
   List<BCategory> get allCategory => _allCategiry;
+  List<BCategory> get allSrvices => _allService;
+  List<City> get allCity =>_allCity;
+  List<StateCity> get allState => _allState;
   bool get loding => _loding;
+  bool get lodingSevics => _lodingSevics;
 
   void upDate()=>notifyListeners();
 
@@ -29,9 +39,10 @@ class BussnissCategoryProvider with ChangeNotifier
 
     _loding = true;
     notifyListeners();
-    CustomResponce responce =  await MyHelper.bussnissApi.getAllCategory(
-      userId: user!.id!,
-    );
+    CustomResponce responce =  await MyHelper.bussnissApi.getAllCategory(userId: user!.id!,);
+    var cityResp = await  MyHelper.bussnissApi.getAllCity(userId: user.id);
+    var stateResp = await  MyHelper.bussnissApi.getAllState();
+
     if(responce.data!=null)
       {
         BussnissCategoryApiModel _d = responce.data;
@@ -41,12 +52,26 @@ class BussnissCategoryProvider with ChangeNotifier
       {
         MyHelper.mySnakebar(context, "${responce.errorMessage}");
       }
+
+    if(cityResp!=null)
+      {
+        _allCity = cityResp.data??[];
+      }
+    if(stateResp !=null)
+      {
+        _allState = stateResp.data??[];
+      }
+
     _loding  = false;
     notifyListeners();
 }
 
 Future<void> lodeService(BCategory category,BuildContext context) async
 {
+
+  _lodingSevics = true;
+  notifyListeners();
+
   CurrentUser? user = await Controllers.useraPrefrenc.getUser();
   CustomResponce _d = await MyHelper.bussnissApi.getAllCategory(userId:user!.id!,categoryId: category.id);
   if(_d.data!=null)
@@ -62,6 +87,8 @@ Future<void> lodeService(BCategory category,BuildContext context) async
     {
       MyHelper.mySnakebar(context, "(${_d.statusCode}) ${_d.errorMessage}");
     }
+  _lodingSevics = false;
+  notifyListeners();
 }
 
 
