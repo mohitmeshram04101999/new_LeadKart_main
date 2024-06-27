@@ -28,9 +28,9 @@ class _BusinessDetailState extends State<BusinessDetail> {
     {'name': 'Campaign Settings', 'icon': Icons.settings},
     {'name': 'Billing Details', 'icon': Icons.person},
     {'name': 'Payment & Invoices', 'icon': Icons.notifications},
-    {'name': 'Manage Website', 'icon': Icons.message},
-    {'name': 'Notification', 'icon': Icons.message},
-    {'name': 'Logout', 'icon': Icons.message},
+    {'name': 'Manage Website', 'icon': Icons.web},
+    {'name': 'Notification', 'icon': Icons.notifications},
+    {'name': 'Logout', 'icon': Icons.logout},
   ];
 
   @override
@@ -50,6 +50,26 @@ class _BusinessDetailState extends State<BusinessDetail> {
           child: Column(
             children: [
 
+              // for(var i  in items)
+              //   Padding(
+              //     padding: const EdgeInsets.symmetric(vertical: 8),
+              //     child: ReuseableBusinesContainer(
+              //         child: Row(
+              //           children: [
+              //             SizedBox(width: 10,),
+              //             Icon(i["icon"],color: Colors.grey, size: SC.from_height(24)),
+              //             SizedBox(width: 10,),
+              //             Text(i["name"],style:TextStyle(
+              //               color: Colors.grey.shade700,
+              //               fontWeight: FontWeight.w500,
+              //               fontSize: SC.from_height(16),
+              //             )),
+              //           ],
+              //         )
+              //     ),
+              //   ),
+
+              //ProFileBox
               SizedBox(height: SC.from_height(22),),
               Container(
                 padding: EdgeInsets.only(bottom: SC.fromWidth(26)),
