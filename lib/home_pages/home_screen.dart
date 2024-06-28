@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
+import 'package:leadkart/ApiServices/plansApi.dart';
 import 'package:leadkart/ApiServices/statesApi.dart';
+import 'package:leadkart/Models/ads_plan_model.dart';
 import 'package:leadkart/component/HelpButtonWhite.dart';
 import 'package:leadkart/component/addRequirmentTile.dart';
  
@@ -79,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             return ListTile(
                               title: Text('SK e solution $index'),
                               onTap: () {
-                                StatesApi().getAllCitiesByStateAndUserId('664493e6bda98d4d03a5faec', '66446389926d794e368c8f6c');
+                                PlansApi().createAiImagePlan( '66446389926d794e368c8f6c');
                               },
                             );
                           },

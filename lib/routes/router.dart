@@ -17,20 +17,20 @@ import '../screens/1 . OnBording Screens/OnBordingnavigation.dart';
 class GoRouterConfig {
   static final router = GoRouter(
     initialLocation: '/',
-    // redirect: (context, state) {
-    //   final prefs = Controllers.userPreferencesController.prefs;
-    //   String? _data = prefs.value?.getString("currentUser");
-    //   CurrentUser? user;
-    //
-    //   if (_data != null) {
-    //     var decode = jsonDecode(_data);
-    //     user = CurrentUser.fromJson(decode);
-    //     if (user.token != null && (state.matchedLocation == '/logInScreen'||state.matchedLocation == '/'||state.matchedLocation == '/otpScreen')) {
-    //       return '/homePage';
-    //     }
-    //   }
-    //   return '/logInScreen';
-    // },
+    redirect: (context, state) {
+      final prefs = Controllers.userPreferencesController.prefs;
+      String? _data = prefs.value?.getString("currentUser");
+      CurrentUser? user;
+
+      if (_data != null) {
+        var decode = jsonDecode(_data);
+        user = CurrentUser.fromJson(decode);
+        if (user.token != null && (state.matchedLocation == '/logInScreen'||state.matchedLocation == '/'||state.matchedLocation == '/otpScreen')) {
+          return '/homePage';
+        }
+      }
+      return null;
+    },
     routes: [
       GoRoute(
         path: '/',
