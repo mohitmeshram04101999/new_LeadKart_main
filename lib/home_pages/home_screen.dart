@@ -3,12 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:leadkart/ApiServices/adsApi.dart';
-import 'package:leadkart/ApiServices/plansApi.dart';
-import 'package:leadkart/ApiServices/statesApi.dart';
-import 'package:leadkart/Models/ads_plan_model.dart';
-import 'package:leadkart/component/HelpButtonWhite.dart';
+import 'package:leadkart/Models/business_model.dart';
 import 'package:leadkart/component/addRequirmentTile.dart';
+import 'package:leadkart/controllers/businessProvider.dart';
  
 import 'package:leadkart/controllers/shredprefrence.dart';
  
@@ -16,6 +13,7 @@ import 'package:leadkart/component/helpButton.dart';
 
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -68,36 +66,75 @@ class _HomeScreenState extends State<HomeScreen> {
                 'assets/home_images/img.png',
               ),
             ),
-            InkWell(
-              onTap: () {
-                MyHelper.mybottomPanel(context: context,
-                    builder: (context,d) {
-                      return Container(
-                        height: 300,
-                        child: ListView.builder(
-                          controller: d,
-                          itemCount: 3,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text('SK e solution $index'),
-                              onTap: () {
-                                PlansApi().createAiImagePlan( '66446389926d794e368c8f6c');
-                              },
-                            );
-                          },
-                        ),
-                      );
-                    });
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    " SK e solution  ",
-                    style: TextStyle(color: Colors.white, fontSize: SC.from_height(18)),
-                  ),
-                  Icon(Icons.arrow_drop_down, color: Colors.white),
-                ],
+            FutureBuilder(
+              future: Provider.of<BusinessProvider>(context, listen: false)
+                  .lode(),
+              builder: (context, snapshot) =>  InkWell(
+                onTap: () {
+                  MyHelper.mybottomPanel(context: context,
+                      builder: (context,d) {
+                        return Consumer<BusinessProvider>(
+                           builder: (context, value, child) {
+                             if (value.loding) {
+                               return Center(
+                                   child: CircularProgressIndicator());
+                             }
+                             MyHelper.logger.i(value.allBusiness.length);
+                             return ListView.builder(
+                               controller: d,
+                               itemCount: value.allBusiness.length,
+                               itemBuilder: (context, index) {
+                                 if (value.allBusiness.length == 0) {
+                                   return Center(
+                                       child: Text("No Business Found"));
+                                 }
+
+
+                                 return ListTile(
+                                   title: Text('${value.allBusiness[index]
+                                       .businessName}'),
+                                   onTap: () {
+                                     Provider.of<BusinessProvider>(context,
+                                         listen: false).setCurrentBusiness(value.allBusiness[index]);
+                                   },
+                                 );
+                               },
+                             );
+                           },
+
+                         );
+                      });
+                },
+                child: Consumer<BusinessProvider>(
+                   builder: (context, value, child) {
+                     if(value.loding)
+                     {
+                       return Center(child: CircularProgressIndicator());
+                     }
+                     if(value.allBusiness.length==0)
+                       return Text("No Business Found");
+                     if(value.allBusiness.length>0 && value.currentBusiness==null){
+                       Future.wait([Provider.of<BusinessProvider>(context, listen: false)
+                           .lode()]).then((e) {
+                          value.setCurrentBusiness(value.allBusiness[0]);
+                           },);
+                     }
+                    return Row(
+                       mainAxisSize: MainAxisSize.min,
+                       children: [
+                         Text(
+                           "${value.currentBusiness == null
+                               ? "No Business Selected"
+                               : value.currentBusiness!.businessName}",
+                           style: TextStyle(color: Colors.white,
+                               fontSize: SC.from_height(18)),
+                         ),
+                         Icon(Icons.arrow_drop_down, color: Colors.white),
+                       ],
+                     );
+
+                   }
+                 ),
               ),
             ),
 Spacer(),

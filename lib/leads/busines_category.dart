@@ -15,14 +15,14 @@ import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/screens/user/follow_up_data.dart';
 import 'package:provider/provider.dart';
 
-class BusinesCategory extends StatefulWidget {
-  const BusinesCategory({Key? key}) : super(key: key);
+class CreateBusinessScreen extends StatefulWidget {
+  const CreateBusinessScreen({Key? key}) : super(key: key);
 
   @override
-  State<BusinesCategory> createState() => _BusinesCategoryState();
+  State<CreateBusinessScreen> createState() => _CreateBusinessScreenState();
 }
 
-class _BusinesCategoryState extends State<BusinesCategory> {
+class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
   TextEditingController textEditingController = TextEditingController();
 
 

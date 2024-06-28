@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
+import 'package:leadkart/controllers/businessProvider.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/leads/busines_category.dart';
@@ -24,6 +25,7 @@ async{
     providers: [
       ChangeNotifierProvider(create: (context) => CreateBusinessProvider()),
       ChangeNotifierProvider(create: (context) => BussnissCategoryProvider()),
+      ChangeNotifierProvider(create: (context) => BusinessProvider()),
     ],
       child: MyApp()));
 }
