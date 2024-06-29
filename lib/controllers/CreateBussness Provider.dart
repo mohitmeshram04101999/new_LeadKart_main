@@ -4,7 +4,6 @@
 import 'dart:io';
 
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -13,7 +12,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:leadkart/Models/AllStateMosel.dart';
 import 'package:leadkart/Models/BusnissCateforyModel.dart';
 import 'package:leadkart/Models/getAllCityModelREsponce.dart';
-import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 
 import 'package:leadkart/helper/helper.dart';
@@ -153,8 +151,11 @@ void removeServiceId(String id) {_service_ids.removeWhere((v)=>v.id==id);notifyL
       address: _addressController.text.trim(),
       tagLine: _tagLineController.text.trim(),
     );
-
-
+   if(responce.statusCode==201)
+     {
+       clear();
+       Controllers.bussnissCategoryProvider(context,listen: false).clean();
+     }
   }
 
 

@@ -33,6 +33,14 @@ class BussnissCategoryProvider with ChangeNotifier
 
   void upDate()=>notifyListeners();
 
+  void clean()
+  {
+    _allCategiry =[];
+    _allService =[];
+    _allCity = [];
+    _allState = [];
+  }
+
   Future<void> lode(BuildContext context)async{
 
     CurrentUser? user = await Controllers.useraPrefrenc.getUser();

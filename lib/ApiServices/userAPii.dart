@@ -62,19 +62,22 @@ class UserApi
   }
 
   // get user by id
-   getUserById(String userId) async
+  Future<CurrentUser?> getUserById() async
   {
     try{
       final CurrentUser? _user = await Controllers.userPreferencesController
           .getUser();
-    var resp = await MyHelper.dio.get('user/getByIdUser/$userId', options: Options(
+    var resp = await MyHelper.dio.get('user/getByIdUser/${_user!.id!}', options: Options(
       headers: {
-        "Authorization": "${_user!.token}",
+        "Authorization": "${_user.token}",
       }
     ));
+      MyHelper.logger.i(resp.data);
+    resp.data;
     CurrentUser user = CurrentUser.fromJson(resp.data);
     MyHelper.logger.i(user);
-    return resp;
+    MyHelper.logger.i(user.toJson());
+    return user;
     }
     catch(e)
     {

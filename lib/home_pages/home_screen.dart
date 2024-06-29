@@ -122,7 +122,7 @@ Spacer(),
         //   //     ],
         //   //   ),
         //   //   width: SC.from_height(85),
-        //   //   height: SC.from_height(30),
+        //   //   height: SC.from_heightc(30),
         //   //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(SC.from_height(15)),border: Border.all(
         //   //       color: Colors.white,width: 1.5
         //   //   )),

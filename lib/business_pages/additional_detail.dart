@@ -234,7 +234,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                                   itemBuilder: (context){
                                   return [
                                     for(var i in p3.allSrvices)
-                                      if(p.service_ids.every((elemt)=>elemt.id==i.id))
+                                      if(p.service_ids.every((elemt)=>elemt.id!=i.id))
                                         PopupMenuItem(
                                           onTap: (){
                                             Controllers.createBusinessProvider(context,listen: false).addService(i);

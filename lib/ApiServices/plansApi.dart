@@ -1,29 +1,34 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:leadkart/Models/ads_plan_model.dart';
 import 'package:leadkart/Models/offering_model.dart';
+import 'package:leadkart/Models/plansModel.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
 
 class PlansApi{
 
- getAllAiImagePlans() async
+ Future<List<PlanDetail>?> getAllAiImagePlans() async
  {
-   try{
-     final CurrentUser? _user = await Controllers.userPreferencesController
-         .getUser();
+   final CurrentUser? _user = await Controllers.userPreferencesController
+       .getUser();
    var resp = await MyHelper.dio.get('plan/getAllPlan', options: Options(
-     headers: {
-       "Authorization": "${_user!.token}",
-     }
+       headers: {
+         "Authorization": "${_user!.token}",
+       }
    ));
-   MyHelper.logger.i(resp.data);
-   return resp;
-   }
-   catch(e)
+   // MyHelper.logger.i(resp.data);
+   if(resp.statusCode ==200)
    {
-     MyHelper.logger.e(e);
+     List<PlanDetail> AllPlans  = [];
+     var _d = ViewPlansModel.fromJson(resp.data);
+     AllPlans.addAll(_d.data!);
+     return AllPlans;
    }
+
  }
 
  createAiImagePlan( String userId) async

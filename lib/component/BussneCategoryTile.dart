@@ -14,13 +14,16 @@ class BussneCategoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
+
     return MyInkWell(
       overLayColor: MyHelper.appConstent.primeryColor.withOpacity(.2),
       onTap: onTap,
       padding: EdgeInsets.all(3),
       decoration: BoxDecoration(
         color: Controllers.createBusinessProvider(context,listen:false).businessCategoryId?.id==category.id?MyHelper.appConstent.primeryColor.withOpacity(.2):null,
-        border: Border.all(color: Controllers.createBusinessProvider(context,listen:false).businessCategoryId!.id==category.id?MyHelper.appConstent.primeryColor:Colors.grey.shade400,width: .5),
+        border: Border.all(color: Controllers.createBusinessProvider(context,listen:false).businessCategoryId?.id==category.id?MyHelper.appConstent.primeryColor:Colors.grey.shade400,width: .5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(

@@ -18,6 +18,7 @@ import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:leadkart/Models/business_model.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
 
@@ -215,13 +216,13 @@ class BussnissApi
 
       //Create BusinessApi
 
-  Future<void>createBusiness({
-     String? logo,
-     String? businessCategoryId,
-     String? businessName,
-     List<String>? serviceId,
-      String? businessContactNum,
-      String? whatAppNum,
+  Future<http.StreamedResponse>createBusiness({
+    String? logo,
+    String? businessCategoryId,
+    String? businessName,
+    List<String>? serviceId,
+    String? businessContactNum,
+    String? whatAppNum,
     String? stateId,
     String? cityId,
     String? webLink,
@@ -230,60 +231,60 @@ class BussnissApi
     String? youTubeLink,
     String? faceBookLink,
     String? address,
-  String? tagLine,
-  String? countryId,
-}) async
-{
+    String? tagLine,
+    String? countryId,
+  }) async
+  {
 
-  String uri = "/business/createBussiness";
+    String uri = "/business/createBussiness";
 
-  CurrentUser? user = await Controllers.useraPrefrenc.getUser();
-
-  var data = {
-    // "businessImage":req,
-    "businessName":businessName,
-    "userId":user!.id.toString(),
-    "businessCategoryId":businessCategoryId,
-    "servicesId": serviceId,
-    "businessContact":businessContactNum,
-    "whatsappNumber":whatAppNum,
-    "stateId": stateId,
-    "cityId":cityId,
-    "websiteLink":webLink,
-    "instagramLink":instaLink,
-    "twitterLink":twitterLink,
-    "youtubeLink":youTubeLink,
-    "facebookLink":faceBookLink,
-    "address":address,
-    "tagline":tagLine,
-    // "countryId":countryId
-  };
-  var formatedData = data.map((key,value)=>MapEntry(key, value.toString()));
-  FormData Fdata = FormData.fromMap(data);
-
-
-
-  var request = http.MultipartRequest("POST",Uri.parse(ApiConst.baseUrl+uri));
-
-  request.headers.addAll({"Authorization":user.token.toString()});
-
-  request.fields.addAll(formatedData);
-
-  request.files.add(await http.MultipartFile.fromPath("businessImage", logo.toString()));
+    CurrentUser? user = await Controllers.useraPrefrenc.getUser();
+// log(user!.id.toString());
+    var data = {
+      // "businessImage":req,
+      "businessName":businessName,
+      "userId":user!.id.toString(),
+      "businessCategoryId":businessCategoryId,
+      "servicesId": "664482f4c7cda5618d2edede",
+      "businessContact":businessContactNum,
+      "whatsappNumber":whatAppNum,
+      "stateId": stateId,
+      "cityId":cityId,
+      "websiteLink":webLink,
+      "instagramLink":instaLink,
+      "twitterLink":twitterLink,
+      "youtubeLink":youTubeLink,
+      "facebookLink":faceBookLink,
+      "address":address,
+      "tagline":tagLine,
+      // "countryId":countryId
+    };
+    var formatedData = data.map((key,value)=>MapEntry(key, value.toString()));
+    FormData Fdata = FormData.fromMap(data);
 
 
 
+    var request = http.MultipartRequest("POST",Uri.parse(ApiConst.baseUrl+uri));
+
+    request.headers.addAll({"Authorization":user.token.toString()});
+
+    request.fields.addAll(formatedData);
+
+    // request.files.add(await http.MultipartFile.fromPath("businessImage", logo.toString()));
 
 
-  var resp = await request.send();
 
 
-  if(resp.statusCode==201)
+
+    var resp = await request.send();
+
+    String respBody = await resp.stream.bytesToString();
+    if(resp.statusCode==201)
     {
-      String respBody = await resp.stream.bytesToString();
       MyHelper.logger.i(respBody);
     }
-  else
+
+    else
     {
       MyHelper.logger.e(resp.statusCode);
       String respBody = await resp.stream.bytesToString();
@@ -291,10 +292,12 @@ class BussnissApi
       MyHelper.logger.e(respBody);
     }
 
+    return resp;
 
 
 
-}
+
+  }
 
 
 //Get Coty
