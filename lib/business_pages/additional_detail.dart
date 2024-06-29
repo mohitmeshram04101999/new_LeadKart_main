@@ -131,7 +131,8 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                           decoration: BoxDecoration(
                             // border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(SC.from_height(5))),
-                          child: p.businessImage!=null?Image.file(File(p.businessImage.toString()),fit: BoxFit.cover,) :  Center(
+                          child: p.businessImage!=null?Image.file(File(p.businessImage!.path),fit: BoxFit.cover,) :
+          Center(
                             child: Text(
                               'Business \n   Logo',
                               style: TextStyle(

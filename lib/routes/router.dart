@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:leadkart/add_images/campaign_setting_page.dart';
+import 'package:leadkart/business_pages/additional_detail.dart';
 import 'package:leadkart/business_pages/growBusinessFaster.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 
 import 'package:leadkart/leads/add_detail_screen.dart';
+import 'package:leadkart/leads/busines_category.dart';
 import 'package:leadkart/login_pages/login_screen.dart';
 import 'package:leadkart/login_pages/otp_screen.dart';
 import 'package:leadkart/screens/imageEditor/imageEditor.dart';
@@ -63,7 +65,13 @@ class GoRouterConfig {
             name: 'AddDetailScreen',
             builder: (context,state)=>AddDetailScreen(),
 
+          ),GoRoute(
+            path: 'createBusinessScreen',
+            name: 'createBusinessScreen',
+            builder: (context,state)=>CreateBusinessScreen(),
+
           ),
+
           GoRoute(
             name: 'getNewLeads',
             path: 'getNewLeads',

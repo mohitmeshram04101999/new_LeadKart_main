@@ -1,12 +1,11 @@
 
 
-import 'dart:io';
+ 
 
 import 'package:dio/dio.dart';
-import 'dart:convert';
-import 'dart:developer';
+ 
 
-import 'package:dio/dio.dart';
+  
 import 'package:leadkart/ApiServices/api%20Path.dart';
 import 'package:leadkart/Models/AllStateMosel.dart';
 import 'package:leadkart/Models/BusnissCateforyModel.dart';
@@ -84,7 +83,7 @@ class BussnissApi
             .map((e) {
           return BusinessModel.fromMap(e);
         }).toList();
-        MyHelper.logger.i(businessList);
+        // MyHelper.logger.i(businessList);
         return CustomResponce(
           statusCode: resp.statusCode!,
           message: resp.data["message"].toString(),
@@ -216,13 +215,13 @@ class BussnissApi
 
       //Create BusinessApi
 
-  Future<http.StreamedResponse>createBusiness({
-    String? logo,
-    String? businessCategoryId,
-    String? businessName,
-    List<String>? serviceId,
-    String? businessContactNum,
-    String? whatAppNum,
+  Future<void>createBusiness({
+     XFile? logo,
+     String? businessCategoryId,
+     String? businessName,
+     List<String>? serviceId,
+      String? businessContactNum,
+      String? whatAppNum,
     String? stateId,
     String? cityId,
     String? webLink,
@@ -231,60 +230,92 @@ class BussnissApi
     String? youTubeLink,
     String? faceBookLink,
     String? address,
-    String? tagLine,
-    String? countryId,
-  }) async
-  {
+  String? tagLine,
+  String? countryId,
+}) async
+{
 
-    String uri = "/business/createBussiness";
+  String uri = "/business/createBussiness";
 
-    CurrentUser? user = await Controllers.useraPrefrenc.getUser();
+  CurrentUser? user = await Controllers.useraPrefrenc.getUser();
 // log(user!.id.toString());
-    var data = {
-      // "businessImage":req,
-      "businessName":businessName,
-      "userId":user!.id.toString(),
-      "businessCategoryId":businessCategoryId,
-      "servicesId": "664482f4c7cda5618d2edede",
-      "businessContact":businessContactNum,
-      "whatsappNumber":whatAppNum,
-      "stateId": stateId,
-      "cityId":cityId,
-      "websiteLink":webLink,
-      "instagramLink":instaLink,
-      "twitterLink":twitterLink,
-      "youtubeLink":youTubeLink,
-      "facebookLink":faceBookLink,
-      "address":address,
-      "tagline":tagLine,
-      // "countryId":countryId
-    };
-    var formatedData = data.map((key,value)=>MapEntry(key, value.toString()));
-    FormData Fdata = FormData.fromMap(data);
+  final file = File(logo!.path);
+  var data = {
+    // "businessImage":req,
+    "files":[
+      await MultipartFile.fromFile(file.path)
+    ],
+    "businessName":businessName,
+    "userId":user!.id.toString(),
+    "businessCategoryId":businessCategoryId,
+    "servicesId": "664482f4c7cda5618d2edede",
+    "businessContact":businessContactNum,
+    "whatsappNumber":whatAppNum,
+    "stateId": stateId,
+    "cityId":cityId,
+    "websiteLink":webLink,
+    "instagramLink":instaLink,
+    "twitterLink":twitterLink,
+    "youtubeLink":youTubeLink,
+    "facebookLink":faceBookLink,
+    "address":address,
+    "tagline":tagLine,
+    // "countryId":countryId
+  };
+  var formatedData = data.map((key,value)=>MapEntry(key, value.toString()));
+  FormData Fdata = FormData.fromMap(data);
 
 
 
-    var request = http.MultipartRequest("POST",Uri.parse(ApiConst.baseUrl+uri));
+  var request = http.MultipartRequest("POST",Uri.parse(ApiConst.baseUrl+uri));
 
-    request.headers.addAll({"Authorization":user.token.toString()});
+  request.files.add(await http.MultipartFile.fromPath("businessImage", logo.path));
+  request.headers.addAll({"Authorization":user.token.toString()});
 
-    request.fields.addAll(formatedData);
+  request.fields.addAll(formatedData);
 
-    // request.files.add(await http.MultipartFile.fromPath("businessImage", logo.toString()));
-
-
-
+  request.files.add(await http.MultipartFile.fromPath("businessImage", logo.toString()));
 
 
-    var resp = await request.send();
 
-    String respBody = await resp.stream.bytesToString();
-    if(resp.statusCode==201)
+
+
+  var resp = await request.send();
+
+  var response = await request.send();
+  var headers = {
+    "Authorization":user.token.toString()
+  };
+  // var data = FormData.fromMap({
+  //   'files': [
+  //     await MultipartFile.fromFile('/C:/Users/lenovo/Downloads/WhatsApp Image 2024-06-11 at 12.41.47 PM (1).jpeg', filename: '/C:/Users/lenovo/Downloads/WhatsApp Image 2024-06-11 at 12.41.47 PM (1).jpeg')
+  //   ],
+  //   'businessName': 'SATYA KABIR',
+  //   'userId': '666fe777a960488a26b13a53',
+  //   'businessCategoryId': '66446b5ec11172db88238dee',
+  //   'servicesId[0]': '664482f4c7cda5618d2edede',
+  //   'servicesId[1]': '66448303c7cda5618d2edee0',
+  //   'servicesId[2]': '66448314c7cda5618d2edee2'
+  // });
+  // var response = await MyHelper.dio.post(uri,
+  //   options: Options(
+  //     headers: headers,
+  //   ),
+  //   data: Fdata,
+  // );
+  if (response.statusCode == 200) {
+    MyHelper.logger.w(json.encode(response.stream.bytesToString()));
+  }
+  else {
+    MyHelper.logger.e(response.statusCode);
+  }
+
+  if(response.statusCode==201)
     {
-      MyHelper.logger.i(respBody);
-    }
 
-    else
+      MyHelper.logger.i(response.statusCode);
+    }
+  else
     {
       MyHelper.logger.e(resp.statusCode);
       String respBody = await resp.stream.bytesToString();
@@ -292,12 +323,10 @@ class BussnissApi
       MyHelper.logger.e(respBody);
     }
 
-    return resp;
 
 
 
-
-  }
+}
 
 
 //Get Coty

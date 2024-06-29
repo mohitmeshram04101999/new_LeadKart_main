@@ -7,10 +7,12 @@ import 'package:go_router/go_router.dart';
 import 'package:leadkart/Models/MycustomResponce.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:leadkart/Models/business_model.dart';
+import 'package:leadkart/controllers/businessProvider.dart';
 import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/leads/busines_category.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -76,24 +78,20 @@ class Authcontroller extends GetxController
         if(value) {
           MyHelper.mySnakebar(context, "Logged in successfully", color: Colors.green);
 
-          CustomResponce _d  = await MyHelper.bussnissApi.getBusinessByUserId(userId: user.id!);
-          if(_d.statusCode==200)
+          var p =  Provider.of<BusinessProvider>(context,listen: false);
+
+          await p.lode();
+
+          if(p.allBusiness.length==0)
             {
-              List<BusinessModel> lis= _d.data;
-              if(lis.length>0)
-                {
-                  context.goNamed('homePage');
-                }
-              else
-                {
-                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BusinesCategory()), (v)=>false);
-                }
+context.goNamed("createBusinessScreen");
             }
           else
             {
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BusinesCategory()), (v)=>false);
+              p.setCurrentBusiness(p.allBusiness[0]);
+context.goNamed("homePage");
             }
-
+          // CustomResponce _d  = await MyHelper.bussnissApi.getBusinessByUserId(userId: user.id!);
 
           // context.goNamed('homePage');
         }

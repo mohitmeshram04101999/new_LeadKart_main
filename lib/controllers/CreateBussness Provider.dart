@@ -33,7 +33,7 @@ class CreateBusinessProvider with ChangeNotifier
   final TextEditingController _faceBookLinkController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _tagLineController = TextEditingController();
-  String? _businessImage;
+  XFile? _businessImage;
   File? imageFile;
   BCategory? _businessCategoryId;
   StateCity? _stateId;
@@ -53,7 +53,7 @@ class CreateBusinessProvider with ChangeNotifier
   TextEditingController get faceBookLinkController  => _faceBookLinkController;
   TextEditingController get addressController  => _addressController;
   TextEditingController get tagLinecontroller  => _tagLineController;
-  String? get businessImage => _businessImage;
+  XFile? get businessImage => _businessImage;
   BCategory? get businessCategoryId => _businessCategoryId;
   StateCity? get stateId => _stateId;
   City? get cityId=>_cityId;
@@ -86,13 +86,24 @@ class CreateBusinessProvider with ChangeNotifier
   //select Image
 Future<void> selectbusinessImage (BuildContext context) async
 {
-  ImagePicker picker = ImagePicker();
-  XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery,imageQuality: 1);
-  if(pickedFile !=null)
-    {
-      _businessImage = pickedFile.path;
-      notifyListeners();
-    }
+  // ImagePicker picker = ImagePicker();
+  // XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery,imageQuality: 1);
+  // if(pickedFile !=null)
+  //   {
+  //     _businessImage = pickedFile;
+  //     notifyListeners();
+  //   }
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['jpg', 'jpeg', 'png'],
+  );
+  if(result != null) {
+    imageFile = File(result.files.single.path!);
+    _businessImage = XFile(imageFile!.path);
+    notifyListeners();
+  } else {
+    // User canceled the picker
+  }
 }
 
 void upDate()=>notifyListeners();
