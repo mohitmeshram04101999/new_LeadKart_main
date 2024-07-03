@@ -2,6 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/dimention.dart';
 
 import '../helper/helper.dart';
@@ -65,9 +66,12 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
       checkColor: MaterialStateProperty.resolveWith((states) =>MyHelper.appConstent.primeryColor),
     ),
     textTheme: TextTheme(
-      displayMedium: MyHelper.textStyls.mediumText,
-      displaySmall: MyHelper.textStyls.smallText,
-      displayLarge: MyHelper.textStyls.onBordingMainText,
+      displayMedium: TextStyles().mediumText,
+      displaySmall: TextStyles().smallText,
+      displayLarge: TextStyles().onBordingMainText,
+      bodySmall: TextStyles().smallBoldText,
+      titleMedium: TextStyles().greenMediumText,
+      titleSmall: TextStyles().leadTileSubTitle,
     ),
 
     appBarTheme: AppBarTheme(

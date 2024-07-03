@@ -1,9 +1,10 @@
 
 
- 
-
-import 'dart:convert';
 import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -220,7 +221,7 @@ class BussnissApi
 
       //Create BusinessApi
 
-  Future<CustomResponce>createBusiness({
+  Future<void>createBusiness({
      XFile? logo,
      String? businessCategoryId,
      String? businessName,
@@ -245,9 +246,11 @@ class BussnissApi
   CurrentUser? user = await Controllers.useraPrefrenc.getUser();
 
   var data = {
+    // "businessImage":req,
     "businessName":businessName,
     "userId":user!.id.toString(),
     "businessCategoryId":businessCategoryId,
+    "servicesId": "664482f4c7cda5618d2edede",
     "businessContact":businessContactNum,
     "whatsappNumber":whatAppNum,
     "stateId": stateId,
@@ -265,11 +268,11 @@ class BussnissApi
   //
   var formatedData = data.map((key,value)=>MapEntry(key, value.toString()));
 
-  MyHelper.logger.i(serviceId);
 
 
   var request = http.MultipartRequest("POST",Uri.parse(ApiConst.baseUrl+uri));
 
+  request.files.add(await http.MultipartFile.fromPath("businessImage", logo.path, ));
   request.headers.addAll({"Authorization":user.token.toString()});
 
   request.fields.addAll(formatedData);

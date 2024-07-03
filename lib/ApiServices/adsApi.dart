@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
+import 'package:leadkart/Models/ad_type_model.dart';
+import 'package:leadkart/Models/ads_model.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
 
@@ -16,8 +18,19 @@ class AdsApi{
         "Authorization": "${_user!.token}",
       }
     ));
-    MyHelper.logger.i(resp.data);
-    return resp;
+    MyHelper.logger.i(resp.data['data']);
+    List<AdvertisementTypeModel> adsTypeModel = [];
+    for(var i in resp.data['data'])
+    {
+      adsTypeModel.add(AdvertisementTypeModel.fromJson(i));
+    }
+
+    if(resp.statusCode==200){
+      MyHelper.logger.i(adsTypeModel);
+    }else{
+      MyHelper.logger.i(adsTypeModel);
+    }
+    return adsTypeModel;
     }
     catch(e)
     {

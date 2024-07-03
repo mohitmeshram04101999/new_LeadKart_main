@@ -1,6 +1,6 @@
-class AdsModel {
+class AdvertisementTypeModel{
   final String id;
-  final dynamic? image; // Nullable since it can be null
+  final String? image;
   final String title;
   final String description;
   final bool isInstagram;
@@ -9,9 +9,11 @@ class AdsModel {
   final String advertisementType;
   final int minimumBudget;
   final bool disable;
+  final int version;
+  final String createdAt;
+  final String updatedAt;
 
-  AdsModel({
-    required this.id,
+  AdvertisementTypeModel({required this.id,
     this.image,
     required this.title,
     required this.description,
@@ -21,19 +23,27 @@ class AdsModel {
     required this.advertisementType,
     required this.minimumBudget,
     required this.disable,
+    required this.version,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
-  factory AdsModel.fromJson(Map<String, dynamic> json) {
-    return AdsModel(
+  factory AdvertisementTypeModel.fromJson(Map<String, dynamic> json) {
+    return AdvertisementTypeModel(
       id: json['_id'] as String,
-      image: json['image'] as dynamic?, // Handle potential null value
-      title: json['title'] as String,description: json['discription'] as String, // Note: typo in JSON key
+      image: json['image'] as String?,
+      title: json['title'] as String,
+      description: json['discription'] as String,
+      // Note: typo in JSON key
       isInstagram: json['isInstagram'] as bool,
       isFacebook: json['isFacebook'] as bool,
       isGoogle: json['isGoogle'] as bool,
       advertisementType: json['advertisementType'] as String,
       minimumBudget: json['minimumBudget'] as int,
       disable: json['disable'] as bool,
+      version: json['__v'] as int,
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
     );
   }
 
@@ -49,6 +59,9 @@ class AdsModel {
       'advertisementType': advertisementType,
       'minimumBudget': minimumBudget,
       'disable': disable,
+      '__v': version,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
     };
   }
 }

@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:leadkart/Models/ad_type_model.dart';
 
 import '../helper/dimention.dart';
 
 
 class AddREquirmentTile extends StatelessWidget {
   Widget icon;
-  AddREquirmentTile({required this.icon,super.key});
+  AdvertisementTypeModel advertisementTypeModel;
+  AddREquirmentTile({required this.icon, required this.advertisementTypeModel,super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: SC.from_width(8)),
       onTap: () {
-        context.pushNamed('getNewLeads');
+        GoRouter.of(context).pushNamed('getNewLeads');
       },
       leading: CircleAvatar(
-        child: Center(child: icon),
+        child: Center(child: advertisementTypeModel.image==null? icon:Image.asset(advertisementTypeModel.image!,fit: BoxFit.contain,)),
 
         backgroundColor: Color.fromRGBO(241, 241, 241, 1),
         radius:SC.from_height(25),
       ),
-      title: Text('Get Leads from Social Platforms',maxLines: 1,overflow: TextOverflow.ellipsis,
+      title: Text(advertisementTypeModel.title,maxLines: 1,overflow: TextOverflow.ellipsis,
         style: TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.w500),),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Acquire customers from insta, fb',maxLines: 1,overflow: TextOverflow.ellipsis
+          Text(advertisementTypeModel.description,maxLines: 1,overflow: TextOverflow.ellipsis
             ,style: TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.w500,color: Colors.grey),),
           SizedBox(height: SC.from_height(5),),
           Row(
