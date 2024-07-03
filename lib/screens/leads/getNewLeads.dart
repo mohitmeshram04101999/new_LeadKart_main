@@ -295,8 +295,8 @@ class PackageCards extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Image.asset("${cardData[index]['image']}", width: 40,),
-                    Text("${cardData[index]['title']}", style:MyHelper.textStyls.greenMediumText),
-                    Flexible(child: Text("${cardData[index]['desc']}", style:MyHelper.textStyls.leadTileSubTitle))
+                    Text("${cardData[index]['title']}", style:Theme.of(context).textTheme.titleMedium),
+                    Flexible(child: Text("${cardData[index]['desc']}", style:Theme.of(context).textTheme.titleSmall))
                   ],
                 ),
               ),

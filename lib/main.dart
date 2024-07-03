@@ -7,6 +7,7 @@ import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
+import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/leads/busines_category.dart';
 
 import 'package:leadkart/routes/router.dart';
@@ -20,7 +21,7 @@ async{
   final userPreferenceController = Controllers.userPreferencesController;
   SharedPreferences preferences = await SharedPreferences.getInstance();
   userPreferenceController.prefs.value = preferences;
-
+MyHelper();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => CreateBusinessProvider()),

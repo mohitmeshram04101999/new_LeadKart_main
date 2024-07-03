@@ -243,9 +243,6 @@ class BussnissApi
   final file = File(logo!.path);
   var data = {
     // "businessImage":req,
-    "files":[
-      await MultipartFile.fromFile(file.path)
-    ],
     "businessName":businessName,
     "userId":user!.id.toString(),
     "businessCategoryId":businessCategoryId,
@@ -270,7 +267,7 @@ class BussnissApi
 
   var request = http.MultipartRequest("POST",Uri.parse(ApiConst.baseUrl+uri));
 
-  request.files.add(await http.MultipartFile.fromPath("businessImage", logo.path));
+  request.files.add(await http.MultipartFile.fromPath("businessImage", logo.path, ));
   request.headers.addAll({"Authorization":user.token.toString()});
 
   request.fields.addAll(formatedData);
@@ -282,26 +279,6 @@ class BussnissApi
 
 
   var response = await request.send();
-  var headers = {
-    "Authorization":user.token.toString()
-  };
-  // var data = FormData.fromMap({
-  //   'files': [
-  //     await MultipartFile.fromFile('/C:/Users/lenovo/Downloads/WhatsApp Image 2024-06-11 at 12.41.47 PM (1).jpeg', filename: '/C:/Users/lenovo/Downloads/WhatsApp Image 2024-06-11 at 12.41.47 PM (1).jpeg')
-  //   ],
-  //   'businessName': 'SATYA KABIR',
-  //   'userId': '666fe777a960488a26b13a53',
-  //   'businessCategoryId': '66446b5ec11172db88238dee',
-  //   'servicesId[0]': '664482f4c7cda5618d2edede',
-  //   'servicesId[1]': '66448303c7cda5618d2edee0',
-  //   'servicesId[2]': '66448314c7cda5618d2edee2'
-  // });
-  // var response = await MyHelper.dio.post(uri,
-  //   options: Options(
-  //     headers: headers,
-  //   ),
-  //   data: Fdata,
-  // );
   if (response.statusCode == 200) {
     MyHelper.logger.w(json.encode(response.stream.bytesToString()));
   }
@@ -318,7 +295,7 @@ class BussnissApi
     {
       MyHelper.logger.e(response.statusCode);
       MyHelper.logger.e(logo.path);
-      MyHelper.logger.e(response.stream.bytesToString());
+      MyHelper.logger.e(await response.stream.bytesToString());
     }
 
 

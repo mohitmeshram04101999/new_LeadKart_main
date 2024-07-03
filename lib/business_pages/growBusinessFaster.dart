@@ -69,7 +69,7 @@ SizedBox(height: 20),
                   children: [
                     Image.asset('assets/instagram_wbg.png', width: 25),
                     SizedBox(width: 10),
-                    Text("Instagram", style: MyHelper.textStyls.smallText),
+                    Text("Instagram", style: Theme.of(context).textTheme.displaySmall),
                   ],
                 ),
 SizedBox(width: 20),
@@ -77,7 +77,7 @@ SizedBox(width: 20),
                   children: [
                     Image.asset('assets/facebook_wbg.png', width: 25),
                     SizedBox(width: 10),
-                    Text("Facebook", style: MyHelper.textStyls.smallText),
+                    Text("Facebook", style: Theme.of(context).textTheme.displaySmall),
                   ],
                 )
 
@@ -144,11 +144,11 @@ class ExtimateResultCard extends StatelessWidget {
                   SizedBox(
                       width: 10,
                     ),
-                      Text("28K", style: MyHelper.textStyls.smallBoldText),
+                      Text("28K", style: Theme.of(context).textTheme.bodySmall),
                       SizedBox(
                         width: 10,
                       ),
-                      Text("VIEWS", style: MyHelper.textStyls.smallText),
+                      Text("VIEWS", style: Theme.of(context).textTheme.displaySmall),
                     ],
                   ),
           SizedBox(
@@ -170,11 +170,11 @@ class ExtimateResultCard extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Text("28K", style: MyHelper.textStyls.smallBoldText),
+                      Text("28K", style: Theme.of(context).textTheme.bodySmall),
                       SizedBox(
                         width: 10,
                       ),
-                      Text("Leads", style: MyHelper.textStyls.smallText),
+                      Text("Leads", style: Theme.of(context).textTheme.displaySmall),
                     ],
                   )
 
@@ -182,9 +182,9 @@ class ExtimateResultCard extends StatelessWidget {
               ),
               RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: "You will spend only ", style: MyHelper.textStyls.smallText),
+                  TextSpan(text: "You will spend only ", style: Theme.of(context).textTheme.displaySmall),
                   TextSpan(text: "₹4000", style: MyHelper.textStyls.mediumText.copyWith(fontWeight: FontWeight.bold)),
-                  TextSpan(text: " in total and ad will run for ", style: MyHelper.textStyls.smallText),
+                  TextSpan(text: " in total and ad will run for ", style: Theme.of(context).textTheme.displaySmall),
                   TextSpan(text: "6 days", style: MyHelper.textStyls.mediumText.copyWith(fontWeight: FontWeight.bold))
                 ]
               ))
@@ -229,8 +229,8 @@ class _PlanSelecterState extends State<PlanSelecter> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(widget.title, style: MyHelper.textStyls.smallText),
-                  Text("₹${widget.price}", style: MyHelper.textStyls.smallBoldText),
+                  Text(widget.title, style: Theme.of(context).textTheme.displaySmall),
+                  Text("₹${widget.price}", style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),
             ),

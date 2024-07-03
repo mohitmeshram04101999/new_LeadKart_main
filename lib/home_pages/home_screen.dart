@@ -3,12 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
+import 'package:leadkart/ApiServices/adsApi.dart';
+import 'package:leadkart/Models/ad_type_model.dart';
 import 'package:leadkart/Models/business_model.dart';
 import 'package:leadkart/component/addRequirmentTile.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
- 
+
 import 'package:leadkart/controllers/shredprefrence.dart';
- 
+
 import 'package:leadkart/component/helpButton.dart';
 
 import 'package:leadkart/helper/dimention.dart';
@@ -23,9 +26,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final List<Map<String, String>> items = [
-
     {'image': 'assets/home_images/img_1.png', 'text': 'AI Meta content'},
     {'image': 'assets/img.png', 'text': 'AI created Ads'},
     {'image': 'assets/home_images/img_2.png', 'text': 'Leads'},
@@ -42,13 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
     // Add more icons as needed
   ];
 
-
   String? dropdownValue;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar:  AppBar(
+      appBar: AppBar(
         leading: SizedBox(),
         leadingWidth: 0,
 
@@ -67,77 +67,77 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             FutureBuilder(
-              future: Provider.of<BusinessProvider>(context, listen: false)
-                  .lode(),
-              builder: (context, snapshot) =>  InkWell(
+              future:
+                  Provider.of<BusinessProvider>(context, listen: false).lode(),
+              builder: (context, snapshot) => InkWell(
                 onTap: () {
-                  MyHelper.mybottomPanel(context: context,
-                      builder: (context,d) {
+                  MyHelper.mybottomPanel(
+                      context: context,
+                      builder: (context, d) {
                         return Consumer<BusinessProvider>(
-                           builder: (context, value, child) {
-                             if (value.loding) {
-                               return Center(
-                                   child: CircularProgressIndicator());
-                             }
-                             MyHelper.logger.i(value.allBusiness.length);
-                             return ListView.builder(
-                               controller: d,
-                               itemCount: value.allBusiness.length,
-                               itemBuilder: (context, index) {
-                                 if (value.allBusiness.length == 0) {
-                                   return Center(
-                                       child: Text("No Business Found"));
-                                 }
+                          builder: (context, value, child) {
+                            if (value.loding) {
+                              return Center(child: CircularProgressIndicator());
+                            }
+                            MyHelper.logger.i(value.allBusiness.length);
+                            return ListView.builder(
+                              controller: d,
+                              itemCount: value.allBusiness.length,
+                              itemBuilder: (context, index) {
+                                if (value.allBusiness.length == 0) {
+                                  return Center(
+                                      child: Text("No Business Found"));
+                                }
 
-
-                                 return ListTile(
-                                   title: Text('${value.allBusiness[index]
-                                       .businessName}'),
-                                   onTap: () {
-                                     Provider.of<BusinessProvider>(context,
-                                         listen: false).setCurrentBusiness(value.allBusiness[index]);
-                                   },
-                                 );
-                               },
-                             );
-                           },
-
-                         );
+                                return ListTile(
+                                  title: Text(
+                                      '${value.allBusiness[index].businessName}'),
+                                  onTap: () {
+                                    Provider.of<BusinessProvider>(context,
+                                            listen: false)
+                                        .setCurrentBusiness(
+                                            value.allBusiness[index]);
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        );
                       });
                 },
                 child: Consumer<BusinessProvider>(
-                   builder: (context, value, child) {
-                     if(value.loding)
-                     {
-                       return Center(child: CircularProgressIndicator());
-                     }
-                     if(value.allBusiness.length==0)
-                       return Text("No Business Found");
-                     if(value.allBusiness.length>0 && value.currentBusiness==null){
-                       Future.wait([Provider.of<BusinessProvider>(context, listen: false)
-                           .lode()]).then((e) {
-                          value.setCurrentBusiness(value.allBusiness[0]);
-                           },);
-                     }
-                    return Row(
-                       mainAxisSize: MainAxisSize.min,
-                       children: [
-                         Text(
-                           "${value.currentBusiness == null
-                               ? "No Business Selected"
-                               : value.currentBusiness!.businessName}",
-                           style: TextStyle(color: Colors.white,
-                               fontSize: SC.from_height(18)),
-                         ),
-                         Icon(Icons.arrow_drop_down, color: Colors.white),
-                       ],
-                     );
-
-                   }
-                 ),
+                    builder: (context, value, child) {
+                  if (value.loding) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  if (value.allBusiness.length == 0)
+                    return Text("No Business Found");
+                  if (value.allBusiness.length > 0 &&
+                      value.currentBusiness == null) {
+                    Future.wait([
+                      Provider.of<BusinessProvider>(context, listen: false)
+                          .lode()
+                    ]).then(
+                      (e) {
+                        value.setCurrentBusiness(value.allBusiness[0]);
+                      },
+                    );
+                  }
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "${value.currentBusiness == null ? "No Business Selected" : value.currentBusiness!.businessName}",
+                        style: TextStyle(
+                            color: Colors.white, fontSize: SC.from_height(18)),
+                      ),
+                      Icon(Icons.arrow_drop_down, color: Colors.white),
+                    ],
+                  );
+                }),
               ),
             ),
-Spacer(),
+            Spacer(),
             // SizedBox(width: SC.from_width(50)),
 
             Padding(
@@ -168,17 +168,25 @@ Spacer(),
         // ],
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal:SC.from_height(18) ),
+        padding: EdgeInsets.symmetric(horizontal: SC.from_height(18)),
         children: [
           // SelectPlanTile(),
 
+          SizedBox(
+            height: SC.from_height(15),
+          ),
 
-          SizedBox(height: SC.from_height(15),),
+          Text(
+            'Introducing AI-powered ads with Leadkart',
+            style: TextStyle(
+              fontSize: SC.fromWidth(22),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
 
-          Text('Introducing AI-powered ads with Leadkart',style: TextStyle(fontSize: SC.fromWidth(22),  fontWeight: FontWeight.w500,),),
-
-          SizedBox(height: SC.from_height(8),),
-
+          SizedBox(
+            height: SC.from_height(8),
+          ),
 
           // GRIDVIEW BUILDER //
           GridView.builder(
@@ -194,7 +202,7 @@ Spacer(),
             itemCount: items.length,
             itemBuilder: (context, index) {
               final item = items[index];
-              return  Container(
+              return Container(
                 margin: EdgeInsets.symmetric(horizontal: SC.from_width(5)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -210,7 +218,9 @@ Spacer(),
                         ),
                       ),
                     ),
-                    SizedBox(width: SC.from_width(3)), // Add some spacing between image and text
+                    SizedBox(
+                        width: SC.from_width(
+                            3)), // Add some spacing between image and text
                     Expanded(
                       child: Text(
                         item['text']!,
@@ -220,17 +230,19 @@ Spacer(),
                           fontSize: SC.from_width(16),
                         ),
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 1, // Adjust maxLines if you want to limit the number of lines for text
+                        maxLines:
+                            1, // Adjust maxLines if you want to limit the number of lines for text
                       ),
                     ),
                   ],
                 ),
               );
-
             },
           ),
 
-          SizedBox(height: SC.from_height(15),),
+          SizedBox(
+            height: SC.from_height(15),
+          ),
 
           // Center(
           //   child: CarouselSlider(
@@ -276,73 +288,119 @@ Spacer(),
 
           Container(
             clipBehavior: Clip.hardEdge,
-            child:
-            Image.asset('assets/home_images/img_3.png',fit: BoxFit.cover,),
+            child: Image.asset(
+              'assets/home_images/img_3.png',
+              fit: BoxFit.cover,
+            ),
             // width: SC.fromWidth(50),
             // height: SC.from_height(200),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(SC.from_height(8)),),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(SC.from_height(8)),
+            ),
           ),
 
-          SizedBox(height: SC.from_height(15),),
+          SizedBox(
+            height: SC.from_height(15),
+          ),
 
-          Container(child: Image.asset('assets/home_images/4.png',fit: BoxFit.cover,)),
+          Container(
+              child: Image.asset(
+            'assets/home_images/4.png',
+            fit: BoxFit.cover,
+          )),
 
-          SizedBox(height: SC.from_height(19),),
+          SizedBox(
+            height: SC.from_height(19),
+          ),
 
-          Text('Choose your Ad requirement',style: TextStyle(fontSize:  SC.from_height(18),fontWeight: FontWeight.w500),),
+          Text(
+            'Choose your Ad requirement',
+            style: TextStyle(
+                fontSize: SC.from_height(18), fontWeight: FontWeight.w500),
+          ),
 
-          SizedBox(height: SC.from_height(15),),
+          SizedBox(
+            height: SC.from_height(15),
+          ),
 
           // CHOOSE ADD REQUIREMENT //
-          ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context,index){
-              return InkWell(
-                onTap: (){
-
-                },
-                child: Container(margin: EdgeInsets.only(top: SC.from_height(15),left: SC.from_height(2),right: SC.from_height(2)),
-                  width: double.infinity,
-                  // height: SC.from_height(85),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    // border: Border.all(),
-                    borderRadius: BorderRadius.circular(SC.from_height(8)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.10), // Shadow color with opacity
-                        spreadRadius: 0.5, // Spread radius
-                        blurRadius: 5, // Blur radius
-                        offset: Offset(1, 2), // Offset in x and y directions
+          FutureBuilder<dynamic>(
+              future: AdsApi().getAllAdvertisementTypes(),
+              builder: (context, snapshot) {
+                if(snapshot.connectionState==ConnectionState.waiting)
+                  return Center(child: CircularProgressIndicator(),);
+                if(snapshot.hasError)
+                  return Center(child: Text("Error: ${snapshot.error}") ,);
+                final data = snapshot.data! as List<AdvertisementTypeModel>;
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final item = data[index];
+                    return InkWell(
+                      onTap: () {
+                        context.pushNamed('getNewLeads');
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            top: SC.from_height(15),
+                            left: SC.from_height(2),
+                            right: SC.from_height(2)),
+                        width: double.infinity,
+                        // height: SC.from_height(85),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          // border: Border.all(),
+                          borderRadius:
+                              BorderRadius.circular(SC.from_height(8)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(
+                                  0.10), // Shadow color with opacity
+                              spreadRadius: 0.5, // Spread radius
+                              blurRadius: 5, // Blur radius
+                              offset:
+                                  Offset(1, 2), // Offset in x and y directions
+                            ),
+                          ],
+                        ),
+                        child: AddREquirmentTile(
+                          advertisementTypeModel: item,
+                          icon: Icon(
+                            iconList[index],
+                            color: Colors.black54,
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
-                  child: AddREquirmentTile(icon:Icon(iconList[index],color: Colors.black54,),),
-                ),
-              );
-            },
-            itemCount: 4,
-          ),
+                    );
+                  },
+                  itemCount: data.length,
+                );
+              }),
 
-          SizedBox(height: SC.from_height(20),),
+          SizedBox(
+            height: SC.from_height(20),
+          ),
 
           Container(
               // height: SC.from_height(134),
               clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-              child: Image.asset('assets/home_images/img_4.png',fit: BoxFit.cover,)),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
+              child: Image.asset(
+                'assets/home_images/img_4.png',
+                fit: BoxFit.cover,
+              )),
 
+          SizedBox(
+            height: SC.from_height(20),
+          ),
 
-          SizedBox(height: SC.from_height(20),),
-
-          SizedBox(height: SC.from_height(10),),
-
+          SizedBox(
+            height: SC.from_height(10),
+          ),
         ],
       ),
     );
   }
 }
-
-
-
