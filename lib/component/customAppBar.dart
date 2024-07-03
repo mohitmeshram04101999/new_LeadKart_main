@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:leadkart/component/helpButton.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 import 'package:provider/provider.dart';
 
 import '../helper/dimention.dart';
@@ -20,18 +22,12 @@ class CustomAppBar extends StatelessWidget {
 
       title: Row(
         children: [
-          Container(
-            clipBehavior: Clip.hardEdge,
-            width: SC.from_width(40),
-            height: SC.from_height(30),
-            decoration: BoxDecoration(
-              // border: Border.all(),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Image.asset(
-              'assets/home_images/img.png',
-            ),
-          ),
+          SizedBox(width: 10,),
+          Consumer<BusinessProvider>(builder:(a,p,c)=> CircleAvatar(
+            backgroundImage:  NetworkImage(p.currentBusiness?.businessImage??""),
+            child: p.currentBusiness?.businessImage!="null"?null:Icon(Icons.image),
+          )),
+          SizedBox(width: 10,),
           FutureBuilder(
             future:
             Provider.of<BusinessProvider>(context, listen: false).lode(),
@@ -50,14 +46,31 @@ class CustomAppBar extends StatelessWidget {
                             controller: d,
                             itemCount: value.allBusiness.length,
                             itemBuilder: (context, index) {
+
                               if (value.allBusiness.length == 0) {
+
                                 return Center(
                                     child: Text("No Business Found"));
                               }
+                              var business =  value.allBusiness[index];
+
 
                               return ListTile(
+
+                                //lead
+                                leading: CircleAvatar(
+                                  backgroundImage: NetworkImage(business.businessImage.toString()),
+                                  child: business.businessImage==null?null:Icon(Icons.image),
+                                ),
+
+                                //title
                                 title: Text(
                                     '${value.allBusiness[index].businessName}'),
+
+                                //trailing
+                                trailing:(business.id==value.currentBusiness?.id)? Icon(Icons.check_circle,color: AppConstent().primeryColor,):null,
+
+                                //onTap
                                 onTap: () {
                                   Provider.of<BusinessProvider>(context,
                                       listen: false)

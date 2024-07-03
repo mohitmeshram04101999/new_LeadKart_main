@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
+import 'package:leadkart/Models/business_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreference extends GetxController{
@@ -15,7 +16,7 @@ class UserPreference extends GetxController{
   }
 
 
-
+  //getUser
   Future<CurrentUser?> getUser()async{
     SharedPreferences sp = await SharedPreferences.getInstance();
     var _data = sp.getString("currentUser");
@@ -27,6 +28,7 @@ class UserPreference extends GetxController{
       }
   }
 
+  //removeUser
   Future<bool> removeUser() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     bool success = await sp.clear();
@@ -34,6 +36,7 @@ class UserPreference extends GetxController{
     return success;
   }
 
+  //get header
   getHeader()async
   {
     SharedPreferences sp = await SharedPreferences.getInstance();
@@ -43,6 +46,27 @@ class UserPreference extends GetxController{
       var decode = jsonDecode(_data);
       CurrentUser user = CurrentUser.fromJson(decode);
       return {"Authorization":user.token};
+    }
+
+  }
+
+
+  saveBusiness(BusinessModel business) async
+  {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    String d = jsonEncode(business.toMap());
+    sp.setString("userBusiness", d);
+  }
+
+  Future<BusinessModel?> getBusiness() async
+  {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    var _data = sp.getString("userBusiness");
+    if(_data!=null)
+    {
+      var decode = jsonDecode(_data);
+      BusinessModel businessModel = BusinessModel.fromMap(decode);
+      return businessModel;
     }
 
   }

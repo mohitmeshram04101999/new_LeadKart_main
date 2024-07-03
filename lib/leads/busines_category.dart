@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 
@@ -186,7 +187,7 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
 
             CustomButton(
               text: 'Next', onPressed: () {
-              // context.pushNamed("homePage");
+                context.pushNamed("additionalDetails");
               // Navigator.push(context, MaterialPageRoute(builder: (context)=> FollowUpDate()));
 
               Navigator.push(
