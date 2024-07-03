@@ -74,7 +74,7 @@ class UserApi
     ));
       MyHelper.logger.i(resp.data);
     resp.data;
-    CurrentUser user = CurrentUser.fromJson(resp.data);
+    CurrentUser user = CurrentUser.fromJson(resp.data["data"]);
     MyHelper.logger.i(user);
     MyHelper.logger.i(user.toJson());
     return user;

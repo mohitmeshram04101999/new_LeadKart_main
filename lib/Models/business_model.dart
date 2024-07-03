@@ -1,5 +1,5 @@
 class BusinessModel {
-  final String _id;
+  final String id;
   final String businessName;
   final String? businessImage; // nullable for cases where image might be missing
   final String userId;
@@ -42,14 +42,14 @@ class BusinessModel {
     required this.disable,
     required this.isFacebookPageLinked,
     required String id,
-  }) : _id = id;
+  }) : id = id;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is BusinessModel &&
           runtimeType == other.runtimeType &&
-          _id == other._id &&
+          id == other.id &&
           businessName == other.businessName &&
           businessImage == other.businessImage &&
           userId == other.userId &&
@@ -72,7 +72,7 @@ class BusinessModel {
 
   @override
   int get hashCode =>
-      _id.hashCode ^
+      id.hashCode ^
       businessName.hashCode ^
       businessImage.hashCode ^
       userId.hashCode ^
@@ -96,7 +96,7 @@ class BusinessModel {
   @override
   String toString() {
     return 'BusinessModel{' +
-        ' _id: $_id,' +
+        ' _id: $id,' +
         ' businessName: $businessName,' +
         ' businessImage: $businessImage,' +
         ' userId: $userId,' +
@@ -142,7 +142,7 @@ class BusinessModel {
     bool? isFacebookPageLinked,
   }) {
     return BusinessModel(
-      id: id ?? this._id,
+      id: id ?? this.id,
       businessName: businessName ?? this.businessName,
       businessImage: businessImage ?? this.businessImage,
       userId: userId ?? this.userId,
@@ -167,7 +167,7 @@ class BusinessModel {
 
   Map<String, dynamic> toMap() {
     return {
-      '_id': this._id,
+      '_id': this.id,
       'businessName': this.businessName,
       'businessImage': this.businessImage,
       'userId': this.userId,

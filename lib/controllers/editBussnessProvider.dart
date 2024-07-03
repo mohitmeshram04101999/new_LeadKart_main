@@ -19,7 +19,7 @@ import 'package:leadkart/helper/helper.dart';
 
 
 
-class CreateBusinessProvider with ChangeNotifier
+class EditBusinessProvider with ChangeNotifier
 {
 
   //Vars ---
@@ -60,6 +60,75 @@ class CreateBusinessProvider with ChangeNotifier
   City? get cityId=>_cityId;
   List<BCategory> get service_ids=> _service_ids;
 
+
+
+  //Initial provider setUp 
+  void init(BuildContext context) async
+  {
+
+    var bus = Controllers.businessProvider(context,listen: false).currentBusiness;
+   var service =  Controllers.bussnissCategoryProvider(context);
+
+    _businessNameController.text = bus?.businessName??"";
+    _businessPhoneNumberController.text = bus?.businessContact!=null?bus!.businessContact.toString():"";
+    _businessWatsAppNumberController.text = bus?.whatsappNumber!=null?bus!.whatsappNumber.toString():"";
+    _webLinkController.text = bus?.websiteLink??"";
+    _instaLinkController.text= bus?.instagramLink??"";
+    _twitterLinkController.text= bus?.twitterLink??"";
+    _youTubeLinkController.text= bus?.youtubeLink??"";
+    _faceBookLinkController.text = bus?.facebookLink??"";
+    _addressController.text= bus?.address??"";
+    _tagLineController.text=bus?.tagline??"";
+    await service.lode(context);
+    await service.lodeService(bus?.businessCategoryId??"",context);
+
+
+    if(bus?.servicesId!=null)
+      {
+
+        for(BCategory i in service.allSrvices??[])
+        {
+          MyHelper.logger.i("{  ${i.id}  ${bus?.servicesId.first}");
+          if(bus!.servicesId.contains(i.id))
+            {
+              addService(i);
+            }
+        }
+      }
+
+    //setting Category id
+    for(var i in service.allCategory)
+    {
+
+      if(i.id==bus!.businessCategoryId)
+      {
+        _businessCategoryId = i;
+      }
+    }
+
+
+    //Setting City id
+    for(var i in service.allCity)
+      {
+        if(i.id==bus!.cityId)
+          {
+            _cityId = i;
+          }
+      }
+
+    //setting State
+    for(var i in service.allState)
+    {
+      if(i.id==bus!.stateId)
+      {
+        _stateId = i;
+      }
+    }
+     notifyListeners();
+  }
+
+
+
   void clear()
   {
     _businessNameController.clear();
@@ -85,61 +154,55 @@ class CreateBusinessProvider with ChangeNotifier
 
   //setters---------
   //select Image
-Future<void> selectbusinessImage (BuildContext context) async
-{
-  // ImagePicker picker = ImagePicker();
-  // XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery,imageQuality: 1);
-  // if(pickedFile !=null)
-  //   {
-  //     _businessImage = pickedFile;
-  //     notifyListeners();
-  //   }
-  FilePickerResult? result = await FilePicker.platform.pickFiles(
-    type: FileType.custom,
-    allowedExtensions: ['jpg', 'jpeg', 'png'],
-  );
-  if(result != null) {
-    imageFile = File(result.files.single.path!);
-    _businessImage = XFile(imageFile!.path);
-    notifyListeners();
-  } else {
-    // User canceled the picker
-  }
-}
+  Future<void> selectbusinessImage (BuildContext context) async
+  {
 
-void upDate()=>notifyListeners();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'jpeg', 'png'],
+    );
+    if(result != null) {
+      imageFile = File(result.files.single.path!);
+      _businessImage = XFile(imageFile!.path);
+      notifyListeners();
+    } else {
+      // User canceled the picker
+    }
+  }
+
+  void upDate()=>notifyListeners();
 
 //set CategoryId
- void setCategoryId(BCategory category,BuildContext context) async {
-   var _serviece  = Controllers.bussnissCategoryProvider(context,listen: false);
-  _businessCategoryId=category;
-   await _serviece.lodeService(category.id??"", context);
-   if(_serviece.allSrvices.length!=0)
-     {
-       _service_ids = [];
-       _service_ids.addAll(_serviece.allSrvices);
-     }
-   else
-     {
-       _service_ids = [];
-     }
-  _businessCatTitleController.text = category.title??"";
-  notifyListeners();
+  void setCategoryId(BCategory category,BuildContext context) async {
+    var _serviece  = Controllers.bussnissCategoryProvider(context,listen: false);
+    _businessCategoryId=category;
+    await _serviece.lodeService(category.id??"", context);
+    if(_serviece.allSrvices.length!=0)
+    {
+      _service_ids = [];
+      _service_ids.addAll(_serviece.allSrvices);
+    }
+    else
+    {
+      _service_ids = [];
+    }
+    _businessCatTitleController.text = category.title??"";
+    notifyListeners();
 
-}
+  }
 
 //set Stateid
-void setStateId(StateCity? state)  {_stateId = state;notifyListeners();}
+  void setStateId(StateCity? state)  {_stateId = state;notifyListeners();}
 
 //set cityId
-void setCityId(City? city) {_cityId=city;notifyListeners();}
+  void setCityId(City? city) {_cityId=city;notifyListeners();}
 
 
   //addService
-void addService(BCategory service) {_service_ids.add(service);notifyListeners();}
+  void addService(BCategory service) {_service_ids.add(service);notifyListeners();}
 
   //Remove id
-void removeServiceId(String id) {_service_ids.removeWhere((v)=>v.id==id);notifyListeners();}
+  void removeServiceId(String id) {_service_ids.removeWhere((v)=>v.id==id);notifyListeners();}
 
 
 
@@ -164,29 +227,13 @@ void removeServiceId(String id) {_service_ids.removeWhere((v)=>v.id==id);notifyL
       address: _addressController.text.trim(),
       tagLine: _tagLineController.text.trim(),
     );
-    MyHelper.logger.e("hjghjhjjh");
-
-   // if(responce.statusCode==201)
-   //   {
-   //     clear();
-   //     Controllers.bussnissCategoryProvider(context,listen: false).clean();
-   //   }
-
-    MyHelper.logger.e("hiii");
-    MyHelper.logger.e(responce.message);
-    MyHelper.logger.e(responce.data);
-    if(responce.statusCode==201)
-    {
-      //     clear();
-      //     Controllers.bussnissCategoryProvider(context,listen: false).clean();
-      MyHelper.mySnakebar(context, "${responce.message}");
-    }
-    else
-      {
-        MyHelper.mySnakebar(context, "${responce.message}");
-      }
+    // if(responce.statusCode==201)
+    //   {
+    //     clear();
+    //     Controllers.bussnissCategoryProvider(context,listen: false).clean();
+    //   }
   }
 
 
-  //
+//
 }

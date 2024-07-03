@@ -74,14 +74,14 @@ class BussnissCategoryProvider with ChangeNotifier
     notifyListeners();
 }
 
-Future<void> lodeService(BCategory category,BuildContext context) async
+Future<void> lodeService(String categoryId,BuildContext context) async
 {
 
   _lodingSevics = true;
   notifyListeners();
 
   CurrentUser? user = await Controllers.useraPrefrenc.getUser();
-  CustomResponce _d = await MyHelper.bussnissApi.getAllCategory(userId:user!.id!,categoryId: category.id);
+  CustomResponce _d = await MyHelper.bussnissApi.getAllCategory(userId:user!.id!,categoryId: categoryId);
   if(_d.data!=null)
     {
       BussnissCategoryApiModel _model = _d.data!;

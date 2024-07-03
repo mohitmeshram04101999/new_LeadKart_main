@@ -2,8 +2,13 @@
 
  
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:dio/dio.dart';
- 
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+
 
   
 import 'package:leadkart/ApiServices/api%20Path.dart';
@@ -215,7 +220,7 @@ class BussnissApi
 
       //Create BusinessApi
 
-  Future<void>createBusiness({
+  Future<CustomResponce>createBusiness({
      XFile? logo,
      String? businessCategoryId,
      String? businessName,
@@ -238,17 +243,11 @@ class BussnissApi
   String uri = "/business/createBussiness";
 
   CurrentUser? user = await Controllers.useraPrefrenc.getUser();
-// log(user!.id.toString());
-  final file = File(logo!.path);
+
   var data = {
-    // "businessImage":req,
-    "files":[
-      await MultipartFile.fromFile(file.path)
-    ],
     "businessName":businessName,
     "userId":user!.id.toString(),
     "businessCategoryId":businessCategoryId,
-    "servicesId": "664482f4c7cda5618d2edede",
     "businessContact":businessContactNum,
     "whatsappNumber":whatAppNum,
     "stateId": stateId,
@@ -262,66 +261,59 @@ class BussnissApi
     "tagline":tagLine,
     // "countryId":countryId
   };
-  var formatedData = data.map((key,value)=>MapEntry(key, value.toString()));
-  FormData Fdata = FormData.fromMap(data);
 
+  //
+  var formatedData = data.map((key,value)=>MapEntry(key, value.toString()));
+
+  MyHelper.logger.i(serviceId);
 
 
   var request = http.MultipartRequest("POST",Uri.parse(ApiConst.baseUrl+uri));
 
-  request.files.add(await http.MultipartFile.fromPath("businessImage", logo.path));
   request.headers.addAll({"Authorization":user.token.toString()});
 
   request.fields.addAll(formatedData);
+  for(int i =0;i<serviceId!.length;i++)
+    {
+      request.fields["servicesId[$i]"] = serviceId[i].toString();
+    }
 
-  request.files.add(await http.MultipartFile.fromPath("businessImage", logo.toString()));
 
-
-
-
-
-  var resp = await request.send();
 
   var response = await request.send();
-  var headers = {
-    "Authorization":user.token.toString()
-  };
-  // var data = FormData.fromMap({
-  //   'files': [
-  //     await MultipartFile.fromFile('/C:/Users/lenovo/Downloads/WhatsApp Image 2024-06-11 at 12.41.47 PM (1).jpeg', filename: '/C:/Users/lenovo/Downloads/WhatsApp Image 2024-06-11 at 12.41.47 PM (1).jpeg')
-  //   ],
-  //   'businessName': 'SATYA KABIR',
-  //   'userId': '666fe777a960488a26b13a53',
-  //   'businessCategoryId': '66446b5ec11172db88238dee',
-  //   'servicesId[0]': '664482f4c7cda5618d2edede',
-  //   'servicesId[1]': '66448303c7cda5618d2edee0',
-  //   'servicesId[2]': '66448314c7cda5618d2edee2'
-  // });
-  // var response = await MyHelper.dio.post(uri,
-  //   options: Options(
-  //     headers: headers,
-  //   ),
-  //   data: Fdata,
-  // );
-  if (response.statusCode == 200) {
-    MyHelper.logger.w(json.encode(response.stream.bytesToString()));
+  var d = await response.stream.bytesToString();
+  var mapdata = jsonDecode(d);
+
+  MyHelper.logger.e(response.statusCode);
+  MyHelper.logger.e(d);
+
+  //
+  // BusinessModel model = BusinessModel.fromMap(mapdata["data"]);
+  
+  // geting datad end sending to return
+
+  MyHelper.logger.e("OK");
+
+  if (response.statusCode == 201) {
+    return CustomResponce(
+      statusCode: response.statusCode,
+      // data: model,
+      message: mapdata["message"]
+    );
   }
+
+  //returnig the data is wrong
   else {
     MyHelper.logger.e(response.statusCode);
+    var d = await response.stream.bytesToString();
+    MyHelper.logger.i(d);
+    return CustomResponce(
+        statusCode: response.statusCode,
+      data: mapdata["message"],
+      errorMessage: d
+    );
   }
 
-  if(response.statusCode==201)
-    {
-
-      MyHelper.logger.i(response.statusCode);
-    }
-  else
-    {
-      MyHelper.logger.e(resp.statusCode);
-      String respBody = await resp.stream.bytesToString();
-      MyHelper.logger.e(logo);
-      MyHelper.logger.e(respBody);
-    }
 
 
 
