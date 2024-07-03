@@ -69,8 +69,14 @@ class GoRouterConfig {
             path: 'createBusinessScreen',
             name: 'createBusinessScreen',
             builder: (context,state)=>CreateBusinessScreen(),
-
           ),
+
+          GoRoute(
+            path: 'additionalDetails',
+            name: 'additionalDetails',
+            builder: (context,state)=>AdditionalDetail(),
+          ),
+
 
           GoRoute(
             name: 'getNewLeads',
