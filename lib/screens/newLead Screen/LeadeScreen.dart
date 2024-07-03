@@ -29,6 +29,7 @@ class _LeadeScreenState extends State<LeadeScreen> {
 
       //AppBar
       appBar: AppBar(
+        titleSpacing: 20,
 
         //titel
         title: Text("Leads"),

@@ -172,9 +172,7 @@ void removeServiceId(String id) {_service_ids.removeWhere((v)=>v.id==id);notifyL
    //     Controllers.bussnissCategoryProvider(context,listen: false).clean();
    //   }
 
-    MyHelper.logger.e("hiii");
-    MyHelper.logger.e(responce.message);
-    MyHelper.logger.e(responce.data);
+
     if(responce.statusCode==201)
     {
       //     clear();

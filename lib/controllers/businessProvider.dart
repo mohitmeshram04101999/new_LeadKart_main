@@ -6,6 +6,7 @@ import 'package:leadkart/Models/MycustomResponce.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:leadkart/Models/business_model.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
+import 'package:leadkart/helper/helper.dart';
 
 class BusinessProvider with ChangeNotifier
 {
@@ -35,6 +36,7 @@ BusinessModel? get currentBusiness => _currentBusiness;
   {
     _currentBusiness = business;
     notifyListeners();
+    MyHelper.logger.e("Changed");
   }
 
 }

@@ -7,7 +7,6 @@ import 'package:leadkart/component/busines_reuseable_widget.dart';
 
 import 'package:leadkart/component/custom_page_route.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
-import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/leads/add_detail_screen.dart';
@@ -57,7 +56,7 @@ class _BusinessDetailState extends State<BusinessDetail> {
             children: [
 
 
-              Text("{${Controllers.editBusinessProvider(context,listen: false).businessNameController.text}}"),
+              // Text("{${Controllers.editBusinessProvider(context,listen: false).businessNameController.text}}"),
               //ProFileBox
               SizedBox(height: SC.from_height(22),),
 
@@ -104,7 +103,7 @@ class _BusinessDetailState extends State<BusinessDetail> {
                   width: SC.from_height(58),
                   height: SC.from_height(58),
                   child: p.currentBusiness?.businessImage==null?
-                  CircleAvatar(child: Icon(CupertinoIcons.person_alt,size: 25,),):Image.network(p.currentBusiness?.businessImage??""),
+                  CircleAvatar(child: Icon(CupertinoIcons.person_alt,size: 25,),):Image.network(p.currentBusiness?.businessImage??"",fit: BoxFit.cover,),
                 ),
 
                 SizedBox(height: SC.from_height(12),),

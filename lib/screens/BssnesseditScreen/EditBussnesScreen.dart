@@ -145,14 +145,17 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                             decoration: BoxDecoration(
                               // border: Border.all(color: Colors.grey),
                                 borderRadius: BorderRadius.circular(SC.from_height(5))),
-                            child: p.businessImage!=null?Image.file(File(p.businessImage!.path),fit: BoxFit.cover,) :
-                            Center(
-                              child: Text(
-                                'Business \n   Logo',
-                                style: TextStyle(
-                                    color: Colors.grey.shade700, fontSize: SC.from_height(17),fontWeight: FontWeight.w500),
-                              ),
+                            child: ((p.isImageUpdated)?Image.file(File(p.businessImage?.path??""),fit: BoxFit.cover,):
+            (Controllers.businessProvider(context,listen: false).currentBusiness!.businessImage!="null")?   Image.network(Controllers.businessProvider(context,listen: false).currentBusiness!.businessImage.toString(),fit: BoxFit.cover,):
+            Center(
+            child: Text(
+            'Business \n   Logo',
+            style: TextStyle(
+            color: Colors.grey.shade700, fontSize: SC.from_height(17),fontWeight: FontWeight.w500),
+            ),
+            )
                             )
+
                         ),
                       ),
                     ),
@@ -480,7 +483,7 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                 ),
 
                 SizedBox(height: SC.from_height(20),),
-                MyactionButton(action:()=> p.createBusiness(context)),
+                MyactionButton(action:()=> p.upDateBusiness(context)),
                 SizedBox(height: SC.from_height(20),),
 
               ],

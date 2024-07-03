@@ -7,8 +7,9 @@ import '../helper/helper.dart';
 class HelpButton extends StatelessWidget {
   String title;
   IconData? icon;
+  void Function()? onTap;
 
-  HelpButton({this.title ="Help?",this.icon,super.key});
+  HelpButton({this.onTap,this.title ="Help?",this.icon,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class HelpButton extends StatelessWidget {
             SizedBox(width: SC.from_width(5),),
             Text(title, style: MyHelper.textStyls.leadTileWhiteText,),
           ],
-        ), onPressed: () {},
+        ), onPressed: onTap,
         style: ButtonStyle(
           padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal:0, vertical: 5)),
           backgroundColor: MaterialStatePropertyAll( MyHelper.appConstent.primeryColor),

@@ -8,10 +8,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:leadkart/Models/AllStateMosel.dart';
 import 'package:leadkart/Models/BusnissCateforyModel.dart';
+import 'package:leadkart/Models/business_model.dart';
 import 'package:leadkart/Models/getAllCityModelREsponce.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 
@@ -40,6 +42,7 @@ class EditBusinessProvider with ChangeNotifier
   StateCity? _stateId;
   City? _cityId;
   List<BCategory> _service_ids= [];
+  bool _isImageUpdated = false;
 
 
   //Getters ----
@@ -59,6 +62,7 @@ class EditBusinessProvider with ChangeNotifier
   StateCity? get stateId => _stateId;
   City? get cityId=>_cityId;
   List<BCategory> get service_ids=> _service_ids;
+  bool get isImageUpdated => _isImageUpdated;
 
 
 
@@ -147,6 +151,7 @@ class EditBusinessProvider with ChangeNotifier
     _stateId = null;
     _cityId = null;
     _service_ids = [];
+    _isImageUpdated = false;
   }
 
 
@@ -164,10 +169,18 @@ class EditBusinessProvider with ChangeNotifier
     if(result != null) {
       imageFile = File(result.files.single.path!);
       _businessImage = XFile(imageFile!.path);
+      _isImageUpdated = true;
       notifyListeners();
     } else {
       // User canceled the picker
     }
+  }
+
+  void clearImaga()
+  {
+    _businessImage = null;
+    _isImageUpdated = false;
+    notifyListeners();
   }
 
   void upDate()=>notifyListeners();
@@ -207,9 +220,10 @@ class EditBusinessProvider with ChangeNotifier
 
 
 
-  Future<void> createBusiness(BuildContext context) async
+  Future<void> upDateBusiness(BuildContext context) async
   {
-    var  responce = await MyHelper.bussnissApi.createBusiness(
+    var  responce = await MyHelper.bussnissApi.upDateBusiness(
+      businessId: Controllers.businessProvider(context,listen: false).currentBusiness?.id??"",
       logo: _businessImage,
       cityId: _cityId?.id??"",
       stateId: _stateId?.id??"",
@@ -227,11 +241,15 @@ class EditBusinessProvider with ChangeNotifier
       address: _addressController.text.trim(),
       tagLine: _tagLineController.text.trim(),
     );
-    // if(responce.statusCode==201)
-    //   {
-    //     clear();
-    //     Controllers.bussnissCategoryProvider(context,listen: false).clean();
-    //   }
+    if(responce.statusCode==200)
+      {
+        clear();
+        Controllers.bussnissCategoryProvider(context,listen: false).clean();
+        BusinessModel data = responce.data;
+        Controllers.businessProvider(context,listen: false).setCurrentBusiness(data);
+        context.pop();
+
+      }
   }
 
 
