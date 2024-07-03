@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/component/adjustImageView.dart';
@@ -10,6 +10,7 @@ import 'package:leadkart/component/imagePickerDialog.dart';
 import 'package:leadkart/component/imageView.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 
 
 class ImageEditor extends StatefulWidget {
@@ -353,7 +354,7 @@ class _BottomChipsState extends State<BottomChips> {
               Text(widget.text),
             ],
           ),
-          backgroundColor: MyHelper.appConstent.leadsBannerColor,
+          backgroundColor: AppConstent().leadsBannerColor,
           shape: StadiumBorder(),
           onPressed: widget.onTap),
     );
@@ -382,7 +383,7 @@ class _AdjustOptionState extends State<AdjustOption> {
               Text(widget.text),
             ],
           ),
-          backgroundColor: MyHelper.appConstent.leadsBannerColor,
+          backgroundColor: AppConstent().leadsBannerColor,
           shape: StadiumBorder(
             side: BorderSide(color: Colors.transparent),
           ),

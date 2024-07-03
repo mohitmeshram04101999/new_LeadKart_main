@@ -1,6 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:leadkart/component/custom_page_route.dart';
 import 'package:leadkart/component/demo_ad_widget.dart';
@@ -9,6 +9,7 @@ import 'package:leadkart/component/recommendation_widget.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/leads/select_plan.dart';
+import 'package:leadkart/them/constents.dart';
 
 import '../component/customAppBar.dart';
 
@@ -29,7 +30,7 @@ class _AdsPageState extends State<AdsPage> {
       'dateRange': '01 May to 10 May, 2023',
       'adLabel': 'Demo Ad',
       'mainText': 'Get New leads',
-      'mainTextColor': MyHelper.appConstent.primeryColor,
+      'mainTextColor': AppConstent().primeryColor,
       'platformIcons': [
         'assets/facebook.png',
         'assets/add_images/insta.png',
@@ -130,7 +131,7 @@ class _AdsPageState extends State<AdsPage> {
               children: [
                 Text('Select a Package',style: TextStyle(fontSize: SC.from_height(18),fontWeight: FontWeight.w500),),
                 Spacer(),
-                Text('See More',style: TextStyle(color: MyHelper.appConstent.primeryColor,fontSize: SC.fromWidth(27),fontWeight: FontWeight.w600),),
+                Text('See More',style: TextStyle(color: AppConstent().primeryColor,fontSize: SC.fromWidth(27),fontWeight: FontWeight.w600),),
               ],
             ),
 

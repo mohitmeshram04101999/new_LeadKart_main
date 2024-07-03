@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/component/HelpButtonWhite.dart';
 import 'package:leadkart/component/custom_button.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 
 class PaymentDetails extends StatefulWidget {
   const PaymentDetails({super.key});
@@ -38,7 +39,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
-        backgroundColor: MyHelper.appConstent.primeryColor,
+        backgroundColor: AppConstent().primeryColor,
         title: Text('Payment details',style: TextStyle(fontSize: SC.from_height(21)),),
         actions: [
           HelpButtonWhite(),
@@ -123,7 +124,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                             return RadioListTile(
                               fillColor: MaterialStateProperty.resolveWith<Color>((states) {
                                 if (states.contains(MaterialState.selected)) {
-                                  return MyHelper.appConstent.primeryColor; // Color when selected
+                                  return AppConstent().primeryColor; // Color when selected
                                 }
                                 return Colors.grey; // Color when unselected
                               }),
@@ -183,7 +184,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
 
                               fillColor: MaterialStateProperty.resolveWith<Color>((states) {
                                 if (states.contains(MaterialState.selected)) {
-                                  return MyHelper.appConstent.primeryColor; // Color when selected
+                                  return AppConstent().primeryColor; // Color when selected
                                 }
                                 return Colors.grey; // Color when unselected
                               }),

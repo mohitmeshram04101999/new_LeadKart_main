@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:leadkart/component/sheder%20Iocn.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 
 class DigitalAdsPackage extends StatefulWidget {
   const DigitalAdsPackage({super.key});
@@ -149,7 +150,7 @@ class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
                 style: TextStyle(
                     fontSize: SC.fromWidth(25),
                     fontWeight: FontWeight.w500,
-                    color: MyHelper.appConstent.primeryColor),
+                    color: AppConstent().primeryColor),
               ),
             ],
           ),
@@ -179,7 +180,7 @@ class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
                   'Add Notes',
                   style: TextStyle(
                       fontSize: SC.fromWidth(25),
-                      color: MyHelper.appConstent.primeryColor,
+                      color: AppConstent().primeryColor,
                       fontWeight: FontWeight.w500),
                 ),
               ],
@@ -217,7 +218,7 @@ class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
                       style: TextStyle(
                         fontSize: SC.fromWidth(26),
                         fontWeight: FontWeight.bold,
-                        color: index == 0 ? MyHelper.appConstent.primeryColor : Colors.grey.shade700,
+                        color: index == 0 ? AppConstent().primeryColor : Colors.grey.shade700,
                       ),
                     ),
                   ),

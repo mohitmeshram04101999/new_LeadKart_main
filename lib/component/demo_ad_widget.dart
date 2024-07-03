@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 
 class DemoAdWidget extends StatelessWidget {
   final String dateRange;
@@ -150,7 +151,7 @@ class DemoAdWidget extends StatelessWidget {
                 Container(
                   height: SC.from_height(1),
                   width: SC.from_height(85),
-                  child: Divider(thickness: 1, color: MyHelper.appConstent.primeryColor),
+                  child: Divider(thickness: 1, color: AppConstent().primeryColor),
                 ),
               ],
             ),

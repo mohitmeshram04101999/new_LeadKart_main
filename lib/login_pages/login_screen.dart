@@ -4,7 +4,7 @@ import 'package:animations/animations.dart';
 import 'dart:developer';
 
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:flutter/services.dart';
 
 import 'package:leadkart/component/custom_button.dart';

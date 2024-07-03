@@ -1,9 +1,11 @@
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/component/HelpButtonWhite.dart';
 import 'package:leadkart/component/sheder%20Iocn.dart';
+import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 
 
 class LeadeTile extends StatelessWidget {
@@ -21,7 +23,7 @@ class LeadeTile extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       margin: EdgeInsets.symmetric(horizontal: SC.from_width(12),vertical:5),
       child: InkWell(
-        splashColor: MyHelper.appConstent.leadsBannerColor,
+        splashColor: AppConstent().leadsBannerColor,
         onTap: onTap,
         child: Container(
           height: SC.from_width(80),
@@ -67,12 +69,12 @@ class LeadeTile extends StatelessWidget {
                   children: [
 
                     //title
-                    Text("Demo Lead",overflow: TextOverflow.ellipsis,maxLines: 1,style: MyHelper.textStyls.leadTileTitle),
+                    Text("Demo Lead",overflow: TextOverflow.ellipsis,maxLines: 1,style: TextStyles().leadTileTitle),
 
                     //subtitle
-                    Text("+91 9988909890",maxLines: 1,overflow: TextOverflow.ellipsis,style:MyHelper.textStyls.leadTileSubTitle),
+                    Text("+91 9988909890",maxLines: 1,overflow: TextOverflow.ellipsis,style:TextStyles().leadTileSubTitle),
 
-                    Text("Added : 8789-887-788",maxLines: 1,overflow: TextOverflow.ellipsis,style:MyHelper.textStyls.leadTileSubTitle),
+                    Text("Added : 8789-887-788",maxLines: 1,overflow: TextOverflow.ellipsis,style:TextStyles().leadTileSubTitle),
 
                   ],
                 ),
@@ -86,7 +88,7 @@ class LeadeTile extends StatelessWidget {
                         width: double.infinity,
                         child: Text("New Lead",style: TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w500),),
                         decoration: BoxDecoration(
-                            color: MyHelper.appConstent.leadTiletagColor,
+                            color: AppConstent().leadTiletagColor,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(32)
                           )

@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 
 class AddCreation extends StatefulWidget {
   const AddCreation({Key? key}) : super(key: key);
@@ -46,7 +47,7 @@ class _AddCreationState extends State<AddCreation> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
-        backgroundColor: MyHelper.appConstent.primeryColor,
+        backgroundColor: AppConstent().primeryColor,
         title: Text('Create an Add',),
 
       ),
@@ -282,7 +283,7 @@ class _AddCreationState extends State<AddCreation> {
                 // context.pushNamed("homePage");
                 // Your onPressed logic here
               },
-              color: MyHelper.appConstent.primeryColor, // The button's background color
+              color: AppConstent().primeryColor, // The button's background color
               borderShape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
               ),

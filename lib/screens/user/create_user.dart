@@ -1,5 +1,5 @@
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:flutter/services.dart';
 import 'package:leadkart/component/custom_button.dart';
 import 'package:leadkart/component/custom_page_route.dart';
@@ -25,7 +25,7 @@ class _CreateUserState extends State<CreateUser> {
     return Scaffold(
       appBar:  AppBar(
         foregroundColor: Colors.white,
-        backgroundColor: MyHelper.appConstent.primeryColor,
+        backgroundColor: AppConstent().primeryColor,
         title: Text('Create an user',),
       ),
       body: SingleChildScrollView(

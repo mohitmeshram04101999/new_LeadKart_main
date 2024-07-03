@@ -1,6 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +8,7 @@ import 'package:leadkart/add_images/campaign_setting_page.dart';
 import 'package:leadkart/component/custom_button.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 
 class CreateAds extends StatefulWidget {
   const CreateAds({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class _CreateAdsState extends State<CreateAds> {
 
       appBar:  AppBar(
         foregroundColor: Colors.white,
-        backgroundColor: MyHelper.appConstent.primeryColor,
+        backgroundColor: AppConstent().primeryColor,
         title: Text('Create an Ad',style: TextStyle( fontSize: SC.from_height(21) ),)
       ),
 

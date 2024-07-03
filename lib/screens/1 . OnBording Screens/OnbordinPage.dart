@@ -1,8 +1,10 @@
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/component/clips/onbording%20cliper.dart';
+import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/dimention.dart';
+import 'package:leadkart/them/constents.dart';
 
 import '../../helper/helper.dart';
 import '../../login_pages/login_screen.dart';
@@ -42,7 +44,7 @@ class _OnBordingPageState extends State<OnBordingPage> {
             child: Container(
               width: double.infinity,
               height: MediaQuery.of(context).size.height/2,
-              color: MyHelper.appConstent.OnbordingAppBar,
+              color: AppConstent().OnbordingAppBar,
               child: widget.child,
             ),
           ),
@@ -50,20 +52,20 @@ class _OnBordingPageState extends State<OnBordingPage> {
 
 
           //main text
-          Text(widget.mainText,style: MyHelper.textStyls.onBordingMainText,),
+          Text(widget.mainText,style: TextStyles().onBordingMainText,),
           SizedBox(height: SC.from_width(16),),
 
           //subtitle
           Padding(
-            padding: MyHelper.appConstent.horizontalPedding,
-            child: Text(widget.subTitle,textAlign: TextAlign.center,style: MyHelper.textStyls.onBordingSubTitle,),
+            padding: AppConstent().horizontalPedding,
+            child: Text(widget.subTitle,textAlign: TextAlign.center,style: TextStyles().onBordingSubTitle,),
           ),
           Spacer(),
 
           Padding(
             padding: EdgeInsets.symmetric(vertical: SC.from_width(10)),
             child: Padding(
-              padding:MyHelper.appConstent.horizontalPedding,
+              padding:AppConstent().horizontalPedding,
               child: Row(
                 children: [
 

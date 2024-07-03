@@ -1,10 +1,11 @@
 import 'package:fl_chart/fl_chart.dart';
 // import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 // import 'package:flutter/widgets.dart';
 import 'package:flutter_echarts/flutter_echarts.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'dart:math' as math;
 
@@ -38,7 +39,7 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
-        backgroundColor: MyHelper.appConstent.primeryColor,
+        backgroundColor: AppConstent().primeryColor,
         title: Text('Add Detail',style: TextStyle(fontSize: SC.from_height(21)),),
       ),
       body: Padding(
@@ -82,7 +83,7 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: SC.fromWidth(27),
-                            color:  MyHelper.appConstent.primeryColor),
+                            color:  AppConstent().primeryColor),
                       ),
                       Container(
                         width: SC.from_height(90),
@@ -92,7 +93,7 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                             'Finished',
                             style: TextStyle(
                               fontSize: SC.from_height(15),
-                                color: MyHelper.appConstent.primeryColor),
+                                color: AppConstent().primeryColor),
                           ),
                         ),
                         decoration: BoxDecoration(

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:getwidget/components/shimmer/gf_shimmer.dart';
@@ -13,10 +13,12 @@ import 'package:leadkart/component/custom_textfield.dart';
 import 'package:leadkart/component/myChipWidget.dart';
 import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
+import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
+import 'package:leadkart/them/constents.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -106,7 +108,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
 
       appBar:  AppBar(
         foregroundColor: Colors.white,
-        backgroundColor: MyHelper.appConstent.primeryColor,
+        backgroundColor: AppConstent().primeryColor,
         title: Text('Additional Detail',style: TextStyle(fontSize: SC.from_height(21)),),
       ),
       body: Consumer<CreateBusinessProvider>(
@@ -211,13 +213,13 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                         //if Loading
                          if (p3.lodingSevics)
                           {
-                            return Center(child: Text("Loding....",style: MyHelper.textStyls.smallBoldText,));
+                            return Center(child: Text("Loding....",style: TextStyles().smallBoldText,));
                           }
 
                         //if List id empty
                         else if (p3.allSrvices.length ==0)
                           {
-                            return Center(child: Text("No Services Found",style: MyHelper.textStyls.smallBoldText,));
+                            return Center(child: Text("No Services Found",style: TextStyles().smallBoldText,));
                           }
 
                         //returning final data

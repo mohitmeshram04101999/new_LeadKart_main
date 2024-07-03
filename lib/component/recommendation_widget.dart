@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 
 class RecommendationWidget extends StatelessWidget {
   final String title;
@@ -133,7 +134,7 @@ class RecommendationWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: MyHelper.appConstent.primeryColor),
+                  border: Border.all(color: AppConstent().primeryColor),
 
                 ),
                 margin: EdgeInsets.symmetric(horizontal: SC.from_height(12)),
@@ -143,7 +144,7 @@ class RecommendationWidget extends StatelessWidget {
                   child: Text(
                     'Choose Package',
                     style: TextStyle(
-                      color:  MyHelper.appConstent.primeryColor, // Replace with your primary color
+                      color:  AppConstent().primeryColor, // Replace with your primary color
                       fontSize: SC.from_height(14),
                     ),
                   ),

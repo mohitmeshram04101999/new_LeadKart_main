@@ -1,7 +1,12 @@
+import 'package:animations/animations.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:getwidget/components/button/gf_button.dart';
 
 import 'package:flutter/material.dart';
 import 'package:leadkart/component/BussneCategoryTile.dart';
 import 'package:leadkart/component/HelpButtonWhite.dart';
+import 'package:leadkart/component/addRequirmentTile.dart';
 import 'package:leadkart/component/custom_button.dart';
 import 'package:leadkart/component/custom_page_route.dart';
 import 'package:leadkart/component/custom_textfield.dart';
@@ -10,6 +15,7 @@ import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/screens/user/follow_up_data.dart';
+import 'package:leadkart/them/constents.dart';
 import 'package:provider/provider.dart';
 
 class CreateBusinessScreen extends StatefulWidget {
@@ -53,7 +59,7 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
     return Scaffold(
       appBar:  AppBar(
         foregroundColor: Colors.white,
-        backgroundColor: MyHelper.appConstent.primeryColor,
+        backgroundColor: AppConstent().primeryColor,
         title: Text('Busines Category',),
         actions: [
 

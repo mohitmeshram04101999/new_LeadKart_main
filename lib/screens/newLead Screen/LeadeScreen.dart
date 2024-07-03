@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/component/HelpButtonWhite.dart';
 import 'package:leadkart/component/leadeTile.dart';
 import 'package:leadkart/helper/dimention.dart';
@@ -52,7 +52,7 @@ class _LeadeScreenState extends State<LeadeScreen> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
-              padding: MyHelper.appConstent.horizontalPedding,
+              padding: AppConstent().horizontalPedding,
               child: Row(
                 children: [
                   for(String i in filters)

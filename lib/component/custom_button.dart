@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:leadkart/helper/dimention.dart';
-import 'package:leadkart/helper/helper.dart'; // Assuming GFButton is from the GetWidget package
+import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart'; // Assuming GFButton is from the GetWidget package
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -19,7 +20,7 @@ class CustomButton extends StatelessWidget {
       width: SC.from_height(340),
       child: GFButton(
         onPressed: onPressed,
-        color: MyHelper.appConstent.primeryColor,
+        color: AppConstent().primeryColor,
         borderShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),

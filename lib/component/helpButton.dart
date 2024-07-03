@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/them/constents.dart';
 
 import '../helper/dimention.dart';
 import '../helper/helper.dart';
@@ -24,12 +26,12 @@ class HelpButton extends StatelessWidget {
           children: [
             Icon(icon??Icons.call_outlined),
             SizedBox(width: SC.from_width(5),),
-            Text(title, style: MyHelper.textStyls.leadTileWhiteText,),
+            Text(title, style: TextStyles().leadTileWhiteText,),
           ],
         ), onPressed: onTap,
         style: ButtonStyle(
           padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal:0, vertical: 5)),
-          backgroundColor: MaterialStatePropertyAll( MyHelper.appConstent.primeryColor),
+          backgroundColor: MaterialStatePropertyAll( AppConstent().primeryColor),
           foregroundColor: MaterialStateProperty.resolveWith((states) => Colors.white),
           fixedSize: MaterialStatePropertyAll(Size(120, 25)),
           side: MaterialStatePropertyAll( BorderSide(color: Colors.white)),

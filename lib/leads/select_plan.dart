@@ -1,5 +1,5 @@
  
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/component/HelpButtonWhite.dart';
  
 import 'package:leadkart/component/custom_button.dart';
@@ -9,6 +9,7 @@ import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/leads/payment_details.dart';
 import 'package:leadkart/screens/leads/getNewLeads.dart';
+import 'package:leadkart/them/constents.dart';
 
 class SelectPlan extends StatefulWidget {
   const SelectPlan({Key? key}) : super(key: key);
@@ -90,7 +91,7 @@ class _SelectPlanState extends State<SelectPlan> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
-        backgroundColor: MyHelper.appConstent.primeryColor,
+        backgroundColor: AppConstent().primeryColor,
         title: Text('Select a Plan',style: TextStyle(fontSize: SC.from_height(21)),),
         actions: [
           HelpButtonWhite(),

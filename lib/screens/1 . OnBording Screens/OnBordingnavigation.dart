@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/screens/1%20.%20OnBording%20Screens/on1.dart';
 import 'package:leadkart/screens/1%20.%20OnBording%20Screens/on2.dart';
+import 'package:leadkart/them/constents.dart';
 
 import 'on3.dart';
 import 'on4.dart';
@@ -71,7 +72,7 @@ class _OnBordingMainState extends State<OnBordingMain> {
                     width: 6,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: curruntPage ==i?MyHelper.appConstent.primeryColor:Colors.grey,
+                      color: curruntPage ==i?AppConstent().primeryColor:Colors.grey,
                     ),
                   )
               ],

@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 
 
 class TextStyles
@@ -13,7 +14,7 @@ class TextStyles
   TextStyle mediumText = TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.w400,color: Colors.black);
   TextStyle smallText = TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w400,color: Color.fromRGBO(98, 98, 98, 1));
   TextStyle smallBoldText = TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.bold,color: Color.fromRGBO(98, 98, 98, 1));
-  TextStyle greenMediumText = TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.bold,color: MyHelper.appConstent.primeryColor);
+  TextStyle greenMediumText = TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.bold,color: AppConstent().primeryColor);
   TextStyle blackSmallText = TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w400,color: Colors.grey);
   TextStyle actionButtonStyle =  TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: SC.from_width(19));
 }

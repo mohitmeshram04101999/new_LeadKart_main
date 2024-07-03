@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:leadkart/component/custom_button.dart';
 import 'package:leadkart/component/custom_textfield.dart';
@@ -46,7 +46,7 @@ class _FollowUpDateState extends State<FollowUpDate> {
     return Scaffold(
       appBar:  AppBar(
         foregroundColor: Colors.white,
-        backgroundColor: MyHelper.appConstent.primeryColor,
+        backgroundColor: AppConstent().primeryColor,
         title: Text('Set Follow Up Date',style: TextStyle(fontSize:  SC.from_height(21)),),
       ),
       body: Padding(
@@ -212,7 +212,7 @@ class _FollowUpDateState extends State<FollowUpDate> {
                   itemBuilder: (context, index) {
                     return Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: MyHelper.appConstent.primeryColor),
+                        border: Border.all(color: AppConstent().primeryColor),
                         borderRadius: BorderRadius.circular(SC.from_height(8)),
                       ),
                       width: SC.from_height(155),

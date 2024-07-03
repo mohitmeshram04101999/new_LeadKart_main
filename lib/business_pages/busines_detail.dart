@@ -1,5 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
 import 'package:leadkart/business_pages/additional_detail.dart';
@@ -15,6 +17,7 @@ import 'package:leadkart/leads/digital_ads_package.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
 import 'package:leadkart/screens/BssnesseditScreen/EditBussnesScreen.dart';
 import 'package:leadkart/screens/user/create_user.dart';
+import 'package:leadkart/them/constents.dart';
 import 'package:provider/provider.dart';
 
 class BusinessDetail extends StatefulWidget {
@@ -45,7 +48,7 @@ class _BusinessDetailState extends State<BusinessDetail> {
 
      appBar:  AppBar(
         foregroundColor: Colors.white,
-        backgroundColor: MyHelper.appConstent.primeryColor,
+        backgroundColor: AppConstent().primeryColor,
         title: Text('Business Detail',style: TextStyle(fontSize: SC.from_height(21)),),
       ),
 

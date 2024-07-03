@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leadkart/component/leadeTile.dart';
 import 'package:leadkart/component/leadeTilewithChecBox.dart';
+import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
+import 'package:leadkart/them/constents.dart';
 
 
 class AssaignLeads extends StatefulWidget {
@@ -34,7 +36,7 @@ class _AssaignLeadsState extends State<AssaignLeads> {
         children: [
 
           Padding(
-            padding: MyHelper.appConstent.horizontalPedding,
+            padding: AppConstent().horizontalPedding,
             child: InkWell(
               onTap: (){
                 MyHelper.mybottomPanel(
@@ -43,7 +45,7 @@ class _AssaignLeadsState extends State<AssaignLeads> {
                       children: [
                         for(int i =0;i<5;i++)
                           Padding(
-                            padding: MyHelper.appConstent.horizontalPedding,
+                            padding: AppConstent().horizontalPedding,
                             child: Text("Option $i",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 15),),
                           )
                       ],
@@ -67,7 +69,7 @@ class _AssaignLeadsState extends State<AssaignLeads> {
           ),
           
           Padding(
-            padding: MyHelper.appConstent.horizontalPedding,
+            padding: AppConstent().horizontalPedding,
             child: Text("Select leads",style: TextStyle(fontSize: SC.from_width(23),fontWeight: FontWeight.w500,color:Color.fromRGBO(68, 68, 68, 1)),),
           ),
           
@@ -78,7 +80,7 @@ class _AssaignLeadsState extends State<AssaignLeads> {
 
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15),
-            child: MyactionButton(action: (){},child: Text("Assign Leads",style: MyHelper.textStyls.actionButtonStyle),),
+            child: MyactionButton(action: (){},child: Text("Assign Leads",style: TextStyles().actionButtonStyle),),
           ),
 
         ],

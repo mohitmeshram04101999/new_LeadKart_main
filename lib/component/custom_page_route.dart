@@ -1,5 +1,5 @@
 import 'package:animations/animations.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 
 
 // SLIDE AND FADE TRANSITION ANIMATION  //

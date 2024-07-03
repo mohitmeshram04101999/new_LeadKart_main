@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/business_pages/growBusinessFaster.dart';
 import 'package:leadkart/component/PlanTileview.dart';
@@ -37,7 +37,7 @@ class GetNewLeads extends StatelessWidget {
       ),
 
       appBar: AppBar(
-        backgroundColor: MyHelper.appConstent.primeryColor,
+        backgroundColor: AppConstent().primeryColor,
         foregroundColor: Colors.white,
         title: const Text('Get New Leads'),
 
@@ -120,7 +120,7 @@ class GetNewLeads extends StatelessWidget {
 
               //All Plans List
               FutureBuilder(
-                  future: Controllers.allplansprovider(context).load(),
+                  future: Controllers.allplansprovider(context, listen: false).load(),
 
 
                   builder: (a,b){
@@ -465,7 +465,7 @@ class InfoCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Container(
           decoration: BoxDecoration(
-            color: MyHelper.appConstent.infoContainerColor,
+            color: AppConstent().infoContainerColor,
             borderRadius: BorderRadius.circular(10),
           ),
           padding: EdgeInsets.symmetric(

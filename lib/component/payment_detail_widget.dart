@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 
 class PaymentDetailWidget extends StatelessWidget {
   final List<PaymentOption> paymentOptions;
@@ -42,7 +43,7 @@ class PaymentDetailWidget extends StatelessWidget {
           return RadioListTile(
             fillColor: MaterialStateProperty.resolveWith<Color>((states) {
               if (states.contains(MaterialState.selected)) {
-                return MyHelper.appConstent.primeryColor; // Color when selected
+                return AppConstent().primeryColor; // Color when selected
               }
               return Colors.grey; // Color when unselected
             }),

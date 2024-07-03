@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -10,6 +10,7 @@ import 'package:leadkart/component/selectedImageView.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/enums.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 import 'package:uuid/uuid.dart';
 
 import '../controllers/imageEditorController.dart';
@@ -45,7 +46,7 @@ class _ImagePickerDialogState extends State<ImagePickerDialog> {
                         radius: Radius.circular(10),
                         borderPadding: EdgeInsets.all(10),
                         borderType: BorderType.RRect,
-                        color: MyHelper.appConstent.dottedBorderColor,
+                        color: AppConstent().dottedBorderColor,
                         child: Container(
                             width: double.maxFinite,
                             height: 150,

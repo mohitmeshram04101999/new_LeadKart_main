@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:flutter/widgets.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 
 class GrowBusinessFaster extends StatefulWidget {
   const GrowBusinessFaster({super.key});
@@ -116,7 +118,7 @@ class ExtimateResultCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text("Estimated Result", style: MyHelper.textStyls.mediumText),
+                  Text("Estimated Result", style: TextStyles().mediumText),
                   SizedBox(
                     width: 10,
                   ),
@@ -183,9 +185,9 @@ class ExtimateResultCard extends StatelessWidget {
               RichText(text: TextSpan(
                 children: [
                   TextSpan(text: "You will spend only ", style: Theme.of(context).textTheme.displaySmall),
-                  TextSpan(text: "₹4000", style: MyHelper.textStyls.mediumText.copyWith(fontWeight: FontWeight.bold)),
+                  TextSpan(text: "₹4000", style: TextStyles().mediumText.copyWith(fontWeight: FontWeight.bold)),
                   TextSpan(text: " in total and ad will run for ", style: Theme.of(context).textTheme.displaySmall),
-                  TextSpan(text: "6 days", style: MyHelper.textStyls.mediumText.copyWith(fontWeight: FontWeight.bold))
+                  TextSpan(text: "6 days", style: TextStyles().mediumText.copyWith(fontWeight: FontWeight.bold))
                 ]
               ))
             ],
@@ -223,7 +225,7 @@ class _PlanSelecterState extends State<PlanSelecter> {
               decoration:BoxDecoration(
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: MyHelper.appConstent.primeryColor, width: 2),
+                border: Border.all(color: AppConstent().primeryColor, width: 2),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -268,7 +270,7 @@ class LeadsBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: MyHelper.appConstent.leadsBannerColor,
+        color: AppConstent().leadsBannerColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -278,8 +280,8 @@ class LeadsBanner extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text('Get New Leads', style: MyHelper.textStyls.greenMediumText),
-            Text('Get new customers using Leads', style: MyHelper.textStyls.blackSmallText),
+            Text('Get New Leads', style: TextStyles().greenMediumText),
+            Text('Get new customers using Leads', style: TextStyles().blackSmallText),
           ],
         ), Image.asset('assets/img_5.png', width: 100, height: 80)],
       ),

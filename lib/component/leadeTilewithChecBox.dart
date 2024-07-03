@@ -1,7 +1,9 @@
 
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/component/sheder%20Iocn.dart';
+import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/them/constents.dart';
 
 import '../helper/dimention.dart';
 import '../helper/helper.dart';
@@ -31,7 +33,7 @@ class _LeadeTile2State extends State<LeadeTile2> {
       clipBehavior: Clip.hardEdge,
       margin: EdgeInsets.symmetric(horizontal: SC.from_width(12),vertical: 5),
       child: InkWell(
-        splashColor: MyHelper.appConstent.leadsBannerColor,
+        splashColor: AppConstent().leadsBannerColor,
         onTap: widget.onTap,
         child: Container(
           height: SC.from_width(80),
@@ -89,12 +91,12 @@ class _LeadeTile2State extends State<LeadeTile2> {
                   children: [
 
                     //title
-                    Text("Demo Lead",overflow: TextOverflow.ellipsis,maxLines: 1,style: MyHelper.textStyls.leadTileTitle),
+                    Text("Demo Lead",overflow: TextOverflow.ellipsis,maxLines: 1,style: TextStyles().leadTileTitle),
 
                     //subtitle
-                    Text("+91 9988909890",maxLines: 1,overflow: TextOverflow.ellipsis,style:MyHelper.textStyls.leadTileSubTitle),
+                    Text("+91 9988909890",maxLines: 1,overflow: TextOverflow.ellipsis,style:TextStyles().leadTileSubTitle),
 
-                    Text("Added : 8789-887-788",maxLines: 1,overflow: TextOverflow.ellipsis,style:MyHelper.textStyls.leadTileSubTitle),
+                    Text("Added : 8789-887-788",maxLines: 1,overflow: TextOverflow.ellipsis,style:TextStyles().leadTileSubTitle),
 
                   ],
                 ),
@@ -108,7 +110,7 @@ class _LeadeTile2State extends State<LeadeTile2> {
                         width: double.infinity,
                         child: Text("New Lead",style: TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w500),),
                         decoration: BoxDecoration(
-                            color: MyHelper.appConstent.leadTiletagColor,
+                            color: AppConstent().leadTiletagColor,
                             borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(32)
                             )

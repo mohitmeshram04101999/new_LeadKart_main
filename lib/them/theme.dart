@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/dimention.dart';
 
@@ -11,8 +11,8 @@ ThemeData AppTheme()
 {
   return ThemeData(
     brightness: Brightness.light,
-    primaryColor: MyHelper.appConstent.primeryColor,
-secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
+    primaryColor: AppConstent().primeryColor,
+secondaryHeaderColor: AppConstent().leadTiletagColor,
     iconTheme: IconThemeData(
       color: Colors.black,
       size: SC.fromWidth(20)
@@ -54,7 +54,7 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
     checkboxTheme: CheckboxThemeData(
       
       side: BorderSide(
-        color: MyHelper.appConstent.primeryColor,
+        color: AppConstent().primeryColor,
         width: 2
       ),
       
@@ -63,7 +63,7 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
       ),
 
       fillColor: WidgetStateProperty.resolveWith((state)=>Colors.white),
-      checkColor: MaterialStateProperty.resolveWith((states) =>MyHelper.appConstent.primeryColor),
+      checkColor: MaterialStateProperty.resolveWith((states) =>AppConstent().primeryColor),
     ),
     textTheme: TextTheme(
       displayMedium: TextStyles().mediumText,
@@ -77,7 +77,7 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
     appBarTheme: AppBarTheme(
       titleSpacing: 0,
       foregroundColor: Colors.white,
-      backgroundColor: MyHelper.appConstent.primeryColor
+      backgroundColor: AppConstent().primeryColor
     ),
 
 
@@ -92,7 +92,7 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
           shape: MaterialStateProperty.resolveWith((states) =>RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           )),
-        side:MaterialStateProperty.resolveWith((states) => BorderSide(color: MyHelper.appConstent.primeryColor))
+        side:MaterialStateProperty.resolveWith((states) => BorderSide(color: AppConstent().primeryColor))
       ),
     ),
 
@@ -100,8 +100,8 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
 
     //ColorScheme
     colorScheme: ColorScheme.light(
-      primary: MyHelper.appConstent.primeryColor,
-      onSecondary: MyHelper.appConstent.secondaryColor,
+      primary: AppConstent().primeryColor,
+      onSecondary: AppConstent().secondaryColor,
     ),
     
     //Eleveted Button THeme
@@ -115,7 +115,7 @@ secondaryHeaderColor: MyHelper.appConstent.leadTiletagColor,
 
         foregroundColor: MaterialStateProperty.resolveWith((states) => Colors.white),
 
-        backgroundColor: MaterialStateProperty.resolveWith((states) => MyHelper.appConstent.primeryColor),
+        backgroundColor: MaterialStateProperty.resolveWith((states) => AppConstent().primeryColor),
 
         textStyle: MaterialStateProperty.resolveWith((states) => TextStyle(fontSize: SC.from_width(14),fontWeight: FontWeight.w600,color: Colors.white))
       )
