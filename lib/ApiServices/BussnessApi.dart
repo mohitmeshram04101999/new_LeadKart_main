@@ -7,7 +7,11 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
+
+  
 import 'package:leadkart/ApiServices/api%20Path.dart';
 import 'package:leadkart/Models/AllStateMosel.dart';
 import 'package:leadkart/Models/BusnissCateforyModel.dart';
@@ -19,6 +23,7 @@ import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:leadkart/Models/business_model.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
 
@@ -216,7 +221,7 @@ class BussnissApi
 
       //Create BusinessApi
 
-  Future<void>createBusiness({
+  Future<CustomResponce>createBusiness({
      XFile? logo,
      String? businessCategoryId,
      String? businessName,
@@ -239,14 +244,13 @@ class BussnissApi
   String uri = "/business/createBussiness";
 
   CurrentUser? user = await Controllers.useraPrefrenc.getUser();
-// log(user!.id.toString());
-  final file = File(logo!.path);
+
   var data = {
     // "businessImage":req,
     "businessName":businessName,
     "userId":user!.id.toString(),
     "businessCategoryId":businessCategoryId,
-    "servicesId": "664482f4c7cda5618d2edede",
+    // "servicesId": "664482f4c7cda5618d2edede",
     "businessContact":businessContactNum,
     "whatsappNumber":whatAppNum,
     "stateId": stateId,
@@ -260,48 +264,183 @@ class BussnissApi
     "tagline":tagLine,
     // "countryId":countryId
   };
+
+  //
   var formatedData = data.map((key,value)=>MapEntry(key, value.toString()));
-  FormData Fdata = FormData.fromMap(data);
 
 
 
   var request = http.MultipartRequest("POST",Uri.parse(ApiConst.baseUrl+uri));
 
-  request.files.add(await http.MultipartFile.fromPath("businessImage", logo.path, ));
+  request.files.add(await http.MultipartFile.fromPath("businessImage", logo?.path??"", ));
   request.headers.addAll({"Authorization":user.token.toString()});
 
   request.fields.addAll(formatedData);
-
-
-
-
+  for(int i =0;i<serviceId!.length;i++)
+    {
+      request.fields["servicesId[$i]"] = serviceId[i].toString();
+    }
 
 
 
   var response = await request.send();
-  if (response.statusCode == 200) {
-    MyHelper.logger.w(json.encode(response.stream.bytesToString()));
+  var d = await response.stream.bytesToString();
+  var mapdata = jsonDecode(d);
+
+  MyHelper.logger.i(response.statusCode);
+  MyHelper.logger.i(d);
+
+  //
+  // BusinessModel model = BusinessModel.fromMap(mapdata["data"]);
+  
+  // geting datad end sending to return
+
+  MyHelper.logger.i("OK");
+
+  if (response.statusCode == 201) {
+    return CustomResponce(
+      statusCode: response.statusCode,
+      // data: model,
+      message: mapdata["message"]
+    );
   }
+
+  //returnig the data is wrong
   else {
     MyHelper.logger.e(response.statusCode);
+    var d = await response.stream.bytesToString();
+    MyHelper.logger.i(d);
+    return CustomResponce(
+        statusCode: response.statusCode,
+      data: mapdata["message"],
+      errorMessage: d
+    );
   }
 
-  if(response.statusCode==201)
-    {
-
-      MyHelper.logger.i(response.statusCode);
-    }
-  else
-    {
-      MyHelper.logger.e(response.statusCode);
-      MyHelper.logger.e(logo.path);
-      MyHelper.logger.e(await response.stream.bytesToString());
-    }
 
 
 
 
 }
+
+
+  Future<CustomResponce> upDateBusiness({
+    required String businessId,
+    XFile? logo,
+    String? businessCategoryId,
+    String? businessName,
+    List<String>? serviceId,
+    String? businessContactNum,
+    String? whatAppNum,
+    String? stateId,
+    String? cityId,
+    String? webLink,
+    String? instaLink,
+    String? twitterLink,
+    String? youTubeLink,
+    String? faceBookLink,
+    String? address,
+    String? tagLine,
+    String? countryId,
+  }) async
+  {
+
+    String uri = "business/updateBussiness/$businessId";
+
+
+    MyHelper.logger.i(businessId);
+
+    CurrentUser? user = await Controllers.useraPrefrenc.getUser();
+
+    var data = {
+      // "businessImage":req,
+      "businessName":businessName,
+      "userId":user!.id.toString(),
+      "businessCategoryId":businessCategoryId,
+      // "servicesId": "664482f4c7cda5618d2edede",
+      "businessContact":businessContactNum,
+      "whatsappNumber":whatAppNum,
+      "stateId": stateId,
+      "cityId":cityId,
+      "websiteLink":webLink,
+      "instagramLink":instaLink,
+      "twitterLink":twitterLink,
+      "youtubeLink":youTubeLink,
+      "facebookLink":faceBookLink,
+      "address":address,
+      "tagline":tagLine,
+      // "disable":false,
+      // "metaAccessToken":'true',
+      // "isFacebookPageLinked":'true'
+      // "countryId":countryId
+    };
+
+
+    //
+    var formatedData = data.map((key,value)=>MapEntry(key, value.toString()));
+
+
+
+    var request = http.MultipartRequest("PUT",Uri.parse(ApiConst.baseUrl+uri));
+
+    if(logo!=null)
+      {
+        request.files.add(await http.MultipartFile.fromPath("businessImage", logo.path??"", ));
+      }
+    request.headers.addAll({"Authorization":user.token.toString()});
+
+    request.fields.addAll(formatedData);
+    for(int i =0;i<serviceId!.length;i++)
+    {
+      request.fields["servicesId[$i]"] = serviceId[i].toString();
+    }
+
+
+    MyHelper.logger.i(logo?.path??"");
+    MyHelper.logger.i(ApiConst.baseUrl+uri);
+    MyHelper.logger.i(data);
+
+    var response = await request.send();
+    var d = await response.stream.bytesToString();
+    var mapdata = jsonDecode(d);
+
+    MyHelper.logger.i(response.statusCode);
+    MyHelper.logger.i(d);
+
+    //
+    BusinessModel model = BusinessModel.fromMap(mapdata["data"]);
+
+    // geting datad end sending to return
+
+
+
+    if (response.statusCode == 200) {
+      return CustomResponce(
+          statusCode: response.statusCode,
+          data: model,
+          message: mapdata["message"]
+          // message: "update Suces,mjcdcj,a"
+      );
+    }
+
+    //returnig the data is wrong
+    else {
+      MyHelper.logger.e(response.statusCode);
+      // var d = await response.stream.bytesToString();
+      MyHelper.logger.i(d);
+      return CustomResponce(
+          statusCode: response.statusCode,
+          data: mapdata["message"],
+          // data: "bnbnbhj",
+          errorMessage: d
+      );
+    }
+
+
+
+
+
+  }
 
 
 //Get Coty

@@ -54,29 +54,17 @@ class _MyactionButtonState extends State<MyactionButton> {
             setState(() {
 
             });
-            try{
-              dynamic returnData = await widget.action();
-              if(widget.onActionComplit!=null)
-                {
-                  widget.onActionComplit!(returnData);
-                }
-            }
-            catch(ex)
+
+            dynamic returnData = await widget.action();
+            if(widget.onActionComplit!=null)
             {
-              // dynamic returnData = await widget.action();
-              if(widget.onActionComplit!=null)
-              {
-                widget.onActionComplit!(ex);
-              }
-              throw ex;
-
+              widget.onActionComplit!(returnData);
             }
-            finally{
-              loding = false;
-              setState(() {
 
-              });
-            }
+            loding = false;
+            setState(() {
+
+            });
           }
 
         },

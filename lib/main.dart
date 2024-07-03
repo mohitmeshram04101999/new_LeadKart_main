@@ -2,9 +2,12 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leadkart/controllers/AllPlansProvider.dart';
 import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
+import 'package:leadkart/controllers/editBussnessProvider.dart';
+import 'package:leadkart/controllers/profileProvider.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -26,7 +29,10 @@ MyHelper();
     providers: [
       ChangeNotifierProvider(create: (context) => CreateBusinessProvider()),
       ChangeNotifierProvider(create: (context) => BussnissCategoryProvider()),
+      ChangeNotifierProvider(create: (context) => Allplansprovider()),
+      ChangeNotifierProvider(create: (context) => Profileprovider()),
       ChangeNotifierProvider(create: (context) => BusinessProvider()),
+      ChangeNotifierProvider(create: (context) => EditBusinessProvider()),
     ],
       child: MyApp()));
 }

@@ -226,7 +226,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                           child: Wrap(
                             children: [
                               for(var chip in p.service_ids)
-                                Mychipwidget(category: chip),
+                                Mychipwidget(category: chip,onDeleted: (){    Controllers.createBusinessProvider(context,listen: false).removeServiceId(chip.id!);},),
                               
                               //PopUpMenuButton to add Service
                               if(p.service_ids.length !=p3.allSrvices.length)
@@ -235,7 +235,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                                   itemBuilder: (context){
                                   return [
                                     for(var i in p3.allSrvices)
-                                      if(p.service_ids.every((elemt)=>elemt.id==i.id))
+                                      if(p.service_ids.every((elemt)=>elemt.id!=i.id))
                                         PopupMenuItem(
                                           onTap: (){
                                             Controllers.createBusinessProvider(context,listen: false).addService(i);

@@ -32,13 +32,7 @@ class Mychipwidget extends StatelessWidget {
         ),
 
         // Optional: Add an icon to the chip
-        onDeleted:(){
-          Controllers.createBusinessProvider(context,listen: false).removeServiceId(category.id!);
-          if(onDeleted!=null)
-            {
-              onDeleted!();
-            }
-        },
+        onDeleted:onDeleted,
         deleteIcon: Icon(Icons.cancel,
             color: Colors
                 .grey), // Optional: Customize delete icon

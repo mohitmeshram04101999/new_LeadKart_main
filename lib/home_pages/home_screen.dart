@@ -8,6 +8,7 @@ import 'package:leadkart/ApiServices/adsApi.dart';
 import 'package:leadkart/Models/ad_type_model.dart';
 import 'package:leadkart/Models/business_model.dart';
 import 'package:leadkart/component/addRequirmentTile.dart';
+import 'package:leadkart/component/customAppBar.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
 
 import 'package:leadkart/controllers/shredprefrence.dart';
@@ -48,125 +49,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: SizedBox(),
-        leadingWidth: 0,
 
-        title: Row(
-          children: [
-            Container(
-              clipBehavior: Clip.hardEdge,
-              width: SC.from_width(40),
-              height: SC.from_height(30),
-              decoration: BoxDecoration(
-                // border: Border.all(),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Image.asset(
-                'assets/home_images/img.png',
-              ),
-            ),
-            FutureBuilder(
-              future:
-                  Provider.of<BusinessProvider>(context, listen: false).lode(),
-              builder: (context, snapshot) => InkWell(
-                onTap: () {
-                  MyHelper.mybottomPanel(
-                      context: context,
-                      builder: (context, d) {
-                        return Consumer<BusinessProvider>(
-                          builder: (context, value, child) {
-                            if (value.loding) {
-                              return Center(child: CircularProgressIndicator());
-                            }
-                            MyHelper.logger.i(value.allBusiness.length);
-                            return ListView.builder(
-                              controller: d,
-                              itemCount: value.allBusiness.length,
-                              itemBuilder: (context, index) {
-                                if (value.allBusiness.length == 0) {
-                                  return Center(
-                                      child: Text("No Business Found"));
-                                }
+      //AppbBar
+      appBar:PreferredSize(
+        preferredSize: Size.fromHeight(60),
+          child: CustomAppBar(
+            trailingButton: HelpButton(),
+          )),
 
-                                return ListTile(
-                                  title: Text(
-                                      '${value.allBusiness[index].businessName}'),
-                                  onTap: () {
-                                    Provider.of<BusinessProvider>(context,
-                                            listen: false)
-                                        .setCurrentBusiness(
-                                            value.allBusiness[index]);
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        );
-                      });
-                },
-                child: Consumer<BusinessProvider>(
-                    builder: (context, value, child) {
-                  if (value.loding) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  if (value.allBusiness.length == 0)
-                    return Text("No Business Found");
-                  if (value.allBusiness.length > 0 &&
-                      value.currentBusiness == null) {
-                    Future.wait([
-                      Provider.of<BusinessProvider>(context, listen: false)
-                          .lode()
-                    ]).then(
-                      (e) {
-                        value.setCurrentBusiness(value.allBusiness[0]);
-                      },
-                    );
-                  }
-                  return Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "${value.currentBusiness == null ? "No Business Selected" : value.currentBusiness!.businessName}",
-                        style: TextStyle(
-                            color: Colors.white, fontSize: SC.from_height(18)),
-                      ),
-                      Icon(Icons.arrow_drop_down, color: Colors.white),
-                    ],
-                  );
-                }),
-              ),
-            ),
-            Spacer(),
-            // SizedBox(width: SC.from_width(50)),
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: HelpButton(),
-            ),
-          ],
-        ),
-        // actions: [
-        //
-        //
-        //   // Container(
-        //   //   child: Row(
-        //   //     mainAxisAlignment: MainAxisAlignment.center,
-        //   //     children: [
-        //   //       Icon(Icons.search,size:  SC.from_height(17),color: Colors.white,),
-        //   //       SizedBox(width: SC.from_height(4),),
-        //   //       Center(child: Text('Search',style: TextStyle(fontSize: SC.from_height(16),color: Colors.white),),),
-        //   //     ],
-        //   //   ),
-        //   //   width: SC.from_height(85),
-        //   //   height: SC.from_height(30),
-        //   //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(SC.from_height(15)),border: Border.all(
-        //   //       color: Colors.white,width: 1.5
-        //   //   )),
-        //   // ),
-        //   SizedBox(width: SC.from_height(20)),
-        // ],
-      ),
+      //Body
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: SC.from_height(18)),
         children: [
@@ -244,47 +135,6 @@ class _HomeScreenState extends State<HomeScreen> {
             height: SC.from_height(15),
           ),
 
-          // Center(
-          //   child: CarouselSlider(
-          //     options: CarouselOptions(
-          //       aspectRatio: 16 / 9,
-          //       viewportFraction: 1,
-          //       initialPage: 0,
-          //       enableInfiniteScroll: true,
-          //       reverse: false,
-          //       autoPlay: true,
-          //       autoPlayInterval: Duration(seconds: 3),
-          //       autoPlayAnimationDuration: Duration(milliseconds: 800),
-          //       autoPlayCurve: Curves.fastOutSlowIn,
-          //       enlargeCenterPage: true,
-          //       scrollDirection: Axis.horizontal,
-          //     ),
-          //     items: [
-          //       GestureDetector(
-          //         onTap: () {
-          //           // Handle onTap event
-          //           // Navigator.push(context, MaterialPageRoute(builder: (context) => TopFeaturedPropety()));
-          //           // Get.to(DetailGalleryScreen());
-          //         },
-          //         child: Container(
-          //           clipBehavior: Clip.hardEdge,
-          //           decoration: BoxDecoration(
-          //             borderRadius: BorderRadius.circular(8), // Replace SC.from_height(8) with a fixed value
-          //           ),
-          //           margin: EdgeInsets.only(
-          //            // Replace ScreenDim.from_width(10) with a fixed value
-          //             top: 5, // Replace ScreenDim.from_width(5) with a fixed value
-          //             bottom: 10, // Replace ScreenDim.from_width(10) with a fixed value
-          //           ),
-          //           child: Image.asset(
-          //             'assets/home_images/img_3.png',
-          //             fit: BoxFit.cover,
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
 
           Container(
             clipBehavior: Clip.hardEdge,
