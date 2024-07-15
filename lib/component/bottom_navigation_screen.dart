@@ -213,29 +213,29 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
           },
           child: pages[currentPage],
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: ()async{
-            showDialog(context: context, builder: (context) {
-              return AlertDialog(
-                title: Text("Are you sure you want to logout?"),
-                actions: [
-                  TextButton(onPressed: (){
-                    Controllers.authController.logOut(context);
-                    context.pop();
-                  }, child: Text("Yes", style: TextStyle(color: Colors.redAccent, fontSize: SC.fromContextWidth(context, 20)))),
-                  TextButton(onPressed: (){
-                    context.pop();
-                  }, child: Text("No", style: TextStyle(
-                      fontSize: SC.fromContextWidth(context, 20)
-                  ),)),
-                ],
-              );
-            },);
-          },
-          backgroundColor: Colors.redAccent,
-          label: Text("Logout"),
-          icon: Icon(Icons.logout),
-        ),
+        // floatingActionButton: FloatingActionButton.extended(
+        //   onPressed: ()async{
+        //     showDialog(context: context, builder: (context) {
+        //       return AlertDialog(
+        //         title: Text("Are you sure you want to logout?"),
+        //         actions: [
+        //           TextButton(onPressed: (){
+        //             Controllers.authController.logOut(context);
+        //             context.pop();
+        //           }, child: Text("Yes", style: TextStyle(color: Colors.redAccent, fontSize: SC.fromContextWidth(context, 20)))),
+        //           TextButton(onPressed: (){
+        //             context.pop();
+        //           }, child: Text("No", style: TextStyle(
+        //               fontSize: SC.fromContextWidth(context, 20)
+        //           ),)),
+        //         ],
+        //       );
+        //     },);
+        //   },
+        //   backgroundColor: Colors.redAccent,
+        //   label: Text("Logout"),
+        //   icon: Icon(Icons.logout),
+        // ),
         bottomNavigationBar: BottomAppBar(
           padding: EdgeInsets.only(top: 3),
           color: Colors.white,

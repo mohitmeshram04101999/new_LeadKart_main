@@ -1,4 +1,8 @@
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:leadkart/ApiServices/adsApi.dart';
+import 'package:leadkart/controllers/creaetAddProvider.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/leads/create_ads_page.dart';import 'package:leadkart/them/constents.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/business_pages/growBusinessFaster.dart';
 import 'package:leadkart/component/PlanTileview.dart';
@@ -12,201 +16,226 @@ import 'package:provider/provider.dart';
 import '../../component/helpButton.dart';
 import '../../helper/dimention.dart';
 
-class GetNewLeads extends StatelessWidget {
+class GetNewLeads extends StatefulWidget {
   const GetNewLeads({super.key});
+
+  @override
+  State<GetNewLeads> createState() => _GetNewLeadsState();
+}
+
+class _GetNewLeadsState extends State<GetNewLeads> {
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
 
+
     print("Build Method is Called set State {}");
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: ()async{
+        Controllers.allplansprovider(context,listen: false).clear();
+        Controllers.createAddProvider(context,listen: false).clear();
+        return true;
+      },
+      child: Scaffold(
 
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
-      floatingActionButton:  SizedBox(
-        width:double.infinity ,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ElevatedButton(
-            onPressed: () {
-              // context.pushNamed('imageEditor');
-            },
-            child: Text('Next'),
+        floatingActionButton:  SizedBox(
+          width:double.infinity ,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: ElevatedButton(
+              onPressed: () {
+                context.pushNamed("createAdd");
+              },
+              child: const Text('Next'),
+            ),
           ),
         ),
-      ),
 
-      appBar: AppBar(
-        backgroundColor: AppConstent().primeryColor,
-        foregroundColor: Colors.white,
-        title: const Text('Get New Leads'),
+        appBar: AppBar(
+          backgroundColor: AppConstent().primeryColor,
+          foregroundColor: Colors.white,
+          title: const Text('Get New Leads'),
 
-        actions: [  Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: HelpButton(),
-        )],
+          actions: [  Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: HelpButton(),
+          )],
 
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0),
-        child:  SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const InfoCard(
-                title: 'Get new customers using Leads :',
-                subTitle:
-                ' Generate daily new leads by showing your ads to potential customers in target area.',
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Total Budget",
-                      style: Theme.of(context).textTheme.displayMedium,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: SC.from_width(10),
-              ),
-              Row(
+        ),
+        body: Consumer<CreateAddProvider>(
+          builder: (a,p,c)=>Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child:  SingleChildScrollView(
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Checkbox(value: true, onChanged: (value) {}),
-                  BudgetSelecter(
-                    icon: 'assets/facebook_wbg.png',
-                    budget:'2000',
+                  const InfoCard(
+                    title: 'Get new customers using Leads :',
+                    subTitle:
+                    ' Generate daily new leads by showing your ads to potential customers in target area.',
                   ),
-
-                ],
-              ),
-              SizedBox(
-                height: SC.from_width(10),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Checkbox(value: true, onChanged: (value) {}),
-                  BudgetSelecter(
-                    icon: 'assets/instagram_wbg.png',
-                    budget:'2000',
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: SC.fromContextWidth(context, 20),
-              ),
-              Text("OR"),
-              SizedBox(
-                height: SC.fromContextWidth(context, 20),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("Select a Plan",style: Theme.of(context).textTheme.displayMedium,),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              LeadSelecter(),
-
-
-              //All Plans List
-              FutureBuilder(
-                  future: Controllers.allplansprovider(context, listen: false).load(),
-
-
-                  builder: (a,b){
-
-                    return Consumer<Allplansprovider>(builder: (a,p,c){
-
-                      print("THis is From Consumer");
-
-                      if(p.initing)
-                      {
-                        return CircularProgressIndicator();
-                      }
-
-                      if(p.allPlans.length==0)
-                      {
-                        return Text("No Data Found");
-                      }
-
-                      return ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          primary: false
-                          ,itemCount: p.allPlans.length,
-                          itemBuilder: (a,i)=>Plantileview(data: p.allPlans[i])
-                      );
-                    });
-                  }),
-
-
-              SizedBox(
-                height: 5,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("Package includes",style: Theme.of(context).textTheme.displayMedium,),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              ConstrainedBox(
-                // height:200,
-                constraints: BoxConstraints(
-                  maxHeight: 200,
-                  minHeight: 200,
-                ),
-                child: PackageCards(),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              ExtimateResultCard(),
-              SizedBox(
-                height: 5,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("Package Frequently asked Questions",style: Theme.of(context).textTheme.displayMedium,),
-                ),
-              ),
-              ListView.builder(
-                shrinkWrap: true, // Prevent excessive scrolling
-                physics: const NeverScrollableScrollPhysics(), // Disable scrolling if needed
-                itemCount: 10,
-                itemBuilder: (context, index) {
-
-                  return ExpansionTile(
-                    title: Text('Where will my ad be shown?'),
+                  Row(
                     children: [
-                      ListTile(
-                        title: Text('No where!'),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Total Budget",
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
                       ),
                     ],
-                  );
-                },
+                  ),
+                  SizedBox(
+                    height: SC.from_width(10),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Checkbox(value: true, onChanged: (value) {}),
+                      BudgetSelecter(
+                        onDec: ()=>p.decFacebookBudget(),
+                        onInc: ()=>p.incFacebookBudget(),
+                        icon: 'assets/facebook_wbg.png',
+                        budget:p.faceBookBudgetController.toInt().toString(),
+                      ),
+
+                    ],
+                  ),
+                  SizedBox(
+                    height: SC.from_width(10),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Checkbox(value: true, onChanged: (value) {}),
+                      BudgetSelecter(
+                        onInc: ()=>p.incInstBudget(),
+                        onDec: ()=>p.decInstBudget(),
+                        icon: 'assets/instagram_wbg.png',
+                        budget:'${p.instBudgetController.toInt()}',
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: SC.fromContextWidth(context, 20),
+                  ),
+                  Text("OR"),
+                  SizedBox(
+                    height: SC.fromContextWidth(context, 20),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Select a Plan",style: Theme.of(context).textTheme.displayMedium,),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  LeadSelecter(),
 
 
+                  //All Plans List
+                  FutureBuilder(
+                      future: Controllers.allplansprovider(context, listen: false).load(),
+
+
+                      builder: (a,b){
+
+                        return Consumer<Allplansprovider>(builder: (a,p1,c){
+
+
+                          if(p1.initing)
+                          {
+                            return CircularProgressIndicator();
+                          }
+
+                          if(p1.allPlans.length==0)
+                          {
+                            return Text("No Data Found");
+                          }
+
+                          return ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              primary: false
+                              ,itemCount: p1.allPlans.length,
+                              itemBuilder: (a,i)=>Plantileview(
+                                  data: p1.allPlans[i]
+                              )
+                          );
+                        });
+                      }),
+
+
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Package includes",style: Theme.of(context).textTheme.displayMedium,),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  ConstrainedBox(
+                    // height:200,
+                    constraints: BoxConstraints(
+                      maxHeight: 200,
+                      minHeight: 200,
+                    ),
+                    child: PackageCards(),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  ExtimateResultCard(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Package Frequently asked Questions",style: Theme.of(context).textTheme.displayMedium,),
+                    ),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true, // Prevent excessive scrolling
+                    physics: const NeverScrollableScrollPhysics(), // Disable scrolling if needed
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+
+                      return ExpansionTile(
+                        title: Text('Where will my ad be shown?'),
+                        children: [
+                          ListTile(
+                            title: Text('No where!'),
+                          ),
+                        ],
+                      );
+                    },
+
+
+                  ),
+                  SizedBox(
+                    height: 100,
+                  )
+                ],
               ),
-              SizedBox(
-                height: 100,
-              )
-            ],
+            ),
           ),
         ),
       ),
@@ -347,16 +376,13 @@ class PackageCards extends StatelessWidget {
 }
 
 
-class BudgetSelecter extends StatefulWidget {
+class BudgetSelecter extends StatelessWidget {
   String icon;
   String budget;
-  BudgetSelecter({super.key, required this.icon, required this.budget});
+  void Function()? onInc;
+  void Function()? onDec;
+  BudgetSelecter({required this.onInc,required this.onDec,super.key, required this.icon, required this.budget});
 
-  @override
-  State<BudgetSelecter> createState() => _BudgetSelecterState();
-}
-
-class _BudgetSelecterState extends State<BudgetSelecter> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -378,12 +404,12 @@ class _BudgetSelecterState extends State<BudgetSelecter> {
                 padding: const EdgeInsets.symmetric(
                     horizontal: 10, vertical: 10),
                 child: Image.asset(
-                  widget.icon,
+                  icon,
                   height: SC.from_width(20),
                 )),
             Expanded(child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(widget.budget,style: Theme.of(context).textTheme.displaySmall,),
+              child: Text(budget,style: Theme.of(context).textTheme.displaySmall,),
             )),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -400,11 +426,7 @@ class _BudgetSelecterState extends State<BudgetSelecter> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       GestureDetector(
-                        onTap: (){
-                          setState(() {
-                            widget.budget= (int.parse(widget.budget)-1).toString();
-                          });
-                        },
+                        onTap:onDec,
                         child: Container(
                           decoration: const BoxDecoration(),
                           child: Padding(
@@ -417,11 +439,7 @@ class _BudgetSelecterState extends State<BudgetSelecter> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            widget.budget= (int.parse(widget.budget)+1).toString();
-                          });
-                        },
+                        onTap: onInc,
                         child: Container(
                           decoration:  BoxDecoration(
                             color: Theme.of(context).colorScheme.onSecondary,
@@ -451,7 +469,6 @@ class _BudgetSelecterState extends State<BudgetSelecter> {
     );
   }
 }
-
 
 class InfoCard extends StatelessWidget {
   final String title;

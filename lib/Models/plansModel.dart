@@ -42,19 +42,22 @@ class ViewPlansModel {
 
 class PlanDetail {
   String? id;
-  AdvertisementTypeId? advertisementTypeId;
-  Title? title;
+  String? advertisementTypeId;
+  String? title;
   int? price;
   int? duretion;
   int? dailySpendBudget;
   int? aiImageCount;
   bool? disable;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  int? v;
   int? instaBudget;
   int? googleBudget;
   int? facebookBudget;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  int? v;
+  dynamic views;
+  dynamic reach;
+  dynamic leads;
 
   PlanDetail({
     this.id,
@@ -65,48 +68,58 @@ class PlanDetail {
     this.dailySpendBudget,
     this.aiImageCount,
     this.disable,
-    this.createdAt,
-    this.updatedAt,
-    this.v,
     this.instaBudget,
     this.googleBudget,
     this.facebookBudget,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
+    this.views,
+    this.reach,
+    this.leads,
   });
 
   factory PlanDetail.fromJson(Map<String, dynamic> json) => PlanDetail(
     id: json["_id"],
-    advertisementTypeId: advertisementTypeIdValues.map[json["advertisementTypeId"]]!,
-    title: titleValues.map[json["title"]]!,
+    advertisementTypeId: json["advertisementTypeId"],
+    title: json["title"],
     price: json["price"],
     duretion: json["duretion"],
     dailySpendBudget: json["dailySpendBudget"],
     aiImageCount: json["aiImageCount"],
     disable: json["disable"],
-    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
-    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
-    v: json["__v"],
     instaBudget: json["instaBudget"],
     googleBudget: json["googleBudget"],
     facebookBudget: json["facebookBudget"],
+    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+    v: json["__v"],
+    views: json["views"],
+    reach: json["reach"],
+    leads: json["leads"],
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "advertisementTypeId": advertisementTypeIdValues.reverse[advertisementTypeId],
-    "title": titleValues.reverse[title],
+    "advertisementTypeId": advertisementTypeId,
+    "title": title,
     "price": price,
     "duretion": duretion,
     "dailySpendBudget": dailySpendBudget,
     "aiImageCount": aiImageCount,
     "disable": disable,
-    "createdAt": createdAt?.toIso8601String(),
-    "updatedAt": updatedAt?.toIso8601String(),
-    "__v": v,
     "instaBudget": instaBudget,
     "googleBudget": googleBudget,
     "facebookBudget": facebookBudget,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "__v": v,
+    "views": views,
+    "reach": reach,
+    "leads": leads,
   };
 }
+
 
 enum AdvertisementTypeId {
   THE_615_F4_B3_B7_B3_B3_B001_F3_B3_B3_B,

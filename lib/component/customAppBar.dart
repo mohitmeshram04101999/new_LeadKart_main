@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import '../helper/dimention.dart';
 
 
-
 class CustomAppBar extends StatelessWidget {
   Widget? trailingButton ;
   CustomAppBar({this.trailingButton,super.key});
@@ -17,20 +16,20 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  AppBar(
-      leading: SizedBox(),
+      leading:const SizedBox(),
       leadingWidth: 0,
 
       title: Row(
         children: [
-          SizedBox(width: 10,),
+          const SizedBox(width: 10,),
           Consumer<BusinessProvider>(builder:(a,p,c)=> CircleAvatar(
             backgroundImage:  NetworkImage(p.currentBusiness?.businessImage??""),
-            child: p.currentBusiness?.businessImage!="null"?null:Icon(Icons.image),
+            child: p.currentBusiness?.businessImage!="null"?null:const Icon(Icons.image),
           )),
-          SizedBox(width: 10,),
+          const SizedBox(width: 10,),
           FutureBuilder(
             future:
-            Provider.of<BusinessProvider>(context, listen: false).lode(),
+            Provider.of<BusinessProvider>(context, listen: false).lode(context),
             builder: (context, snapshot) => InkWell(
               onTap: () {
                 MyHelper.mybottomPanel(
@@ -39,9 +38,8 @@ class CustomAppBar extends StatelessWidget {
                       return Consumer<BusinessProvider>(
                         builder: (context, value, child) {
                           if (value.loding) {
-                            return Center(child: CircularProgressIndicator());
+                            return const Center(child: CircularProgressIndicator());
                           }
-                          MyHelper.logger.i(value.allBusiness.length);
                           return ListView.builder(
                             controller: d,
                             itemCount: value.allBusiness.length,
@@ -49,23 +47,28 @@ class CustomAppBar extends StatelessWidget {
 
                               if (value.allBusiness.length == 0) {
 
-                                return Center(
+                                return const  Center(
                                     child: Text("No Business Found"));
                               }
                               var business =  value.allBusiness[index];
 
-
                               return ListTile(
+
+                                //Color
+                                tileColor: (business.id==value.currentBusiness?.id)?AppConstent().primeryColor.withOpacity(.15):null,
+
+                                //Subtitle of TIle
+                                subtitle: Text(business.isFacebookPageLinked.toString(),style: TextStyle(color: Colors.grey.shade500),),
 
                                 //lead
                                 leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(business.businessImage.toString()),
-                                  child: business.businessImage==null?null:Icon(Icons.image),
+                                  backgroundImage: NetworkImage(business.businessImage??""),
+                                  child: business.businessImage==null?null:const Icon(Icons.image),
                                 ),
 
                                 //title
                                 title: Text(
-                                    '${value.allBusiness[index].businessName}'),
+                                    '${business.businessName}'),
 
                                 //trailing
                                 trailing:(business.id==value.currentBusiness?.id)? Icon(Icons.check_circle,color: AppConstent().primeryColor,):null,
@@ -75,7 +78,7 @@ class CustomAppBar extends StatelessWidget {
                                   Provider.of<BusinessProvider>(context,
                                       listen: false)
                                       .setCurrentBusiness(
-                                      value.allBusiness[index]);
+                                      business);
                                 },
                               );
                             },
@@ -87,15 +90,15 @@ class CustomAppBar extends StatelessWidget {
               child: Consumer<BusinessProvider>(
                   builder: (context, value, child) {
                     if (value.currentBusiness==null && value.loding) {
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     }
                     if (value.allBusiness.length == 0)
-                      return Text("No Business Found");
+                      return const Text("No Business Found");
                     if (value.allBusiness.length > 0 &&
                         value.currentBusiness == null) {
                       Future.wait([
                         Provider.of<BusinessProvider>(context, listen: false)
-                            .lode()
+                            .lode(context)
                       ]).then(
                             (e) {
                           value.setCurrentBusiness(value.allBusiness[0]);
@@ -110,13 +113,13 @@ class CustomAppBar extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white, fontSize: SC.from_height(18)),
                         ),
-                        Icon(Icons.arrow_drop_down, color: Colors.white),
+                        const Icon(Icons.arrow_drop_down, color: Colors.white),
                       ],
                     );
                   }),
             ),
           ),
-          Spacer(),
+          const Spacer(),
           // SizedBox(width: SC.from_width(50)),
 
           Padding(

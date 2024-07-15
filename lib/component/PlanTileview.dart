@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:leadkart/Models/plansModel.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
 
 import '../helper/dimention.dart';
 
@@ -10,33 +12,13 @@ class Plantileview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> containerData =  [
-      {
-        'isRecommendation': true,
-        'duration': '30 days',
-        'price': 2000.0, // Ensure this is a double
-        'leads': 200,
-        'reach': 50000,
-        'platforms': [
-          'assets/facebook.png',
-          'assets/add_images/insta.png',
-        ],
-        'aiImages': 5,
-      },    {
-        'isRecommendation': false,
-        'duration': '30 days',
-        'price': 2000.0, // Ensure this is a double
-        'leads': 200,
-        'reach': 50000,
-        'platforms': [
-          'assets/facebook.png',
-          'assets/add_images/insta.png',
-        ],
-        'aiImages': 5,
+
+    var p = Controllers.createAddProvider(context,listen: false);
+
+    return MyInkWell(
+      onTap: (){
+        p.setPlan(p.plan?.id==data.id?null:data);
       },
-      // Add more containers as needed
-    ];
-    return Container(
       margin: EdgeInsets.symmetric(horizontal: SC.from_height(2), vertical: SC.from_height(5)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(11),
@@ -99,11 +81,11 @@ class Plantileview extends StatelessWidget {
                   ),
                 ),
                 Expanded(child: Container()),
-                // Radio(
-                //   value: index,
-                //   groupValue: selectedValue,
-                //   onChanged: onChanged,
-                // ),
+                Radio(
+                  value:data.id,
+                  groupValue:Controllers.createAddProvider(context,listen: false).plan?.id,
+                  onChanged: (d){},
+                ),
               ],
             ),
           ),
@@ -127,13 +109,16 @@ class Plantileview extends StatelessWidget {
                 // SizedBox(
                 //     height: SC.fromContextWidth(context, 6.5),
                 //     child: _buildPlatformIconsColumn('Platform', platforms,context)),
-                SizedBox(
-                    height: SC.fromContextWidth(context, 6.5),
-                    child: _buildInfoColumn('AI Images', data.aiImageCount.toString(), context)),
+                _buildInfoColumn('Lead', data.leads??"0", context),
+                _buildInfoColumn('Reach', data.reach??"0", context),
+                _buildPlatformIconsColumn("Platform",["assets/facebook.png","assets/instagram_wbg.png"], context),
+                _buildInfoColumn('AI Images', data.aiImageCount.toString(), context),
+
               ],
             ),
           ),
           SizedBox(height: SC.from_height(5)),
+
         ],
       ),
     );
