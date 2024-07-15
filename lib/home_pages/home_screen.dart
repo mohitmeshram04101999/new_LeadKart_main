@@ -1,23 +1,20 @@
-// import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:go_router/go_router.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
 import 'package:leadkart/Models/ad_type_model.dart';
-import 'package:leadkart/Models/business_model.dart';
 import 'package:leadkart/component/addRequirmentTile.dart';
 import 'package:leadkart/component/customAppBar.dart';
-import 'package:leadkart/controllers/businessProvider.dart';
 
-import 'package:leadkart/controllers/shredprefrence.dart';
 
 import 'package:leadkart/component/helpButton.dart';
 
 import 'package:leadkart/helper/dimention.dart';
-import 'package:leadkart/helper/helper.dart';
-import 'package:provider/provider.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
+import 'package:leadkart/screens/splash%20Screen.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -46,9 +43,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String? dropdownValue;
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        RouteTo(context, child: (a,b)=>SplashScreen());
+        },),
 
       //AppbBar
       appBar:PreferredSize(
@@ -130,7 +146,6 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
-
           SizedBox(
             height: SC.from_height(15),
           ),
@@ -181,45 +196,44 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Center(child: CircularProgressIndicator(),);
                 if(snapshot.hasError)
                   return Center(child: Text("Error: ${snapshot.error}") ,);
+                if(snapshot.data==null)
+                  {
+                    return Center(child: const  Text("Not Data Found"),);
+                  }
                 final data = snapshot.data! as List<AdvertisementTypeModel>;
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final item = data[index];
-                    return InkWell(
-                      onTap: () {
-                        context.pushNamed('getNewLeads');
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            top: SC.from_height(15),
-                            left: SC.from_height(2),
-                            right: SC.from_height(2)),
-                        width: double.infinity,
-                        // height: SC.from_height(85),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          // border: Border.all(),
-                          borderRadius:
-                              BorderRadius.circular(SC.from_height(8)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(
-                                  0.10), // Shadow color with opacity
-                              spreadRadius: 0.5, // Spread radius
-                              blurRadius: 5, // Blur radius
-                              offset:
-                                  Offset(1, 2), // Offset in x and y directions
-                            ),
-                          ],
-                        ),
-                        child: AddREquirmentTile(
-                          advertisementTypeModel: item,
-                          icon: Icon(
-                            iconList[index],
-                            color: Colors.black54,
+                    return Container(
+                      margin: EdgeInsets.only(
+                          top: SC.from_height(15),
+                          left: SC.from_height(2),
+                          right: SC.from_height(2)),
+                      width: double.infinity,
+                      // height: SC.from_height(85),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        // border: Border.all(),
+                        borderRadius:
+                            BorderRadius.circular(SC.from_height(8)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(
+                                0.10), // Shadow color with opacity
+                            spreadRadius: 0.5, // Spread radius
+                            blurRadius: 5, // Blur radius
+                            offset:
+                                const Offset(1, 2), // Offset in x and y directions
                           ),
+                        ],
+                      ),
+                      child: AddREquirmentTile(
+                        advertisementTypeModel: item,
+                        icon: Icon(
+                          iconList[index],
+                          color: Colors.black54,
                         ),
                       ),
                     );

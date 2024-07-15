@@ -15,9 +15,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:leadkart/ApiServices/api%20Path.dart';
 import 'package:leadkart/Models/AllStateMosel.dart';
 import 'package:leadkart/Models/BusnissCateforyModel.dart';
+import 'package:leadkart/Models/BussnessdetailModel.dart';
 import 'package:leadkart/Models/MycustomResponce.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:leadkart/Models/getAllCityModelREsponce.dart';
+import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:leadkart/Models/business_model.dart';
@@ -73,7 +75,6 @@ class BussnissApi
   }) async
   {
     try {
-      // /business/getBusinessByCategory?categoryId=60b9b3b3b3b3b3b3b3b3b3b3&userId=66446389926d794e368c8f6c&page=1&title=&businessId=
       String uri = "/business/getAllBussinessByUserId/$userId";
 
       final CurrentUser? _user = await Controllers.userPreferencesController
@@ -272,7 +273,10 @@ class BussnissApi
 
   var request = http.MultipartRequest("POST",Uri.parse(ApiConst.baseUrl+uri));
 
-  request.files.add(await http.MultipartFile.fromPath("businessImage", logo?.path??"", ));
+  if(logo!=null)
+    {
+      request.files.add(await http.MultipartFile.fromPath("businessImage", logo.path??"", ));
+    }
   request.headers.addAll({"Authorization":user.token.toString()});
 
   request.fields.addAll(formatedData);
@@ -495,5 +499,32 @@ class BussnissApi
 
   }
 
+
+
+  Future<BusinessDetailModel?> getFullDetailOfBusiness(String businessId)async
+  {
+    var logg = Logger();
+    var user  = await UserPreference().getUser();
+
+    Logger().i(businessId);
+
+    String uri = "/business/getByIdBussiness/$businessId?userId=${user?.id}";
+
+    var header = await UserPreference().getHeader();
+
+    var resp = await MyHelper.dio.get(uri,options: Options(headers: header));
+
+    if(resp.statusCode==200)
+      {
+        var model = BusinessDetailModel.fromJson(resp.data);
+        return model;
+      }
+    else
+      {
+        logg.e("response From Detail Business Api");
+        logg.e(resp.statusCode);
+        logg.e(resp.data);
+      }
+  }
 
 }

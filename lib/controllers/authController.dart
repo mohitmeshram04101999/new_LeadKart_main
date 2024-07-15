@@ -80,7 +80,7 @@ class Authcontroller extends GetxController
 
           var p =  Provider.of<BusinessProvider>(context,listen: false);
 
-          await p.lode();
+          await p.lode(context);
 
           if(p.allBusiness.length==0)
             {

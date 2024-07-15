@@ -222,6 +222,31 @@ class EditBusinessProvider with ChangeNotifier
 
   Future<void> upDateBusiness(BuildContext context) async
   {
+
+    if(_businessNameController.text=="")
+    {
+      MyHelper.mySnakebar(context, "Please Provide a business name");
+      return ;
+    }
+    if(_businessCategoryId ==null)
+    {
+      MyHelper.mySnakebar(context, "Please select business category");
+      return ;
+    }
+
+
+    if(_stateId==null)
+    {
+      MyHelper.mySnakebar(context, "Please select State");
+      return ;
+    }
+    if(cityId==null)
+      {
+        MyHelper.mySnakebar(context, "Please select City");
+        return ;
+      }
+
+
     var  responce = await MyHelper.bussnissApi.upDateBusiness(
       businessId: Controllers.businessProvider(context,listen: false).currentBusiness?.id??"",
       logo: _businessImage,
@@ -243,10 +268,10 @@ class EditBusinessProvider with ChangeNotifier
     );
     if(responce.statusCode==200)
       {
-        clear();
-        Controllers.bussnissCategoryProvider(context,listen: false).clean();
         BusinessModel data = responce.data;
         Controllers.businessProvider(context,listen: false).setCurrentBusiness(data);
+        clear();
+        Controllers.bussnissCategoryProvider(context,listen: false).clean();
         context.pop();
 
       }

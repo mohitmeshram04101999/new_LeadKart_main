@@ -1,4 +1,7 @@
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:flutter/material.dart';
+import 'package:leadkart/Models/business_model.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
+import 'package:leadkart/helper/helper.dart';import 'package:leadkart/them/constents.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/Models/ad_type_model.dart';
 
@@ -14,15 +17,20 @@ class AddREquirmentTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: SC.from_width(8)),
-      onTap: () {
-        GoRouter.of(context).pushNamed('getNewLeads');
+      onTap: () async {
+        bool create = await  Controllers.businessProvider(context,listen: false).showWarning(context);
+        if(create)
+          {
+            GoRouter.of(context).pushNamed('getNewLeads');
+          }
       },
       leading: CircleAvatar(
-        child: Center(child: advertisementTypeModel.image==null? icon:Image.asset(advertisementTypeModel.image!,fit: BoxFit.contain,)),
+        child: Center(child: advertisementTypeModel.image==null? icon:Image.asset(advertisementTypeModel.image??"",fit: BoxFit.contain,)),
 
         backgroundColor: Color.fromRGBO(241, 241, 241, 1),
         radius:SC.from_height(25),
       ),
+
       title: Text(advertisementTypeModel.title,maxLines: 1,overflow: TextOverflow.ellipsis,
         style: TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.w500),),
       subtitle: Column(

@@ -146,6 +146,29 @@ void removeServiceId(String id) {_service_ids.removeWhere((v)=>v.id==id);notifyL
 
   Future<void> createBusiness(BuildContext context) async
   {
+
+    if(_businessNameController.text=="")
+      {
+        MyHelper.mySnakebar(context, "Please Provide a business name");
+        return ;
+      }
+    if(_businessNameController.text=="")
+    {
+      MyHelper.mySnakebar(context, "Please select business category");
+      return ;
+    }
+
+    if(_stateId==null)
+    {
+      MyHelper.mySnakebar(context, "Please select City");
+      return ;
+    }
+    if(cityId==null)
+    {
+      MyHelper.mySnakebar(context, "Please select State");
+      return ;
+    }
+
     var  responce = await MyHelper.bussnissApi.createBusiness(
       logo: _businessImage,
       cityId: _cityId?.id??"",
@@ -164,20 +187,13 @@ void removeServiceId(String id) {_service_ids.removeWhere((v)=>v.id==id);notifyL
       address: _addressController.text.trim(),
       tagLine: _tagLineController.text.trim(),
     );
-    MyHelper.logger.e("hjghjhjjh");
 
-   // if(responce.statusCode==201)
-   //   {
-   //     clear();
-   //     Controllers.bussnissCategoryProvider(context,listen: false).clean();
-   //   }
-
-
+    //if Business created successfull then perfoming action
     if(responce.statusCode==201)
     {
-      //     clear();
-      //     Controllers.bussnissCategoryProvider(context,listen: false).clean();
-      MyHelper.mySnakebar(context, "${responce.message}");
+      MyHelper.mySnakebar(context, color: AppConstent().primeryColor,"${responce.message}");
+      clear();
+      Controllers.bussnissCategoryProvider(context,listen: false).clean();
     }
     else
       {

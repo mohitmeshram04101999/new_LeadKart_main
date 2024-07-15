@@ -1,11 +1,17 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:flutter/material.dart';
+import 'package:leadkart/component/CustomButton.dart';
+import 'package:leadkart/component/customRadioFeild.dart';
+import 'package:leadkart/component/custom_textfield.dart';
+import 'package:leadkart/controllers/creaetAddProvider.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';import 'package:leadkart/them/constents.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/component/custom_button.dart';
 import 'package:leadkart/helper/dimention.dart';
+import 'package:provider/provider.dart';
 
 class CampaignSetting extends StatefulWidget {
   const CampaignSetting({Key? key}) : super(key: key);
@@ -16,9 +22,16 @@ class CampaignSetting extends StatefulWidget {
 
 class _CampaignSettingState extends State<CampaignSetting> {
 
-  String _selectedGender = 'Male';
+  var days = {
+    "SU":1,
+    "M":2,
+    "T":3,
+    "W":4,
+    "TU":5,
+    "F":6,
+    "SA":7,
+  };
 
-  RangeValues _values = RangeValues(18, 66); // Define _values with initial range
   double min = 18; // Define min value
   double max = 66; // Define max value
   @override
@@ -26,11 +39,11 @@ class _CampaignSettingState extends State<CampaignSetting> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
-        title: Text('Ad Campaign Settings'),
+        title: const Text('Ad Campaign Settings'),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: SC.from_height(17)),
-        child: ListView(
+      body: Consumer<CreateAddProvider>(
+        builder: (a,p,c)=>ListView(
+          padding: EdgeInsets.symmetric(horizontal: SC.from_height(17)),
           children: [
             SizedBox(height: SC.from_height(10),),
             Container(
@@ -60,57 +73,17 @@ class _CampaignSettingState extends State<CampaignSetting> {
             SizedBox(height: SC.from_height(15),),
             Text('Select the Gender',
               style: TextStyle(fontSize: SC.from_height(18),fontWeight: FontWeight.w500),),
-
+            SizedBox(height: SC.from_height(7),),
             // RADIO BUTTON //
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
 
-                Row(
-                  children: [
-                    Radio<String>(
-                      value: 'Male',
-                      groupValue: _selectedGender,
-                      activeColor: Color.fromRGBO(36, 238, 221, 1),
-                      onChanged: (String? value) {
-                        setState(() {
-                          _selectedGender = value!;
-                        });
-                      },
-                    ),
-                    Text('Male',style: TextStyle(fontSize: SC.from_height(17)),),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio<String>(
-                      value: 'Female',
-                      groupValue: _selectedGender,
-                      activeColor: Color.fromRGBO(36, 238, 221, 1),
-                      onChanged: (String? value) {
-                        setState(() {
-                          _selectedGender = value!;
-                        });
-                      },
-                    ),
-                    Text('Female',style: TextStyle(fontSize: SC.from_height(17))),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio<String>(
-                      value: 'Other',
-                      groupValue: _selectedGender,
-                      activeColor: Color.fromRGBO(36, 238, 221, 1),
-                      onChanged: (String? value) {
-                        setState(() {
-                          _selectedGender = value!;
-                        });
-                      },
-                    ),
-                    Text('Other',style: TextStyle(fontSize: SC.from_height(17))),
-                  ],
-                ),
+                CustomRadio(value: 1,active: p.targetGenders.contains(1), label: "Male",onTap: (v){p.setTargetGender(v);},),
+                SizedBox(width: 10,),
+                CustomRadio(value: 2,active: p.targetGenders.contains(2), label: "Female",onTap: (v){p.setTargetGender(v);},),
+                SizedBox(width: 10,),
+                CustomRadio(value: 3,active: p.targetGenders.contains(3), label: "Other",onTap: (v){p.setTargetGender(v);},),
               ],
             ),
 
@@ -316,46 +289,100 @@ class _CampaignSettingState extends State<CampaignSetting> {
               ],
             ),
             SizedBox(height: SC.from_height(10),),
+
             Container(
               height: SC.from_width(16),
               child: RangeSlider(
-                values: _values,
+                values: p.ageRange,
                 min: min,
                 max: max,
                 divisions: 500000,
                 labels: RangeLabels(
-                  _values.start.round().toString(),
-                  _values.end.round().toString(),
+                  p.ageRange.start.round().toString(),
+                  p.ageRange.end.round().toString(),
                 ),
                 activeColor: Color.fromRGBO(36, 238, 221, 1),
                 // Set active color
                 inactiveColor: Colors.grey.shade400,
                 onChanged: (newvalues) {
-                  setState(() {
-                    _values = newvalues;
-                  });
+                  p.setAgeRange(newvalues);
                 },
               ),
             ),
             SizedBox(height: SC.from_height(20),),
             Text('Days', style: TextStyle(fontSize: SC.from_height(17.5))),
+            SizedBox(height: SC.from_height(10),),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:[
+                for(var i in days.entries)
+                  MyInkWell(
+                    width: SC.from_height(35),
+                    height: SC.from_height(35),
+                    onTap: ()=>p.setDay(i.value),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(3),
+                      color: (p.days.contains(i.value))?AppConstent().primeryColor:Colors.transparent,
+                      border: Border.all(
+                        color: AppConstent().primeryColor
+                      )
+                    ),
+                    child: Center(child: Text(i.key[0].toString(),style: TextStyle(
+                      color: p.days.contains(i.value)?Colors.white:AppConstent().primeryColor
+                    ),)),
+                  )
+              ],
+            ),
 
             SizedBox(height: SC.from_height(20),),
+
+            Text('Ad Schedule', style: TextStyle(fontSize: SC.from_height(17.5))),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: CustomPicker(
+                      onTap: ()=>p.setStartDay(context),
+                      label: "Set Start Date", child: Text(p.startDate==null?"Start Date":"${p.startDate.toString().split(" ").first}")),
+                ),
+                Expanded(
+                  child: CustomPicker(
+                      onTap: ()=>p.setEndDay(context),
+                      label: "Set End Time", child: Text(p.endDate==null?"End Date":"${p.endDate.toString().split(" ").first}")),
+                ),
+              ],
+            ),
+            SizedBox(height: SC.from_height(8),),
+            Text('Running Interval', style: TextStyle(fontSize: SC.from_height(17.5))),
+           Row(
+             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+             children: [
+               Expanded(
+                 child: CustomPicker(
+                   onTap: ()=>p.setDayStartTime(context),
+                     label: "StartTime", child: Text(p.dayStartTime==null?"Set Start Time":"${p.dayStartTime.toString().substring(10,15)}")),
+               ),
+               Expanded(
+                 child: CustomPicker(
+                   onTap: ()=>p.setEndTime(context),
+                     label: "StartTime", child: Text(p.dayEndTime==null?"Set End Time":"${p.dayEndTime.toString().substring(10,15)}")),
+               ),
+             ],
+           ),
+            SizedBox(height: SC.from_height(20),),
+
 
             // GFBUTTON //
 
             CustomButton(
-              text: 'Proceed to payment', onPressed: () {
-              context.pushNamed("imageEditor");
-              // Navigator.push(context, MaterialPageRoute(builder: (context)=> CampaignSetting()));
-            },
+              text: 'Proceed to payment', onPressed: ()=>p.createAdd(context),
             ),
 
 
 
             SizedBox(height: SC.from_height(20),),
           ],
-        ),
+        )
       ),
     );
   }

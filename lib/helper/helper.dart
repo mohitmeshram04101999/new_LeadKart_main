@@ -33,7 +33,8 @@ class MyHelper
   {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         elevation: 0,
-        behavior:SnackBarBehavior.floating,
+        behavior:SnackBarBehavior.fixed,
+        duration:const  Duration(milliseconds: 1000),
         // margin:EdgeInsets.symmetric(horizontal: 30,vertical: 8),
         backgroundColor: Colors.transparent,
 

@@ -9,6 +9,7 @@ import 'package:leadkart/helper/controllerInstances.dart';
 
 import 'package:leadkart/leads/add_detail_screen.dart';
 import 'package:leadkart/leads/busines_category.dart';
+import 'package:leadkart/leads/create_ads_page.dart';
 import 'package:leadkart/login_pages/login_screen.dart';
 import 'package:leadkart/login_pages/otp_screen.dart';
 import 'package:leadkart/screens/imageEditor/imageEditor.dart';
@@ -82,6 +83,13 @@ class GoRouterConfig {
             name: 'getNewLeads',
             path: 'getNewLeads',
             builder: (context, state) => GetNewLeads(),
+            routes: [
+              GoRoute(
+                name: "createAdd",
+                  path: "createAdd",
+                builder: (context,state)=>CreateAds(),
+              )
+            ]
           ),
           GoRoute(path: 'campaignSettings', name: 'campaignSettings', builder: (context, state) => CampaignSetting()),
           GoRoute(path: 'growBusinessFaster', name: 'growBusinessFaster', builder: (context, state) => GrowBusinessFaster()),
