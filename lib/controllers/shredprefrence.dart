@@ -37,7 +37,7 @@ class UserPreference extends GetxController{
   }
 
   //get header
-  getHeader()async
+  Future<Map<String,String>?> getHeader()async
   {
     SharedPreferences sp = await SharedPreferences.getInstance();
     var _data = sp.getString("currentUser");
@@ -45,7 +45,7 @@ class UserPreference extends GetxController{
     {
       var decode = jsonDecode(_data);
       CurrentUser user = CurrentUser.fromJson(decode);
-      return {"Authorization":user.token};
+      return {"Authorization":user.token??""};
     }
 
   }

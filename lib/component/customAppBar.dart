@@ -58,7 +58,7 @@ class CustomAppBar extends StatelessWidget {
                                 tileColor: (business.id==value.currentBusiness?.id)?AppConstent().primeryColor.withOpacity(.15):null,
 
                                 //Subtitle of TIle
-                                subtitle: Text(business.isFacebookPageLinked.toString(),style: TextStyle(color: Colors.grey.shade500),),
+                                subtitle: SelectableText(business.id.toString(),style: TextStyle(color: Colors.grey.shade500),),
 
                                 //lead
                                 leading: CircleAvatar(

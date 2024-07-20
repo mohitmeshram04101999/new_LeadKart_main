@@ -26,6 +26,9 @@ class MyHelper
       printTime: true,
     ),
   );
+
+
+
   static Dio dio = Dio(
     BaseOptions(baseUrl: "https://server.leadkart.dsmacademy.in/api/"),
   );
@@ -34,7 +37,7 @@ class MyHelper
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         elevation: 0,
         behavior:SnackBarBehavior.fixed,
-        duration:const  Duration(milliseconds: 1000),
+        duration:const  Duration(milliseconds: 2000),
         // margin:EdgeInsets.symmetric(horizontal: 30,vertical: 8),
         backgroundColor: Colors.transparent,
 
@@ -54,6 +57,13 @@ class MyHelper
             child: Text(descriptioin,textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w400,fontSize: SC.from_width(17)),)))));
   }
 
+  static  String titleFormate(String s)
+  {
+
+    String d = s.replaceAll("_", " ").capitalizeFirst!;
+    return d;
+  }
+
   static mybottomPanel({required BuildContext context,required Widget Function(BuildContext, ScrollController) builder})=>showModalBottomSheet(
     showDragHandle: true,
     context: context,
@@ -67,4 +77,32 @@ class MyHelper
       builder: builder,
     ),
   );
+
+
+  static String formateDateTime(DateTime dateTime)
+  {
+    var month ={
+      1:"Jan",
+      2:"Fab",
+      3:"Mar",
+      4:"Apr",
+      5:"May",
+      6:"Jun",
+      7:"Jul",
+      8:"Aug",
+      9:"Sep",
+      10:"Oct",
+      11:"Nov",
+      12:"Dec",
+    };
+
+
+    String date = dateTime.toString().split(" ").first;
+    return "${dateTime.day} ${month[dateTime.month]},${dateTime.year}";
+  }
+
+  static String formateTime(TimeOfDay time)
+  {
+    return "${time.hour%12} : ${time.minute} ${time.hour>=12?"PM":"AM"}";
+  }
 }

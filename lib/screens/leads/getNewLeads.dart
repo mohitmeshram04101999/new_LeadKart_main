@@ -44,6 +44,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
 
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
+
         floatingActionButton:  SizedBox(
           width:double.infinity ,
           child: Padding(
@@ -68,6 +69,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
           )],
 
         ),
+
         body: Consumer<CreateAddProvider>(
           builder: (a,p,c)=>Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -141,7 +143,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                   SizedBox(
                     height: 5,
                   ),
-                  LeadSelecter(),
+                  // LeadSelecter(),
 
 
                   //All Plans List
@@ -201,7 +203,10 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                   SizedBox(
                     height: 5,
                   ),
-                  ExtimateResultCard(),
+
+                   if(p.estimatedData!=null)
+                   ExtimateResultCard(data: p.estimatedData!,),
+
                   SizedBox(
                     height: 5,
                   ),

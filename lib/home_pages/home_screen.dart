@@ -12,8 +12,6 @@ import 'package:leadkart/component/customAppBar.dart';
 import 'package:leadkart/component/helpButton.dart';
 
 import 'package:leadkart/helper/dimention.dart';
-import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
-import 'package:leadkart/screens/splash%20Screen.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -62,9 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        RouteTo(context, child: (a,b)=>SplashScreen());
-        },),
+      // floatingActionButton: FloatingActionButton(onPressed: (){
+      //   RouteTo(context, child: (a,b)=>SplashScreen());
+      //   },),
 
       //AppbBar
       appBar:PreferredSize(
@@ -203,6 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 final data = snapshot.data! as List<AdvertisementTypeModel>;
                 return ListView.builder(
                   shrinkWrap: true,
+                  itemCount: data.length,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final item = data[index];
@@ -238,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   },
-                  itemCount: data.length,
+
                 );
               }),
 
