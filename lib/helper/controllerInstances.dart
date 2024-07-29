@@ -13,6 +13,7 @@ import 'package:leadkart/controllers/businessProvider.dart';
 import 'package:leadkart/controllers/creaetAddProvider.dart';
 import 'package:leadkart/controllers/editBussnessProvider.dart';
 import 'package:leadkart/controllers/imageEditorController.dart';
+import 'package:leadkart/controllers/leadeProvider.dart';
 import 'package:leadkart/controllers/profileProvider.dart';
 import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:provider/provider.dart';
@@ -32,4 +33,5 @@ class Controllers
   static CreateAddProvider createAddProvider(BuildContext context,{bool listen = true}) => Provider.of<CreateAddProvider>(context,listen: false);
   static CampaignProvider cmpaignProvider(BuildContext context,{bool listen = true}) => Provider.of<CampaignProvider>(context,listen: false);
   static AddListByBusinessProvider addListByBusinessProvider(BuildContext context,{bool listen = true}) => Provider.of<AddListByBusinessProvider>(context,listen: false);
+  static LeadsProvider leadsProvider(BuildContext context,{bool listen = true}) => Provider.of<LeadsProvider>(context,listen: false);
 }

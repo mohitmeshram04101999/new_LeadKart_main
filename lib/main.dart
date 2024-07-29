@@ -11,6 +11,7 @@ import 'package:leadkart/controllers/addListByBussnessProvider.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
 import 'package:leadkart/controllers/creaetAddProvider.dart';
 import 'package:leadkart/controllers/editBussnessProvider.dart';
+import 'package:leadkart/controllers/leadeProvider.dart';
 import 'package:leadkart/controllers/profileProvider.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
@@ -40,19 +41,20 @@ MyHelper();
       ChangeNotifierProvider(create: (context) => CreateAddProvider()),
       ChangeNotifierProvider(create: (context) => CampaignProvider()),
       ChangeNotifierProvider(create: (context) => AddListByBusinessProvider()),
+      ChangeNotifierProvider(create: (context) => LeadsProvider()),
     ],
-      child: MyApp()));
+      child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  Offset _offset = Offset(100, 100);
+  final Offset _offset = const Offset(100, 100);
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:flutter/material.dart';
+import 'package:leadkart/Models/LeadsApiresponce.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leadkart/component/leadeTile.dart';
 import 'package:leadkart/component/leadeTilewithChecBox.dart';
@@ -10,6 +11,7 @@ import 'package:leadkart/them/constents.dart';
 
 
 class AssaignLeads extends StatefulWidget {
+
   const AssaignLeads({super.key});
 
   @override
@@ -32,7 +34,8 @@ class _AssaignLeadsState extends State<AssaignLeads> {
       ),
 
       //Body (List Of Leads)
-      body: ListView(
+      body: Column(
+
         children: [
 
           Padding(

@@ -165,12 +165,12 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
   int backPress = 0;
 
   final List<Widget> pages = [
-    HomeScreen(),
-    AddImages(),
-    AdsPage(),
-    LeadeScreen(),
+    const HomeScreen(),
+    const AddImages(),
+    const AdsPage(),
+    const LeadeScreen(),
     // CreateAds(),
-    BusinessDetail(),
+    const BusinessDetail(),
   ];
 
   @override
@@ -203,7 +203,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
       },
       child: Scaffold(
         body: PageTransitionSwitcher(
-          duration: Duration(milliseconds: 700),
+          duration: const Duration(milliseconds: 700),
           transitionBuilder: (Widget child, Animation<double> animation, Animation<double> secondaryAnimation) {
             return FadeThroughTransition(
               animation: animation,

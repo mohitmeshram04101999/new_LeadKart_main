@@ -121,7 +121,6 @@ class AdsApi{
         request.files.add(await http.MultipartFile.fromPath("filename", file.toString()??"", ));
       }
 
-
     var resp = await request.send();
 
     String responceBody = await resp.stream.bytesToString();
