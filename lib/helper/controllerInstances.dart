@@ -7,6 +7,7 @@ import 'package:leadkart/controllers/AllPlansProvider.dart';
 import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
 import 'package:leadkart/controllers/GetCampaignProvider.dart';
+import 'package:leadkart/controllers/LeadeDetaileProvider.dart';
 import 'package:leadkart/controllers/addListByBussnessProvider.dart';
 import 'package:leadkart/controllers/authController.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
@@ -34,4 +35,5 @@ class Controllers
   static CampaignProvider cmpaignProvider(BuildContext context,{bool listen = true}) => Provider.of<CampaignProvider>(context,listen: false);
   static AddListByBusinessProvider addListByBusinessProvider(BuildContext context,{bool listen = true}) => Provider.of<AddListByBusinessProvider>(context,listen: false);
   static LeadsProvider leadsProvider(BuildContext context,{bool listen = true}) => Provider.of<LeadsProvider>(context,listen: false);
+  static LeadDetailProvider leadDetailProvider(BuildContext context,{bool listen = true}) => Provider.of<LeadDetailProvider>(context,listen: false);
 }

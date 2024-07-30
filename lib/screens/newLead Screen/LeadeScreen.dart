@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:leadkart/ApiServices/leads%20api.dart';
 import 'package:leadkart/controllers/leadeProvider.dart';import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/controllerInstances.dart';import 'package:leadkart/them/constents.dart';
@@ -12,6 +13,7 @@ import 'package:leadkart/screens/newLead%20Screen/assign_Leads.dart';
 import 'package:provider/provider.dart';
 
 import '../../component/helpButton.dart';
+import '../../leads/digital_ads_package.dart';
 
 
 
@@ -102,7 +104,13 @@ class _LeadeScreenState extends State<LeadeScreen> {
                   physics:const  NeverScrollableScrollPhysics(),
                   itemBuilder: (a,b){
                     var lead = p.allLeads[b];
-                    return LeadeTile(lead: lead,);
+                    return LeadeTile(
+                      onTap: (){
+                        Controllers.leadDetailProvider(context,listen: false).loadLeadDetail(context: context, leadId: lead.id??"");
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const DigitalAdsPackage()));
+
+                      },
+                      lead: lead,);
                   },
                 );
 

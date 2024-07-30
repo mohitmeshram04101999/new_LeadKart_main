@@ -7,6 +7,7 @@ import 'package:leadkart/controllers/AllPlansProvider.dart';
 import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
 import 'package:leadkart/controllers/GetCampaignProvider.dart';
+import 'package:leadkart/controllers/LeadeDetaileProvider.dart';
 import 'package:leadkart/controllers/addListByBussnessProvider.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
 import 'package:leadkart/controllers/creaetAddProvider.dart';
@@ -42,6 +43,7 @@ MyHelper();
       ChangeNotifierProvider(create: (context) => CampaignProvider()),
       ChangeNotifierProvider(create: (context) => AddListByBusinessProvider()),
       ChangeNotifierProvider(create: (context) => LeadsProvider()),
+      ChangeNotifierProvider(create: (context) => LeadDetailProvider()),
     ],
       child: const MyApp()));
 }

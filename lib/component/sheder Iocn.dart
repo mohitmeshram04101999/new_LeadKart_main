@@ -5,8 +5,9 @@ import 'package:leadkart/them/constents.dart';
 import '../helper/helper.dart';
 
 class ShederIcon extends StatelessWidget {
-  IconData iconData;
-  ShederIcon({required this.iconData});
+  final IconData iconData;
+  final Function()? onTap;
+  ShederIcon({this.onTap,required this.iconData});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ShederIcon extends StatelessWidget {
               child: CircleAvatar(),
             ),
           ),
-          Center(child: Icon(iconData,color: Colors.white,))
+          Center(child: IconButton(onPressed: onTap,icon:Icon(iconData,color: Colors.white,),))
         ],
       ),
     );

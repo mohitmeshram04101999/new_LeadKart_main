@@ -50,6 +50,7 @@ class Lead {
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
+  String? note;
 
   Lead({
     this.id,
@@ -69,6 +70,7 @@ class Lead {
     this.createdAt,
     this.updatedAt,
     this.v,
+    this.note,
   });
 
   factory Lead.fromJson(Map<String, dynamic> json) => Lead(
@@ -88,6 +90,7 @@ class Lead {
     leadStatus: json["leadStatus"],
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+    note: json["note"],
     v: json["__v"],
   );
 

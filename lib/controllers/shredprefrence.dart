@@ -50,6 +50,19 @@ class UserPreference extends GetxController{
 
   }
 
+  Future<Map<String,dynamic>?> getHeaderForDio()async
+  {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    var _data = sp.getString("currentUser");
+    if(_data!=null)
+    {
+      var decode = jsonDecode(_data);
+      CurrentUser user = CurrentUser.fromJson(decode);
+      return {"Authorization":user.token??""};
+    }
+
+  }
+
 
   saveBusiness(BusinessModel business) async
   {
