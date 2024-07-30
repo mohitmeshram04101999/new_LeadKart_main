@@ -1,5 +1,6 @@
 
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:flutter/material.dart';
+import 'package:leadkart/Models/LeadsApiresponce.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/component/HelpButtonWhite.dart';
 import 'package:leadkart/component/sheder%20Iocn.dart';
 import 'package:leadkart/helper/TextStyles.dart';
@@ -9,9 +10,11 @@ import 'package:leadkart/them/constents.dart';
 
 
 class LeadeTile extends StatelessWidget {
+  final Lead? lead;
   double elevation;
+  bool demo;
   void Function()? onTap;
-  LeadeTile({this.onTap,this.elevation = .5,super.key});
+  LeadeTile({this.demo=false,this.lead,this.onTap,this.elevation = .5,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +72,10 @@ class LeadeTile extends StatelessWidget {
                   children: [
 
                     //title
-                    Text("Demo Lead",overflow: TextOverflow.ellipsis,maxLines: 1,style: TextStyles().leadTileTitle),
+                    Text(lead?.name??"Demo Lead",overflow: TextOverflow.ellipsis,maxLines: 1,style: TextStyles().leadTileTitle),
 
                     //subtitle
-                    Text("+91 9988909890",maxLines: 1,overflow: TextOverflow.ellipsis,style:TextStyles().leadTileSubTitle),
+                    Text(lead?.userContactNumber??lead?.whatsappNumber??"${demo?"+91 7470765984":"No Contact number"}",maxLines: 1,overflow: TextOverflow.ellipsis,style:TextStyles().leadTileSubTitle),
 
                     Text("Added : 8789-887-788",maxLines: 1,overflow: TextOverflow.ellipsis,style:TextStyles().leadTileSubTitle),
 
@@ -86,10 +89,10 @@ class LeadeTile extends StatelessWidget {
                       Container(
                         alignment: Alignment.center,
                         width: double.infinity,
-                        child: Text("New Lead",style: TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w500),),
+                        child: Text("${lead?.leadStatus}",style: TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w500),),
                         decoration: BoxDecoration(
                             color: AppConstent().leadTiletagColor,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(32)
                           )
                         ),

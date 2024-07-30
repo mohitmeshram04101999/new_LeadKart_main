@@ -169,6 +169,7 @@ String otp = '';
 
             Center(
               child: MyactionButton(
+                lable: "Verify Otp",
                 action:()=> Controllers.authController.verifyOtp(otp, context),
               ),
             ),

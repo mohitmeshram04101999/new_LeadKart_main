@@ -44,6 +44,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
 
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
+
         floatingActionButton:  SizedBox(
           width:double.infinity ,
           child: Padding(
@@ -68,6 +69,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
           )],
 
         ),
+
         body: Consumer<CreateAddProvider>(
           builder: (a,p,c)=>Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -127,7 +129,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                   SizedBox(
                     height: SC.fromContextWidth(context, 20),
                   ),
-                  Text("OR"),
+                  const Text("OR"),
                   SizedBox(
                     height: SC.fromContextWidth(context, 20),
                   ),
@@ -138,10 +140,10 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                       child: Text("Select a Plan",style: Theme.of(context).textTheme.displayMedium,),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  LeadSelecter(),
+                  // LeadSelecter(),
 
 
                   //All Plans List
@@ -156,16 +158,16 @@ class _GetNewLeadsState extends State<GetNewLeads> {
 
                           if(p1.initing)
                           {
-                            return CircularProgressIndicator();
+                            return const CircularProgressIndicator();
                           }
 
                           if(p1.allPlans.length==0)
                           {
-                            return Text("No Data Found");
+                            return const Text("No Data Found");
                           }
 
                           return ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               primary: false
                               ,itemCount: p1.allPlans.length,
@@ -177,7 +179,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                       }),
 
 
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Align(
@@ -187,22 +189,25 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                       child: Text("Package includes",style: Theme.of(context).textTheme.displayMedium,),
                     ),
                   ),
-                  SizedBox(
+                 const  SizedBox(
                     height: 5,
                   ),
                   ConstrainedBox(
                     // height:200,
-                    constraints: BoxConstraints(
+                    constraints: const BoxConstraints(
                       maxHeight: 200,
                       minHeight: 200,
                     ),
-                    child: PackageCards(),
+                    child:const  PackageCards(),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  ExtimateResultCard(),
-                  SizedBox(
+
+                   if(p.estimatedData!=null)
+                   ExtimateResultCard(data: p.estimatedData!,),
+
+                  const SizedBox(
                     height: 5,
                   ),
                   Align(
@@ -218,7 +223,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                     itemCount: 10,
                     itemBuilder: (context, index) {
 
-                      return ExpansionTile(
+                      return const ExpansionTile(
                         title: Text('Where will my ad be shown?'),
                         children: [
                           ListTile(

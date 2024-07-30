@@ -84,7 +84,9 @@ class Plantileview extends StatelessWidget {
                 Radio(
                   value:data.id,
                   groupValue:Controllers.createAddProvider(context,listen: false).plan?.id,
-                  onChanged: (d){},
+                  onChanged: (d){
+                    p.setPlan(p.plan?.id==data.id?null:data);
+                  },
                 ),
               ],
             ),

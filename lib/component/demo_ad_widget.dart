@@ -1,39 +1,20 @@
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'dart:ffi';
+
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:leadkart/Models/addListByBussnesIdModel.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/them/constents.dart';
 
 class DemoAdWidget extends StatelessWidget {
-  final String dateRange;
-  final String adLabel;
-  final String mainText;
-  final Color mainTextColor;
-  final List<String> platformIcons;
-  final String imagePath;
-  final int reach;
-  final int leads;
-  final int spent;
-  final int clicks;
-  final VoidCallback onViewReportsTap;
-
-  DemoAdWidget({
-    required this.dateRange,
-    required this.adLabel,
-    required this.mainText,
-    required this.mainTextColor,
-    required this.platformIcons,
-    required this.imagePath,
-    required this.reach,
-    required this.leads,
-    required this.spent,
-    required this.clicks,
-    required this.onViewReportsTap,
-  });
+  final AddByBuinesss add;
+  DemoAdWidget({required this.add});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: SC.from_height(2)),
+      margin: EdgeInsets.symmetric(horizontal: SC.from_height(2),vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: Colors.white,
@@ -56,7 +37,7 @@ class DemoAdWidget extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: SC.from_height(10), top: SC.from_height(10)),
                 child: Text(
-                  dateRange,
+                  "${add.startDate}",
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: SC.from_height(14.5)),
                 ),
               ),
@@ -73,7 +54,7 @@ class DemoAdWidget extends StatelessWidget {
                 width: SC.from_height(70),
                 child: Center(
                   child: Text(
-                    adLabel,
+                    "Demo ad",
                     style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w600, fontSize: SC.fromWidth(33)),
                   ),
                 ),
@@ -86,22 +67,27 @@ class DemoAdWidget extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  mainText,
-                  style: TextStyle(color: mainTextColor, fontWeight: FontWeight.w600, fontSize: SC.from_height(17)),
+                  "Get new leads",
+                  style: TextStyle(color: AppConstent().primeryColor, fontWeight: FontWeight.w600, fontSize: SC.from_height(17)),
                 ),
                 SizedBox(width: SC.fromWidth(11.5)),
-                Row(
-                  children: platformIcons.map((icon) {
-                    return Padding(
-                      padding: EdgeInsets.only(right: SC.from_height(13)),
-                      child: Container(
-                        width: SC.from_height(18),
-                        height: SC.from_height(18),
-                        child: Image.asset(icon),
-                      ),
-                    );
-                  }).toList(),
-                ),
+                if(add.isFacebookAdEnabled??false)
+                   ShaderMask(shaderCallback: (a){
+                    return  const LinearGradient(
+                      begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [
+                          Colors.yellow,
+                          
+                          Color(0xfffd1d1d),
+                     Color(0xffc13584),
+                          Color(0xff405de6)
+
+                        ]).createShader(a);
+                  },child: const Icon(FontAwesomeIcons.squareInstagram,color: Colors.white,),),
+                const SizedBox(width: 5,),
+                if(add.isFacebookAdEnabled??false)
+                  const Icon(FontAwesomeIcons.facebookF,color: Color.fromRGBO(1, 101, 225, 1),),
               ],
             ),
           ),
@@ -113,21 +99,22 @@ class DemoAdWidget extends StatelessWidget {
               bottom: SC.fromWidth(25),
             ),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   clipBehavior: Clip.hardEdge,
                   width: SC.from_width(124),
                   height: SC.from_height(124),
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(SC.from_height(10))),
-                  child: Image.asset(imagePath),
+                  child: Image.network(add.image??"",fit: BoxFit.cover,),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildInfoRow('Reach', reach.toString()),
-                    _buildInfoRow('Leads', leads.toString()),
-                    _buildInfoRow('Spent', spent.toString()),
-                    _buildInfoRow('Clicks', clicks.toString()),
+                    _buildInfoRow('Ad Views',"${add.totalImpression??0}"),
+                    _buildInfoRow('Leads', "${add.totalLeads??0}"),
+                    _buildInfoRow('Spent', "${add.totalSpendBudget??0}"),
+                    _buildInfoRow('Clicks', "${add.totalClicks??0}"),
                   ],
                 ),
               ],
@@ -138,7 +125,7 @@ class DemoAdWidget extends StatelessWidget {
             child: Column(
               children: [
                 InkWell(
-                  onTap: onViewReportsTap,
+                  onTap: (){},
                   child: Text(
                     'View Reports',
                     style: TextStyle(
@@ -161,6 +148,9 @@ class DemoAdWidget extends StatelessWidget {
       ),
     );
   }
+
+
+
 
   Widget _buildInfoRow(String label, String value) {
     return Padding(

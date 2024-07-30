@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "351577286503",
+    "project_id": "leadkart-ai",
+    "storage_bucket": "leadkart-ai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351577286503:android:8275e8bebc8279569e31c2",
+        "android_client_info": {
+          "package_name": "com.example.leadkart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFsq6Y4XLeYqnLQbrEEqumBbbu352y2Rg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

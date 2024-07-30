@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:leadkart/ApiServices/addDetaL%20API.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
+import 'package:leadkart/Models/estimateddataModel.dart';
 import 'package:leadkart/Models/plansModel.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
+import 'package:leadkart/helper/helper.dart';
 import 'package:logger/logger.dart';
 
 import '../Models/ad_type_model.dart';
@@ -24,6 +27,7 @@ class CreateAddProvider with ChangeNotifier{
   TimeOfDay? _dayStartTime;
   TimeOfDay? _dayEndTime;
   DateTime? _startDate;
+  EstimatedData? _estimatedData;
   DateTime? _endDate;
   bool _isFaceBookAddEnable = false;
   bool _isInstEnable = false;
@@ -39,6 +43,7 @@ class CreateAddProvider with ChangeNotifier{
   TextEditingController get destinationUrlController => _destinationUrlController;
   TextEditingController get captionController => _captionController;
   RangeValues get ageRange => _ageRange;
+  EstimatedData?  get estimatedData => _estimatedData;
   List<int> get days => _days;
   TimeOfDay? get dayStartTime => _dayStartTime;
   TimeOfDay? get dayEndTime => _dayEndTime;
@@ -49,18 +54,27 @@ class CreateAddProvider with ChangeNotifier{
   bool get isGoogleAddEnable => _isGoogleAddEnable;
   List<int> get  targetGenders => _targetGender;
 
+  //
+  //addType
   void setAddType(AdvertisementTypeModel add)
   {
     _addType = add;
     notifyListeners();
   }
 
+  //
+  //Increase FaceBook Budget
   void incFacebookBudget()
   {
-    _faceBookBudget = _faceBookBudget+1000;
+    _faceBookBudget = _faceBookBudget+200;
+    _plan = null;
+    getEstimatedPlan();
     notifyListeners();
   }
 
+
+  //
+  //set Gender Target
   void setTargetGender(int i)
   {
     if(_targetGender.contains(i))
@@ -74,42 +88,89 @@ class CreateAddProvider with ChangeNotifier{
     notifyListeners();
   }
 
+  //
+  //Decrese Facbbo Budget
   void decFacebookBudget()
   {
-    double _d = _faceBookBudget-1000;
+    double _d = _faceBookBudget-200;
     _faceBookBudget = (_d<0)?0:_d;
+    _plan = null;
+    getEstimatedPlan();
     notifyListeners();
   }
 
+  //
+  //Increase inst Budget
   void incInstBudget()
   {
-    _instBudget = _instBudget+1000;
+    _instBudget = _instBudget+200;
+    _plan = null;
+    getEstimatedPlan();
     notifyListeners();
   }
 
+  //
+  //dec Inst Budget
   void decInstBudget()
   {
-    double _d = _instBudget-1000;
+    double _d = _instBudget-200;
     _instBudget = (_d<0)?0:_d;
+    _plan = null;
+    getEstimatedPlan();
     notifyListeners();
   }
 
   void incGoogleBudget()
   {
-    _googleBudget = _googleBudget+1000;
+    _googleBudget = _googleBudget+200;
+    getEstimatedPlan();
     notifyListeners();
   }
 
   void decGoogleBudget()
   {
-    double _d = _googleBudget -1000;
+    double _d = _googleBudget -200;
     _googleBudget = (_d<0)?0:_d;
+    getEstimatedPlan();
     notifyListeners();
+  }
+
+  void getEstimatedPlan() async
+  {
+
+    if(_plan!=null)
+    {
+      var _d = await AdsApi().getEstimatedPlan( instaBudget: _plan?.facebookBudget??0, facebookBudget: _plan?.facebookBudget??0);
+      if(_d!=null)
+      {
+        _estimatedData  = _d.data;
+        notifyListeners();
+        return ;
+      }
+    }
+
+    if(_faceBookBudget!=0|| _instBudget !=0)
+      {
+        var _d = await AdsApi().getEstimatedPlan( instaBudget: _instBudget.toInt(), facebookBudget: _faceBookBudget.toInt());
+        if(_d!=null)
+          {
+            _estimatedData  = _d.data;
+            notifyListeners();
+            return ;
+          }
+      }
+
+    else
+      {
+        _estimatedData = null;
+        notifyListeners();
+      }
   }
 
   void setPlan(PlanDetail? p)
   {
     _plan = p;
+    getEstimatedPlan();
     notifyListeners();
   }
 
@@ -206,6 +267,11 @@ class CreateAddProvider with ChangeNotifier{
       isGoogleAddEnable: plan==null&&_googleBudget>0,
       planId: plan?.id,
     );
+
+    if(d is Map)
+      {
+        MyHelper.mySnakebar(context, "${d["message"]}");
+      }
   }
 
 
@@ -231,6 +297,7 @@ class CreateAddProvider with ChangeNotifier{
    _dayEndTime = null;
    _startDate = null;
    _endDate = null;
+   _estimatedData = null;
 
    notifyListeners();
    Logger().i("create add provider is clear ");

@@ -483,7 +483,7 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                 ),
 
                 SizedBox(height: SC.from_height(20),),
-                MyactionButton(action:()=> p.upDateBusiness(context)),
+                MyactionButton(lable: "Update",action:()=> p.upDateBusiness(context)),
                 SizedBox(height: SC.from_height(20),),
 
               ],

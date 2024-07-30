@@ -17,8 +17,10 @@ class Allplansprovider with ChangeNotifier
 
   Future<void> load() async
   {
+
     _allPlans = await PlansApi().getAllAiImagePlans()??[];
     _initing =  false;
+
     notifyListeners();
   }
 

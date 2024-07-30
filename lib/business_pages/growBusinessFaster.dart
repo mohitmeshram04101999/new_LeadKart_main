@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:flutter/material.dart';
+import 'package:leadkart/Models/estimateddataModel.dart';import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:flutter/widgets.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -86,7 +87,7 @@ SizedBox(width: 20),
               ],
             ),
 SizedBox(height: 10),
-            ExtimateResultCard()
+            // ExtimateResultCard()
           ],
         ),
       ),
@@ -94,7 +95,8 @@ SizedBox(height: 10),
   }
 }
 class ExtimateResultCard extends StatelessWidget {
-  const ExtimateResultCard({super.key});
+  final EstimatedData data;
+  const ExtimateResultCard({required this.data,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -141,12 +143,12 @@ class ExtimateResultCard extends StatelessWidget {
                         ),
                           child: Padding(
                             padding: const EdgeInsets.all(3.0),
-                            child: Image.asset('assets/eyes.png', width: 25, height: 25),
+                            child: Icon(Icons.remove_red_eye_outlined),
                           ),),
                   SizedBox(
                       width: 10,
                     ),
-                      Text("28K", style: Theme.of(context).textTheme.bodySmall),
+                      Text("${data.totalReach}K", style: Theme.of(context).textTheme.bodySmall),
                       SizedBox(
                         width: 10,
                       ),
@@ -167,12 +169,12 @@ class ExtimateResultCard extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(3.0),
-                          child: Image.asset('assets/eyes.png', width: 25, height: 25),
+                          child: Icon(Icons.people_outline),
                         ),),
                       SizedBox(
                         width: 10,
                       ),
-                      Text("28K", style: Theme.of(context).textTheme.bodySmall),
+                      Text("${data.totalLeads??0}K", style: Theme.of(context).textTheme.bodySmall),
                       SizedBox(
                         width: 10,
                       ),

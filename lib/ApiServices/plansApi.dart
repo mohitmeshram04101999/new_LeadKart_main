@@ -8,6 +8,7 @@ import 'package:leadkart/Models/offering_model.dart';
 import 'package:leadkart/Models/plansModel.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:logger/logger.dart';
 
 class PlansApi{
 
@@ -26,6 +27,7 @@ class PlansApi{
      List<PlanDetail> AllPlans  = [];
      var _d = ViewPlansModel.fromJson(resp.data);
      AllPlans.addAll(_d.data!);
+
      return AllPlans;
    }
 

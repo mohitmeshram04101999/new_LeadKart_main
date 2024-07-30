@@ -11,7 +11,7 @@ import 'package:leadkart/component/custom_page_route.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
-import 'package:leadkart/leads/add_detail_screen.dart';
+import 'package:leadkart/leads/adddetail/add_detail_screen.dart';
 import 'package:leadkart/leads/create_add_setting.dart';
 import 'package:leadkart/leads/digital_ads_package.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
@@ -153,6 +153,10 @@ class _BusinessDetailState extends State<BusinessDetail> {
                         {
                           Navigator.push(context,CustomPageRoute(page: i["page"]));
                         }
+                        if(i["name"]=="Logout")
+                          {
+
+                          }
                       },
                       child: Row(
                         children: [

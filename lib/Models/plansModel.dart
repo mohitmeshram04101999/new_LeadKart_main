@@ -41,17 +41,17 @@ class ViewPlansModel {
 }
 
 class PlanDetail {
+  int? instaBudget;
+  int? googleBudget;
+  int? facebookBudget;
   String? id;
-  String? advertisementTypeId;
+  AdvertisementTypeId? advertisementTypeId;
   String? title;
   int? price;
   int? duretion;
   int? dailySpendBudget;
   int? aiImageCount;
   bool? disable;
-  int? instaBudget;
-  int? googleBudget;
-  int? facebookBudget;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
@@ -60,6 +60,9 @@ class PlanDetail {
   dynamic leads;
 
   PlanDetail({
+    this.instaBudget,
+    this.googleBudget,
+    this.facebookBudget,
     this.id,
     this.advertisementTypeId,
     this.title,
@@ -68,9 +71,6 @@ class PlanDetail {
     this.dailySpendBudget,
     this.aiImageCount,
     this.disable,
-    this.instaBudget,
-    this.googleBudget,
-    this.facebookBudget,
     this.createdAt,
     this.updatedAt,
     this.v,
@@ -80,17 +80,17 @@ class PlanDetail {
   });
 
   factory PlanDetail.fromJson(Map<String, dynamic> json) => PlanDetail(
+    instaBudget: json["instaBudget"],
+    googleBudget: json["googleBudget"],
+    facebookBudget: json["facebookBudget"],
     id: json["_id"],
-    advertisementTypeId: json["advertisementTypeId"],
-    title: json["title"],
+    advertisementTypeId: json["advertisementTypeId"] == null ? null : AdvertisementTypeId.fromJson(json["advertisementTypeId"]),
+    title:json["title"],
     price: json["price"],
     duretion: json["duretion"],
     dailySpendBudget: json["dailySpendBudget"],
     aiImageCount: json["aiImageCount"],
     disable: json["disable"],
-    instaBudget: json["instaBudget"],
-    googleBudget: json["googleBudget"],
-    facebookBudget: json["facebookBudget"],
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],
@@ -100,17 +100,17 @@ class PlanDetail {
   );
 
   Map<String, dynamic> toJson() => {
+    "instaBudget": instaBudget,
+    "googleBudget": googleBudget,
+    "facebookBudget": facebookBudget,
     "_id": id,
-    "advertisementTypeId": advertisementTypeId,
+    "advertisementTypeId": advertisementTypeId?.toJson(),
     "title": title,
     "price": price,
     "duretion": duretion,
     "dailySpendBudget": dailySpendBudget,
     "aiImageCount": aiImageCount,
     "disable": disable,
-    "instaBudget": instaBudget,
-    "googleBudget": googleBudget,
-    "facebookBudget": facebookBudget,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
@@ -120,35 +120,71 @@ class PlanDetail {
   };
 }
 
+class AdvertisementTypeId {
+  String? id;
+  String? image;
+  String? title;
+  String? discription;
+  bool? isInstagram;
+  bool? isFacebook;
+  bool? isGoogle;
+  String? advertisementType;
+  int? minimumBudget;
+  bool? disable;
+  int? v;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
-enum AdvertisementTypeId {
-  THE_615_F4_B3_B7_B3_B3_B001_F3_B3_B3_B,
-  THE_6656_CEDE1302350_B8_BE0_AF1_E
+  AdvertisementTypeId({
+    this.id,
+    this.image,
+    this.title,
+    this.discription,
+    this.isInstagram,
+    this.isFacebook,
+    this.isGoogle,
+    this.advertisementType,
+    this.minimumBudget,
+    this.disable,
+    this.v,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory AdvertisementTypeId.fromJson(Map<String, dynamic> json) => AdvertisementTypeId(
+    id: json["_id"],
+    image: json["image"],
+    title: json["title"],
+    discription: json["discription"],
+    isInstagram: json["isInstagram"],
+    isFacebook: json["isFacebook"],
+    isGoogle: json["isGoogle"],
+    advertisementType: json["advertisementType"],
+    minimumBudget: json["minimumBudget"],
+    disable: json["disable"],
+    v: json["__v"],
+    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "image": image,
+    "title": title,
+    "discription": discription,
+    "isInstagram": isInstagram,
+    "isFacebook": isFacebook,
+    "isGoogle": isGoogle,
+    "advertisementType": advertisementType,
+    "minimumBudget": minimumBudget,
+    "disable": disable,
+    "__v": v,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+  };
 }
 
-final advertisementTypeIdValues = EnumValues({
-  "615f4b3b7b3b3b001f3b3b3b": AdvertisementTypeId.THE_615_F4_B3_B7_B3_B3_B001_F3_B3_B3_B,
-  "6656cede1302350b8be0af1e": AdvertisementTypeId.THE_6656_CEDE1302350_B8_BE0_AF1_E
-});
 
-enum Title {
-  GOOGLE,
-  SK_E_SOLUTION
-}
 
-final titleValues = EnumValues({
-  "Google": Title.GOOGLE,
-  "SK e solution": Title.SK_E_SOLUTION
-});
 
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
 
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
-}

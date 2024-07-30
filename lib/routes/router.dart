@@ -7,15 +7,17 @@ import 'package:leadkart/business_pages/additional_detail.dart';
 import 'package:leadkart/business_pages/growBusinessFaster.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 
-import 'package:leadkart/leads/add_detail_screen.dart';
+import 'package:leadkart/leads/adddetail/add_detail_screen.dart';
 import 'package:leadkart/leads/busines_category.dart';
 import 'package:leadkart/leads/create_ads_page.dart';
 import 'package:leadkart/login_pages/login_screen.dart';
 import 'package:leadkart/login_pages/otp_screen.dart';
 import 'package:leadkart/screens/imageEditor/imageEditor.dart';
 import 'package:leadkart/screens/leads/getNewLeads.dart';
+import 'package:leadkart/screens/newLead%20Screen/LeadeScreen.dart';
 
 import '../component/bottom_navigation_screen.dart';
+import '../leads/digital_ads_package.dart';
 import '../screens/1 . OnBording Screens/OnBordingnavigation.dart';
 class GoRouterConfig {
   static final router = GoRouter(
@@ -44,14 +46,14 @@ class GoRouterConfig {
 
         name: 'logInScreen',
         path: '/logInScreen',
-        builder: (context, state) => LoginScreen(),
+        builder: (context, state) => const LoginScreen(),
         routes: [
           GoRoute(
             name: 'otpScreen',
             path: 'otpScreen',
             builder: (context, state){
               final data = jsonEncode(state.pathParameters);
-              return OtpScreen();},
+              return const OtpScreen();},
           ),
         ]
       ),
@@ -64,30 +66,35 @@ class GoRouterConfig {
           GoRoute(
             path: 'AddDetailScreen',
             name: 'AddDetailScreen',
-            builder: (context,state)=>AddDetailScreen(),
+            builder: (context,state)=>const AddDetailScreen(),
 
           ),GoRoute(
             path: 'createBusinessScreen',
             name: 'createBusinessScreen',
-            builder: (context,state)=>CreateBusinessScreen(),
+            builder: (context,state)=>const CreateBusinessScreen(),
           ),
 
           GoRoute(
             path: 'additionalDetails',
             name: 'additionalDetails',
-            builder: (context,state)=>AdditionalDetail(),
+            builder: (context,state)=>const AdditionalDetail(),
           ),
 
 
           GoRoute(
             name: 'getNewLeads',
             path: 'getNewLeads',
-            builder: (context, state) => GetNewLeads(),
+            builder: (context, state) =>const  GetNewLeads(),
             routes: [
               GoRoute(
                 name: "createAdd",
                   path: "createAdd",
-                builder: (context,state)=>CreateAds(),
+                builder: (context,state)=>const CreateAds(),
+              ),
+              GoRoute(
+                name: "digitalAdsPackage",
+                path: "DigitalAdsPackage",
+                builder: (context,state)=>const DigitalAdsPackage(),
               )
             ]
           ),

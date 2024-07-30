@@ -18,11 +18,13 @@ class AddREquirmentTile extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: SC.from_width(8)),
       onTap: () async {
-        bool create = await  Controllers.businessProvider(context,listen: false).showWarning(context);
-        if(create)
-          {
-            GoRouter.of(context).pushNamed('getNewLeads');
-          }
+        // bool create = await  Controllers.businessProvider(context,listen: false).showWarning(context);
+        // if(create)
+        //   {
+        //     GoRouter.of(context).pushNamed('getNewLeads');
+        //   }
+
+        GoRouter.of(context).pushNamed('getNewLeads');
       },
       leading: CircleAvatar(
         child: Center(child: advertisementTypeModel.image==null? icon:Image.asset(advertisementTypeModel.image??"",fit: BoxFit.contain,)),
@@ -32,13 +34,13 @@ class AddREquirmentTile extends StatelessWidget {
       ),
 
       title: Text(advertisementTypeModel.title,maxLines: 1,overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.w500),),
+        style: TextStyle(fontSize: SC.from_width(13),fontWeight: FontWeight.w500),),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(advertisementTypeModel.description,maxLines: 1,overflow: TextOverflow.ellipsis
-            ,style: TextStyle(fontSize: SC.from_width(15),fontWeight: FontWeight.w500,color: Colors.grey),),
+            ,style: TextStyle(fontSize: SC.from_width(13),fontWeight: FontWeight.w500,color: Colors.grey),),
           SizedBox(height: SC.from_height(5),),
           Row(
             children: [

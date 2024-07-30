@@ -101,10 +101,6 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
     return Scaffold(
 
 
-      floatingActionButton:FloatingActionButton(onPressed: ()async{
-        var usr = await Controllers.useraPrefrenc.getUser();
-        MyHelper.bussnissApi.getAllCity(userId: usr!.id);
-      },),
 
       appBar:  AppBar(
         foregroundColor: Colors.white,
@@ -465,7 +461,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
               ),
 
               SizedBox(height: SC.from_height(20),),
-              MyactionButton(action:()=> p.createBusiness(context)),
+              MyactionButton(lable: "Create Business",action:()=> p.createBusiness(context)),
               SizedBox(height: SC.from_height(20),),
 
             ],

@@ -127,19 +127,6 @@ mainAxisSize: MainAxisSize.min,
 
 
 
-      //    COUNTINUE //
-
-      // Padding(
-      //   padding:  EdgeInsets.symmetric(horizontal: 25),
-      //   child: CustomButton(
-      //     text: 'Continue', onPressed: () {
-      //     // context.pushNamed("homePage");
-      //     Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpScreen()));
-      //   },
-      //   ),
-      // ),
-
-
 
       // ROW //
       SizedBox(height: SC.from_height(40),),

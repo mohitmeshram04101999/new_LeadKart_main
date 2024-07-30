@@ -5,6 +5,7 @@ class MyactionButton extends StatefulWidget {
   Duration? duretion;
   Widget? child;
   double height;
+  String? lable;
   Curve? curve;
   double? width;
   Function(dynamic)? onActionComplit;
@@ -13,6 +14,7 @@ class MyactionButton extends StatefulWidget {
   BoxDecoration? decoration;
   BoxDecoration? activeDecoration;
   MyactionButton({
+    this.lable,
     this.curve,
     this.height = 50,
     this.width,
@@ -76,9 +78,9 @@ class _MyactionButtonState extends State<MyactionButton> {
           child: Center(child: loding?
           CircularProgressIndicator(
             color: Colors.white,
-          ):widget.child!=null?
-              widget.child
-              :Text("Press",style: TextStyle(color: Colors.white,fontSize: 20),)
+          ):(widget.child!=null && widget.lable==null)?
+           widget.child
+              :Text("${widget.lable??"Press"}",style: TextStyle(color: Colors.white,fontSize: 20),)
           ),
           decoration: !loding?
           widget.decoration??BoxDecoration(

@@ -22,8 +22,8 @@ class ImageRow extends StatelessWidget {
               },
               child: Container(
                 margin: EdgeInsets.all(SC.from_height(4)),
-                width: SC.from_height(125),
-                height: SC.from_height(125),
+                width: SC.from_width(125),
+                height: SC.from_width(125),
                 child: Image.asset(
                   imagePaths[index],
                   fit: BoxFit.cover,

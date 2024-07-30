@@ -5,6 +5,7 @@ import 'package:leadkart/component/CustomButton.dart';
 import 'package:leadkart/component/customRadioFeild.dart';
 import 'package:leadkart/component/custom_textfield.dart';
 import 'package:leadkart/controllers/creaetAddProvider.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';import 'package:leadkart/them/constents.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
@@ -343,12 +344,12 @@ class _CampaignSettingState extends State<CampaignSetting> {
                 Expanded(
                   child: CustomPicker(
                       onTap: ()=>p.setStartDay(context),
-                      label: "Set Start Date", child: Text(p.startDate==null?"Start Date":"${p.startDate.toString().split(" ").first}")),
+                      label: "Set Start Date", child: Text(p.startDate==null?"Start Date":"${MyHelper.formateDateTime(p.startDate!)}")),
                 ),
                 Expanded(
                   child: CustomPicker(
                       onTap: ()=>p.setEndDay(context),
-                      label: "Set End Time", child: Text(p.endDate==null?"End Date":"${p.endDate.toString().split(" ").first}")),
+                      label: "Set End Time", child: Text(p.endDate==null?"End Date":"${MyHelper.formateDateTime(p.endDate!)}")),
                 ),
               ],
             ),
@@ -360,12 +361,12 @@ class _CampaignSettingState extends State<CampaignSetting> {
                Expanded(
                  child: CustomPicker(
                    onTap: ()=>p.setDayStartTime(context),
-                     label: "StartTime", child: Text(p.dayStartTime==null?"Set Start Time":"${p.dayStartTime.toString().substring(10,15)}")),
+                     label: "StartTime", child: Text(p.dayStartTime==null?"Set Start Time":"${MyHelper.formateTime(p.dayStartTime!)}")),
                ),
                Expanded(
                  child: CustomPicker(
                    onTap: ()=>p.setEndTime(context),
-                     label: "StartTime", child: Text(p.dayEndTime==null?"Set End Time":"${p.dayEndTime.toString().substring(10,15)}")),
+                     label: "StartTime", child: Text(p.dayEndTime==null?"Set End Time":"${MyHelper.formateTime(p.dayEndTime!)}")),
                ),
              ],
            ),

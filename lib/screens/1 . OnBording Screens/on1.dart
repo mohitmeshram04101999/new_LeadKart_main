@@ -13,7 +13,10 @@ class On1 extends StatelessWidget {
     return OnBordingPage(
       pageController: pageController,
       child: Center(
-        child: CircularProgressIndicator(),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Image.asset("assets/add_images/12.png"),
+        ),
       ),
       mainText: "Welcome to Leadkart.ai",
       subTitle: "We help you to create, manage ads and generate leads.",

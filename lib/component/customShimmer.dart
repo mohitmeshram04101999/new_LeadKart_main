@@ -10,13 +10,13 @@ class CustomShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Shimmer(
       enabled: active,
-      child: child,
       gradient: LinearGradient(
         colors: [
           Colors.grey,
           Colors.grey.shade300
         ]
       ),
+      child: child,
     );
   }
 }
