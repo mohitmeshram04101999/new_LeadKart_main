@@ -13,9 +13,10 @@ class LeadsApi
   //get Lead for bussinessID
   Future<Response> getAllLeads({
     String businessId = "664483cb34434c7cec80d6ed",
+    String? stage
   })async
   {
-    String uri = "/getLeadOfYourBussiness?businessId=$businessId";
+    String uri = "/getLeadOfYourBussiness?businessId=$businessId${(stage!=null)?"&stage=$stage":""}";
     var toc= await UserPreference().getUser();
 
     var head =  {"Authorization":toc?.token??""};
@@ -26,7 +27,9 @@ class LeadsApi
 
   //
   //get leadeDetaile
-Future<Response> getLeadeDetail(String leadId)async
+Future<Response> getLeadeDetail(
+    String leadId,
+    )async
 {
   String uri = "/getLeadDetails?leadId=$leadId";
 
@@ -37,15 +40,54 @@ Future<Response> getLeadeDetail(String leadId)async
 
 Future<Response> updateLeads(
     String leadId,
-    String changeType,
+  {
+    String? changeType,
+    String? note,
+    String? followUpDate,
+    String? email,
+    String?whatsappNumber,
+    String? name,
+    String? userContactNumber
+  }
     )async
 {
   String uri = "/updateLeadDetails?leadId=$leadId";
   var head = await UserPreference().getHeaderForDio();
   var data = {
     "leadStatus":changeType,
+    "note":note,
+    "followUpDate":followUpDate,
+    "email":email,
+    "whatsappNumber":whatsappNumber,
+    // "adsetId":"",
+    // "adId":"",
+    "name":name,
+    "userContactNumber":userContactNumber,
   };
-  var resp = await MyHelper.dio.put(uri,data: data,options: Options(headers: head));
+
+  var officialData = {};
+  _log.i(data);
+
+  for(MapEntry e in data.entries)
+    {
+      if(e.value!=null)
+        {
+          officialData[e.key] = e.value;
+        }
+    }
+
+
+  var resp = await MyHelper.dio.put(uri,data: officialData,options: Options(headers: head));
+  return resp;
+}
+
+//get Lead History
+Future<Response> getLeadHistory(String leadId) async
+{
+  var user = await UserPreference().getUser();
+  var head = await UserPreference().getHeaderForDio();
+  String uri = "/getAllLeadHistoryByLeadId?userId=${user?.id}&leadId=$leadId";
+  var resp = await MyHelper.dio.get(uri,options: Options(headers: head));
   return resp;
 }
 

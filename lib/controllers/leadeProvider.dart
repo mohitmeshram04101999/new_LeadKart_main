@@ -15,9 +15,14 @@ class LeadsProvider with ChangeNotifier{
 
   bool _isLoad = false;
   List<Lead> _allLeads = [];
+  String _filterType = "ALL";
+  bool _filterOn = false;
 
   List<Lead> get allLeads => _allLeads;
   bool get isLoad => _isLoad;
+  String get filterType =>_filterType;
+  bool get filterIsOn => _filterOn;
+
 
 
 
@@ -25,8 +30,7 @@ class LeadsProvider with ChangeNotifier{
   //get Leads by BusinessId;
   Future<void> getLeads(BuildContext context) async
   {
-
-    var resp = await _leadsApi.getAllLeads();
+    var resp = await _leadsApi.getAllLeads(stage: _filterType=="ALL"?null:_filterType);
 
     if(resp.statusCode==200)
       {
@@ -45,9 +49,18 @@ class LeadsProvider with ChangeNotifier{
       {
         MyHelper.mySnakebar(context, "${resp.statusCode} ${resp.data}");
       }
-
+    _filterOn = false;
     _isLoad = true;
     notifyListeners();
+
+  }
+
+  Future<void> filter(BuildContext context,String type)async
+  {
+    _filterType = type;
+    _filterOn = true;
+    notifyListeners();
+    getLeads(context);
 
   }
 
@@ -56,6 +69,8 @@ class LeadsProvider with ChangeNotifier{
   {
     _isLoad = true;
     _allLeads = [];
+    _filterType ="All";
+    _filterOn = false;
     notifyListeners();
   }
 
