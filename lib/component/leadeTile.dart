@@ -58,7 +58,6 @@ class LeadeTile extends StatelessWidget {
                         style: TextStyle(fontSize: SC.from_width(8.7),color: Colors.white),),
                       ),
                     )
-
                   ],
                 ),
 
@@ -83,19 +82,19 @@ class LeadeTile extends StatelessWidget {
                 ),
               ),
 
-              AspectRatio(aspectRatio: 1,
+              AspectRatio(aspectRatio: 1.3,
                   child: Column(
                     children: [
                       Container(
                         alignment: Alignment.center,
                         width: double.infinity,
-                        child: Text("${lead?.leadStatus}",style: TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w500),),
                         decoration: BoxDecoration(
                             color: AppConstent().leadTiletagColor,
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(32)
                           )
                         ),
+                        child: Text("${leadTyps[lead?.leadStatus]}",style: TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w500),),
                       ),
                       Expanded(
                         child: ShederIcon(iconData: Icons.call_outlined,)

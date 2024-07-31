@@ -18,16 +18,24 @@ class OptionChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Chip(
-          shape:RoundedRectangleBorder(
-            side: BorderSide(color: AppConstent().primeryColor),
-            borderRadius: BorderRadius.circular(50),
-          ),
-          backgroundColor:active?AppConstent().primeryColor.withOpacity(.3):null,
-          label:
-          Text(label,style: TextStyle(fontSize: SC.fromWidth(28),color: AppConstent().primeryColor),)),
+    return Card(
+      clipBehavior: Clip.hardEdge,
+      elevation: 0,
+      margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50)
+      ),
+      child: InkWell(
+        onTap: onTap,
+        child: Chip(
+            shape:RoundedRectangleBorder(
+              side: BorderSide(color: AppConstent().primeryColor),
+              borderRadius: BorderRadius.circular(50),
+            ),
+            backgroundColor:active?AppConstent().primeryColor.withOpacity(.3):null,
+            label:
+            Text(label,style: TextStyle(fontSize: SC.fromWidth(28),color: AppConstent().primeryColor),)),
+      ),
     );
   }
 }

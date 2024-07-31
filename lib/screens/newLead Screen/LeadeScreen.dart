@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/ApiServices/leads%20api.dart';
+import 'package:leadkart/component/messageText.dart';
+import 'package:leadkart/component/optioChip.dart';
+import 'package:leadkart/controllers/LeadeDetaileProvider.dart';
 import 'package:leadkart/controllers/leadeProvider.dart';import 'package:leadkart/helper/TextStyles.dart';
-import 'package:leadkart/helper/controllerInstances.dart';import 'package:leadkart/them/constents.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
+import 'package:leadkart/shimmers.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/component/HelpButtonWhite.dart';
 import 'package:leadkart/component/leadeTile.dart';
 import 'package:leadkart/helper/dimention.dart';
@@ -10,6 +14,7 @@ import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
 import 'package:leadkart/screens/leads/getNewLeads.dart';
 import 'package:leadkart/screens/newLead%20Screen/assign_Leads.dart';
+import 'package:leadkart/them/typs.dart';
 import 'package:provider/provider.dart';
 
 import '../../component/helpButton.dart';
@@ -28,6 +33,8 @@ class LeadeScreen extends StatefulWidget {
 class _LeadeScreenState extends State<LeadeScreen> {
 
   List<String> filters = ["All","Pending","In-progress","follow on interested"];
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,38 +69,49 @@ class _LeadeScreenState extends State<LeadeScreen> {
         children: [
           
           //titelButtons
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Padding(
-              padding: AppConstent().horizontalPedding,
-              child: Row(
-                children: [
-                  for(String i in filters)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 6),
-                      child: OutlinedButton(onPressed: (){}, child: Text(i,
-                      
-                      style: TextStyle(fontWeight: FontWeight.w600,fontSize: SC.from_width(16),color:Colors.grey.shade700))),
+          Consumer<LeadsProvider>(
+              builder: (a,p,c){
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: AppConstent().horizontalPedding,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: OptionChip(
+                            onTap: (){p.filter(context, "ALL");},
+                            active: p.filterType=="ALL",
+                            label: 'All',),
+                        ),
+                        for(MapEntry i in translater.entries)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: OptionChip(
+                              onTap: (){p.filter(context, i.key);},
+                              active: p.filterType==i.key,
+                              label: '${i.value}',),
+                          ),
+                      ],
                     ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: SC.fromHeight(70),),
+                  ),
+                );
+              }),
 
+          SizedBox(height: SC.fromHeight(70),),
 
           FutureBuilder(
               future: Controllers.leadsProvider(context,listen: false).getLeads(context),
               builder: (context,snapshot){
             return Consumer<LeadsProvider>(
               builder: (a,p,c){
-                if(!p.isLoad)
+                if(!p.isLoad||p.filterIsOn)
                 {
-                  return const Center(child: CircularProgressIndicator(),);
+                  return leadeTileLodingView();
                 }
                 if(p.allLeads.isEmpty)
                 {
-                  return const Center(child: Text("No List For Business"));
+                  return const Messagetext(data: "No List For Business");
                 }
 
                 // return Text("sdf");
