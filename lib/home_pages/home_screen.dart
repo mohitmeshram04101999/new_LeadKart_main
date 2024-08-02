@@ -12,6 +12,7 @@ import 'package:leadkart/component/customAppBar.dart';
 import 'package:leadkart/component/helpButton.dart';
 
 import 'package:leadkart/helper/dimention.dart';
+import 'package:leadkart/shimmers.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -22,6 +23,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
   final List<Map<String, String>> items = [
     {'image': 'assets/home_images/img_1.png', 'text': 'AI Meta content'},
     {'image': 'assets/img.png', 'text': 'AI created Ads'},
@@ -54,6 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 
+  final _addTypeLoading = addTypeLoading();
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       //AppbBar
       appBar:PreferredSize(
-        preferredSize: Size.fromHeight(60),
+        preferredSize: const  Size.fromHeight(60),
           child: CustomAppBar(
             trailingButton: HelpButton(),
           )),
@@ -96,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // GRIDVIEW BUILDER //
           GridView.builder(
             primary: false,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -130,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text(
                         item['text']!,
                         style: TextStyle(
-                          color: Color.fromRGBO(0, 0, 0, 7),
+                          color: const Color.fromRGBO(0, 0, 0, 7),
                           fontWeight: FontWeight.w500,
                           fontSize: SC.from_width(16),
                         ),
@@ -151,14 +156,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
           Container(
             clipBehavior: Clip.hardEdge,
-            child: Image.asset(
-              'assets/home_images/img_3.png',
-              fit: BoxFit.cover,
-            ),
             // width: SC.fromWidth(50),
             // height: SC.from_height(200),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(SC.from_height(8)),
+            ),
+            child: Image.asset(
+              'assets/home_images/img_3.png',
+              fit: BoxFit.cover,
             ),
           ),
 
@@ -166,11 +171,10 @@ class _HomeScreenState extends State<HomeScreen> {
             height: SC.from_height(15),
           ),
 
-          Container(
-              child: Image.asset(
-            'assets/home_images/4.png',
-            fit: BoxFit.cover,
-          )),
+          Image.asset(
+                      'assets/home_images/4.png',
+                      fit: BoxFit.cover,
+                    ),
 
           SizedBox(
             height: SC.from_height(19),
@@ -186,23 +190,36 @@ class _HomeScreenState extends State<HomeScreen> {
             height: SC.from_height(15),
           ),
 
+
+
+
           // CHOOSE ADD REQUIREMENT //
           FutureBuilder<dynamic>(
               future: AdsApi().getAllAdvertisementTypes(),
+
+              //
               builder: (context, snapshot) {
-                if(snapshot.connectionState==ConnectionState.waiting)
-                  return Center(child: CircularProgressIndicator(),);
-                if(snapshot.hasError)
+                //
+                if(snapshot.connectionState==ConnectionState.waiting) {
+                  return _addTypeLoading;
+                }
+
+                //
+                if(snapshot.hasError) {
                   return Center(child: Text("Error: ${snapshot.error}") ,);
-                if(snapshot.data==null)
-                  {
-                    return Center(child: const  Text("Not Data Found"),);
+                }
+
+                //
+                if(snapshot.data==null){
+                    return const Center(child: Text("Not Data Found"),);
                   }
+
+                //
                 final data = snapshot.data! as List<AdvertisementTypeModel>;
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount: data.length,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const  NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final item = data[index];
                     return Container(

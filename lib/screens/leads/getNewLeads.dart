@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
-import 'package:leadkart/controllers/creaetAddProvider.dart';import 'package:leadkart/helper/TextStyles.dart';
-import 'package:leadkart/leads/create_ads_page.dart';import 'package:leadkart/them/constents.dart';
+import 'package:leadkart/controllers/creaetAddProvider.dart';
+import 'package:leadkart/controllers/offeringTile.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/leads/create_ads_page.dart';
+import 'package:leadkart/shimmers.dart';import 'package:leadkart/them/constents.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/business_pages/growBusinessFaster.dart';
 import 'package:leadkart/component/PlanTileview.dart';
@@ -25,6 +28,15 @@ class GetNewLeads extends StatefulWidget {
 
 class _GetNewLeadsState extends State<GetNewLeads> {
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Controllers.allplansprovider(context,listen: false).clear();
+    Controllers.createAddProvider(context,listen: false).clear();
+    Controllers.allplansprovider(context, listen: false).load(context);
+  }
 
 
 
@@ -101,7 +113,16 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Checkbox(value: true, onChanged: (value) {}),
+                      Checkbox(value:( p.plan==null&&p.faceBookBudgetController!=0), onChanged: (value) {
+                        if(value!)
+                          {
+                           p.incFacebookBudget();
+                          }
+                        else
+                          {
+                            p.clearFaceBookBudget();
+                          }
+                      }),
                       BudgetSelecter(
                         onDec: ()=>p.decFacebookBudget(),
                         onInc: ()=>p.incFacebookBudget(),
@@ -117,7 +138,17 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Checkbox(value: true, onChanged: (value) {}),
+                      Checkbox(value: p.plan==null&&p.instBudgetController!=0, onChanged: (value) {
+                        if(value!)
+                        {
+                          p.incInstBudget();
+                        }
+                        else
+                          {
+                            p.clearInstBudget();
+
+                          }
+                      }),
                       BudgetSelecter(
                         onInc: ()=>p.incInstBudget(),
                         onDec: ()=>p.decInstBudget(),
@@ -146,42 +177,48 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                   // LeadSelecter(),
 
 
-                  //All Plans List
-                  FutureBuilder(
-                      future: Controllers.allplansprovider(context, listen: false).load(),
+                  Consumer<Allplansprovider>(builder: (a,p1,c){
 
 
-                      builder: (a,b){
+                    if(p1.initing)
+                    {
+                      return Column(
+                        children: [
+                          for(int i = 0;i<5;i++)
+                            const Padding(
+                              padding:  EdgeInsets.all(8.0),
+                              child:  ContainerShimmer(
+                                height: 120,
+                                width: double.infinity,
+                              ),
+                            )
+                        ],
+                      );
+                    }
 
-                        return Consumer<Allplansprovider>(builder: (a,p1,c){
+                    if(p1.allPlans.length==0)
+                    {
+                      return const Text("No Data Found");
+                    }
 
+                    return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        primary: false
+                        ,itemCount: p1.allPlans.length,
+                        itemBuilder: (a,i)=>Plantileview(
+                            data: p1.allPlans[i]
+                        )
+                    );
+                  }),
 
-                          if(p1.initing)
-                          {
-                            return const CircularProgressIndicator();
-                          }
-
-                          if(p1.allPlans.length==0)
-                          {
-                            return const Text("No Data Found");
-                          }
-
-                          return ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              primary: false
-                              ,itemCount: p1.allPlans.length,
-                              itemBuilder: (a,i)=>Plantileview(
-                                  data: p1.allPlans[i]
-                              )
-                          );
-                        });
-                      }),
 
 
                   const SizedBox(
                     height: 5,
                   ),
+
+                  if(p.plan!=null&& p.offers.isNotEmpty)
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -189,23 +226,38 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                       child: Text("Package includes",style: Theme.of(context).textTheme.displayMedium,),
                     ),
                   ),
+
+                 if(p.loadingOffer)
+                   ContainerShimmer(height: 150,
+                 decoration: BoxDecoration(
+                   color: Colors.white,
+                   borderRadius: BorderRadius.circular(8)
+                 ),
+                 ),
+
+
                  const  SizedBox(
                     height: 5,
                   ),
-                  ConstrainedBox(
-                    // height:200,
-                    constraints: const BoxConstraints(
-                      maxHeight: 200,
-                      minHeight: 200,
+
+
+
+                  //
+                  //List Of Offers
+                  if(p.plan!=null&& p.offers.isNotEmpty&&p.loadingOffer!=true)
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for(var i in p.offers)
+                          OfferTile(offer: i),
+                      ],
                     ),
-                    child:const  PackageCards(),
-                  ),
-                  const SizedBox(
-                    height: 5,
                   ),
 
+
                    if(p.estimatedData!=null)
-                   ExtimateResultCard(data: p.estimatedData!,),
+                   ExtimateResultCard(data: p.estimatedData!,totalBudget: p.plan!=null?(p.plan?.facebookBudget??0)+(p.plan?.instaBudget??0): (p.faceBookBudgetController+p.instBudgetController).toInt(),),
 
                   const SizedBox(
                     height: 5,

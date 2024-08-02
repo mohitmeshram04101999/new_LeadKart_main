@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/Models/estimateddataModel.dart';import 'package:leadkart/helper/TextStyles.dart';
@@ -96,7 +97,8 @@ SizedBox(height: 10),
 }
 class ExtimateResultCard extends StatelessWidget {
   final EstimatedData data;
-  const ExtimateResultCard({required this.data,super.key});
+  final int totalBudget;
+  const ExtimateResultCard({required this.totalBudget,required this.data,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +150,7 @@ class ExtimateResultCard extends StatelessWidget {
                   SizedBox(
                       width: 10,
                     ),
-                      Text("${data.totalReach}K", style: Theme.of(context).textTheme.bodySmall),
+                      Text("${data.totalReach!<1000?data.totalReach:'${(data.totalReach??0)/1000}K'}", style: Theme.of(context).textTheme.bodySmall),
                       SizedBox(
                         width: 10,
                       ),
@@ -174,7 +176,7 @@ class ExtimateResultCard extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Text("${data.totalLeads??0}K", style: Theme.of(context).textTheme.bodySmall),
+                      Text("${data.totalLeads!<1000?data.totalLeads:'${(data.totalLeads??0)/1000}K'}", style: Theme.of(context).textTheme.bodySmall),
                       SizedBox(
                         width: 10,
                       ),
@@ -187,7 +189,7 @@ class ExtimateResultCard extends StatelessWidget {
               RichText(text: TextSpan(
                 children: [
                   TextSpan(text: "You will spend only ", style: Theme.of(context).textTheme.displaySmall),
-                  TextSpan(text: "₹4000", style: TextStyles().mediumText.copyWith(fontWeight: FontWeight.bold)),
+                  TextSpan(text: "₹$totalBudget", style: TextStyles().mediumText.copyWith(fontWeight: FontWeight.bold)),
                   TextSpan(text: " in total and ad will run for ", style: Theme.of(context).textTheme.displaySmall),
                   TextSpan(text: "6 days", style: TextStyles().mediumText.copyWith(fontWeight: FontWeight.bold))
                 ]

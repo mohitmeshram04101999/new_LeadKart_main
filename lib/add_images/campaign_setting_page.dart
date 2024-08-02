@@ -81,9 +81,9 @@ class _CampaignSettingState extends State<CampaignSetting> {
               children: <Widget>[
 
                 CustomRadio(value: 1,active: p.targetGenders.contains(1), label: "Male",onTap: (v){p.setTargetGender(v);},),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 CustomRadio(value: 2,active: p.targetGenders.contains(2), label: "Female",onTap: (v){p.setTargetGender(v);},),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 CustomRadio(value: 3,active: p.targetGenders.contains(3), label: "Other",onTap: (v){p.setTargetGender(v);},),
               ],
             ),
@@ -257,85 +257,7 @@ class _CampaignSettingState extends State<CampaignSetting> {
 
             SizedBox(height: SC.from_height(15),),
 
-            GestureDetector(
-              onTap: () {
 
-              },
-              child: Container(
-                width: SC.from_height(180),
-                height: SC.from_height(40),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(
-                      Icons.settings, color: Color.fromRGBO(36, 238, 221, 1),),
-                    SizedBox(width: SC.from_height(7),),
-                    Text('Advance Setting', style: TextStyle(
-                      fontSize: SC.from_height(17),
-                      color: Color.fromRGBO(36, 238, 221, 1),),)
-                  ],
-                ),
-              ),
-            ),
-
-
-            //  RANGE SLIDER //
-            Row(
-              children: [
-                Text(
-                  'Age Range', style: TextStyle(fontSize: SC.from_height(18)),),
-                Expanded(child: Container()),
-                Text(
-                  '18 to 66', style: TextStyle(fontSize: SC.from_height(17.5)),),
-              ],
-            ),
-            SizedBox(height: SC.from_height(10),),
-
-            Container(
-              height: SC.from_width(16),
-              child: RangeSlider(
-                values: p.ageRange,
-                min: min,
-                max: max,
-                divisions: 500000,
-                labels: RangeLabels(
-                  p.ageRange.start.round().toString(),
-                  p.ageRange.end.round().toString(),
-                ),
-                activeColor: Color.fromRGBO(36, 238, 221, 1),
-                // Set active color
-                inactiveColor: Colors.grey.shade400,
-                onChanged: (newvalues) {
-                  p.setAgeRange(newvalues);
-                },
-              ),
-            ),
-            SizedBox(height: SC.from_height(20),),
-            Text('Days', style: TextStyle(fontSize: SC.from_height(17.5))),
-            SizedBox(height: SC.from_height(10),),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:[
-                for(var i in days.entries)
-                  MyInkWell(
-                    width: SC.from_height(35),
-                    height: SC.from_height(35),
-                    onTap: ()=>p.setDay(i.value),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(3),
-                      color: (p.days.contains(i.value))?AppConstent().primeryColor:Colors.transparent,
-                      border: Border.all(
-                        color: AppConstent().primeryColor
-                      )
-                    ),
-                    child: Center(child: Text(i.key[0].toString(),style: TextStyle(
-                      color: p.days.contains(i.value)?Colors.white:AppConstent().primeryColor
-                    ),)),
-                  )
-              ],
-            ),
-
-            SizedBox(height: SC.from_height(20),),
 
             Text('Ad Schedule', style: TextStyle(fontSize: SC.from_height(17.5))),
             Row(
@@ -353,23 +275,107 @@ class _CampaignSettingState extends State<CampaignSetting> {
                 ),
               ],
             ),
-            SizedBox(height: SC.from_height(8),),
+
+            SizedBox(height: SC.from_height(15),),
             Text('Running Interval', style: TextStyle(fontSize: SC.from_height(17.5))),
-           Row(
-             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-             children: [
-               Expanded(
-                 child: CustomPicker(
-                   onTap: ()=>p.setDayStartTime(context),
-                     label: "StartTime", child: Text(p.dayStartTime==null?"Set Start Time":"${MyHelper.formateTime(p.dayStartTime!)}")),
-               ),
-               Expanded(
-                 child: CustomPicker(
-                   onTap: ()=>p.setEndTime(context),
-                     label: "StartTime", child: Text(p.dayEndTime==null?"Set End Time":"${MyHelper.formateTime(p.dayEndTime!)}")),
-               ),
-             ],
-           ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: CustomPicker(
+                      onTap: ()=>p.setDayStartTime(context),
+                      label: "StartTime", child: Text(p.dayStartTime==null?"Set Start Time":"${MyHelper.formateTime(p.dayStartTime!)}")),
+                ),
+                Expanded(
+                  child: CustomPicker(
+                      onTap: ()=>p.setEndTime(context),
+                      label: "StartTime", child: Text(p.dayEndTime==null?"Set End Time":"${MyHelper.formateTime(p.dayEndTime!)}")),
+                ),
+              ],
+            ),
+
+
+            ExpansionTile(
+              tilePadding: EdgeInsets.zero,
+                collapsedIconColor: AppConstent().primeryColor,
+                title: const Text(""),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 60),
+                  Icon(Icons.settings),
+                  SizedBox(width: 5),
+                  Text("Advanced Setting",
+                  style: TextStyle(color: AppConstent().primeryColor,fontWeight: FontWeight.w700,fontSize: SC.fromWidth(22)),)
+                ],
+              ),
+
+              children: [
+
+                //  RANGE SLIDER //
+                Row(
+                  children: [
+                    Text(
+                      'Age Range', style: TextStyle(fontSize: SC.from_height(18)),),
+                    Expanded(child: Container()),
+                    Text(
+                      '18 to 66', style: TextStyle(fontSize: SC.from_height(17.5)),),
+                  ],
+                ),
+                SizedBox(height: SC.from_height(10),),
+
+                SizedBox(
+                  height: SC.from_width(16),
+                  child: RangeSlider(
+                    values: p.ageRange,
+                    min: min,
+                    max: max,
+                    divisions: 500000,
+                    labels: RangeLabels(
+                      p.ageRange.start.round().toString(),
+                      p.ageRange.end.round().toString(),
+                    ),
+                    activeColor: Color.fromRGBO(36, 238, 221, 1),
+                    // Set active color
+                    inactiveColor: Colors.grey.shade400,
+                    onChanged: (newvalues) {
+                      p.setAgeRange(newvalues);
+                    },
+                  ),
+                ),
+
+                SizedBox(height: SC.from_height(20),),
+                Text('Days', style: TextStyle(fontSize: SC.from_height(17.5))),
+                SizedBox(height: SC.from_height(10),),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children:[
+                    for(var i in days.entries)
+                      MyInkWell(
+                        width: SC.from_height(35),
+                        height: SC.from_height(35),
+                        onTap: ()=>p.setDay(i.value),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(3),
+                            color: (p.days.contains(i.value))?AppConstent().primeryColor:Colors.transparent,
+                            border: Border.all(
+                                color: AppConstent().primeryColor
+                            )
+                        ),
+                        child: Center(child: Text(i.key[0].toString(),style: TextStyle(
+                            color: p.days.contains(i.value)?Colors.white:AppConstent().primeryColor
+                        ),)),
+                      )
+                  ],
+                ),
+
+                SizedBox(height: SC.from_height(20),),
+
+              ],
+            ),
+
+
+
             SizedBox(height: SC.from_height(20),),
 
 

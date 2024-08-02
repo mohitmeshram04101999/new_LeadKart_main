@@ -63,83 +63,90 @@ class _LeadeScreenState extends State<LeadeScreen> {
 
 
       //Body OF Screen
-      body: ListView(
+      body: RefreshIndicator(
 
-        padding: const EdgeInsets.only(top: 20,bottom: 10),
-        children: [
-          
-          //titelButtons
-          Consumer<LeadsProvider>(
-              builder: (a,p,c){
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: AppConstent().horizontalPedding,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: OptionChip(
-                            onTap: (){p.filter(context, "ALL");},
-                            active: p.filterType=="ALL",
-                            label: 'All',),
-                        ),
-                        for(MapEntry i in translater.entries)
+        onRefresh: ()async{
+          await Controllers.leadsProvider(context).getLeads(context);
+        },
+
+        child: ListView(
+
+          padding: const EdgeInsets.only(top: 20,bottom: 10),
+          children: [
+
+            //titelButtons
+            Consumer<LeadsProvider>(
+                builder: (a,p,c){
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: AppConstent().horizontalPedding,
+                      child: Row(
+                        children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 5),
                             child: OptionChip(
-                              onTap: (){p.filter(context, i.key);},
-                              active: p.filterType==i.key,
-                              label: '${i.value}',),
+                              onTap: (){p.filter(context, "ALL");},
+                              active: p.filterType=="ALL",
+                              label: 'All',),
                           ),
-                      ],
+                          for(MapEntry i in translater.entries)
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: OptionChip(
+                                onTap: (){p.filter(context, i.key);},
+                                active: p.filterType==i.key,
+                                label: '${i.value}',),
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                }),
 
-          SizedBox(height: SC.fromHeight(70),),
+            SizedBox(height: SC.fromHeight(70),),
 
-          FutureBuilder(
-              future: Controllers.leadsProvider(context,listen: false).getLeads(context),
-              builder: (context,snapshot){
-            return Consumer<LeadsProvider>(
-              builder: (a,p,c){
-                if(!p.isLoad||p.filterIsOn)
-                {
-                  return leadeTileLodingView();
-                }
-                if(p.allLeads.isEmpty)
-                {
-                  return const Messagetext(data: "No List For Business");
-                }
+            FutureBuilder(
+                future: Controllers.leadsProvider(context,listen: false).getLeads(context),
+                builder: (context,snapshot){
+              return Consumer<LeadsProvider>(
+                builder: (a,p,c){
+                  if(!p.isLoad||p.filterIsOn)
+                  {
+                    return leadeTileLodingView();
+                  }
+                  if(p.allLeads.isEmpty)
+                  {
+                    return const Messagetext(data: "No List For Business");
+                  }
 
-                // return Text("sdf");
-                return ListView.builder(
-                  itemCount: p.allLeads.length,
-                  shrinkWrap: true,
-                  primary: false,
-                  physics:const  NeverScrollableScrollPhysics(),
-                  itemBuilder: (a,b){
-                    var lead = p.allLeads[b];
-                    return LeadeTile(
-                      onTap: (){
-                        Controllers.leadDetailProvider(context,listen: false).loadLeadDetail(context: context, leadId: lead.id??"");
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const DigitalAdsPackage()));
+                  // return Text("sdf");
+                  return ListView.builder(
+                    itemCount: p.allLeads.length,
+                    shrinkWrap: true,
+                    primary: false,
+                    physics:const  NeverScrollableScrollPhysics(),
+                    itemBuilder: (a,b){
+                      var lead = p.allLeads[b];
+                      return LeadeTile(
+                        onTap: (){
+                          Controllers.leadDetailProvider(context,listen: false).loadLeadDetail(context: context, leadId: lead.id??"");
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const DigitalAdsPackage()));
 
-                      },
-                      lead: lead,);
-                  },
-                );
+                        },
+                        lead: lead,);
+                    },
+                  );
 
-              },
-            );
-          }),
+                },
+              );
+            }),
 
-          //Loop For Leads
-          // for(int i =0;i<12;i++)
-          //   LeadeTile(onTap: (){RouteTo(context, child:(a,b) =>AssaignLeads());},)
-        ],
+            //Loop For Leads
+            // for(int i =0;i<12;i++)
+            //   LeadeTile(onTap: (){RouteTo(context, child:(a,b) =>AssaignLeads());},)
+          ],
+        ),
       ),
 
     );
