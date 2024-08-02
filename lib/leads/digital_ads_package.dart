@@ -283,7 +283,7 @@ class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
                           fontWeight: FontWeight.w500),
                     ),
                     subtitle: (p.loading)
-                        ? ContainerShimmer(height: 50)
+                        ? const  ContainerShimmer(height: 50)
                         : Text(
                             // p.lead?.note??"Not is Empty \u{1F5D1}",
                             p.lead?.note ?? "Note is Empty",

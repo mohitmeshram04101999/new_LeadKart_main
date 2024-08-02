@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:leadkart/ApiServices/addDetaL%20API.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
+import 'package:leadkart/ApiServices/plansApi.dart';
+import 'package:leadkart/Models/PlanBYTypIdModel.dart';
 import 'package:leadkart/Models/estimateddataModel.dart';
+import 'package:leadkart/Models/offeringResponceModel.dart';
 import 'package:leadkart/Models/plansModel.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -13,7 +18,7 @@ import '../Models/ad_type_model.dart';
 
 class CreateAddProvider with ChangeNotifier{
   AdvertisementTypeModel? _addType;
-  PlanDetail? _plan;
+  PlanDetail2? _plan;
   final TextEditingController _titleController = TextEditingController();
   String? _imagePath;
   double _faceBookBudget = 0;
@@ -32,10 +37,12 @@ class CreateAddProvider with ChangeNotifier{
   bool _isFaceBookAddEnable = false;
   bool _isInstEnable = false;
   bool _isGoogleAddEnable = false;
+  bool _lodingOffer = false;
+  List<OfferDetail> _offers = [];
 
   AdvertisementTypeModel? get addType => _addType;
   String? get image => _imagePath;
-  PlanDetail? get plan => _plan;
+  PlanDetail2? get plan => _plan;
   TextEditingController get titleController => _titleController;
   double get faceBookBudgetController => _faceBookBudget;
   double get instBudgetController => _instBudget;
@@ -52,7 +59,9 @@ class CreateAddProvider with ChangeNotifier{
   bool get isFaceBookAddEnable => _isFaceBookAddEnable;
   bool get isInstEnable => _isInstEnable;
   bool get isGoogleAddEnable => _isGoogleAddEnable;
+  bool get loadingOffer => _lodingOffer;
   List<int> get  targetGenders => _targetGender;
+  List<OfferDetail> get offers =>_offers;
 
   //
   //addType
@@ -167,9 +176,51 @@ class CreateAddProvider with ChangeNotifier{
       }
   }
 
-  void setPlan(PlanDetail? p)
+  void clearFaceBookBudget()
+  {
+    _faceBookBudget = 0;
+    notifyListeners();
+  }
+
+  void clearInstBudget()
+  {
+    _instBudget = 0;
+    notifyListeners();
+  }
+
+  Future<void> getOffering(BuildContext context,String typeId) async
+  {
+    _lodingOffer = true;
+    notifyListeners();
+    var resp  = await PlansApi().getOfferingByAddType(typeId);
+    Logger().i("${resp.statusCode}\n${resp.body}");
+    if(resp.statusCode==200)
+      {
+        var decode = jsonDecode(resp.body);
+        var d = OfferingApiResponce.fromJson(decode);
+        _offers = d.data??[];
+      }
+    else if(resp.statusCode==404)
+      {
+        _offers = [];
+        var decode = jsonDecode(resp.body);
+        MyHelper.mySnakebar(context, decode["message"]);
+      }
+    else
+      {
+
+        Logger().i("${resp.statusCode}\n${resp.body}");
+      }
+
+    _lodingOffer = false;
+    notifyListeners();
+  }
+
+  void setPlan(PlanDetail2? p)
   {
     _plan = p;
+    _instBudget =0;
+    _faceBookBudget = 0;
     getEstimatedPlan();
     notifyListeners();
   }
@@ -241,6 +292,11 @@ class CreateAddProvider with ChangeNotifier{
   }
 
 
+  void addCaption(String caption){
+    captionController.text = caption;
+}
+
+
 
   Future<void> createAdd(BuildContext context) async
   {
@@ -293,6 +349,7 @@ class CreateAddProvider with ChangeNotifier{
    _captionController.clear();
    _ageRange = RangeValues(18, 66);
    _days = [];
+   _offers = [];
    _dayStartTime = null;
    _dayEndTime = null;
    _startDate = null;

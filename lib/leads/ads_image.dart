@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
 import 'package:leadkart/controllers/addListByBussnessProvider.dart';import 'package:leadkart/helper/TextStyles.dart';
-import 'package:leadkart/helper/controllerInstances.dart';import 'package:leadkart/them/constents.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
+import 'package:leadkart/shimmers.dart';import 'package:leadkart/them/constents.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:leadkart/component/custom_page_route.dart';
 import 'package:leadkart/component/demo_ad_widget.dart';
@@ -84,6 +85,8 @@ class _AdsPageState extends State<AdsPage> {
     // Add more recommendations as needed
   ];
 
+  final addLoading = const  AddTileLoading();
+
 
 
   String? dropdownValue;
@@ -124,7 +127,7 @@ class _AdsPageState extends State<AdsPage> {
 
               if(p.loding)
                 {
-                  return const  Center(child: Text("Loading..."),);
+                  return addLoading;
                 }
               if(p.allAdds.isEmpty)
                 {

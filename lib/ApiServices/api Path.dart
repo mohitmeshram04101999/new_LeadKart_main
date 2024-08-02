@@ -1,6 +1,6 @@
 class ApiConst
 {
- static String baseUrl = "https://server.leadkart.dsmacademy.in/api/";
- static String loginWithPhon = "/user/mobileLogIn?=";
- static String verifyOtp = "/user/verifyOtp?";
+ static const String baseUrl = "https://server.leadkart.dsmacademy.in/api/";
+ static const String loginWithPhon = "/user/mobileLogIn?=";
+ static const String verifyOtp = "/user/verifyOtp?";
 }

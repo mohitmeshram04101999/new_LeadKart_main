@@ -55,58 +55,58 @@ class _CreateAdsState extends State<CreateAds> {
 
             //  SELECT CAMPAIGN   DROPDOWN//
 
-            GestureDetector(
-              onTap: () {
-                MyHelper.mybottomPanel(
-                  context: context,
-                  builder: (context,d) =>  ListView(
-                    controller: d,
-                    children: [
-                      for (int i = 0; i < 5; i++)
-                        ListTile(
-                          title: Text(
-                            "Option $i",
-                            style:TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 ,fontWeight: FontWeight.w500),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              selectedOption = "Option $i";
-                            });
-                            Navigator.pop(context); // Close the bottom sheet
-                          },
-                        )
-                    ],
-                  ),
-                );
-              },
-              child: Container(
-                width: double.infinity,
-                height: SC.from_height(45),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(7),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                        selectedOption ?? 'Select Campaign',
-                        style: TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700,fontWeight: FontWeight.w500 )
-                    ),
-                    Transform.rotate(
-                      angle: 1.5708,  // Rotate 90 degrees clockwise (π/2 radians)
-                      child: Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: Colors.black.withOpacity(0.8),
-                        size: SC.from_height(17),
-                      ),
-                    ),
-
-                  ],
-                ),
-              ),
-            ),
+            // GestureDetector(
+            //   onTap: () {
+            //     MyHelper.mybottomPanel(
+            //       context: context,
+            //       builder: (context,d) =>  ListView(
+            //         controller: d,
+            //         children: [
+            //           for (int i = 0; i < 5; i++)
+            //             ListTile(
+            //               title: Text(
+            //                 "Option $i",
+            //                 style:TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 ,fontWeight: FontWeight.w500),
+            //               ),
+            //               onTap: () {
+            //                 setState(() {
+            //                   selectedOption = "Option $i";
+            //                 });
+            //                 Navigator.pop(context); // Close the bottom sheet
+            //               },
+            //             )
+            //         ],
+            //       ),
+            //     );
+            //   },
+            //   child: Container(
+            //     width: double.infinity,
+            //     height: SC.from_height(45),
+            //     decoration: BoxDecoration(
+            //       border: Border.all(color: Colors.grey),
+            //       borderRadius: BorderRadius.circular(7),
+            //     ),
+            //     padding: EdgeInsets.symmetric(horizontal: 10),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         Text(
+            //             selectedOption ?? 'Select Campaign',
+            //             style: TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700,fontWeight: FontWeight.w500 )
+            //         ),
+            //         Transform.rotate(
+            //           angle: 1.5708,  // Rotate 90 degrees clockwise (π/2 radians)
+            //           child: Icon(
+            //             Icons.arrow_forward_ios_rounded,
+            //             color: Colors.black.withOpacity(0.8),
+            //             size: SC.from_height(17),
+            //           ),
+            //         ),
+            //
+            //       ],
+            //     ),
+            //   ),
+            // ),
 
 
             SizedBox(
@@ -114,36 +114,46 @@ class _CreateAdsState extends State<CreateAds> {
             ),
 
             // SELECT AN IMAGE //
-            DottedBorder(
-              strokeWidth: 1,
-              dashPattern: [8],
-              color: Colors.grey,
-              child: MyInkWell(
-                onTap: ()=>p.selectImage(context),
-                width: double.infinity,
-                height: SC.from_height(210),
-                decoration: BoxDecoration(
-                  // border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(SC.from_height(5))),
-                child: p.image!=null? Image.file(File(p.image??""),fit: BoxFit.cover,):Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: SC.from_height(30),
-                      height: SC.from_height(30),
-                      child: Image.asset('assets/create.png'),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                DottedBorder(
+                  strokeWidth: 1,
+                  dashPattern: [8],
+                  color: Colors.grey,
+                  child: MyInkWell(
+                    onTap: ()=>p.selectImage(context),
+                    width: double.infinity,
+                    height: SC.from_height(210),
+                    decoration: BoxDecoration(
+                      // border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(SC.from_height(5))),
+                    child: p.image!=null? Image.file(File(p.image??""),fit: BoxFit.cover,):Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: SC.from_height(30),
+                          height: SC.from_height(30),
+                          child: Image.asset('assets/create.png'),
+                        ),
+                        SizedBox(
+                          width: SC.from_height(15),
+                        ),
+                        Text(
+                          'Select an Image',
+                          style: TextStyle(
+                              color: Colors.grey, fontSize: SC.from_height(17),fontWeight: FontWeight.w500),
+                        )
+                      ],
                     ),
-                    SizedBox(
-                      width: SC.from_height(15),
-                    ),
-                    Text(
-                      'Select an Image',
-                      style: TextStyle(
-                          color: Colors.grey, fontSize: SC.from_height(17),fontWeight: FontWeight.w500),
-                    )
-                  ],
+                  ),
                 ),
-              ),
+                if(p.image!=null)
+                Positioned(
+                    right: -10,
+                    top: -10,
+                    child: CircleAvatar(child: IconButton(onPressed: ()=>p.selectImage(context), icon: const Icon(Icons.add))))
+              ],
             ),
             SizedBox(
               height: SC.from_height(15),
@@ -154,7 +164,7 @@ class _CreateAdsState extends State<CreateAds> {
               padding: EdgeInsets.symmetric(horizontal: SC.from_height(0)),
               child: CustomTextField(
                 controller: p.titleController,
-                labelText: "Name",
+                labelText: "Ad title",
               ),
             ),
             SizedBox(
@@ -197,127 +207,130 @@ class _CreateAdsState extends State<CreateAds> {
                   ),
                   ListTile(
                       title: Text(
-                        'Order tastiest momos in Bhopal.',
+                        'Order tastiest momos in Bhopal.\nClick on Link now',
                         style: TextStyle(
                             color: Colors.grey, fontSize: SC.from_height(15),fontWeight: FontWeight.w500),
                       ),
-                      subtitle: Text(
-                        'Click on Link now',
-                        style: TextStyle(
-                            color: Colors.grey, fontSize: SC.from_height(15),fontWeight: FontWeight.w500),
-                      ),
-                      trailing: Text(
-                        'Add',
-                        style: TextStyle(
-                            color: Color.fromRGBO(36, 238, 221, 1),
-                            fontSize: SC.from_height(16),fontWeight: FontWeight.w500),
+                      // subtitle: Text(
+                      //   'Click on Link now',
+                      //   style: TextStyle(
+                      //       color: Colors.grey, fontSize: SC.from_height(15),fontWeight: FontWeight.w500),
+                      // ),
+                      trailing: InkWell(
+                        onTap: ()=>p.addCaption("Order tastiest momos in Bhopal. Click on Link now"),
+                        child: Text(
+                          'Add',
+                          style: TextStyle(
+                              color: const Color.fromRGBO(36, 238, 221, 1),
+                              fontSize: SC.from_height(16),fontWeight: FontWeight.w500),
+                        ),
                       ))
                 ],
               ),
             ),
 
-            SizedBox(
-              height: SC.from_height(15),
-            ),
+            // SizedBox(
+            //   height: SC.from_height(15),
+            // ),
 
 
             // ANDROID SWITCH //
-            Row(
-              children: [
-                Text(
-                  'Call to Action',
-                  style: TextStyle(color: Colors.grey.shade700,fontSize: SC.from_height(19),fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  width: SC.from_height(10),
-                ),
-                Center(
-                  child: SwitchTheme(
-                    data: SwitchThemeData(
-                      thumbColor: MaterialStateProperty.resolveWith((states) {
-                        if (states.contains(MaterialState.selected)) {
-                          return Colors.white; // Active thumb color
-                        }
-                        return Colors.blue; // Inactive thumb color
-                      }),
-                      trackColor: MaterialStateProperty.resolveWith((states) {
-                        if (states.contains(MaterialState.selected)) {
-                          return Colors.blue; // Active track color
-                        }
-                        return Colors.white; // Inactive track color
-                      }),
-                    ),
-                    child: Switch(
-                      value: lights,
-                      onChanged: (bool value) {
-                        setState(() {
-                          lights = value;
-                        });
-
-                        _updateUserApi('08:00', '17:00', value ? "1" : "0"); // Replace '08:00' and '17:00' with your actual times
-                      },
-                    ),
-                  ),
-                ),
-
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Text(
+            //       'Call to Action',
+            //       style: TextStyle(color: Colors.grey.shade700,fontSize: SC.from_height(19),fontWeight: FontWeight.w500),
+            //     ),
+            //     SizedBox(
+            //       width: SC.from_height(10),
+            //     ),
+            //     Center(
+            //       child: SwitchTheme(
+            //         data: SwitchThemeData(
+            //           thumbColor: MaterialStateProperty.resolveWith((states) {
+            //             if (states.contains(MaterialState.selected)) {
+            //               return Colors.white; // Active thumb color
+            //             }
+            //             return Colors.blue; // Inactive thumb color
+            //           }),
+            //           trackColor: MaterialStateProperty.resolveWith((states) {
+            //             if (states.contains(MaterialState.selected)) {
+            //               return Colors.blue; // Active track color
+            //             }
+            //             return Colors.white; // Inactive track color
+            //           }),
+            //         ),
+            //         child: Switch(
+            //           value: lights,
+            //           onChanged: (bool value) {
+            //             setState(() {
+            //               lights = value;
+            //             });
+            //
+            //             _updateUserApi('08:00', '17:00', value ? "1" : "0"); // Replace '08:00' and '17:00' with your actual times
+            //           },
+            //         ),
+            //       ),
+            //     ),
+            //
+            //   ],
+            // ),
 
             //  CALL TO ACTION  DROPDOWN//
-            SizedBox(
-              height: SC.from_height(15),
-            ),
-            GestureDetector(
-              onTap: () {
-                MyHelper.mybottomPanel(
-                  context: context,
-                  builder: (context,d) => ListView(
-                    children: [
-                      for (int i = 0; i < 5; i++)
-                        ListTile(
-                          title: Text(
-                            "Option $i",
-                            style:TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 ,fontWeight: FontWeight.w500),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              selectedOption = "Option $i";
-                            });
-                            Navigator.pop(context); // Close the bottom sheet
-                          },
-                        )
-                    ],
-                  ),
-                );
-              },
-              child: Container(
-                width: double.infinity,
-                height: SC.from_height(45),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(7),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                        selectedOption ?? 'Select a Call to Action',
-                        style:  TextStyle(fontSize:SC.from_height(15) ,color: Colors.grey.shade700,fontWeight: FontWeight.w500)
-                    ),
-                    Transform.rotate(
-                      angle: 1.5708,  // Rotate 90 degrees clockwise (π/2 radians)
-                      child: Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: Colors.black.withOpacity(0.8),
-                        size: SC.from_height(17),
-                      ),
-                    ),
-
-                  ],
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   height: SC.from_height(15),
+            // ),
+            // GestureDetector(
+            //   onTap: () {
+            //     MyHelper.mybottomPanel(
+            //       context: context,
+            //       builder: (context,d) => ListView(
+            //         children: [
+            //           for (int i = 0; i < 5; i++)
+            //             ListTile(
+            //               title: Text(
+            //                 "Option $i",
+            //                 style:TextStyle(fontSize:SC.from_height(16),color: Colors.grey.shade700 ,fontWeight: FontWeight.w500),
+            //               ),
+            //               onTap: () {
+            //                 setState(() {
+            //                   selectedOption = "Option $i";
+            //                 });
+            //                 Navigator.pop(context); // Close the bottom sheet
+            //               },
+            //             )
+            //         ],
+            //       ),
+            //     );
+            //   },
+            //   child: Container(
+            //     width: double.infinity,
+            //     height: SC.from_height(45),
+            //     decoration: BoxDecoration(
+            //       border: Border.all(color: Colors.grey),
+            //       borderRadius: BorderRadius.circular(7),
+            //     ),
+            //     padding: EdgeInsets.symmetric(horizontal: 10),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         Text(
+            //             selectedOption ?? 'Select a Call to Action',
+            //             style:  TextStyle(fontSize:SC.from_height(15) ,color: Colors.grey.shade700,fontWeight: FontWeight.w500)
+            //         ),
+            //         Transform.rotate(
+            //           angle: 1.5708,  // Rotate 90 degrees clockwise (π/2 radians)
+            //           child: Icon(
+            //             Icons.arrow_forward_ios_rounded,
+            //             color: Colors.black.withOpacity(0.8),
+            //             size: SC.from_height(17),
+            //           ),
+            //         ),
+            //
+            //       ],
+            //     ),
+            //   ),
+            // ),
 
             SizedBox(
               height: SC.from_height(8),

@@ -23,7 +23,7 @@ class AddREquirmentTile extends StatelessWidget {
         //   {
         //     GoRouter.of(context).pushNamed('getNewLeads');
         //   }
-
+        Controllers.allplansprovider(context).selectAddPlane(advertisementTypeModel);
         GoRouter.of(context).pushNamed('getNewLeads');
       },
       leading: CircleAvatar(

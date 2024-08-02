@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:leadkart/Models/PlanBYTypIdModel.dart';
 import 'package:leadkart/Models/plansModel.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
@@ -7,7 +8,7 @@ import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.
 import '../helper/dimention.dart';
 
 class Plantileview extends StatelessWidget {
-  PlanDetail data;
+  PlanDetail2 data;
   Plantileview({required this.data,super.key});
 
   @override
@@ -17,6 +18,7 @@ class Plantileview extends StatelessWidget {
 
     return MyInkWell(
       onTap: (){
+        p.getOffering(context, data.id??"");
         p.setPlan(p.plan?.id==data.id?null:data);
       },
       margin: EdgeInsets.symmetric(horizontal: SC.from_height(2), vertical: SC.from_height(5)),
@@ -111,8 +113,8 @@ class Plantileview extends StatelessWidget {
                 // SizedBox(
                 //     height: SC.fromContextWidth(context, 6.5),
                 //     child: _buildPlatformIconsColumn('Platform', platforms,context)),
-                _buildInfoColumn('Lead', data.leads??"0", context),
-                _buildInfoColumn('Reach', data.reach??"0", context),
+                _buildInfoColumn('Lead', "${data.leads??"0"}", context),
+                _buildInfoColumn('Reach', "${data.reach??"0"}", context),
                 _buildPlatformIconsColumn("Platform",["assets/facebook.png","assets/instagram_wbg.png"], context),
                 _buildInfoColumn('AI Images', data.aiImageCount.toString(), context),
 
@@ -162,6 +164,8 @@ class Plantileview extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
+        //Const
         Text(
           label,
           style: TextStyle(
@@ -171,6 +175,7 @@ class Plantileview extends StatelessWidget {
           ),
         ),
         SizedBox(height: SC.from_height(5)),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: icons.map((icon) {

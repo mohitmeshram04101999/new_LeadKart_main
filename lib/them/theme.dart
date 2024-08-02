@@ -62,8 +62,8 @@ secondaryHeaderColor: AppConstent().leadTiletagColor,
         borderRadius: BorderRadius.circular(4),
       ),
 
-      fillColor: WidgetStateProperty.resolveWith((state)=>Colors.white),
-      checkColor: MaterialStateProperty.resolveWith((states) =>AppConstent().primeryColor),
+      // fillColor: WidgetStateProperty.resolveWith((state)=>Colors.white),
+      checkColor: MaterialStateProperty.resolveWith((states) =>Colors.white),
     ),
     textTheme: TextTheme(
       displayMedium: TextStyles().mediumText,
@@ -96,6 +96,12 @@ secondaryHeaderColor: AppConstent().leadTiletagColor,
       ),
     ),
 
+    
+    expansionTileTheme: const  ExpansionTileThemeData(
+      shape: RoundedRectangleBorder(
+
+      )
+    ),
 
 
     //ColorScheme

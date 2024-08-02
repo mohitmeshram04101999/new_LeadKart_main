@@ -17,7 +17,8 @@ class CustomRadio extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Checkbox(value: active, onChanged: (v){
+          Checkbox(
+              value: active, onChanged: (v){
             onTap(value);
           }),
            Text(label)
