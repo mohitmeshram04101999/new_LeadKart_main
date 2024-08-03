@@ -111,7 +111,7 @@ void upDate()=>notifyListeners();
 
 //set CategoryId
  void setCategoryId(BCategory category,BuildContext context) async {
-   var _serviece  = Controllers.bussnissCategoryProvider(context,listen: false);
+   var _serviece  = Controllers.businessCategoryProvider(context,listen: false);
   _businessCategoryId=category;
    await _serviece.lodeService(category.id??"", context);
    if(_serviece.allSrvices.length!=0)
@@ -195,7 +195,7 @@ void removeServiceId(String id) {_service_ids.removeWhere((v)=>v.id==id);notifyL
     {
       MyHelper.mySnakebar(context, color: AppConstent().primeryColor,"${responce.message}");
       clear();
-      Controllers.bussnissCategoryProvider(context,listen: false).clean();
+      Controllers.businessCategoryProvider(context,listen: false).clean();
     }
     else
       {

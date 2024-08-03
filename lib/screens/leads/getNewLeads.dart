@@ -33,9 +33,9 @@ class _GetNewLeadsState extends State<GetNewLeads> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Controllers.allplansprovider(context,listen: false).clear();
+    Controllers.allPlansProvider(context,listen: false).clear();
     Controllers.createAddProvider(context,listen: false).clear();
-    Controllers.allplansprovider(context, listen: false).load(context);
+    Controllers.allPlansProvider(context, listen: false).load(context);
   }
 
 
@@ -48,7 +48,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
     print("Build Method is Called set State {}");
     return WillPopScope(
       onWillPop: ()async{
-        Controllers.allplansprovider(context,listen: false).clear();
+        Controllers.allPlansProvider(context,listen: false).clear();
         Controllers.createAddProvider(context,listen: false).clear();
         return true;
       },
@@ -160,17 +160,38 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                   SizedBox(
                     height: SC.fromContextWidth(context, 20),
                   ),
-                  const Text("OR"),
-                  SizedBox(
-                    height: SC.fromContextWidth(context, 20),
+
+
+                  
+                  
+                  
+                  Consumer<Allplansprovider>(
+                    builder: (a,p,c){
+                      if(p.allPlans.isEmpty)
+                        {
+                          return const SizedBox();
+                        }
+                      return  Column(
+                        children: [
+                          const Text("OR"),
+                          SizedBox(
+                            height: SC.fromContextWidth(context, 20),
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Select a Plan",style: Theme.of(context).textTheme.displayMedium,),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    
                   ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("Select a Plan",style: Theme.of(context).textTheme.displayMedium,),
-                    ),
-                  ),
+
+
+
                   const SizedBox(
                     height: 5,
                   ),
@@ -196,9 +217,9 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                       );
                     }
 
-                    if(p1.allPlans.length==0)
+                    if(p1.allPlans.isEmpty)
                     {
-                      return const Text("No Data Found");
+                      return const SizedBox();
                     }
 
                     return ListView.builder(

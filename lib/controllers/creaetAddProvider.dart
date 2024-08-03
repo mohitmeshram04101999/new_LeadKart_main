@@ -26,15 +26,15 @@ class CreateAddProvider with ChangeNotifier{
   double _googleBudget = 0;
   final TextEditingController _destinationUrlController = TextEditingController();
   final TextEditingController _captionController = TextEditingController();
-  List<int> _targetGender = [];
-  RangeValues _ageRange = RangeValues(18, 66);
+  List<int> _targetGender = [1,2,3];
+  RangeValues _ageRange =  RangeValues(18, 66);
   List<int> _days = [];
   TimeOfDay? _dayStartTime;
   TimeOfDay? _dayEndTime;
   DateTime? _startDate;
   EstimatedData? _estimatedData;
   DateTime? _endDate;
-  bool _isFaceBookAddEnable = false;
+  final bool _isFaceBookAddEnable = false;
   bool _isInstEnable = false;
   bool _isGoogleAddEnable = false;
   bool _lodingOffer = false;
@@ -355,6 +355,7 @@ class CreateAddProvider with ChangeNotifier{
    _startDate = null;
    _endDate = null;
    _estimatedData = null;
+   _targetGender = [1,2,3];
 
    notifyListeners();
    Logger().i("create add provider is clear ");

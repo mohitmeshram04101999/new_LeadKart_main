@@ -50,7 +50,7 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Controllers.bussnissCategoryProvider(context,listen: false).lode(context);
+    Controllers.businessCategoryProvider(context,listen: false).lode(context);
   }
 
   @override
