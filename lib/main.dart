@@ -8,7 +8,9 @@ import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
 import 'package:leadkart/controllers/GetCampaignProvider.dart';
 import 'package:leadkart/controllers/LeadeDetaileProvider.dart';
+import 'package:leadkart/controllers/SubUserProvider.dart';
 import 'package:leadkart/controllers/addListByBussnessProvider.dart';
+import 'package:leadkart/controllers/addSubUserProvider.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
 import 'package:leadkart/controllers/creaetAddProvider.dart';
 import 'package:leadkart/controllers/editBussnessProvider.dart';
@@ -44,6 +46,8 @@ MyHelper();
       ChangeNotifierProvider(create: (context) => AddListByBusinessProvider()),
       ChangeNotifierProvider(create: (context) => LeadsProvider()),
       ChangeNotifierProvider(create: (context) => LeadDetailProvider()),
+      ChangeNotifierProvider(create: (context) => SubUserProvider()),
+      ChangeNotifierProvider(create: (context) => AddSubUserProvider()),
     ],
       child: const MyApp()));
 }

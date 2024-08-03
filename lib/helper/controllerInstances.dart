@@ -8,6 +8,7 @@ import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
 import 'package:leadkart/controllers/GetCampaignProvider.dart';
 import 'package:leadkart/controllers/LeadeDetaileProvider.dart';
+import 'package:leadkart/controllers/SubUserProvider.dart';
 import 'package:leadkart/controllers/addListByBussnessProvider.dart';
 import 'package:leadkart/controllers/authController.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
@@ -26,14 +27,15 @@ class Controllers
   static final authController = Get.put(Authcontroller());
   static final userPreferencesController = Get.put(UserPreference());
   static CreateBusinessProvider createBusinessProvider(BuildContext context,{bool listen = true}) => Provider.of<CreateBusinessProvider>(context,listen: false);
-  static BussnissCategoryProvider bussnissCategoryProvider(BuildContext context,{bool listen = true}) => Provider.of<BussnissCategoryProvider>(context,listen: false);
-  static Allplansprovider allplansprovider(BuildContext context,{bool listen = true}) => Provider.of<Allplansprovider>(context,listen: false);
+  static BussnissCategoryProvider businessCategoryProvider(BuildContext context,{bool listen = true}) => Provider.of<BussnissCategoryProvider>(context,listen: false);
+  static Allplansprovider allPlansProvider(BuildContext context,{bool listen = true}) => Provider.of<Allplansprovider>(context,listen: false);
   static Profileprovider profileProvider(BuildContext context,{bool listen = true}) => Provider.of<Profileprovider>(context,listen: false);
   static EditBusinessProvider editBusinessProvider(BuildContext context,{bool listen = true}) => Provider.of<EditBusinessProvider>(context,listen: false);
   static BusinessProvider businessProvider(BuildContext context,{bool listen = true}) => Provider.of<BusinessProvider>(context,listen: false);
   static CreateAddProvider createAddProvider(BuildContext context,{bool listen = true}) => Provider.of<CreateAddProvider>(context,listen: false);
-  static CampaignProvider cmpaignProvider(BuildContext context,{bool listen = true}) => Provider.of<CampaignProvider>(context,listen: false);
+  static CampaignProvider campaignProvider(BuildContext context,{bool listen = true}) => Provider.of<CampaignProvider>(context,listen: false);
   static AddListByBusinessProvider addListByBusinessProvider(BuildContext context,{bool listen = true}) => Provider.of<AddListByBusinessProvider>(context,listen: false);
   static LeadsProvider leadsProvider(BuildContext context,{bool listen = true}) => Provider.of<LeadsProvider>(context,listen: false);
   static LeadDetailProvider leadDetailProvider(BuildContext context,{bool listen = true}) => Provider.of<LeadDetailProvider>(context,listen: false);
+  static SubUserProvider subUserProvider(BuildContext context,{bool listen = true}) => Provider.of<SubUserProvider>(context,listen: false);
 }

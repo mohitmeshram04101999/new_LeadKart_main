@@ -67,7 +67,7 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Controllers.cmpaignProvider(context)
+    Controllers.campaignProvider(context)
         .load(context, campaignId: "campaignId");
   }
 
@@ -75,7 +75,7 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          Controllers.cmpaignProvider(context).clear();
+          Controllers.campaignProvider(context).clear();
           return true;
         },
         child: Scaffold(

@@ -4,6 +4,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/component/custom_textfield.dart';
+import 'package:leadkart/component/flatIconns.dart';
 import 'package:leadkart/controllers/creaetAddProvider.dart';import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';import 'package:leadkart/them/constents.dart';
 import 'package:get/get.dart';
@@ -152,7 +153,7 @@ class _CreateAdsState extends State<CreateAds> {
                 Positioned(
                     right: -10,
                     top: -10,
-                    child: CircleAvatar(child: IconButton(onPressed: ()=>p.selectImage(context), icon: const Icon(Icons.add))))
+                    child: CircleAvatar(child: IconButton(onPressed: ()=>p.selectImage(context), icon: FlatIcon(icon: FlatIcons.editImage,),)))
               ],
             ),
             SizedBox(

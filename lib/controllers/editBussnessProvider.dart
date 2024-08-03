@@ -71,7 +71,7 @@ class EditBusinessProvider with ChangeNotifier
   {
 
     var bus = Controllers.businessProvider(context,listen: false).currentBusiness;
-   var service =  Controllers.bussnissCategoryProvider(context);
+   var service =  Controllers.businessCategoryProvider(context);
 
     _businessNameController.text = bus?.businessName??"";
     _businessPhoneNumberController.text = bus?.businessContact!=null?bus!.businessContact.toString():"";
@@ -187,7 +187,7 @@ class EditBusinessProvider with ChangeNotifier
 
 //set CategoryId
   void setCategoryId(BCategory category,BuildContext context) async {
-    var _serviece  = Controllers.bussnissCategoryProvider(context,listen: false);
+    var _serviece  = Controllers.businessCategoryProvider(context,listen: false);
     _businessCategoryId=category;
     await _serviece.lodeService(category.id??"", context);
     if(_serviece.allSrvices.length!=0)
@@ -271,7 +271,7 @@ class EditBusinessProvider with ChangeNotifier
         BusinessModel data = responce.data;
         Controllers.businessProvider(context,listen: false).setCurrentBusiness(data);
         clear();
-        Controllers.bussnissCategoryProvider(context,listen: false).clean();
+        Controllers.businessCategoryProvider(context,listen: false).clean();
         context.pop();
 
       }

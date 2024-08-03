@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/screens/manageUserScreen.dart';import 'package:leadkart/them/constents.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +40,7 @@ class _BusinessDetailState extends State<BusinessDetail> {
     {'name': 'Manage Website', 'icon': Icons.web,"page": const AdditionalDetail()},
     {'name': 'Notification', 'icon': Icons.notifications,"page": const DigitalAdsPackage()},
     {'name': 'Logout', 'icon': Icons.logout},
+    {'name': 'Manage Users', 'icon': Icons.personal_injury,"page":const ManageUserScreen()},
   ];
 
   @override
