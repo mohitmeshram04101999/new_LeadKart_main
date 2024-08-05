@@ -35,7 +35,7 @@ class _BusinessDetailState extends State<BusinessDetail> {
 
   final List<Map<String, dynamic>> items = [
     {'name': 'Campaign Settings', 'icon': Icons.settings,"page":const AddCreation()},
-    {'name': 'Billing Details', 'icon': Icons.person,"page": const  AddDetailScreen()},
+    {'name': 'Billing Details', 'icon': Icons.person,"page": const  AddDetailScreen(adId: "",)},
     {'name': 'Payment & Invoices', 'icon': Icons.notifications,"page": const CreateUser()},
     {'name': 'Manage Website', 'icon': Icons.web,"page": const AdditionalDetail()},
     {'name': 'Notification', 'icon': Icons.notifications,"page": const DigitalAdsPackage()},

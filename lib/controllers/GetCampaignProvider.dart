@@ -47,7 +47,7 @@ class CampaignProvider with ChangeNotifier
       }
     else
       {
-        MyHelper.mySnakebar(context, "Somthing went Wrong");
+        MyHelper.mySnakebar(context, "Something went Wrong");
       }
     _loading =false;
     notifyListeners();

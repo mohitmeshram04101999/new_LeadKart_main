@@ -8,6 +8,7 @@ import 'package:leadkart/business_pages/growBusinessFaster.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 
 import 'package:leadkart/leads/adddetail/add_detail_screen.dart';
+import 'package:leadkart/leads/ads_image.dart';
 import 'package:leadkart/leads/busines_category.dart';
 import 'package:leadkart/leads/create_ads_page.dart';
 import 'package:leadkart/login_pages/login_screen.dart';
@@ -66,12 +67,25 @@ class GoRouterConfig {
           GoRoute(
             path: 'AddDetailScreen',
             name: 'AddDetailScreen',
-            builder: (context,state)=>const AddDetailScreen(),
+            builder: (context,state){
+              final encodedData = jsonEncode(state.extra);
+              final decodeddata = jsonDecode(encodedData);
+              return AddDetailScreen(adId: decodeddata['id']??"",);
+            },
 
           ),GoRoute(
             path: 'createBusinessScreen',
             name: 'createBusinessScreen',
             builder: (context,state)=>const CreateBusinessScreen(),
+          ),
+
+          GoRoute(
+            path: 'adsPage',
+            name: 'adsPage',
+            builder: (context,state){
+              final id = state.pathParameters["id"];
+              return AdsPage();
+            },
           ),
 
           GoRoute(

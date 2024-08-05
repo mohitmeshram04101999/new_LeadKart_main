@@ -140,7 +140,7 @@ class _AdsPageState extends State<AdsPage> {
 
               return ListView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: allAds.length,
                 itemBuilder: (context, index) {
                   final ad = allAds[index];

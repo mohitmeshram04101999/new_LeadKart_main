@@ -27,7 +27,7 @@ class CreateAddProvider with ChangeNotifier{
   final TextEditingController _destinationUrlController = TextEditingController();
   final TextEditingController _captionController = TextEditingController();
   List<int> _targetGender = [1,2,3];
-  RangeValues _ageRange =  RangeValues(18, 66);
+  RangeValues _ageRange = const RangeValues(18, 66);
   List<int> _days = [];
   TimeOfDay? _dayStartTime;
   TimeOfDay? _dayEndTime;
