@@ -1,8 +1,14 @@
 
 
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:leadkart/ApiServices/api%20Path.dart';
 import 'package:http/http.dart' as http;
+import 'package:leadkart/Models/rolsforSubUsersapiResponce.dart';
 import 'package:leadkart/controllers/shredprefrence.dart';
+import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
 import 'package:logger/logger.dart';
 
 class RoleApi
@@ -50,7 +56,7 @@ class RoleApi
     const String uri = "${ApiConst.baseUrl}/user/verifyEmailOtp";
     var head =  await UserPreference().getHeader();
 
-    var resp = await http.post(Uri.parse(uri),body: {
+    var resp = await http.post(Uri.parse(uri),headers: head,body: {
       "email":email,
       "otp":otp,
       "businessId":businessId
@@ -58,6 +64,59 @@ class RoleApi
 
     return resp;
 
+  }
+
+
+  Future<List<Role>?> getUserRole({
+    String userId = "66446389926d794e368c8f6c",
+    required String businessId,
+}) async
+  {
+    String uri = "/getAllUserRole?userId=$userId&businessId=$businessId";
+    var head = await UserPreference().getHeaderForDio();
+    
+    var resp = await MyHelper.dio.get(uri,options: Options(headers: head));
+    
+    _log.i("$businessId\n${resp.statusCode} \n${resp.data}");
+
+    if(resp.statusCode==200)
+      {
+        GetRoleForSubUserApiResponce d = GetRoleForSubUserApiResponce.fromJson(resp.data) ;
+        return d.data;
+      }
+    else
+      {
+        _log.i("${resp.statusCode} \n${resp.data}");
+      }
+
+
+
+  }
+
+
+  Future<Response> assignRoleToSubUser({
+    required String userToken,
+    required String roleId,
+    required String businessId,
+    required String name,
+    required String password,
+
+}) async
+  {
+    const uri =  "/user/CreateSubUser";
+    var head = await UserPreference().getHeader();
+
+   var  data = {
+     "businessId":businessId,
+     "password":password,
+     "name":name,
+     "roleId":roleId,
+     "memberToken":userToken,
+   };
+
+    var resp = await MyHelper.dio.put(uri,data:data ,options: Options(headers: head));
+
+    return resp;
   }
 
 

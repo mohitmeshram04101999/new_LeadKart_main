@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:leadkart/component/custom_textfield.dart';
 import 'package:leadkart/component/flatIconns.dart';
 import 'package:leadkart/controllers/creaetAddProvider.dart';import 'package:leadkart/helper/TextStyles.dart';
-import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';import 'package:leadkart/them/constents.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
+import 'package:leadkart/screens/searchScreen.dart';import 'package:leadkart/them/constents.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:go_router/go_router.dart';
@@ -559,11 +560,14 @@ class _CreateAdsState extends State<CreateAds> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      MyInkWell(
+                        onTap: (){
+                          RouteTo(context, child:(a,n)=>const  SearchTargetAreaScreen());
+                        },
                         padding: EdgeInsets.only(
                             top: SC.from_height(15), left: SC.from_height(15)),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
+                          border: Border.all(color: Colors.grey,width: .5),
                           borderRadius: BorderRadius.circular(SC.from_height(7)),
                         ),
                         width: double.infinity,
@@ -602,8 +606,7 @@ class _CreateAdsState extends State<CreateAds> {
             CustomButton(
               text: 'Next', onPressed: () {
               context.pushNamed("campaignSettings");
-
-            },
+              },
             ),
 
 

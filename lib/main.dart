@@ -16,6 +16,7 @@ import 'package:leadkart/controllers/creaetAddProvider.dart';
 import 'package:leadkart/controllers/editBussnessProvider.dart';
 import 'package:leadkart/controllers/leadeProvider.dart';
 import 'package:leadkart/controllers/profileProvider.dart';
+import 'package:leadkart/controllers/targetAreaSearchAreaController.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -48,6 +49,7 @@ MyHelper();
       ChangeNotifierProvider(create: (context) => LeadDetailProvider()),
       ChangeNotifierProvider(create: (context) => SubUserProvider()),
       ChangeNotifierProvider(create: (context) => AddSubUserProvider()),
+      ChangeNotifierProvider(create: (context) => TargateAreaProvider()),
     ],
       child: const MyApp()));
 }

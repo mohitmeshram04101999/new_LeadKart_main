@@ -22,7 +22,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'dart:math' as math;
 
 class AddDetailScreen extends StatefulWidget {
-  const AddDetailScreen({Key? key}) : super(key: key);
+  final String adId;
+  const AddDetailScreen({required this.adId,Key? key}) : super(key: key);
 
   @override
   State<AddDetailScreen> createState() => _AddDetailScreenState();
@@ -100,7 +101,7 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                 Consumer<CampaignProvider>(
                     builder: (a,p,c){
                       return Container(
-                        padding: EdgeInsets.all(10),
+                        padding:const EdgeInsets.all(10),
                         width: double.infinity,
                         height: SC.from_height(150),
                         decoration: BoxDecoration(
@@ -114,13 +115,13 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                               clipBehavior: Clip.hardEdge,
                               width: SC.from_height(120),
                               height: SC.from_height(105),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(SC.from_height(8))),
                               child: Image.asset(
                                 'assets/img_4.png',
                                 fit: BoxFit.cover,
                               ),
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                  BorderRadius.circular(SC.from_height(8))),
                             ),
                             SizedBox(
                               width: SC.from_height(15),

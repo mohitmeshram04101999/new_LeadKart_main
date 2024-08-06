@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:leadkart/helper/dimention.dart';
 
 class CustomTextField extends StatefulWidget {
+  final String? hintText;
   final TextEditingController controller;
   final List<TextInputFormatter>? format;
   final TextInputType? textInputType;
@@ -16,6 +17,7 @@ class CustomTextField extends StatefulWidget {
 
   const CustomTextField({
     Key? key,
+    this.hintText,
     this.format,
     this.maxLength,
     this.textInputType,
@@ -41,6 +43,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       controller: widget.controller,
       cursorColor: Colors.grey,
       decoration: InputDecoration(
+        hintText: widget.hintText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(SC.from_height(7)),
           borderSide: BorderSide(color: Colors.grey.shade400),

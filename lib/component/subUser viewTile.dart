@@ -10,29 +10,68 @@ class SubUserTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    String? roleNames;
+    for(var i in user.roleId?["permissions"]??[])
+      {
+        for(var j in i.keys)
+          {
+            roleNames ??= "";
+            roleNames += "$j, ";
+          }
+      }
+
     return ExpansionTile(
+      backgroundColor: Colors.grey.shade100,
       childrenPadding:const  EdgeInsets.symmetric(horizontal: 20),
       title: Text(user.name??"Unknown"),
-      subtitle: Text("Email - ${user.email??""}"),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Email - ${user.email??""}"),
+          Text("Role name - ${user.roleId?["roleName"]??"No Role assign"}"),
+        ],
+      ),
 
       children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: (user.roleId==null)
-              ?const Text("No Role Assign")
-              :Text("Role name - ${user.roleId?["roleName"]??""}"),
-        ),
         if(user.roleId?["permissions"]!=null)
-          for(var pr in user.roleId?["permissions"])
-            for(var i in pr.keys)
-              Row(children: [
-                Text(i,style: TextStyle(
-                  color: AppConstent().primeryColor
-                ),),
-                const Text(" - "),
-                for(String role in pr[i])
-                  Text("${role.capitalizeFirst.toString()},"),
-              ],),
+        Table(
+
+          border: TableBorder.all(
+            color: Colors.black
+          ),
+          children:  [
+            const TableRow(
+              children:[
+                TableCell(child: Text("Permissions")),
+                TableCell(child: Center(child: Text("Read"))),
+                TableCell(child: Center(child: Text("Write"))),
+              ]
+            ),
+
+            for(var per in user.roleId?["permissions"]??[])
+              for(String name in per.keys)
+                TableRow(
+                  children: [
+                    TableCell(child: Text(name),),
+                    TableCell(child: Center(child: (per[name].contains("read"))?Icon(Icons.check,color: AppConstent().primeryColor,):Icon(Icons.close,color: Colors.red,))),
+                    TableCell(child: Center(child: (per[name].contains("write"))?Icon(Icons.check,color: AppConstent().primeryColor,):Icon(Icons.close,color: Colors.red,))),
+                  ]
+                ),
+
+          ],
+        ),
+        // if(user.roleId?["permissions"]!=null)
+        //   for(var pr in user.roleId?["permissions"])
+        //     for(var i in pr.keys)
+        //       Row(children: [
+        //         Text(i,style: TextStyle(
+        //           color: AppConstent().primeryColor
+        //         ),),
+        //         const Text(" - "),
+        //         for(String role in pr[i])
+        //           Text("${role.capitalizeFirst.toString()},"),
+        //       ],),
       ],
     );
   }

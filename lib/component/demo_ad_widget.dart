@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:leadkart/Models/addListByBussnesIdModel.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -9,7 +10,7 @@ import 'package:leadkart/them/constents.dart';
 
 class DemoAdWidget extends StatelessWidget {
   final AddByBuinesss add;
-  DemoAdWidget({required this.add});
+  const DemoAdWidget({super.key, required this.add});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class DemoAdWidget extends StatelessWidget {
             color: Colors.grey.shade300,
             spreadRadius: 0.2,
             blurRadius: 5,
-            offset: Offset(0, 1),
+            offset: const Offset(0, 1),
           ),
         ],
       ),
@@ -44,7 +45,7 @@ class DemoAdWidget extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: SC.from_height(8)),
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(233, 233, 233, 1),
+                  color:const Color.fromRGBO(233, 233, 233, 1),
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(SC.from_height(12)),
                     bottomLeft: Radius.circular(SC.from_height(15)),
@@ -125,17 +126,19 @@ class DemoAdWidget extends StatelessWidget {
             child: Column(
               children: [
                 InkWell(
-                  onTap: (){},
+                  onTap: (){
+                    context.pushNamed("AddDetailScreen",extra: {"id":add.id.toString()});
+                  },
                   child: Text(
                     'View Reports',
                     style: TextStyle(
-                      color: Color.fromRGBO(36, 238, 221, 1),
+                      color:const  Color.fromRGBO(36, 238, 221, 1),
                       // fontSize: SC.from_height(15),
                       fontSize: SC.fromWidth(27),
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   height: SC.from_height(1),
                   width: SC.from_height(85),
                   child: Divider(thickness: 1, color: AppConstent().primeryColor),
