@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/ApiServices/api%20Path.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
+import 'package:leadkart/Models/ad_interests.dart';
 import 'package:leadkart/Models/ad_type_model.dart';
 import 'package:leadkart/Models/addListByBussnesIdModel.dart';
 import 'package:leadkart/Models/ads_model.dart';
@@ -229,5 +230,25 @@ class AdsApi{
         _log.e("Responce From\n${resp.statusCode}\n${resp.data}");
       }
 
+  }
+
+  getInterests({required String businessId, required String query}) async
+  {
+    try{
+      final CurrentUser? _user = await Controllers.userPreferencesController
+          .getUser();
+
+      var head = await UserPreference().getHeaderForDio();
+      Logger().i(ApiConst.baseUrl+'targetingInterest?businessId=$businessId&search=$query');
+    var resp = await MyHelper.dio.get('targetingInterest?businessId=$businessId&search=$query', options: Options(
+      headers: head
+    ));
+    MyHelper.logger.i(resp.data['data']);
+    return resp.data ;
+    }
+    catch(e)
+    {
+      MyHelper.logger.e(e);
+    }
   }
 }

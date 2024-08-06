@@ -1,11 +1,14 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:leadkart/Models/ad_interests.dart';
 import 'package:leadkart/component/custom_textfield.dart';
 import 'package:leadkart/component/flatIconns.dart';
 import 'package:leadkart/controllers/creaetAddProvider.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
 import 'package:leadkart/screens/searchScreen.dart';import 'package:leadkart/them/constents.dart';
 import 'package:get/get.dart';
@@ -348,6 +351,12 @@ class _CreateAdsState extends State<CreateAds> {
               height: SC.from_height(8),
             ),
 
+            InterestSelectionWithSearch(),
+
+            SizedBox(
+              height: SC.from_height(15),
+            ),
+
             // ADD AUDIENCEE //
             Container(
               decoration: BoxDecoration(
@@ -618,5 +627,125 @@ class _CreateAdsState extends State<CreateAds> {
 
       ),
     );
+  }
+}
+
+class InterestSelectionWithSearch extends StatefulWidget {
+  @override
+  _InterestSelectionWithSearchState createState() => _InterestSelectionWithSearchState();
+}
+
+class _InterestSelectionWithSearchState extends State<InterestSelectionWithSearch> {
+  List<dynamic> searchResults = [];
+  Timer? _debounce;
+
+  void searchInterests(String query) async{
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () async{
+      if (query.length >= 3) {
+        // Call your API here and update searchResults
+        // For demonstration, we'll use a dummy list
+        List<dynamic> adInterests = await Controllers.createAddProvider(context,listen: false).getInterests(businessId: '664483cb34434c7cec80d6ed'??'', query: query);
+        setState(() {
+          searchResults = adInterests.map((e) => e['name']).toList().where((element) => element.toLowerCase().contains(query.toLowerCase())).toList();
+        });
+      } else {
+        setState(() {
+          searchResults = [];
+        });
+      }
+    });
+  }
+
+  TextEditingController controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<CreateAddProvider>(
+      builder: (context, value, child) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+                top: SC.from_height(10), left: SC.from_height(15)),
+            child: Text('Select Interests',
+                style: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontSize: SC.from_height(16),
+                    fontWeight: FontWeight.w500)),
+          ),
+          SizedBox(height: SC.from_height(10)),
+          Container(
+            width: double.infinity,
+            // height: SC.from_height(45),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(7),
+            ),
+            child: Column(
+              children: [
+                SizedBox(height: SC.from_height(10)),
+                Wrap(
+                  children: value.adInterests.map((e) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Chip(
+                      label: Text(e),
+                      onDeleted: () {
+                        value.removeAdInterests(e);
+                      },
+                    ),
+                  )).toList(),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: SC.from_height(15)),
+                  child: TextField(
+                    controller: controller,
+                    enableSuggestions: true,
+                    contextMenuBuilder: (context, editableTextState) {
+                      return Text('Custom context menu');
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Search interests...',
+                      // border: OutlineInputBorder(),
+                      border: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      focusedErrorBorder: InputBorder.none,
+                    ),
+                    onChanged: searchInterests,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (searchResults.isNotEmpty|| controller.text.isNotEmpty)
+            Container(
+              height: SC.fromContextWidth(context, 2),
+              child: ListView.builder(
+                itemCount: searchResults.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(searchResults[index]),
+                    onTap: () {
+                      // Handle selection of search result
+                      value.setAdInterests(searchResults[index]);
+                    },
+                  );
+                },
+              ),
+            ),
+
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
   }
 }

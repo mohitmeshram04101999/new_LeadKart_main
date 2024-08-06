@@ -2,6 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/screens/manageUserScreen.dart';import 'package:leadkart/them/constents.dart';
+import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/helper/controllerInstances.dart';import 'package:leadkart/them/constents.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
@@ -156,9 +158,24 @@ class _BusinessDetailState extends State<BusinessDetail> {
                           Navigator.push(context,CustomPageRoute(page: i["page"]));
                         }
                         if(i["name"]=="Logout")
-                          {
-
-                          }
+                        {
+                          showDialog(context: context, builder: (context) {
+                            return AlertDialog(
+                              title: Text("Are you sure you want to logout?"),
+                              actions: [
+                                TextButton(onPressed: (){
+                                  Controllers.authController.logOut(context);
+                                  context.pop();
+                                }, child: Text("Yes", style: TextStyle(color: Colors.redAccent, fontSize: SC.fromContextWidth(context, 20)))),
+                                TextButton(onPressed: (){
+                                  context.pop();
+                                }, child: Text("No", style: TextStyle(
+                                    fontSize: SC.fromContextWidth(context, 20)
+                                ),)),
+                              ],
+                            );
+                          },);
+                        }
                       },
                       child: Row(
                         children: [
