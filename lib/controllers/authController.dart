@@ -25,6 +25,7 @@ class Authcontroller extends GetxController
 
   TextEditingController get phonController => _phonNumController;
 
+
   //Log In
   Future<dynamic> login(BuildContext context) async
   {

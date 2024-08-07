@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leadkart/Models/getAllsubUsersResonceModel.dart';
@@ -11,6 +13,38 @@ class SubUserTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    TextStyle titleStyle = const  TextStyle();
+    TextStyle subTitleStyle = TextStyle(color: Colors.grey.shade700);
+
+    if(user.roleId?["permissions"]==null)
+      {
+        return ListTile(
+
+          leading:Container(
+            width: 35,
+            height: 35,
+            clipBehavior: Clip.hardEdge,
+            decoration : BoxDecoration(
+                shape: BoxShape.circle
+            ),
+            child: CachedNetworkImage(
+              imageUrl: user.image??"",
+              fit: BoxFit.cover,
+              errorWidget: (context, url, error) => const CircleAvatar(child:Icon(Icons.person),),
+            ),
+          ),
+
+          title: Text(user.name??"Unknown",style: titleStyle,),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Email - ${user.email??""}",style: subTitleStyle,),
+              Text("Role name - ${user.roleId?["roleName"]??"No Role assign"}",style: subTitleStyle,),
+            ],
+          ),
+        );
+      }
+
     String? roleNames;
     for(var i in user.roleId?["permissions"]??[])
       {
@@ -22,44 +56,56 @@ class SubUserTile extends StatelessWidget {
       }
 
     return ExpansionTile(
-      backgroundColor: Colors.grey.shade100,
+
       childrenPadding:const  EdgeInsets.symmetric(horizontal: 20),
-      title: Text(user.name??"Unknown"),
+
+      leading:Container(
+        width: 35,
+        height: 35,
+        clipBehavior: Clip.hardEdge,
+        decoration : BoxDecoration(
+          shape: BoxShape.circle
+        ),
+        child: CachedNetworkImage(
+          imageUrl: user.image??"",
+          fit: BoxFit.cover,
+          errorWidget: (context, url, error) => const CircleAvatar(child:Icon(Icons.person),),
+        ),
+      ),
+
+      title: Text(user.name??"Unknown",style: titleStyle,),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Email - ${user.email??""}"),
-          Text("Role name - ${user.roleId?["roleName"]??"No Role assign"}"),
+          Text("Email - ${user.email??""}",style: subTitleStyle,overflow: TextOverflow.ellipsis,),
+          Text("Role name - ${user.roleId?["roleName"]??"No Role assign"}",style: subTitleStyle,),
         ],
       ),
 
       children: [
         if(user.roleId?["permissions"]!=null)
-        Table(
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: DataTable(
+            columns: [
+              DataColumn(label: Text("Permissions")),
+              DataColumn(label: Text("Read")),
+              DataColumn(label: Text("Write")),
+            ],
 
-          border: TableBorder.all(
-            color: Colors.black
+            rows: [
+              for(var per in user.roleId?["permissions"]??[])
+                for(String name in per.keys)
+                  DataRow(
+                      cells: [
+                        DataCell(Text(name),),
+                        DataCell(Center(child: (per[name].contains("read"))?Icon(Icons.check,color: AppConstent().primeryColor,):Icon(Icons.close,color: Colors.red,))),
+                        DataCell(Center(child: (per[name].contains("write"))?Icon(Icons.check,color: AppConstent().primeryColor,):Icon(Icons.close,color: Colors.red,))),
+                      ]
+                  ),
+            ],
+
           ),
-          children:  [
-            const TableRow(
-              children:[
-                TableCell(child: Text("Permissions")),
-                TableCell(child: Center(child: Text("Read"))),
-                TableCell(child: Center(child: Text("Write"))),
-              ]
-            ),
-
-            for(var per in user.roleId?["permissions"]??[])
-              for(String name in per.keys)
-                TableRow(
-                  children: [
-                    TableCell(child: Text(name),),
-                    TableCell(child: Center(child: (per[name].contains("read"))?Icon(Icons.check,color: AppConstent().primeryColor,):Icon(Icons.close,color: Colors.red,))),
-                    TableCell(child: Center(child: (per[name].contains("write"))?Icon(Icons.check,color: AppConstent().primeryColor,):Icon(Icons.close,color: Colors.red,))),
-                  ]
-                ),
-
-          ],
         ),
         // if(user.roleId?["permissions"]!=null)
         //   for(var pr in user.roleId?["permissions"])

@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
 import 'package:leadkart/Models/ad_type_model.dart';
 import 'package:leadkart/component/addRequirmentTile.dart';
 import 'package:leadkart/component/customAppBar.dart';
+import 'package:leadkart/component/flatIconns.dart';
 
 
 import 'package:leadkart/component/helpButton.dart';
@@ -41,6 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
     Icons.mail_outline,
     // Add more icons as needed
   ];
+
+  Map<String,Widget> iconsfor = {
+    "667a7c6df68bde8bec7ad3a8":FlatIcon(icon:FlatIcons.whatsApp,size: 20,),
+    "667a7c6df68bde8bec7ad3aa":FlatIcon(icon:FlatIcons.web,size: 20),
+    "667a7c6df68bde8bec7ad3a7":FlatIcon(icon:FlatIcons.people,size: 20),
+    "667a7c6df68bde8bec7ad3ab":FlatIcon(icon:FlatIcons.playStore,size: 20),
+    "667a7c6df68bde8bec7ad3a9":FlatIcon(icon:FlatIcons.call,size: 20)
+  };
 
   String? dropdownValue;
   @override
@@ -247,10 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: AddREquirmentTile(
                         advertisementTypeModel: item,
-                        icon: Icon(
-                          iconList[index],
-                          color: Colors.black54,
-                        ),
+                        icon: iconsfor[item.id]??const SizedBox(),
                       ),
                     );
                   },

@@ -573,8 +573,12 @@ class _CreateAdsState extends State<CreateAds> {
                         width: double.infinity,
                         height: SC.from_height(50),
                         child: Text(
-                          'Add a location',
-                          style: TextStyle(fontSize: SC.from_height(16),color:Colors.grey.shade700),
+                          p.targetArea!=null
+                              ? (p.targetArea?.type=="city"||p.targetArea?.type=="neighborhood"||p.targetArea?.type=="subcity")
+                              ?"${p.targetArea?.name}, ${p.targetArea?.region}, ${p.targetArea?.countryName}"
+                              :"${p.targetArea?.name}, ${p.targetArea?.countryName}"
+                              :'Add a location',
+                          style: TextStyle(fontSize: SC.from_height(16),color:p.targetArea==null?Colors.grey.shade500:Colors.grey.shade700),
                         ),
                       ),
                     ],

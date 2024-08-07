@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:leadkart/Models/getCampaindetailModel.dart';
+import 'package:leadkart/Models/targetAreaResponceModel.dart';
 import 'package:leadkart/controllers/AllPlansProvider.dart';
 import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
@@ -18,6 +19,7 @@ import 'package:leadkart/controllers/imageEditorController.dart';
 import 'package:leadkart/controllers/leadeProvider.dart';
 import 'package:leadkart/controllers/profileProvider.dart';
 import 'package:leadkart/controllers/shredprefrence.dart';
+import 'package:leadkart/controllers/targetAreaSearchAreaController.dart';
 import 'package:provider/provider.dart';
 
 class Controllers
@@ -38,4 +40,5 @@ class Controllers
   static LeadsProvider leadsProvider(BuildContext context,{bool listen = true}) => Provider.of<LeadsProvider>(context,listen: false);
   static LeadDetailProvider leadDetailProvider(BuildContext context,{bool listen = true}) => Provider.of<LeadDetailProvider>(context,listen: false);
   static SubUserProvider subUserProvider(BuildContext context,{bool listen = true}) => Provider.of<SubUserProvider>(context,listen: false);
+  static TargateAreaProvider targateAreaProvider(BuildContext context,{bool listen = true}) => Provider.of<TargateAreaProvider>(context,listen: false);
 }

@@ -27,10 +27,9 @@ class AddREquirmentTile extends StatelessWidget {
         GoRouter.of(context).pushNamed('getNewLeads');
       },
       leading: CircleAvatar(
-        child: Center(child: advertisementTypeModel.image==null? icon:Image.asset(advertisementTypeModel.image??"",fit: BoxFit.contain,)),
-
-        backgroundColor: Color.fromRGBO(241, 241, 241, 1),
+        backgroundColor: const Color.fromRGBO(241, 241, 241, 1),
         radius:SC.from_height(25),
+        child: Center(child: advertisementTypeModel.image==null? icon:Image.asset(advertisementTypeModel.image??"",fit: BoxFit.contain,)),
       ),
 
       title: Text(advertisementTypeModel.title,maxLines: 1,overflow: TextOverflow.ellipsis,
@@ -44,12 +43,19 @@ class AddREquirmentTile extends StatelessWidget {
           SizedBox(height: SC.from_height(5),),
           Row(
             children: [
-              Container(
+              //
+              //
+              if(advertisementTypeModel.isFacebook)
+                Container(
                 width: SC.from_height(16),
                 height: SC.from_height(16),
                 child: Image.asset('assets/facebook.png'),
               ),
               SizedBox(width: SC.from_height(8),),
+
+              //
+              //
+              if(advertisementTypeModel.isFacebook)
               Container(
                 width: SC.from_height(20),
                 height: SC.from_height(20),

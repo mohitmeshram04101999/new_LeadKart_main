@@ -10,6 +10,7 @@ import 'package:leadkart/Models/PlanBYTypIdModel.dart';
 import 'package:leadkart/Models/estimateddataModel.dart';
 import 'package:leadkart/Models/offeringResponceModel.dart';
 import 'package:leadkart/Models/plansModel.dart';
+import 'package:leadkart/Models/targetAreaResponceModel.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:logger/logger.dart';
@@ -39,6 +40,7 @@ class CreateAddProvider with ChangeNotifier{
   bool _isGoogleAddEnable = false;
   bool _lodingOffer = false;
   List<OfferDetail> _offers = [];
+  TargetArea? _targetArea;
 
   AdvertisementTypeModel? get addType => _addType;
   String? get image => _imagePath;
@@ -62,6 +64,7 @@ class CreateAddProvider with ChangeNotifier{
   bool get loadingOffer => _lodingOffer;
   List<int> get  targetGenders => _targetGender;
   List<OfferDetail> get offers =>_offers;
+  TargetArea? get targetArea  => _targetArea;
 
   //
   //addType
@@ -78,6 +81,12 @@ class CreateAddProvider with ChangeNotifier{
     _faceBookBudget = _faceBookBudget+200;
     _plan = null;
     getEstimatedPlan();
+    notifyListeners();
+  }
+
+  void setTargetArea(TargetArea t)
+  {
+    _targetArea = t;
     notifyListeners();
   }
 
@@ -302,6 +311,7 @@ class CreateAddProvider with ChangeNotifier{
   {
     var api = AdsApi();
     var d  = await api.createAdd(
+      location: _targetArea,
         businessId: Controllers.businessProvider(context,listen: false).currentBusiness?.id??"",
         adTypeId: _addType?.id??"",
       startDate: _startDate?.toIso8601String(),
@@ -356,6 +366,7 @@ class CreateAddProvider with ChangeNotifier{
    _endDate = null;
    _estimatedData = null;
    _targetGender = [1,2,3];
+   _targetArea = null;
 
    notifyListeners();
    Logger().i("create add provider is clear ");
