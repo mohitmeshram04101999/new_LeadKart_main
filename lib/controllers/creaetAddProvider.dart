@@ -7,6 +7,7 @@ import 'package:leadkart/ApiServices/addDetaL%20API.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
 import 'package:leadkart/ApiServices/plansApi.dart';
 import 'package:leadkart/Models/PlanBYTypIdModel.dart';
+import 'package:leadkart/Models/ad_interests.dart';
 import 'package:leadkart/Models/estimateddataModel.dart';
 import 'package:leadkart/Models/offeringResponceModel.dart';
 import 'package:leadkart/Models/plansModel.dart';
@@ -40,6 +41,7 @@ class CreateAddProvider with ChangeNotifier{
   bool _isGoogleAddEnable = false;
   bool _lodingOffer = false;
   List<OfferDetail> _offers = [];
+  List<String> _adInterests = [];
   TargetArea? _targetArea;
 
   AdvertisementTypeModel? get addType => _addType;
@@ -65,6 +67,7 @@ class CreateAddProvider with ChangeNotifier{
   List<int> get  targetGenders => _targetGender;
   List<OfferDetail> get offers =>_offers;
   TargetArea? get targetArea  => _targetArea;
+  List<String> get adInterests =>_adInterests;
 
   //
   //addType
@@ -289,6 +292,28 @@ class CreateAddProvider with ChangeNotifier{
     notifyListeners();
   }
 
+  void setAdInterests(String i)
+  {
+    if(_adInterests.contains(i))
+      {
+        // _adInterests.removeWhere((e)=>i==e);
+      }
+    else
+      {
+        _adInterests.add(i);
+      }
+    notifyListeners();
+  }
+
+  void removeAdInterests(String i)
+  {
+    if(_adInterests.contains(i))
+    {
+      _adInterests.removeWhere((e)=>i==e);
+    }
+    notifyListeners();
+  }
+
 
   Future<void> setEndDay(BuildContext context) async
   {
@@ -311,7 +336,6 @@ class CreateAddProvider with ChangeNotifier{
   {
     var api = AdsApi();
     var d  = await api.createAdd(
-      location: _targetArea,
         businessId: Controllers.businessProvider(context,listen: false).currentBusiness?.id??"",
         adTypeId: _addType?.id??"",
       startDate: _startDate?.toIso8601String(),
@@ -337,6 +361,19 @@ class CreateAddProvider with ChangeNotifier{
     if(d is Map)
       {
         MyHelper.mySnakebar(context, "${d["message"]}");
+      }
+  }
+
+  Future<dynamic> getInterests({required String businessId, required String query})async{
+    Map<String,dynamic> resp = await AdsApi().getInterests(businessId: businessId, query: query);
+    if(resp['message']=='Target Serch Area Data')
+      {
+        return resp['data'];
+      }
+    else
+      {
+        Logger().i("$resp");
+        return [];
       }
   }
 
