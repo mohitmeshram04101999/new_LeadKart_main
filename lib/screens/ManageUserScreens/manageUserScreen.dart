@@ -4,6 +4,7 @@ import 'package:leadkart/controllers/SubUserProvider.dart';
 import 'package:leadkart/controllers/addSubUserProvider.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/animated%20dilog.dart';
+import 'package:leadkart/screens/ManageUserScreens/manageRolseTab.dart';
 import 'package:leadkart/screens/ManageUserScreens/manageuserTab.dart';
 import 'package:provider/provider.dart';
 import 'package:timelines/timelines.dart';
@@ -60,10 +61,10 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
         ),
 
 
-        body:TabBarView(
+        body:const TabBarView(
           children: [
             ManageSubUserTab(),
-            Container(color: Colors.red,)
+            RolesAndPerTab(),
           ],
         )
 

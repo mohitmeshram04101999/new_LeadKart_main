@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:leadkart/Models/business_model.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/Models/business_model.dart';
+import 'package:leadkart/component/flatIconns.dart';import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';import 'package:leadkart/them/constents.dart';
 import 'package:go_router/go_router.dart';
@@ -46,21 +47,18 @@ class AddREquirmentTile extends StatelessWidget {
               //
               //
               if(advertisementTypeModel.isFacebook)
-                Container(
-                width: SC.from_height(16),
-                height: SC.from_height(16),
-                child: Image.asset('assets/facebook.png'),
-              ),
-              SizedBox(width: SC.from_height(8),),
+                FlatIcon(icon: FlatIcons.faceBook,size: 15,),
+              const SizedBox(width: 5,),
+
+
+              if(advertisementTypeModel.isInstagram)
+                FlatIcon(icon: FlatIcons.instagram,size: 15,),
+              const SizedBox(width: 5,),
 
               //
               //
-              if(advertisementTypeModel.isFacebook)
-              Container(
-                width: SC.from_height(20),
-                height: SC.from_height(20),
-                child: Image.asset('assets/google.png'),
-              ),
+              if(advertisementTypeModel.isGoogle)
+                FlatIcon(icon: FlatIcons.google,size: 20,),
             ],
           )
         ],

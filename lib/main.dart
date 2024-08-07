@@ -8,6 +8,7 @@ import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
 import 'package:leadkart/controllers/GetCampaignProvider.dart';
 import 'package:leadkart/controllers/LeadeDetaileProvider.dart';
+import 'package:leadkart/controllers/RolsAndPermisionProvider.dart';
 import 'package:leadkart/controllers/SubUserProvider.dart';
 import 'package:leadkart/controllers/addListByBussnessProvider.dart';
 import 'package:leadkart/controllers/addSubUserProvider.dart';
@@ -50,6 +51,7 @@ MyHelper();
       ChangeNotifierProvider(create: (context) => SubUserProvider()),
       ChangeNotifierProvider(create: (context) => AddSubUserProvider()),
       ChangeNotifierProvider(create: (context) => TargateAreaProvider()),
+      ChangeNotifierProvider(create: (context) => RolesAndPermProvider()),
     ],
       child: const MyApp()));
 }

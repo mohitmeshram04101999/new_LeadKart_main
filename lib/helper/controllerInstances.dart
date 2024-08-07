@@ -9,6 +9,7 @@ import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
 import 'package:leadkart/controllers/GetCampaignProvider.dart';
 import 'package:leadkart/controllers/LeadeDetaileProvider.dart';
+import 'package:leadkart/controllers/RolsAndPermisionProvider.dart';
 import 'package:leadkart/controllers/SubUserProvider.dart';
 import 'package:leadkart/controllers/addListByBussnessProvider.dart';
 import 'package:leadkart/controllers/authController.dart';
@@ -41,4 +42,5 @@ class Controllers
   static LeadDetailProvider leadDetailProvider(BuildContext context,{bool listen = true}) => Provider.of<LeadDetailProvider>(context,listen: false);
   static SubUserProvider subUserProvider(BuildContext context,{bool listen = true}) => Provider.of<SubUserProvider>(context,listen: false);
   static TargateAreaProvider targateAreaProvider(BuildContext context,{bool listen = true}) => Provider.of<TargateAreaProvider>(context,listen: false);
+  static RolesAndPermProvider rolesAndPermProvider(BuildContext context,{bool listen = true}) => Provider.of<RolesAndPermProvider>(context,listen: false);
 }

@@ -124,6 +124,7 @@ class LeadDetailProvider with ChangeNotifier
     if(resp.statusCode==200)
       {
         List  _d = resp.data["data"];
+        _log.e(resp.data);
         _leadeHestory = _d.map((e)=>LeadeHistory.fromJson(e)).toList();
       }
     else
