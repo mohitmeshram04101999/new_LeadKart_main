@@ -99,7 +99,7 @@ String otp = '';
                         style: TextStyle(color: Colors.grey.shade600)
                       ),
                       TextSpan(
-                        text: '9988090679',
+                        text: Controllers.authController.phonController.text,
                         style: TextStyle(color: Color.fromRGBO(36, 238, 221, 1)), // Change color of the phone number
                       ),
                     ],

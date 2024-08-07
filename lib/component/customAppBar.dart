@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:leadkart/component/helpButton.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
@@ -40,49 +41,61 @@ class CustomAppBar extends StatelessWidget {
                           if (value.loding) {
                             return const Center(child: CircularProgressIndicator());
                           }
-                          return ListView.builder(
+
+                          if (value.allBusiness.length == 0) {
+
+                            return const  Center(
+                                child: Text("No Business Found"));
+                          }
+
+
+                          return ListView(
                             controller: d,
-                            itemCount: value.allBusiness.length,
-                            itemBuilder: (context, index) {
+                            children: [
 
-                              if (value.allBusiness.length == 0) {
+                              Align(
+                               alignment: Alignment.centerRight ,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: ElevatedButton(onPressed: (){
+                                      context.pushNamed("createBusinessScreen");
+                                    }, child: const Text("Add a Business")),
+                                  )),
 
-                                return const  Center(
-                                    child: Text("No Business Found"));
-                              }
-                              var business =  value.allBusiness[index];
+                              for(var business in value.allBusiness)
+                                ListTile(
 
-                              return ListTile(
+                                  //Color
+                                  tileColor: (business.id==value.currentBusiness?.id)?AppConstent().primeryColor.withOpacity(.15):null,
 
-                                //Color
-                                tileColor: (business.id==value.currentBusiness?.id)?AppConstent().primeryColor.withOpacity(.15):null,
+                                  //Subtitle of TIle
+                                  subtitle: SelectableText(business.id.toString(),style: TextStyle(color: Colors.grey.shade500),),
 
-                                //Subtitle of TIle
-                                subtitle: SelectableText(business.id.toString(),style: TextStyle(color: Colors.grey.shade500),),
+                                  //lead
+                                  leading: CircleAvatar(
+                                    backgroundImage: NetworkImage(business.businessImage??""),
+                                    child: business.businessImage==null?null:const Icon(Icons.image),
+                                  ),
 
-                                //lead
-                                leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(business.businessImage??""),
-                                  child: business.businessImage==null?null:const Icon(Icons.image),
-                                ),
+                                  //title
+                                  title: Text(
+                                      '${business.businessName}'),
 
-                                //title
-                                title: Text(
-                                    '${business.businessName}'),
+                                  //trailing
+                                  trailing:(business.id==value.currentBusiness?.id)? Icon(Icons.check_circle,color: AppConstent().primeryColor,):null,
 
-                                //trailing
-                                trailing:(business.id==value.currentBusiness?.id)? Icon(Icons.check_circle,color: AppConstent().primeryColor,):null,
+                                  //onTap
+                                  onTap: () {
+                                    Provider.of<BusinessProvider>(context,
+                                        listen: false)
+                                        .setCurrentBusiness(
+                                        business);
+                                  },
+                                )
 
-                                //onTap
-                                onTap: () {
-                                  Provider.of<BusinessProvider>(context,
-                                      listen: false)
-                                      .setCurrentBusiness(
-                                      business);
-                                },
-                              );
-                            },
+                            ],
                           );
+
                         },
                       );
                     });

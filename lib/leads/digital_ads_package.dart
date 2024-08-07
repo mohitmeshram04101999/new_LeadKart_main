@@ -254,12 +254,17 @@ class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
                       ),
 
                       //
-                      Text(
-                        'Set Follow UP',
-                        style: TextStyle(
-                            fontSize: SC.fromWidth(25),
-                            fontWeight: FontWeight.w500,
-                            color: AppConstent().primeryColor),
+                      InkWell(
+                        onTap: (){
+                          p.updateFollowUp(context);
+                        },
+                        child: Text(
+                          'Set Follow UP',
+                          style: TextStyle(
+                              fontSize: SC.fromWidth(25),
+                              fontWeight: FontWeight.w500,
+                              color: AppConstent().primeryColor),
+                        ),
                       ),
                     ],
                   ),
@@ -340,6 +345,7 @@ class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
                       ? const ContainerShimmer(height: 20, width: 120)
                       : Consumer<LeadDetailProvider>(
                           builder: (a, p, c) => ListView.builder(
+                            reverse: true,
                                 itemCount: p.leadHistory.length,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),

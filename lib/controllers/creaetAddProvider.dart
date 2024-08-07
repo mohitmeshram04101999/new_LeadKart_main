@@ -11,6 +11,7 @@ import 'package:leadkart/Models/ad_interests.dart';
 import 'package:leadkart/Models/estimateddataModel.dart';
 import 'package:leadkart/Models/offeringResponceModel.dart';
 import 'package:leadkart/Models/plansModel.dart';
+import 'package:leadkart/Models/targetAreaResponceModel.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:logger/logger.dart';
@@ -41,6 +42,7 @@ class CreateAddProvider with ChangeNotifier{
   bool _lodingOffer = false;
   List<OfferDetail> _offers = [];
   List<String> _adInterests = [];
+  TargetArea? _targetArea;
 
   AdvertisementTypeModel? get addType => _addType;
   String? get image => _imagePath;
@@ -64,6 +66,7 @@ class CreateAddProvider with ChangeNotifier{
   bool get loadingOffer => _lodingOffer;
   List<int> get  targetGenders => _targetGender;
   List<OfferDetail> get offers =>_offers;
+  TargetArea? get targetArea  => _targetArea;
   List<String> get adInterests =>_adInterests;
 
   //
@@ -81,6 +84,12 @@ class CreateAddProvider with ChangeNotifier{
     _faceBookBudget = _faceBookBudget+200;
     _plan = null;
     getEstimatedPlan();
+    notifyListeners();
+  }
+
+  void setTargetArea(TargetArea t)
+  {
+    _targetArea = t;
     notifyListeners();
   }
 
@@ -394,6 +403,7 @@ class CreateAddProvider with ChangeNotifier{
    _endDate = null;
    _estimatedData = null;
    _targetGender = [1,2,3];
+   _targetArea = null;
 
    notifyListeners();
    Logger().i("create add provider is clear ");

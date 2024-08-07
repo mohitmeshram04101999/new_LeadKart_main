@@ -80,6 +80,43 @@ class LeadDetailProvider with ChangeNotifier
       }
   }
 
+  Future<void> updateFollowUp(BuildContext context)async
+  {
+    var curruntDate = await showDatePicker(context: context,barrierDismissible: false, firstDate: DateTime.now(), lastDate: DateTime(3000));
+    TimeOfDay? time;
+    if(curruntDate!=null)
+      {
+       time = await showTimePicker(context: context, barrierDismissible: false,initialTime: TimeOfDay.now());
+      }
+
+    if(curruntDate!=null&&time!=null)
+      {
+
+        var updateWalaDate = DateTime(curruntDate.year,curruntDate.month,curruntDate.day,time.hour,time.minute);
+
+        var resp = await _leadApi.updateLeads(_lead?.id??"",followUpDate: updateWalaDate.toIso8601String());
+
+        if(resp.statusCode==200)
+        {
+          MyHelper.mySnakebar(context, resp.data["message"]);
+          loadLeadDetail(context: context, leadId: _lead?.id??"");
+        }
+        else
+        {
+          MyHelper.mySnakebar(context,resp.data["message"]);
+          _log.i(resp.data);
+        }
+      }
+    else
+      {
+        MyHelper.mySnakebar(context, "Please select Date Time");
+      }
+
+
+
+
+  }
+
   Future<void> getHistory(BuildContext context) async
   {
     var resp = await _leadApi.getLeadHistory(_lead?.id??"");
@@ -87,6 +124,7 @@ class LeadDetailProvider with ChangeNotifier
     if(resp.statusCode==200)
       {
         List  _d = resp.data["data"];
+        _log.e(resp.data);
         _leadeHestory = _d.map((e)=>LeadeHistory.fromJson(e)).toList();
       }
     else

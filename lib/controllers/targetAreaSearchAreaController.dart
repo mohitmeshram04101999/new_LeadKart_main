@@ -12,12 +12,15 @@ import 'package:logger/logger.dart';
 class TargateAreaProvider with ChangeNotifier
 {
 
-  List _searchResult = [];
+  List<TargetArea> _searchResult = [];
   bool _loading = false;
+  TextEditingController _searchController = TextEditingController();
 
 
-  List get  searchResult =>_searchResult;
+  List<TargetArea> get  searchResult =>_searchResult;
   bool get loading => _loading;
+  TextEditingController get  searchController => _searchController;
+
 
   Future<void> search(BuildContext context,{
     required String data,
@@ -45,6 +48,14 @@ class TargateAreaProvider with ChangeNotifier
     notifyListeners();
 
     
+  }
+
+  void clear()
+  {
+    _loading = false;
+    _searchResult = [];
+    _searchController.clear();
+    notifyListeners();
   }
 
 }

@@ -10,6 +10,7 @@ import 'package:leadkart/Models/ad_type_model.dart';
 import 'package:leadkart/Models/addListByBussnesIdModel.dart';
 import 'package:leadkart/Models/ads_model.dart';
 import 'package:leadkart/Models/estimateddataModel.dart';
+import 'package:leadkart/Models/targetAreaResponceModel.dart';
 import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -37,7 +38,7 @@ class AdsApi{
     int? instBudget,
     int? googleBudget,
     String? destinationUrl,
-    dynamic location = const {"countries":["IN"]},
+    TargetArea? location,
     List<int>? audienceGender,
     int? ageRangeFrom,
     List<int>? days,
@@ -56,10 +57,11 @@ class AdsApi{
       "businessId": businessId,
       "planId": planId,
       "name": name,
+      //static
       "optimization_goal": "REACH",
       "billing_event": "IMPRESSIONS",
-      // "start_time":"2024-10-06T04:45:17+0000",
-      // "status": "PAUSED",
+      "start_time":"2024-10-06T04:45:17+0000",
+      "status": "PAUSED",
       // "file":file
       "dailySpendBudget": 10000,
       // "externalCampiagnId": "66879f2b9cc7c8273dfd0901",
@@ -71,7 +73,7 @@ class AdsApi{
       "googleBudget": googleBudget,
       "destinationUrl": destinationUrl,
       // "audienceId": null,
-      "location": { "countries": ["IN"] },
+      "location": location!=null? location.toJson().toString() :null,
       "interest": { "id": 6018341976753, "name": "Movies" },
       // "audienceGender": audienceGender,
       "ageRangeFrom": ageRangeFrom,
