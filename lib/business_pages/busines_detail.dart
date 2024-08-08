@@ -1,8 +1,10 @@
 
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/screens/ManageUserScreens/manageUserScreen.dart';import 'package:leadkart/them/constents.dart';
-import 'package:leadkart/screens/manageUserScreen.dart';import 'package:leadkart/them/constents.dart';
 import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/controllerInstances.dart';import 'package:leadkart/them/constents.dart';
 import 'package:go_router/go_router.dart';
@@ -14,14 +16,12 @@ import 'package:leadkart/component/busines_reuseable_widget.dart';
 import 'package:leadkart/component/custom_page_route.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
 import 'package:leadkart/helper/dimention.dart';
-import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/leads/adddetail/add_detail_screen.dart';
 import 'package:leadkart/leads/create_add_setting.dart';
 import 'package:leadkart/leads/digital_ads_package.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
 import 'package:leadkart/screens/BssnesseditScreen/EditBussnesScreen.dart';
 import 'package:leadkart/screens/user/create_user.dart';
-import 'package:leadkart/them/constents.dart';
 import 'package:provider/provider.dart';
 
 class BusinessDetail extends StatefulWidget {
@@ -42,8 +42,16 @@ class _BusinessDetailState extends State<BusinessDetail> {
     {'name': 'Payment & Invoices', 'icon': Icons.notifications,"page": const CreateUser()},
     {'name': 'Manage Website', 'icon': Icons.web,"page": const AdditionalDetail()},
     {'name': 'Notification', 'icon': Icons.notifications,"page": const DigitalAdsPackage()},
+    {'name': 'User, Roles & Permissions', 'icon': Icons.personal_injury,"page":const ManageUserScreen()},
+    {'name': 'Terms & Conditions', 'icon': FontAwesomeIcons.compassDrafting,"page":null},
+    {'name': ' Privacy Policy', 'icon': Icons.privacy_tip,"page":null},
+    {'name': 'Support', 'icon': Icons.support_agent_outlined,"page":null},
+    {'name': ' Contact us', 'icon': Icons.call,"page":null},
+    {'name': 'Share App', 'icon': Icons.share,"page":null},
+    {'name': 'Designs', 'icon': Icons.view_carousel_outlined,"page":null},
+    {'name': 'Notifications', 'icon': Icons.notifications,"page":null},
     {'name': 'Logout', 'icon': Icons.logout},
-    {'name': 'Manage Users', 'icon': Icons.personal_injury,"page":const ManageUserScreen()},
+
   ];
 
   @override

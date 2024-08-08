@@ -1,36 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:leadkart/ApiServices/leads%20api.dart';
 import 'package:leadkart/component/messageText.dart';
 import 'package:leadkart/component/optioChip.dart';
-import 'package:leadkart/controllers/LeadeDetaileProvider.dart';
-import 'package:leadkart/controllers/leadeProvider.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/controllers/leadeProvider.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/shimmers.dart';import 'package:leadkart/them/constents.dart';
-import 'package:leadkart/component/HelpButtonWhite.dart';
 import 'package:leadkart/component/leadeTile.dart';
 import 'package:leadkart/helper/dimention.dart';
-import 'package:leadkart/helper/helper.dart';
-import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
-import 'package:leadkart/screens/leads/getNewLeads.dart';
-import 'package:leadkart/screens/newLead%20Screen/assign_Leads.dart';
 import 'package:leadkart/them/typs.dart';
 import 'package:provider/provider.dart';
-
-import '../../component/helpButton.dart';
 import '../../leads/digital_ads_package.dart';
 
 
 
 
-class LeadeScreen extends StatefulWidget {
-  const LeadeScreen({super.key});
+class LeadScreen extends StatefulWidget {
+  const LeadScreen({super.key});
 
   @override
-  State<LeadeScreen> createState() => _LeadeScreenState();
+  State<LeadScreen> createState() => _LeadScreenState();
 }
 
-class _LeadeScreenState extends State<LeadeScreen> {
+class _LeadScreenState extends State<LeadScreen> {
 
   List<String> filters = ["All","Pending","In-progress","follow on interested"];
 
@@ -53,12 +43,7 @@ class _LeadeScreenState extends State<LeadeScreen> {
         //titel
         title: const Text("Leads"),
 
-        actions: [
 
-          //help Button
-          HelpButton(title: "Search?",),
-          const SizedBox(width: 10,),
-        ],
       ),
 
 
@@ -71,8 +56,15 @@ class _LeadeScreenState extends State<LeadeScreen> {
 
         child: ListView(
 
-          padding: const EdgeInsets.only(top: 20,bottom: 10),
+          padding: const EdgeInsets.only(top: 8,bottom: 10),
           children: [
+
+            // const Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 10),
+            //   child: Customsearchfeald(
+            //
+            //   ),
+            // ),
 
             //titelButtons
             Consumer<LeadsProvider>(
@@ -142,9 +134,7 @@ class _LeadeScreenState extends State<LeadeScreen> {
               );
             }),
 
-            //Loop For Leads
-            // for(int i =0;i<12;i++)
-            //   LeadeTile(onTap: (){RouteTo(context, child:(a,b) =>AssaignLeads());},)
+        
           ],
         ),
       ),

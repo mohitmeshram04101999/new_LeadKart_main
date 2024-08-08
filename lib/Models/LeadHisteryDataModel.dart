@@ -2,9 +2,11 @@
 //
 //     final leadsApiResponce = leadsApiResponceFromJson(jsonString);
 
+
+
 import 'dart:convert';
 
-import 'package:leadkart/them/constents.dart';
+import '../them/constents.dart';
 
 LeadeHistory leadsApiResponceFromJson(String str) => LeadeHistory.fromJson(json.decode(str));
 
@@ -12,7 +14,7 @@ String leadsApiResponceToJson(LeadeHistory data) => json.encode(data.toJson());
 
 class LeadeHistory {
   String? id;
-  String? leadId;
+  LeadId? leadId;
   String? historyType;
   String? statusChange;
   String? actionType;
@@ -33,7 +35,7 @@ class LeadeHistory {
 
   factory LeadeHistory.fromJson(Map<String, dynamic> json) => LeadeHistory(
     id: json["_id"],
-    leadId: json["leadId"],
+    leadId: LeadId.fromJson(json["leadId"]),
     historyType: json["historyType"],
     statusChange: json["statusChange"],
     actionType: json["actionType"],
@@ -52,4 +54,27 @@ class LeadeHistory {
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
   };
+}
+
+
+class LeadId
+{
+  String id;
+  String adId;
+  LeadId({
+    required this.id ,
+    required this.adId,
+});
+
+  factory LeadId.fromJson(Map<String, dynamic> json) => LeadId(
+    id: json["_id"]??"",
+    adId: json["adId"]??"",
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "adId":adId,
+  };
+
+
 }

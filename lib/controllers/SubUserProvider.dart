@@ -51,4 +51,11 @@ class SubUserProvider with ChangeNotifier
      notifyListeners();
    }
 
+   void clear()
+   {
+     _subUsers = [];
+     _loading = true;
+     notifyListeners();
+   }
+
 }

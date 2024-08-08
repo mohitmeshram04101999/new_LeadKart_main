@@ -12,7 +12,11 @@ class TopPlacementView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    List _d = data["data"];
+    List? _d = data["data"];
+    if(_d==null||_d.length==0)
+      {
+        return const  Center(child: Text("No Data"),);
+      }
 
     String charddata ="";
 
@@ -22,31 +26,8 @@ class TopPlacementView extends StatelessWidget {
 
     return Column(
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: SC.from_height(15)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Top Placement ',
-                style: TextStyle(fontSize: SC.from_height(19),fontWeight: FontWeight.w600,color: Colors.grey.shade700),
-              ),
-              InkWell(
-                onTap: (){
 
-                },
-                child: Text(
-                  'Views',
-                  style: TextStyle(
-                      fontSize: SC.from_height(18),
-                      color: Color.fromRGBO(36, 238, 221, 1)),
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        Container(
+        SizedBox(
           child: Echarts(
             option: '''
       {
@@ -95,7 +76,7 @@ class TopPlacementView extends StatelessWidget {
       }
     ''',
           ),
-          width:  SC.from_height(300),
+           
           height:  SC.from_height(300),
         )
 

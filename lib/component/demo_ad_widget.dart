@@ -2,19 +2,33 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:leadkart/Models/addListByBussnesIdModel.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:leadkart/Models/addListByBussnesIdModel.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/them/constents.dart';
+import 'package:logger/logger.dart';
 
 class DemoAdWidget extends StatelessWidget {
   final AddByBuinesss add;
-  const DemoAdWidget({super.key, required this.add});
+  final bool isDemo;
+  const DemoAdWidget({this.isDemo=false,super.key, required this.add});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+
+    Logger().e("${add.toJson()}");
+
+    return MyInkWell(
+      splasColor: Colors.grey.shade100,
+      onTap: ()async{
+        await Future.delayed(const Duration(milliseconds: 150));
+        context.pushNamed("AddDetailScreen",extra: {"id":add.id.toString()});
+        Controllers.campaignProvider(context).load(context,campaignId: add.id??"");
+      },
       margin: EdgeInsets.symmetric(horizontal: SC.from_height(2),vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -42,24 +56,25 @@ class DemoAdWidget extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: SC.from_height(14.5)),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: SC.from_height(8)),
-                decoration: BoxDecoration(
-                  color:const Color.fromRGBO(233, 233, 233, 1),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(SC.from_height(12)),
-                    bottomLeft: Radius.circular(SC.from_height(15)),
+              if(isDemo)
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: SC.from_height(8)),
+                  decoration: BoxDecoration(
+                    color:const Color.fromRGBO(233, 233, 233, 1),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(SC.from_height(12)),
+                      bottomLeft: Radius.circular(SC.from_height(15)),
+                    ),
+                  ),
+                  height: SC.from_height(28),
+                  width: SC.from_height(70),
+                  child: Center(
+                    child: Text(
+                      "Demo ad",
+                      style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w600, fontSize: SC.fromWidth(33)),
+                    ),
                   ),
                 ),
-                height: SC.from_height(28),
-                width: SC.from_height(70),
-                child: Center(
-                  child: Text(
-                    "Demo ad",
-                    style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w600, fontSize: SC.fromWidth(33)),
-                  ),
-                ),
-              ),
             ],
           ),
           SizedBox(height: SC.from_height(4)),

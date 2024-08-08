@@ -30,17 +30,17 @@ class CampaignProvider with ChangeNotifier
 
   Future<void> load(BuildContext context,{required String campaignId})async
   {
-    var _d = await AddDetailApi.getAddCampaignData();
+    var _d = await AddDetailApi.getAddCampaignData(campaignId: campaignId);
     if(_d!=null)
       {
         _data = _d;
         notifyListeners();
-        if(_d.data?.isFacebookAdEnabled??false)
+        if(_d.data?.isFacebookAdEnabled==true)
           {
              await getFaceBookReport(_d.data?.facebookAdSetId??"");
             _selectedPlateform = "F";
           }
-        if(_d.data?.isInstaAdEnabled??false)
+        if(_d.data?.isInstaAdEnabled==true)
         {
 
         }

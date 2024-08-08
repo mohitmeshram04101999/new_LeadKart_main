@@ -10,31 +10,18 @@ class DeviceReachView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    List _d = data["data"];
+    List? _d = data["data"];
+    if(_d==null||_d.length==0)
+      {
+        return const Center(child: Text("Reach Report is Empty"),);
+      }
+
+
     
     return  Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Device',
-              style: TextStyle(fontSize: SC.from_height(18),color: Colors.grey.shade700,fontWeight: FontWeight.w500),
-            ),
-            InkWell(
-              onTap: (){
 
-              },
-              child: Text(
-                'Views',
-                style: TextStyle(
-                    fontSize: SC.from_height(18),
-                    color: Color.fromRGBO(36, 238, 221, 1)),
-              ),
-            ),
-          ],
-        ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Padding(
