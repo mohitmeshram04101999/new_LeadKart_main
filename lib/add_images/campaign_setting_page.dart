@@ -14,6 +14,8 @@ import 'package:leadkart/component/custom_button.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/searchScreen.dart';
+
 class CampaignSetting extends StatefulWidget {
   const CampaignSetting({Key? key}) : super(key: key);
 
@@ -144,30 +146,60 @@ class _CampaignSettingState extends State<CampaignSetting> {
             SizedBox(height: SC.from_height(20),),
             // ADD TARGET AREA //
             Container(
-              padding: EdgeInsets.symmetric(horizontal: SC.from_height(10)),
-              width: double.infinity,
-              height: SC.from_height(50),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.grey)),
-              child: Row(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            // border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(SC.from_height(7)),
+          ),
+          width: double.infinity,
+          height: SC.from_height(80),
+          child: Stack(
+            // alignment: Alignment.bottomCenter,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
-                  Text('Add Target Area', style: TextStyle(
-                      fontSize: SC.from_height(15),
-                      color: Colors.grey.shade700,
-                      fontWeight: FontWeight.w500),),
-                  Expanded(child: Container()),
-                  InkWell(
-                      onTap: () {
-
-                      },
-                      child: Text('Add', style: TextStyle(
-                          fontSize: SC.from_height(15.5),
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(36, 238, 221, 1)),)),
+                  MyInkWell(
+                    onTap: (){
+                      RouteTo(context, child:(a,n)=>const  SearchTargetAreaScreen());
+                    },
+                    padding: EdgeInsets.only(
+                        top: SC.from_height(15), left: SC.from_height(15)),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey,width: .5),
+                      borderRadius: BorderRadius.circular(SC.from_height(7)),
+                    ),
+                    width: double.infinity,
+                    height: SC.from_height(50),
+                    child: Text(
+                      p.targetArea!=null
+                          ? (p.targetArea?.type=="city"||p.targetArea?.type=="neighborhood"||p.targetArea?.type=="subcity")
+                          ?"${p.targetArea?.name}, ${p.targetArea?.region}, ${p.targetArea?.countryName}"
+                          :"${p.targetArea?.name}, ${p.targetArea?.countryName}"
+                          :'Add a location',
+                      style: TextStyle(fontSize: SC.from_height(16),color:p.targetArea==null?Colors.grey.shade500:Colors.grey.shade700),
+                    ),
+                  ),
                 ],
               ),
-            ),
+              Positioned(
+                top: SC.from_height(5),
+                left: SC.from_height(20),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(SC.from_height(7)),
+                    color: Colors.white,
+                  ),
+                  child: Text(
+                    ' Target Area ',
+                    style: TextStyle(
+                        color: Colors.grey.shade700, fontSize: SC.from_height(15)),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
             SizedBox(height: SC.from_height(20),),
 
             // TARGETTING SUGESTION //

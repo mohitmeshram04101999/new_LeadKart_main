@@ -366,7 +366,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                 labelText: 'Website Link ',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Business Contact No. cannot be empty';
+                    return 'Website Link cannot be empty';
                   }
                   // Additional validation logic if needed
                   return null;
@@ -383,7 +383,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                 labelText: 'Instagram Link ',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Business Contact No. cannot be empty';
+                    return 'Instagram Link cannot be empty';
                   }
                   // Additional validation logic if needed
                   return null;
@@ -397,7 +397,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                 labelText: 'Twitter Link  ',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Business Contact No. cannot be empty';
+                    return 'Twitter Link cannot be empty';
                   }
                   // Additional validation logic if needed
                   return null;
@@ -411,7 +411,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                 labelText: 'Youtube Link  ',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Business Contact No. cannot be empty';
+                    return 'Youtube Link cannot be empty';
                   }
                   // Additional validation logic if needed
                   return null;
@@ -425,7 +425,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                 labelText: 'Facebook Link ',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Business Contact No. cannot be empty';
+                    return 'Facebook Link cannot be empty';
                   }
                   // Additional validation logic if needed
                   return null;
@@ -439,7 +439,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                 labelText: 'Address ',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Business Contact No. cannot be empty';
+                    return 'Address cannot be empty';
                   }
                   // Additional validation logic if needed
                   return null;
@@ -453,7 +453,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                 labelText: 'Tagline ',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Business Contact No. cannot be empty';
+                    return 'Tagline cannot be empty';
                   }
                   // Additional validation logic if needed
                   return null;
