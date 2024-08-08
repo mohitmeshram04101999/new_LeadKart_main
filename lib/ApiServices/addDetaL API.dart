@@ -1,10 +1,12 @@
 
 
 import 'package:dio/dio.dart';
+import 'package:leadkart/ApiServices/api%20Path.dart';
 import 'package:leadkart/Models/addRepot%20Model.dart';
 import 'package:leadkart/Models/getCampaindetailModel.dart';
 import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 import 'package:logger/logger.dart';
 
 class AddDetailApi
@@ -12,12 +14,20 @@ class AddDetailApi
   static final _log =  Logger();
 
   ///1 get Campaign Detail
-  static Future<GetCampaignDetailModel?> getAddCampaignData() async
+  static Future<GetCampaignDetailModel?> getAddCampaignData({
+    // String  campaignId = "6694c0012d938ab030433868"
+    required String  campaignId
+}) async
   {
 
-    String uri = "/getInternalCampiagnDataById/?internalCampaignId=6694c0012d938ab030433868";
+    String uri = "/getInternalCampiagnDataById/?internalCampaignId=$campaignId";
+
+
     var head = await UserPreference().getHeaderForDio();
     var resp = await MyHelper.dio.get(uri,options: Options(headers: head));
+
+    _log.e(resp);
+
 
 
     if(resp.statusCode ==200)

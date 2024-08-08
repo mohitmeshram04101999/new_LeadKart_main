@@ -23,7 +23,7 @@ import 'dart:math' as math;
 
 class AddDetailScreen extends StatefulWidget {
   final String adId;
-  const AddDetailScreen({required this.adId,Key? key}) : super(key: key);
+  const AddDetailScreen({required this.adId, Key? key}) : super(key: key);
 
   @override
   State<AddDetailScreen> createState() => _AddDetailScreenState();
@@ -68,9 +68,20 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Controllers.campaignProvider(context)
-        .load(context, campaignId: "campaignId");
+    // Controllers.campaignProvider(context)
+    //     .load(context);
   }
+
+  final lableStyle = TextStyle(
+      fontSize: SC.from_height(18),
+      fontWeight: FontWeight.w600,
+      color: Colors.grey.shade700);
+
+  final sidelabelstyle =  TextStyle(
+      fontSize: SC.from_height(18),
+      color:  AppConstent().primeryColor,
+      // color: Colors.red,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -98,90 +109,89 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
 
                 //Main Container
 
-                Consumer<CampaignProvider>(
-                    builder: (a,p,c){
-                      return Container(
-                        padding:const EdgeInsets.all(10),
-                        width: double.infinity,
-                        height: SC.from_height(150),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.shade300),
-                          borderRadius: BorderRadius.circular(SC.from_height(8)),
-                        ),
-                        child: Row(
-                          children: [
-                            // LEAD GENERATION //
-                            Container(
-                              clipBehavior: Clip.hardEdge,
-                              width: SC.from_height(120),
-                              height: SC.from_height(105),
-                              decoration: BoxDecoration(
-                                  borderRadius:
+                Consumer<CampaignProvider>(builder: (a, p, c) {
+                  return Container(
+                    padding: const EdgeInsets.all(10),
+                    width: double.infinity,
+                    height: SC.from_height(150),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(SC.from_height(8)),
+                    ),
+                    child: Row(
+                      children: [
+                        // LEAD GENERATION //
+                        Container(
+                          clipBehavior: Clip.hardEdge,
+                          width: SC.from_height(120),
+                          height: SC.from_height(105),
+                          decoration: BoxDecoration(
+                              borderRadius:
                                   BorderRadius.circular(SC.from_height(8))),
-                              child: Image.asset(
-                                'assets/img_4.png',
-                                fit: BoxFit.cover,
-                              ),
+                          child: Image.asset(
+                            'assets/img_4.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(
+                          width: SC.from_height(15),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Lead Generation',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: SC.fromWidth(27),
+                                  color: AppConstent().primeryColor),
                             ),
-                            SizedBox(
-                              width: SC.from_height(15),
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Lead Generation',
+                            Container(
+                              width: SC.from_height(90),
+                              height: SC.from_height(30),
+                              decoration: BoxDecoration(
+                                  color: Color.fromRGBO(36, 255, 229, 0.22),
+                                  border: Border.all(
+                                      color: Color.fromRGBO(12, 151, 134, 1)),
+                                  borderRadius: BorderRadius.circular(
+                                      SC.from_height(15))),
+                              child: Center(
+                                child: Text(
+                                  'Finished',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: SC.fromWidth(27),
+                                      fontSize: SC.from_height(15),
                                       color: AppConstent().primeryColor),
                                 ),
-                                Container(
-                                  width: SC.from_height(90),
-                                  height: SC.from_height(30),
-                                  child: Center(
-                                    child: Text(
-                                      'Finished',
-                                      style: TextStyle(
-                                          fontSize: SC.from_height(15),
-                                          color: AppConstent().primeryColor),
-                                    ),
+                              ),
+                            ),
+                            Text(
+                              '1 May - 10 May',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey.shade700,
+                                  fontSize: SC.fromWidth(30)),
+                            ),
+                            Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {},
+                                  child: Text(
+                                    'See Detail >',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: SC.fromWidth(27),
+                                        color:AppConstent().primeryColor),
                                   ),
-                                  decoration: BoxDecoration(
-                                      color: Color.fromRGBO(36, 255, 229, 0.22),
-                                      border: Border.all(
-                                          color: Color.fromRGBO(12, 151, 134, 1)),
-                                      borderRadius:
-                                      BorderRadius.circular(SC.from_height(15))),
-                                ),
-                                Text(
-                                  '1 May - 10 May',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey.shade700,
-                                      fontSize: SC.fromWidth(30)),
-                                ),
-                                Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {},
-                                      child: Text(
-                                        'See Detail >',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: SC.fromWidth(27),
-                                            color: Color.fromRGBO(36, 238, 221, 1)),
-                                      ),
-                                    )
-                                  ],
                                 )
                               ],
                             )
                           ],
-                        ),
-                      );
-                    }),
+                        )
+                      ],
+                    ),
+                  );
+                }),
 
                 //
 
@@ -214,7 +224,7 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                       'See All Leads',
                       style: TextStyle(
                           fontSize: SC.from_height(17),
-                          color: Color.fromRGBO(36, 238, 221, 1)),
+                          color: AppConstent().primeryColor),
                     ),
                   ),
                 ),
@@ -225,10 +235,18 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                 Consumer<CampaignProvider>(builder: (a, p, c) {
                   var d = p.data?.data;
 
-                  if(p.loading)
-                    {
-                      return Container();
-                    }
+                  if (p.loading) {
+                    return Container();
+                  }
+
+                  if (p.faceBookReport?["keyPerformanceIndicators"] == null ||
+                      p.faceBookReport?["keyPerformanceIndicators"]["data"]
+                              .length ==
+                          0) {
+                    return const Center(
+                        child: Text(
+                            "No Report Fond "));
+                  }
 
                   return ReportGridView(
                     facbookEnable: d?.isFacebookAdEnabled ?? false,
@@ -236,6 +254,7 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                     facebookdata: p.faceBookReport?["keyPerformanceIndicators"],
                   );
                 }),
+
                 SizedBox(
                   height: SC.from_height(20),
                 ),
@@ -256,10 +275,15 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                           child: Text("No Data Found",
                               style: TextStyles().smallBoldText));
                     }
-                    if(p.loading== false && p.faceBookReport==null && p.instReport==null)
-                      {
-                        return Center(child: Text("NO Data"),);
-                      }
+                    if (p.loading == false &&
+                        p.faceBookReport == null &&
+                        p.instReport == null) {
+                      return Center(
+                        child: Text("NO Data"),
+                      );
+                    }
+
+                    // return Text("${p.faceBookReport}");
 
                     var _data;
 
@@ -296,10 +320,10 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                                   ),
                                   decoration: BoxDecoration(
                                     color: p.selectedPlateform == "F"
-                                        ? Color.fromRGBO(36, 238, 221, 1)
+                                        ? AppConstent().primeryColor
                                         : Colors.white,
                                     border: Border.all(
-                                        color: Color.fromRGBO(36, 238, 221, 1)),
+                                        color: AppConstent().primeryColor),
                                     borderRadius: BorderRadius.circular(
                                         SC.from_height(30)),
                                   ),
@@ -327,10 +351,10 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                                   ),
                                   decoration: BoxDecoration(
                                     color: p.selectedPlateform == "I"
-                                        ? Color.fromRGBO(36, 238, 221, 1)
+                                        ? AppConstent().primeryColor
                                         : Colors.white,
                                     border: Border.all(
-                                        color: Color.fromRGBO(36, 238, 221, 1)),
+                                        color: AppConstent().primeryColor),
                                     borderRadius: BorderRadius.circular(
                                         SC.from_height(30)),
                                   ),
@@ -344,6 +368,22 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                         ),
 
                         // DEVICE AND VIEWS //
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Device',
+                              style: lableStyle,
+                            ),
+                            InkWell(
+                              onTap: () {},
+                              child: Text(
+                                'Views',
+                                style: sidelabelstyle,
+                              ),
+                            ),
+                          ],
+                        ),
                         DeviceReachView(data: _data["deviceReach"] as Map),
 
                         SizedBox(
@@ -355,6 +395,27 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                         ),
                         SizedBox(
                           height: SC.from_height(30),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: SC.from_height(15)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Age',
+                                style: lableStyle,
+                              ),
+                              InkWell(
+                                onTap: () {},
+                                child: Text(
+                                  'Views',
+                                  style:sidelabelstyle,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
 
                         // AGE AND VIEWS  BarChart //
@@ -378,6 +439,7 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                         SizedBox(
                           height: SC.from_height(15),
                         ),
+
                         // POST ENGAGEMENT //
                         Padding(
                           padding: EdgeInsets.symmetric(
@@ -387,16 +449,13 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                             children: [
                               Text(
                                 'Post Engagement',
-                                style: TextStyle(
-                                    fontSize: SC.from_height(18),
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.grey.shade700),
+                                style: lableStyle,
                               ),
                               Text(
                                 "${getEngagementCount(_data["engagements"])}",
                                 style: TextStyle(
                                     fontSize: SC.from_height(17),
-                                    color: Color.fromRGBO(36, 238, 221, 1)),
+                                    color: AppConstent().primeryColor),
                               ),
                             ],
                           ),
@@ -406,20 +465,26 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              for (var i in _data["engagements"]["data"][0]
-                                  ["actions"])
-                                if (translate[i["action_type"]] != null)
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 4),
-                                    child: buildCommentWidget(
-                                      icon: iconFor[i["action_type"]]!,
-                                      title:
-                                          translate[i["action_type"]] ?? "Null",
-                                      count: i["value"] ?? 0,
-                                      textColor: Colors.grey,
+                              if (_data["engagements"]["data"] != null ||
+                                  _data["engagements"]["data"].length > 0)
+                                const Text("Repot is Empty"),
+
+                              if (_data["engagements"]["data"] != null &&
+                                  _data["engagements"]["data"].length > 0)
+                                for (var i in _data["engagements"]["data"][0]
+                                    ["actions"])
+                                  if (translate[i["action_type"]] != null)
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 4),
+                                      child: buildCommentWidget(
+                                        icon: iconFor[i["action_type"]]!,
+                                        title: translate[i["action_type"]] ??
+                                            "Null",
+                                        count: i["value"] ?? 0,
+                                        textColor: Colors.grey,
+                                      ),
                                     ),
-                                  ),
 
                               // SizedBox(height: 15),
                               // buildCommentWidget(
@@ -469,6 +534,24 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                         ),
 
                         // Gender and CTR //
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Gender',
+                              style: lableStyle,
+                            ),
+                            InkWell(
+                              onTap: () {},
+                              child: Text(
+                                'Views (CTR)',
+                                style: TextStyle(
+                                    fontSize: SC.from_height(18),
+                                    color: AppConstent().primeryColor),
+                              ),
+                            ),
+                          ],
+                        ),
                         GenderAndCtrView(data: _data["gender"]),
 
                         SizedBox(
@@ -484,6 +567,26 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                           height: SC.from_height(15),
                         ),
                         // TOP PLACEMENT and CTR //
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: SC.from_height(15)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Top Placement ',
+                                style: lableStyle,
+                              ),
+                              InkWell(
+                                onTap: () {},
+                                child: Text(
+                                  'Views',
+                                  style:sidelabelstyle,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         TopPlacementView(data: _data["placements"]),
 
                         SizedBox(
@@ -505,7 +608,7 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                           child: Text(
                             'Top Performing State ',
                             style: TextStyle(
-                                fontSize: SC.from_height(19),
+                                fontSize: SC.from_height(18),
                                 fontWeight: FontWeight.w600,
                                 color: Colors.grey.shade700),
                           ),
@@ -514,7 +617,9 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                           height: SC.from_height(15),
                         ),
 
-                        TableView(data: _data['stateWisePerformance']),
+                        TableView(
+                            labale: "State",
+                            data: _data['stateWisePerformance']),
 
                         const Divider(
                           color: Colors.grey,
@@ -536,7 +641,8 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                           height: SC.from_height(15),
                         ),
 
-                        TableView(data: _data['cityWisePerformance']),
+                        TableView(
+                            labale: "City", data: _data['cityWisePerformance']),
 
                         SizedBox(
                           height: SC.from_height(30),
@@ -566,10 +672,7 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
           SizedBox(width: SC.from_height(10)),
           Text(
             title,
-            style: TextStyle(
-                fontSize: SC.from_height(16),
-                color: textColor,
-                fontWeight: FontWeight.w500),
+            style: lableStyle,
           ),
           Expanded(child: Container()),
           Text(
@@ -586,15 +689,19 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
 }
 
 String getEngagementCount(Map data) {
-  List _d = data["data"][0]["actions"];
-  String ans = "not Found";
-  _d.forEach((e) {
-    if (e["action_type"] == "post_engagement") {
-      ans = e["value"].toString();
-    }
-  });
+  if (data["data"] != null && data["data"].length > 0) {
+    List _d = data["data"][0]["actions"];
+    String ans = "not Found";
+    _d.forEach((e) {
+      if (e["action_type"] == "post_engagement") {
+        ans = e["value"].toString();
+      }
+    });
 
-  return "${ans}";
+    return "${ans}";
+  } else {
+    return "0";
+  }
 }
 
 class SalesData {

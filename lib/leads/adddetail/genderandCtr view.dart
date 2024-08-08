@@ -11,35 +11,20 @@ class GenderAndCtrView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    List _d  = data["data"];
+    List? _d  = data["data"];
+
+    if(_d==null||_d.length==0)
+      {
+        return Center(child: Text("Gender Data is Empty"));
+      }
 
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Gender',
-              style: TextStyle(fontSize: SC.from_height(19),fontWeight: FontWeight.w600,color: Colors.grey.shade700),
-            ),
-            InkWell(
-              onTap: (){
-
-              },
-              child: Text(
-                'Views (CTR)',
-                style: TextStyle(
-                    fontSize: SC.from_height(18),
-                    color: const Color.fromRGBO(36, 238, 221, 1)),
-              ),
-            ),
-          ],
-        ),
 
 
 
-        Container(
-          child: Echarts(
+        SizedBox(
+          child:  Echarts(
 
             option: '''
       {
@@ -80,7 +65,7 @@ class GenderAndCtrView extends StatelessWidget {
       }
     ''',
           ),
-          width: SC.from_height(300),
+
           height: SC.from_height(300),
         ),
 

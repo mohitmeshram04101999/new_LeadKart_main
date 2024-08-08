@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/Models/business_model.dart';
 import 'package:leadkart/component/flatIconns.dart';import 'package:leadkart/helper/TextStyles.dart';
@@ -30,7 +31,10 @@ class AddREquirmentTile extends StatelessWidget {
       leading: CircleAvatar(
         backgroundColor: const Color.fromRGBO(241, 241, 241, 1),
         radius:SC.from_height(25),
-        child: Center(child: advertisementTypeModel.image==null? icon:Image.asset(advertisementTypeModel.image??"",fit: BoxFit.contain,)),
+        child: CachedNetworkImage(
+          imageUrl: advertisementTypeModel.image??"",
+          errorWidget:(context, url, error) =>const Icon(Icons.image_not_supported),
+        ),
       ),
 
       title: Text(advertisementTypeModel.title,maxLines: 1,overflow: TextOverflow.ellipsis,

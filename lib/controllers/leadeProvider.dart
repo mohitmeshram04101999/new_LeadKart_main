@@ -4,6 +4,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:leadkart/ApiServices/leads%20api.dart';
 import 'package:leadkart/Models/LeadsApiresponce.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
 
 class LeadsProvider with ChangeNotifier{
@@ -30,7 +31,8 @@ class LeadsProvider with ChangeNotifier{
   //get Leads by BusinessId;
   Future<void> getLeads(BuildContext context) async
   {
-    var resp = await _leadsApi.getAllLeads(stage: _filterType=="ALL"?null:_filterType);
+    var currutBusiness = Controllers.businessProvider(context).currentBusiness;
+    var resp = await _leadsApi.getAllLeads(businessId: currutBusiness?.id??"",stage: _filterType=="ALL"?null:_filterType);
 
     if(resp.statusCode==200)
       {

@@ -168,7 +168,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
     const HomeScreen(),
     const AddImages(),
     const AdsPage(),
-    const LeadeScreen(),
+    const LeadScreen(),
     // CreateAds(),
     const BusinessDetail(),
   ];

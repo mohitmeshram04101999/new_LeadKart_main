@@ -12,33 +12,16 @@ class BarChartViewOfAge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-     List _d = data["data"];
+     List? _d = data["data"];
+
+     if(_d==null||_d.length==0)
+       {
+         return const Center(child: Text("Age Data is Empty"));
+       }
+
     return Column(
       children: [
 
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: SC.from_height(15)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Age',
-                style: TextStyle(fontSize: SC.from_height(18),color: Colors.grey.shade700,fontWeight: FontWeight.w500),
-              ),
-              InkWell(
-                onTap: (){
-
-                },
-                child: Text(
-                  'Views',
-                  style: TextStyle(
-                      fontSize: SC.from_height(18),
-                      color: Color.fromRGBO(36, 238, 221, 1)),
-                ),
-              ),
-            ],
-          ),
-        ),
 
         SizedBox(
           height: 300,

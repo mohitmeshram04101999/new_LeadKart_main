@@ -24,7 +24,6 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Controllers.subUserProvider(context).lode(context);
   }
 
   @override
@@ -40,7 +39,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
           ],
           bottom:  TabBar(
             dividerColor: Colors.transparent,
-
+            unselectedLabelColor: Colors.white,
             indicatorPadding: const EdgeInsets.symmetric(horizontal: 8,vertical: 2),
             labelPadding: const EdgeInsets.symmetric(vertical: 8),
 

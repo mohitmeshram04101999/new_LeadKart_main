@@ -15,6 +15,7 @@ class RoleApi
 {
 
   final _log = Logger();
+  final _userPref = UserPreference();
   //
   //Get All Sub Users
   Future<http.Response> getAllSubUsers({
@@ -118,6 +119,56 @@ class RoleApi
 
     return resp;
   }
+
+
+
+  Future<Response> getAllRoleAndPerm({
+    required String businessId
+})async
+  {
+    var user = await _userPref.getUser();
+    var head = await _userPref.getHeaderForDio();
+    String uri = "/getAllUserRole?userId=${user?.id}&businessId=$businessId";
+
+    var resp = await MyHelper.dio.get(uri,options: Options(headers: head));
+
+    return resp;
+  }
+
+  Future<Response> getPermissionsList()async
+  {
+    var user  = await _userPref.getUser();
+    var head = await _userPref.getHeaderForDio();
+    String uri = "/permissionListApi?userId=${user?.id??""}";
+
+    var resp = await MyHelper.dio.get(uri,options: Options(headers: head));
+
+    return resp;
+  }
+
+  Future<Response> createRolePerm({
+    required String roleName,
+    required List<Map<String,List<String>>> data,
+    required String businessId
+}) async
+  {
+    var user  = await _userPref.getUser();
+    var head = await _userPref.getHeaderForDio();
+    String uri = "/createuserRole?userId=${user?.id??""}";
+
+    var sendData = {
+      "roleName":roleName,
+      "permissions":data,
+      "businessId":businessId
+    };
+
+
+    var resp = await MyHelper.dio.post(uri,data: sendData,options: Options(headers: head));
+
+    return resp;
+
+  }
+
 
 
 
