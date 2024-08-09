@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
+import 'package:leadkart/Models/faq_responce_model.dart';
 import 'package:leadkart/controllers/creaetAddProvider.dart';
 import 'package:leadkart/controllers/offeringTile.dart';import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/leads/create_ads_page.dart';
@@ -290,24 +291,53 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                       child: Text("Package Frequently asked Questions",style: Theme.of(context).textTheme.displayMedium,),
                     ),
                   ),
-                  ListView.builder(
-                    shrinkWrap: true, // Prevent excessive scrolling
-                    physics: const NeverScrollableScrollPhysics(), // Disable scrolling if needed
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
 
-                      return const ExpansionTile(
-                        title: Text('Where will my ad be shown?'),
-                        children: [
-                          ListTile(
-                            title: Text('No where!'),
-                          ),
-                        ],
-                      );
-                    },
+                  FutureBuilder(
+                      future: Controllers.faqProvider(context).getAllFaq(context,type: "ADD_PLAN"),
+                      builder: (context,snap){
+                        if(snap.connectionState==ConnectionState.waiting)
+                          {
+                            return const Center(child: CircularProgressIndicator(),);
+                          }
+                        if(snap.hasError)
+                          {
+                            return Center(child: Text("${snap.error} \n${snap.stackTrace}"),);
+                          }
+
+                        if(snap.data==null||snap.data?.length==0)
+                          {
+                            return const Center(child: Text("No Data Found"),);
+                          }
+
+                        return ListView.builder(
+                          shrinkWrap: true, // Prevent excessive scrolling
+                          physics: const NeverScrollableScrollPhysics(), // Disable scrolling if needed
+                          itemCount: snap.data?.length,
+                          itemBuilder: (context, index) {
+
+                            Question question = snap.data![index];
+
+                            return ExpansionTile(
+                              childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
+                              title: Text(question.question??"",style: TextStyle(fontWeight: FontWeight.w500),),
+                              children: [
+                                Text(question.answer??"",
+                                style: TextStyle(
+                                  fontSize: SC.from_width(16),
+                                ),),
+                                // ListTile(
+                                //   title: Text(question.answer??""),
+                                // ),
+                              ],
+                            );
+                          },
 
 
+                        );
+
+    }
                   ),
+
                   SizedBox(
                     height: 100,
                   )

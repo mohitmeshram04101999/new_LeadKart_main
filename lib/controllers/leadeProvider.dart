@@ -32,7 +32,7 @@ class LeadsProvider with ChangeNotifier{
   Future<void> getLeads(BuildContext context) async
   {
     var currutBusiness = Controllers.businessProvider(context).currentBusiness;
-    var resp = await _leadsApi.getAllLeads(businessId: currutBusiness?.id??"",stage: _filterType=="ALL"?null:_filterType);
+    var resp = await _leadsApi.getAllLeads(stage: _filterType=="ALL"?null:_filterType);
 
     if(resp.statusCode==200)
       {

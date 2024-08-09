@@ -27,7 +27,6 @@ class ManageSubUserTab extends StatelessWidget {
               return true;
             },
             child: ListView.separated(
-              reverse: true,
               // separatorBuilder: (context, index) =>const Divider(endIndent: 20,indent: 20,color: Colors.grey,thickness: .5,),
               separatorBuilder: (context, index) {
                 return Container(
@@ -35,7 +34,7 @@ class ManageSubUserTab extends StatelessWidget {
                   height:0,
                 );
               },
-              itemCount: p.subUsers.length,
+              itemCount: p.subUsers.reversed.length,
               itemBuilder: (a,i){
 
                 //returnWidget
@@ -44,7 +43,7 @@ class ManageSubUserTab extends StatelessWidget {
 
                   margin:const  EdgeInsets.symmetric(horizontal: 5,vertical: 7),
                   child: SubUserTile(
-                      user: p.subUsers[i]
+                      user: p.subUsers.reversed.toList()[i]
                   ),
                 );
 

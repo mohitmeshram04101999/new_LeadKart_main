@@ -710,53 +710,6 @@ class _InterestSelectionWithSearchState extends State<InterestSelectionWithSearc
                   )).toList(),
                 ),
 
-
-
-                //
-                //
-                // if (searchResults.isNotEmpty)
-                //   Container(
-                //   height: 2,
-                //     child: Stack(
-                //       clipBehavior: Clip.none,
-                //       children: [
-                //         AnimatedPositioned(
-                //           duration:const Duration(minutes: 2000),
-                //           top:(searchResults.isNotEmpty|| controller.text.isNotEmpty)?-300:0,
-                //             left: 0,right: 0,
-                //             bottom: 0,
-                //             child: Container(
-                //               margin: EdgeInsets.all(10),
-                //               decoration: BoxDecoration(
-                //                 color: Colors.white,
-                //                 boxShadow: [
-                //                   BoxShadow(
-                //                     color: Colors.grey.shade500,
-                //                     blurRadius: 3
-                //                   )
-                //                 ]
-                //               ),
-                //               height: SC.fromContextWidth(context, 2),
-                //               child: ListView.builder(
-                //                 itemCount: searchResults.length,
-                //                 physics: const NeverScrollableScrollPhysics(),
-                //                 itemBuilder: (context, index) {
-                //                   return ListTile(
-                //                     title: Text(searchResults[index]),
-                //                     onTap: () {
-                //                       // Handle selection of search result
-                //                       value.setAdInterests(searchResults[index]);
-                //                       searchInterests("");
-                //                       controller.clear();
-                //                     },
-                //                   );
-                //                 },
-                //               ),
-                //             ),)
-                //       ],
-                //     ),
-                //   ),
-
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: SC.from_height(15)),
                   child: TextField(
@@ -781,18 +734,33 @@ class _InterestSelectionWithSearchState extends State<InterestSelectionWithSearc
               ],
             ),
           ),
-          if (searchResults.isNotEmpty|| controller.text.isNotEmpty)
-            Container(
-            height: SC.fromContextWidth(context, 2),
+
+            AnimatedContainer(
+              curve: Curves.easeOut,
+              duration:const  Duration(milliseconds: 300),
+              margin:const  EdgeInsets.all(0),
+            height:  (searchResults.isNotEmpty)?SC.fromContextWidth(context, 2):0,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5),
+              boxShadow: [
+                
+                BoxShadow(
+                  color: Colors.grey.shade500,
+                  blurRadius: 3
+                )
+              ]
+            ),
             child: ListView.builder(
               itemCount: searchResults.length,
-              physics: const NeverScrollableScrollPhysics(),
+              // physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(searchResults[index]),
                   onTap: () {
                     // Handle selection of search result
                     value.setAdInterests(searchResults[index]);
+                    searchResults =[];
                     searchInterests("");
                     controller.clear();
                   },
