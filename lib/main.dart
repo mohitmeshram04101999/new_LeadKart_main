@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:leadkart/controllers/AllPlansProvider.dart';
 import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
+import 'package:leadkart/controllers/FaqProvider.dart';
 import 'package:leadkart/controllers/GetCampaignProvider.dart';
 import 'package:leadkart/controllers/LeadeDetaileProvider.dart';
 import 'package:leadkart/controllers/RolsAndPermisionProvider.dart';
@@ -18,6 +19,7 @@ import 'package:leadkart/controllers/editBussnessProvider.dart';
 import 'package:leadkart/controllers/leadeProvider.dart';
 import 'package:leadkart/controllers/profileProvider.dart';
 import 'package:leadkart/controllers/targetAreaSearchAreaController.dart';
+import 'package:leadkart/controllers/terestProvider.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -52,6 +54,8 @@ MyHelper();
       ChangeNotifierProvider(create: (context) => AddSubUserProvider()),
       ChangeNotifierProvider(create: (context) => TargateAreaProvider()),
       ChangeNotifierProvider(create: (context) => RolesAndPermProvider()),
+      ChangeNotifierProvider(create: (context) => FaqProvider()),
+      ChangeNotifierProvider(create: (context) => InterestProvider()),
     ],
       child: const MyApp()));
 }
@@ -70,16 +74,27 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
 
     SC.getScreen(context);
-    return
-     DevicePreview(builder: (context)=>GetMaterialApp.router(
-       debugShowCheckedModeBanner: false,
-       themeMode: ThemeMode.light,
-       theme:Theme.of(context).brightness==Brightness.light? AppTheme():AppTheme(),
-       routeInformationProvider: GoRouterConfig.router.routeInformationProvider,
-       routerDelegate: GoRouterConfig.router.routerDelegate,
-       backButtonDispatcher: GoRouterConfig.router.backButtonDispatcher,
-       routeInformationParser: GoRouterConfig.router.routeInformationParser,
 
-     ));
+    return GetMaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.light,
+      theme:Theme.of(context).brightness==Brightness.light? AppTheme():AppTheme(),
+      routeInformationProvider: GoRouterConfig.router.routeInformationProvider,
+      routerDelegate: GoRouterConfig.router.routerDelegate,
+      backButtonDispatcher: GoRouterConfig.router.backButtonDispatcher,
+      routeInformationParser: GoRouterConfig.router.routeInformationParser,
+
+    );
+    // return
+    //  DevicePreview(builder: (context)=>GetMaterialApp.router(
+    //    debugShowCheckedModeBanner: false,
+    //    themeMode: ThemeMode.light,
+    //    theme:Theme.of(context).brightness==Brightness.light? AppTheme():AppTheme(),
+    //    routeInformationProvider: GoRouterConfig.router.routeInformationProvider,
+    //    routerDelegate: GoRouterConfig.router.routerDelegate,
+    //    backButtonDispatcher: GoRouterConfig.router.backButtonDispatcher,
+    //    routeInformationParser: GoRouterConfig.router.routeInformationParser,
+    //
+    //  ));
   }
 }

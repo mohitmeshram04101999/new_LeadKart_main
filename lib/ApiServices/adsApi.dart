@@ -55,7 +55,7 @@ class AdsApi{
 
     var  data = {
       "businessId": businessId,
-      "planId": planId,
+      // "planId": planId,
       "name": name,
       //static
       "optimization_goal": "REACH",
@@ -68,22 +68,63 @@ class AdsApi{
       "isFacebookAdEnabled": isFaceBookAddEnable,
       "isInstaAdEnabled": isInstaAddEnable,
       "isGoogleAdEnabledokAdSetId": isGoogleAddEnable,
-      "facebookBudget": faceBookBudget,
+      // "facebookBudget": faceBookBudget,
+      "facebookBudget": 145400,
       "instaBudget": instBudget,
       "googleBudget": googleBudget,
       "destinationUrl": destinationUrl,
       // "audienceId": null,
-      "location": location!=null? location.toJson().toString() :null,
+      // "location": location!=null? location.toJson().toString() :null,
+      "location": {"countries":["IN"]},
       "interest": { "id": 6018341976753, "name": "Movies" },
       // "audienceGender": audienceGender,
       "ageRangeFrom": ageRangeFrom,
       "ageRangeTo": ageRangeTo,
-      "dayStartTime": dayStartTime?.toString(),
-      "dayEndTime": dayEndTime?.toString(),
+      "dayStartTime": "0",
+      // "dayStartTime": dayStartTime?.toString(),
+      "dayEndTime": "23:59",
+      // "dayEndTime": dayEndTime?.toString(),
       "addTypeId": adTypeId,
       "caption": caption,
-      "startDate":startDate,
-      "endDate":endDate,
+      "startDate":1723186321,
+      // "startDate":startDate,
+      "endDate":1723359121,
+      // "endDate":endDate,
+    };
+
+
+    Map<String,String> fakeData = {
+      "businessId":businessId,
+//planId:6656cf2e1302350b8be0af21
+      "name":"bhupendra",
+      "optimization_goal":"REACH",
+      "billing_event":"IMPRESSIONS",
+//status:PAUSED
+      "dailySpendBudget":"100000",
+//externalCampiagnId:66879f2b9cc7c8273dfd0901
+      "isFacebookAdEnabled":"true",
+//isInstaAdEnabled:true
+//isGoogleAdEnabledokAdSetId:false
+      "facebookBudget":"145400",
+//instaBudget:200000
+//googleBudget:
+      "destinationUrl": "jhghjjkhghjhj.com",
+//audienceId:
+      "location":"{countries:['IN']}",
+      "interest":"{id: '6018341976753', name: 'Movies'}",
+    "audienceGender":"1",
+  "ageRangeFrom":"18",
+  "ageRangeTo":"50",
+  "days":"1",
+  "dayStartTime":"0",
+  "dayEndTime":"23:59",
+  "addTypeId":"667a7c6df68bde8bec7ad3a7",
+//caption:
+  "startDate":"1723186321",
+  "endDate":"1723359121",
+  "days":"2",
+  "audienceGender":"2",
+//filename:
     };
 
     String uri = "/adsDetails/createAdsDetails";
@@ -97,6 +138,7 @@ class AdsApi{
         }
     });
 
+    _log.e(dataToSend);
 
     var request =  http.MultipartRequest("POST",Uri.parse(ApiConst.baseUrl+uri));
 
@@ -129,6 +171,8 @@ class AdsApi{
     String responceBody = await resp.stream.bytesToString();
 
     var j = jsonDecode(responceBody);
+
+    _log.e("${resp.statusCode}\n${j}");
 
     return j;
 
@@ -213,10 +257,10 @@ class AdsApi{
 
   }
 
-  Future<AddListByBusinessResponce?> getAddListByBusiness(String businessId) async
+  Future<AddListByBusinessResponce?> getAddListByBusiness({String businessId = "664483cb34434c7cec80d6ed"}) async
   {
 
-    String uri = "/getAllMyAdsListApi?businessId=664483cb34434c7cec80d6ed";
+    String uri = "/getAllMyAdsListApi?businessId=$businessId";
 
     var head =  await UserPreference().getHeader();
 

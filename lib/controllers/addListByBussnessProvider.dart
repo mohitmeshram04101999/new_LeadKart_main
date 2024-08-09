@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
 import 'package:leadkart/Models/addListByBussnesIdModel.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:logger/logger.dart';
 
 class AddListByBusinessProvider with ChangeNotifier
@@ -21,11 +22,12 @@ class AddListByBusinessProvider with ChangeNotifier
     notifyListeners();
   }
 
-  Future<void> load()async
+  Future<void> load(BuildContext context)async
   {
     _loding = true;
     notifyListeners();
-    var _d = await AdsApi().getAddListByBusiness("businessId");
+    var  business = Controllers.businessProvider(context).currentBusiness;
+    var _d = await AdsApi().getAddListByBusiness(businessId:business?.id??"");
     if(_d!=null)
       {
         Logger().i("In Log");

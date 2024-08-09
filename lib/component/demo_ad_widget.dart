@@ -87,7 +87,7 @@ class DemoAdWidget extends StatelessWidget {
                   style: TextStyle(color: AppConstent().primeryColor, fontWeight: FontWeight.w600, fontSize: SC.from_height(17)),
                 ),
                 SizedBox(width: SC.fromWidth(11.5)),
-                if(add.isFacebookAdEnabled??false)
+                if(add.isFacebookAdEnabled==true)
                    ShaderMask(shaderCallback: (a){
                     return  const LinearGradient(
                       begin: Alignment.bottomLeft,
@@ -102,7 +102,7 @@ class DemoAdWidget extends StatelessWidget {
                         ]).createShader(a);
                   },child: const Icon(FontAwesomeIcons.squareInstagram,color: Colors.white,),),
                 const SizedBox(width: 5,),
-                if(add.isFacebookAdEnabled??false)
+                if(add.isFacebookAdEnabled==true)
                   const Icon(FontAwesomeIcons.facebookF,color: Color.fromRGBO(1, 101, 225, 1),),
               ],
             ),

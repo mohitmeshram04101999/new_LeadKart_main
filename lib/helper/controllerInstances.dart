@@ -7,6 +7,7 @@ import 'package:leadkart/Models/targetAreaResponceModel.dart';
 import 'package:leadkart/controllers/AllPlansProvider.dart';
 import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
+import 'package:leadkart/controllers/FaqProvider.dart';
 import 'package:leadkart/controllers/GetCampaignProvider.dart';
 import 'package:leadkart/controllers/LeadeDetaileProvider.dart';
 import 'package:leadkart/controllers/RolsAndPermisionProvider.dart';
@@ -43,4 +44,5 @@ class Controllers
   static SubUserProvider subUserProvider(BuildContext context,{bool listen = true}) => Provider.of<SubUserProvider>(context,listen: false);
   static TargateAreaProvider targateAreaProvider(BuildContext context,{bool listen = true}) => Provider.of<TargateAreaProvider>(context,listen: false);
   static RolesAndPermProvider rolesAndPermProvider(BuildContext context,{bool listen = true}) => Provider.of<RolesAndPermProvider>(context,listen: false);
+  static FaqProvider faqProvider(BuildContext context,{bool listen = true}) => Provider.of<FaqProvider>(context,listen: false);
 }

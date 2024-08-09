@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/component/helpButton.dart';
@@ -72,9 +73,21 @@ class CustomAppBar extends StatelessWidget {
                                   subtitle: SelectableText(business.id.toString(),style: TextStyle(color: Colors.grey.shade500),),
 
                                   //lead
-                                  leading: CircleAvatar(
-                                    backgroundImage: NetworkImage(business.businessImage??""),
-                                    child: business.businessImage==null?null:const Icon(Icons.image),
+                                  leading: AspectRatio(
+                                    aspectRatio: 1,
+                                    child: Container(
+                                      margin: const EdgeInsets.all(6),
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: BoxDecoration(
+                                        color: AppConstent().primeryColor,
+                                        shape: BoxShape.circle
+                                      ),
+                                      child:CachedNetworkImage(
+                                        fit:BoxFit.cover,
+                                          imageUrl:business.businessImage??"",
+                                        errorWidget: (a,b,e)=> const Icon(Icons.image,color: Colors.white,),
+                                      ),
+                                    ),
                                   ),
 
                                   //title

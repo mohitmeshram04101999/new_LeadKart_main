@@ -34,7 +34,7 @@ class _AdsPageState extends State<AdsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Controllers.addListByBusinessProvider(context).load();
+    Controllers.addListByBusinessProvider(context).load(context);
   }
 // DEMO ADD //
 
@@ -186,42 +186,42 @@ class _AdsPageState extends State<AdsPage> {
 
 
             //  RECOMENDATION //
-            // ListView.builder(
-            //   shrinkWrap: true,
-            //   physics: NeverScrollableScrollPhysics(),
-            //   itemCount: recommendations.length,
-            //   itemBuilder: (context, index) {
-            //     final recommendation = recommendations[index];
-            //     return Padding(
-            //       padding:   EdgeInsets.symmetric(vertical: 10.0),
-            //       child: RecommendationWidget(
-            //         title: recommendation['title'],
-            //         description: recommendation['description'],
-            //         duration: recommendation['duration'],
-            //         leads: recommendation['leads'],
-            //         reach: recommendation['reach'],
-            //         platforms: recommendation['platforms'],
-            //
-            //         onTap: () {
-            //
-            //           Navigator.push(
-            //             context,
-            //             CustomAnimation(page: SelectPlan(), transitionType: TransitionType.FadeThrough),
-            //           );
-            //
-            //         },
-            //
-            //         // onTap: () {
-            //         //   Navigator.push(
-            //         //     context,
-            //         //     MaterialPageRoute(builder: (context) => SelectPlan()),
-            //         //   );
-            //         // },
-            //       ),
-            //     );
-            //   },
-            // ),
-            //
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: recommendations.length,
+              itemBuilder: (context, index) {
+                final recommendation = recommendations[index];
+                return Padding(
+                  padding:   EdgeInsets.symmetric(vertical: 10.0),
+                  child: RecommendationWidget(
+                    title: recommendation['title'],
+                    description: recommendation['description'],
+                    duration: recommendation['duration'],
+                    leads: recommendation['leads'],
+                    reach: recommendation['reach'],
+                    platforms: recommendation['platforms'],
+
+                    onTap: () {
+
+                      Navigator.push(
+                        context,
+                        CustomAnimation(page: SelectPlan(), transitionType: TransitionType.FadeThrough),
+                      );
+
+                    },
+
+                    // onTap: () {
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(builder: (context) => SelectPlan()),
+                    //   );
+                    // },
+                  ),
+                );
+              },
+            ),
+
             // SizedBox(height: SC.from_height(18),),
 
           ],

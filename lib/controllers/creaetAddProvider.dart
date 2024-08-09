@@ -336,6 +336,7 @@ class CreateAddProvider with ChangeNotifier{
   {
     var api = AdsApi();
     var d  = await api.createAdd(
+      location: _targetArea,
         businessId: Controllers.businessProvider(context,listen: false).currentBusiness?.id??"",
         adTypeId: _addType?.id??"",
       startDate: _startDate?.toIso8601String(),

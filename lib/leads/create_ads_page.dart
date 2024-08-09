@@ -358,258 +358,261 @@ class _CreateAdsState extends State<CreateAds> {
             ),
 
             // ADD AUDIENCEE //
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                // border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(SC.from_height(7)),
-              ),
-              width: double.infinity,
-              // height: SC.from_height(100),
-              height: SC.fromHeight(8.2),
-              child: Stack(
-                // alignment: Alignment.bottomCenter,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(SC.from_height(7)),
-                        ),
-                        width: double.infinity,
-                        height: SC.from_height(55),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                                width: SC.from_height(
-                                    10)), // Optional: Add some space before the chip
-                            Chip(
-                              label: Text(
-                                'Food Shopper',
-                                style: TextStyle(color: Colors.grey.shade700,fontSize:SC.from_height(15) ),
-                              ),
-                              backgroundColor:
-                              Colors.white, // Customize chip background color
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    SC.from_height(
-                                        15)), // Match container border radius
-                                side: BorderSide(
-                                    color: Colors
-                                        .grey), // Optional: Match container border color
-                              ),
-
-                              // Optional: Add an icon to the chip
-                              onDeleted: () {
-                                // Handle chip deletion or button click action
-                                print('Chip button pressed');
-                              },
-                              deleteIcon: Icon(Icons.cancel,
-                                  color: Colors
-                                      .grey), // Optional: Customize delete icon
-                              deleteButtonTooltipMessage:
-                              'Remove', // Tooltip for the delete button
-                            ),
-                            SizedBox(width: SC.from_height(10)),
-                            Chip(
-                              label: Text(
-                                'Retailer',
-                                style: TextStyle(color: Colors.grey.shade700,fontSize:SC.from_height(15) ),
-                              ),
-                              backgroundColor:
-                              Colors.white, // Customize chip background color
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    SC.from_height(
-                                        15)), // Match container border radius
-                                side: BorderSide(
-                                    color: Colors
-                                        .grey), // Optional: Match container border color
-                              ),
-
-                              // Optional: Add an icon to the chip
-                              onDeleted: () {
-                                // Handle chip deletion or button click action
-                                print('Chip button pressed');
-                              },
-                              deleteIcon: Icon(Icons.cancel,
-                                  color: Colors
-                                      .grey), // Optional: Customize delete icon
-                              deleteButtonTooltipMessage:
-                              'Remove', // Tooltip for the delete button
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  Positioned(
-                    top: SC.from_height(8),
-                    left: SC.from_height(20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        // border: Border.all(),
-                        borderRadius: BorderRadius.circular(SC.from_height(7)),
-                        color: Colors.white,
-                      ),
-                      child: Text(
-                        ' Audience ',
-                        style: TextStyle(
-                            color: Colors.grey.shade700, fontSize: SC.from_height(16)),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-
-            SizedBox(
-              height: SC.from_height(15),
-            ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     // border: Border.all(color: Colors.grey),
+            //     borderRadius: BorderRadius.circular(SC.from_height(7)),
+            //   ),
+            //   width: double.infinity,
+            //   // height: SC.from_height(100),
+            //   height: SC.fromHeight(8.2),
+            //   child: Stack(
+            //     // alignment: Alignment.bottomCenter,
+            //     children: [
+            //       Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           Container(
+            //             decoration: BoxDecoration(
+            //               border: Border.all(color: Colors.grey),
+            //               borderRadius: BorderRadius.circular(SC.from_height(7)),
+            //             ),
+            //             width: double.infinity,
+            //             height: SC.from_height(55),
+            //             child: Row(
+            //               children: [
+            //                 SizedBox(
+            //                     width: SC.from_height(
+            //                         10)), // Optional: Add some space before the chip
+            //                 Chip(
+            //                   label: Text(
+            //                     'Food Shopper',
+            //                     style: TextStyle(color: Colors.grey.shade700,fontSize:SC.from_height(15) ),
+            //                   ),
+            //                   backgroundColor:
+            //                   Colors.white, // Customize chip background color
+            //                   shape: RoundedRectangleBorder(
+            //                     borderRadius: BorderRadius.circular(
+            //                         SC.from_height(
+            //                             15)), // Match container border radius
+            //                     side: BorderSide(
+            //                         color: Colors
+            //                             .grey), // Optional: Match container border color
+            //                   ),
+            //
+            //                   // Optional: Add an icon to the chip
+            //                   onDeleted: () {
+            //                     // Handle chip deletion or button click action
+            //                     print('Chip button pressed');
+            //                   },
+            //                   deleteIcon: Icon(Icons.cancel,
+            //                       color: Colors
+            //                           .grey), // Optional: Customize delete icon
+            //                   deleteButtonTooltipMessage:
+            //                   'Remove', // Tooltip for the delete button
+            //                 ),
+            //                 SizedBox(width: SC.from_height(10)),
+            //                 Chip(
+            //                   label: Text(
+            //                     'Retailer',
+            //                     style: TextStyle(color: Colors.grey.shade700,fontSize:SC.from_height(15) ),
+            //                   ),
+            //                   backgroundColor:
+            //                   Colors.white, // Customize chip background color
+            //                   shape: RoundedRectangleBorder(
+            //                     borderRadius: BorderRadius.circular(
+            //                         SC.from_height(
+            //                             15)), // Match container border radius
+            //                     side: BorderSide(
+            //                         color: Colors
+            //                             .grey), // Optional: Match container border color
+            //                   ),
+            //
+            //                   // Optional: Add an icon to the chip
+            //                   onDeleted: () {
+            //                     // Handle chip deletion or button click action
+            //                     print('Chip button pressed');
+            //                   },
+            //                   deleteIcon: Icon(Icons.cancel,
+            //                       color: Colors
+            //                           .grey), // Optional: Customize delete icon
+            //                   deleteButtonTooltipMessage:
+            //                   'Remove', // Tooltip for the delete button
+            //                 ),
+            //               ],
+            //             ),
+            //           )
+            //         ],
+            //       ),
+            //       Positioned(
+            //         top: SC.from_height(8),
+            //         left: SC.from_height(20),
+            //         child: Container(
+            //           decoration: BoxDecoration(
+            //             // border: Border.all(),
+            //             borderRadius: BorderRadius.circular(SC.from_height(7)),
+            //             color: Colors.white,
+            //           ),
+            //           child: Text(
+            //             ' Audience ',
+            //             style: TextStyle(
+            //                 color: Colors.grey.shade700, fontSize: SC.from_height(16)),
+            //           ),
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ),
+            //
+            // SizedBox(
+            //   height: SC.from_height(15),
+            // ),
 
             // AI SUGESTED CAPTION  //
-            Container(
-              width: double.infinity,
-              height: SC.from_height(95),
-              decoration: BoxDecoration(
-                  color: Color.fromRGBO(236, 253, 243, 0.5),
-                  borderRadius: BorderRadius.circular(
-                    SC.from_height(5),
-                  )),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: SC.from_height(10), left: SC.from_height(15)),
-                    child: Text('AI Suggested Caption',
-                        style:  TextStyle(
-                            color: Colors.grey.shade700,
-                            fontSize: SC.from_height(16),
-                            fontWeight: FontWeight.w500)),
-                  ),
-                  SizedBox(
-                    height: SC.from_height(10),
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: SC.from_height(12),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 8,right: 8,top: 5,bottom: 5),
-                        // height: SC.from_height(32),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.grey,),
-                          borderRadius: BorderRadius.circular(SC.fromWidth(15)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'Food Shopper',
-                              style: TextStyle(
-                                  color: Colors.grey.shade700,
-                                  fontSize:SC.fromWidth(27)),
-                            ),
-                            Icon(
-                              Icons.add,
-                              color: Colors.blue,
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: SC.from_height(20),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 8,right: 8,top: 5,bottom: 5),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(SC.from_height(15)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'Retailer',
-                              style: TextStyle(
-                                  color: Colors.grey.shade700,
-                                  fontSize:SC.fromWidth(27)),
-                            ),
-                            Icon(
-                              Icons.add,
-                              color: Colors.blue,
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
+            // Container(
+            //   width: double.infinity,
+            //   height: SC.from_height(95),
+            //   decoration: BoxDecoration(
+            //       color: Color.fromRGBO(236, 253, 243, 0.5),
+            //       borderRadius: BorderRadius.circular(
+            //         SC.from_height(5),
+            //       )),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Padding(
+            //         padding: EdgeInsets.only(
+            //             top: SC.from_height(10), left: SC.from_height(15)),
+            //         child: Text('AI Suggested Caption',
+            //             style:  TextStyle(
+            //                 color: Colors.grey.shade700,
+            //                 fontSize: SC.from_height(16),
+            //                 fontWeight: FontWeight.w500)),
+            //       ),
+            //       SizedBox(
+            //         height: SC.from_height(10),
+            //       ),
+            //
+            //
+            //
+            //       Row(
+            //         children: [
+            //           SizedBox(
+            //             width: SC.from_height(12),
+            //           ),
+            //           Container(
+            //             padding:const  EdgeInsets.only(left: 8,right: 8,top: 5,bottom: 5),
+            //             // height: SC.from_height(32),
+            //             decoration: BoxDecoration(
+            //               color: Colors.white,
+            //               border: Border.all(color: Colors.grey,),
+            //               borderRadius: BorderRadius.circular(SC.fromWidth(15)),
+            //             ),
+            //             child: Row(
+            //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //               children: [
+            //                 Text(
+            //                   'Food Shopper',
+            //                   style: TextStyle(
+            //                       color: Colors.grey.shade700,
+            //                       fontSize:SC.fromWidth(27)),
+            //                 ),
+            //                 Icon(
+            //                   Icons.add,
+            //                   color: Colors.blue,
+            //                 )
+            //               ],
+            //             ),
+            //           ),
+            //           SizedBox(
+            //             width: SC.from_height(20),
+            //           ),
+            //           Container(
+            //             padding: EdgeInsets.only(left: 8,right: 8,top: 5,bottom: 5),
+            //             decoration: BoxDecoration(
+            //               color: Colors.white,
+            //               border: Border.all(color: Colors.grey),
+            //               borderRadius: BorderRadius.circular(SC.from_height(15)),
+            //             ),
+            //             child: Row(
+            //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //               children: [
+            //                 Text(
+            //                   'Retailer',
+            //                   style: TextStyle(
+            //                       color: Colors.grey.shade700,
+            //                       fontSize:SC.fromWidth(27)),
+            //                 ),
+            //                 Icon(
+            //                   Icons.add,
+            //                   color: Colors.blue,
+            //                 )
+            //               ],
+            //             ),
+            //           ),
+            //         ],
+            //       )
+            //     ],
+            //   ),
+            // ),
 
-            // ADD LOCATION //
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                // border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(SC.from_height(7)),
-              ),
-              width: double.infinity,
-              height: SC.from_height(80),
-              child: Stack(
-                // alignment: Alignment.bottomCenter,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      MyInkWell(
-                        onTap: (){
-                          RouteTo(context, child:(a,n)=>const  SearchTargetAreaScreen());
-                        },
-                        padding: EdgeInsets.only(
-                            top: SC.from_height(15), left: SC.from_height(15)),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey,width: .5),
-                          borderRadius: BorderRadius.circular(SC.from_height(7)),
-                        ),
-                        width: double.infinity,
-                        height: SC.from_height(50),
-                        child: Text(
-                          p.targetArea!=null
-                              ? (p.targetArea?.type=="city"||p.targetArea?.type=="neighborhood"||p.targetArea?.type=="subcity")
-                              ?"${p.targetArea?.name}, ${p.targetArea?.region}, ${p.targetArea?.countryName}"
-                              :"${p.targetArea?.name}, ${p.targetArea?.countryName}"
-                              :'Add a location',
-                          style: TextStyle(fontSize: SC.from_height(16),color:p.targetArea==null?Colors.grey.shade500:Colors.grey.shade700),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Positioned(
-                    top: SC.from_height(5),
-                    left: SC.from_height(20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(SC.from_height(7)),
-                        color: Colors.white,
-                      ),
-                      child: Text(
-                        ' Target Area ',
-                        style: TextStyle(
-                            color: Colors.grey.shade700, fontSize: SC.from_height(15)),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
+            // // ADD LOCATION //
+            // Container(
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     // border: Border.all(color: Colors.grey),
+            //     borderRadius: BorderRadius.circular(SC.from_height(7)),
+            //   ),
+            //   width: double.infinity,
+            //   height: SC.from_height(80),
+            //   child: Stack(
+            //     // alignment: Alignment.bottomCenter,
+            //     children: [
+            //       Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           MyInkWell(
+            //             onTap: (){
+            //               RouteTo(context, child:(a,n)=>const  SearchTargetAreaScreen());
+            //             },
+            //             padding: EdgeInsets.only(
+            //                 top: SC.from_height(15), left: SC.from_height(15)),
+            //             decoration: BoxDecoration(
+            //               border: Border.all(color: Colors.grey,width: .5),
+            //               borderRadius: BorderRadius.circular(SC.from_height(7)),
+            //             ),
+            //             width: double.infinity,
+            //             height: SC.from_height(50),
+            //             child: Text(
+            //               p.targetArea!=null
+            //                   ? (p.targetArea?.type=="city"||p.targetArea?.type=="neighborhood"||p.targetArea?.type=="subcity")
+            //                   ?"${p.targetArea?.name}, ${p.targetArea?.region}, ${p.targetArea?.countryName}"
+            //                   :"${p.targetArea?.name}, ${p.targetArea?.countryName}"
+            //                   :'Add a location',
+            //               style: TextStyle(fontSize: SC.from_height(16),color:p.targetArea==null?Colors.grey.shade500:Colors.grey.shade700),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //       Positioned(
+            //         top: SC.from_height(5),
+            //         left: SC.from_height(20),
+            //         child: Container(
+            //           decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.circular(SC.from_height(7)),
+            //             color: Colors.white,
+            //           ),
+            //           child: Text(
+            //             ' Target Area ',
+            //             style: TextStyle(
+            //                 color: Colors.grey.shade700, fontSize: SC.from_height(15)),
+            //           ),
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ),
 
             SizedBox(
               height: SC.from_height(15),
@@ -669,6 +672,9 @@ class _InterestSelectionWithSearchState extends State<InterestSelectionWithSearc
       builder: (context, value, child) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+          //
+          //Text
           Padding(
             padding: EdgeInsets.only(
                 top: SC.from_height(10), left: SC.from_height(15)),
@@ -679,6 +685,8 @@ class _InterestSelectionWithSearchState extends State<InterestSelectionWithSearc
                     fontWeight: FontWeight.w500)),
           ),
           SizedBox(height: SC.from_height(10)),
+
+          //decorationcontainer
           Container(
             width: double.infinity,
             // height: SC.from_height(45),
@@ -687,11 +695,12 @@ class _InterestSelectionWithSearchState extends State<InterestSelectionWithSearc
               borderRadius: BorderRadius.circular(7),
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: SC.from_height(10)),
                 Wrap(
                   children: value.adInterests.map((e) => Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 2),
                     child: Chip(
                       label: Text(e),
                       onDeleted: () {
@@ -700,6 +709,7 @@ class _InterestSelectionWithSearchState extends State<InterestSelectionWithSearc
                     ),
                   )).toList(),
                 ),
+
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: SC.from_height(15)),
                   child: TextField(
@@ -724,23 +734,44 @@ class _InterestSelectionWithSearchState extends State<InterestSelectionWithSearc
               ],
             ),
           ),
-          if (searchResults.isNotEmpty|| controller.text.isNotEmpty)
-            Container(
-              height: SC.fromContextWidth(context, 2),
-              child: ListView.builder(
-                itemCount: searchResults.length,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(searchResults[index]),
-                    onTap: () {
-                      // Handle selection of search result
-                      value.setAdInterests(searchResults[index]);
-                    },
-                  );
-                },
-              ),
+
+            AnimatedContainer(
+              curve: Curves.easeOut,
+              duration:const  Duration(milliseconds: 300),
+              margin:const  EdgeInsets.all(0),
+            height:  (searchResults.isNotEmpty)?SC.fromContextWidth(context, 2):0,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5),
+              boxShadow: [
+                
+                BoxShadow(
+                  color: Colors.grey.shade500,
+                  blurRadius: 3
+                )
+              ]
             ),
+            child: ListView.builder(
+              itemCount: searchResults.length,
+              // physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(searchResults[index]),
+                  onTap: () {
+                    // Handle selection of search result
+                    value.setAdInterests(searchResults[index]);
+                    searchResults =[];
+                    searchInterests("");
+                    controller.clear();
+                  },
+                );
+              },
+            ),
+          )
+
+
+
+
 
         ],
       ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
 import 'package:leadkart/Models/ad_type_model.dart';
 import 'package:leadkart/component/addRequirmentTile.dart';
@@ -14,6 +15,8 @@ import 'package:leadkart/component/flatIconns.dart';
 import 'package:leadkart/component/helpButton.dart';
 
 import 'package:leadkart/helper/dimention.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
+import 'package:leadkart/screens/helpScreen.dart';
 import 'package:leadkart/shimmers.dart';
 
 
@@ -83,7 +86,12 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar:PreferredSize(
         preferredSize: const  Size.fromHeight(60),
           child: CustomAppBar(
-            trailingButton: HelpButton(),
+            trailingButton: HelpButton(
+              onTap: (){
+                // context.pushNamed("helpScreen");
+                RouteTo(context, child: (a,b)=>const HelpScreen());
+              },
+            ),
           )),
 
       //Body

@@ -40,7 +40,7 @@ class Lead {
   String? pageId;
   String? leadgenId;
   dynamic formId;
-  String? createdTime;
+  DateTime? createdTime;
   String? leadSource;
   String? userContactNumber;
   String? name;
@@ -81,7 +81,7 @@ class Lead {
     pageId: json["pageId"],
     leadgenId: json["leadgenId"],
     formId: json["formId"],
-    createdTime: json["createdTime"],
+    createdTime: DateTime.parse(json["createdTime"].toString()),
     leadSource: json["leadSource"],
     userContactNumber: json["userContactNumber"],
     name: json["name"],

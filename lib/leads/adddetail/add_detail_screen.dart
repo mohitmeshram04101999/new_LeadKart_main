@@ -11,6 +11,8 @@ import 'package:leadkart/leads/adddetail/devicerachebiew.dart';
 import 'package:leadkart/leads/adddetail/genderandCtr%20view.dart';
 import 'package:leadkart/leads/adddetail/tableview.dart';
 import 'package:leadkart/leads/adddetail/topPlacement%20view.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
+import 'package:leadkart/screens/seeAllLeads/seeAllLeads.dart';
 import 'package:leadkart/them/constents.dart';
 // import 'package:flutter/widgets.dart';
 import 'package:flutter_echarts/flutter_echarts.dart';
@@ -219,7 +221,9 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                 // SEE ALL LEADS //
                 Center(
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      RouteTo(context, child:(a,b)=> const SeeAllLeads());
+                    },
                     child: Text(
                       'See All Leads',
                       style: TextStyle(
