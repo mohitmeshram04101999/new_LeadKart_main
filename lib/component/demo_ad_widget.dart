@@ -27,7 +27,7 @@ class DemoAdWidget extends StatelessWidget {
       onTap: ()async{
         await Future.delayed(const Duration(milliseconds: 150));
         context.pushNamed("AddDetailScreen",extra: {"id":add.id.toString()});
-        Controllers.campaignProvider(context).load(context,campaignId: add.id??"");
+        Controllers.campaignProvider(context).load(context,campaignAd: add);
       },
       margin: EdgeInsets.symmetric(horizontal: SC.from_height(2),vertical: 8),
       decoration: BoxDecoration(
