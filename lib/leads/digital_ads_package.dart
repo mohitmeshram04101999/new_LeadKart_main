@@ -367,7 +367,7 @@ class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8),
                                         child: Text(
-                                          "${MyHelper.formateDateTime(history.createdAt!)}",
+                                          "${MyHelper.formatDateTime(history.createdAt!)}",
                                           style: const TextStyle(
                                               color: Colors.grey),
                                         ),

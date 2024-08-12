@@ -79,7 +79,7 @@ class MyHelper
   );
 
 
-  static String formateDateTime(DateTime dateTime)
+  static String formatDateTime(DateTime dateTime)
   {
     var month ={
       1:"Jan",
@@ -101,7 +101,19 @@ class MyHelper
     return "${dateTime.day} ${month[dateTime.month]},${dateTime.year}";
   }
 
-  static String formateTime(TimeOfDay time)
+
+  static String reFormatDatTime(String date)
+  {
+    var _n = date.split(" ");
+    String newData = "";
+    for(int i = 0;i<3;i++)
+      {
+        newData += "${_n[i]} ";
+      }
+    return newData;
+  }
+
+  static String formatTime(TimeOfDay time)
   {
     return "${time.hour%12} : ${time.minute} ${time.hour>=12?"PM":"AM"}";
   }

@@ -76,7 +76,7 @@ class LeadeTile extends StatelessWidget {
                     //subtitle
                     Text(lead?.userContactNumber??lead?.whatsappNumber??"${demo?"+91 7470765984":"No Contact number"}",maxLines: 1,overflow: TextOverflow.ellipsis,style:TextStyles().leadTileSubTitle),
 
-                    Text("Added - ${MyHelper.formateDateTime(lead?.createdTime??DateTime.now())}",maxLines: 1,overflow: TextOverflow.ellipsis,style:TextStyles().leadTileSubTitle),
+                    Text("Added - ${MyHelper.formatDateTime(lead?.createdTime??DateTime.now())}",maxLines: 1,overflow: TextOverflow.ellipsis,style:TextStyles().leadTileSubTitle),
 
                   ],
                 ),

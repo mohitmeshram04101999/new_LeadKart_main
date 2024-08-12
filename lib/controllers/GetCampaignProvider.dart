@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/ApiServices/addDetaL%20API.dart';
+import 'package:leadkart/Models/addListByBussnesIdModel.dart';
 import 'package:leadkart/Models/addRepot%20Model.dart';
 import 'package:leadkart/Models/getCampaindetailModel.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -13,6 +14,7 @@ class CampaignProvider with ChangeNotifier
   Map<String,dynamic>? _faceBookReport;
   Map<String,dynamic>? _instReport;
   String? _selectedPlateform;
+  AddByBuinesss? _adData;
 
 
   GetCampaignDetailModel? get data =>_data;
@@ -20,6 +22,7 @@ class CampaignProvider with ChangeNotifier
   Map<String,dynamic>? get faceBookReport =>_faceBookReport;
   Map<String,dynamic>? get instReport => _instReport;
   String? get selectedPlateform=> _selectedPlateform;
+  AddByBuinesss? get adData=>_adData;
 
 
   void setSelectedPlateForm(String? s)
@@ -28,9 +31,10 @@ class CampaignProvider with ChangeNotifier
     notifyListeners();
   }
 
-  Future<void> load(BuildContext context,{required String campaignId})async
+  Future<void> load(BuildContext context,{required AddByBuinesss campaignAd})async
   {
-    var _d = await AddDetailApi.getAddCampaignData(campaignId: campaignId);
+    _adData = campaignAd;
+    var _d = await AddDetailApi.getAddCampaignData(campaignId: _adData?.id??"");
     if(_d!=null)
       {
         _data = _d;

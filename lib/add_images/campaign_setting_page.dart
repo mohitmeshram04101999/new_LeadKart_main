@@ -298,12 +298,12 @@ class _CampaignSettingState extends State<CampaignSetting> {
                 Expanded(
                   child: CustomPicker(
                       onTap: ()=>p.setStartDay(context),
-                      label: "Set Start Date", child: Text(p.startDate==null?"Start Date":"${MyHelper.formateDateTime(p.startDate!)}")),
+                      label: "Set Start Date", child: Text(p.startDate==null?"Start Date":"${MyHelper.formatDateTime(p.startDate!)}")),
                 ),
                 Expanded(
                   child: CustomPicker(
                       onTap: ()=>p.setEndDay(context),
-                      label: "Set End Time", child: Text(p.endDate==null?"End Date":"${MyHelper.formateDateTime(p.endDate!)}")),
+                      label: "Set End Time", child: Text(p.endDate==null?"End Date":"${MyHelper.formatDateTime(p.endDate!)}")),
                 ),
               ],
             ),
@@ -316,12 +316,12 @@ class _CampaignSettingState extends State<CampaignSetting> {
                 Expanded(
                   child: CustomPicker(
                       onTap: ()=>p.setDayStartTime(context),
-                      label: "StartTime", child: Text(p.dayStartTime==null?"Set Start Time":"${MyHelper.formateTime(p.dayStartTime!)}")),
+                      label: "StartTime", child: Text(p.dayStartTime==null?"Set Start Time":"${MyHelper.formatTime(p.dayStartTime!)}")),
                 ),
                 Expanded(
                   child: CustomPicker(
                       onTap: ()=>p.setEndTime(context),
-                      label: "StartTime", child: Text(p.dayEndTime==null?"Set End Time":"${MyHelper.formateTime(p.dayEndTime!)}")),
+                      label: "StartTime", child: Text(p.dayEndTime==null?"Set End Time":"${MyHelper.formatTime(p.dayEndTime!)}")),
                 ),
               ],
             ),

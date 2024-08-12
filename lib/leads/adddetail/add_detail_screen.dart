@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fl_chart/fl_chart.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:leadkart/ApiServices/addDetaL%20API.dart';
 import 'package:leadkart/controllers/GetCampaignProvider.dart';
 import 'package:leadkart/helper/TextStyles.dart';
@@ -13,6 +15,7 @@ import 'package:leadkart/leads/adddetail/tableview.dart';
 import 'package:leadkart/leads/adddetail/topPlacement%20view.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
 import 'package:leadkart/screens/seeAllLeads/seeAllLeads.dart';
+import 'package:leadkart/shimmers.dart';
 import 'package:leadkart/them/constents.dart';
 // import 'package:flutter/widgets.dart';
 import 'package:flutter_echarts/flutter_echarts.dart';
@@ -112,6 +115,11 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                 //Main Container
 
                 Consumer<CampaignProvider>(builder: (a, p, c) {
+
+                  if(p.loading)
+                    {
+                      return const  ContainerShimmer(height: 150,);
+                    }
                   return Container(
                     padding: const EdgeInsets.all(10),
                     width: double.infinity,
@@ -130,65 +138,71 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                           decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.circular(SC.from_height(8))),
-                          child: Image.asset(
-                            'assets/img_4.png',
+                          child:CachedNetworkImage(
+                            imageUrl: p.adData?.image??"",
                             fit: BoxFit.cover,
-                          ),
-                        ),
+                            placeholder:(context, url) => Text("asdf"),
+                            errorWidget: (a,b,c)=>const Icon(Icons.image),
+                          )),
                         SizedBox(
                           width: SC.from_height(15),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Lead Generation',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: SC.fromWidth(27),
-                                  color: AppConstent().primeryColor),
-                            ),
-                            Container(
-                              width: SC.from_height(90),
-                              height: SC.from_height(30),
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(36, 255, 229, 0.22),
-                                  border: Border.all(
-                                      color: Color.fromRGBO(12, 151, 134, 1)),
-                                  borderRadius: BorderRadius.circular(
-                                      SC.from_height(15))),
-                              child: Center(
-                                child: Text(
-                                  'Finished',
-                                  style: TextStyle(
-                                      fontSize: SC.from_height(15),
-                                      color: AppConstent().primeryColor),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                p.adData?.addTypeId?.title??"",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: SC.fromWidth(27),
+                                    color: AppConstent().primeryColor),
+                              ),
+                              Container(
+                                width: SC.from_height(90),
+                                height: SC.from_height(30),
+                                decoration: BoxDecoration(
+                                    color:(p.adData?.status=="PAUSED")?Colors.yellow.withOpacity(.1):  const Color.fromRGBO(36, 255, 229, 0.22),
+                                    border: Border.all(
+                                        color:(p.adData?.status=="PAUSED")?Colors.orange.shade300:const  Color.fromRGBO(12, 151, 134, 1)),
+                                    borderRadius: BorderRadius.circular(
+                                        SC.from_height(15))),
+                                child: Center(
+                                  child: Text(
+                                  "${p.adData?.status.toString().capitalizeFirst}",
+                                    style: TextStyle(
+                                        fontSize: SC.from_height(15),
+                                        color:(p.adData?.status=="PAUSED")?Colors.orange.shade300: AppConstent().primeryColor),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              '1 May - 10 May',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey.shade700,
-                                  fontSize: SC.fromWidth(30)),
-                            ),
-                            Row(
-                              children: [
-                                InkWell(
-                                  onTap: () {},
-                                  child: Text(
-                                    'See Detail >',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: SC.fromWidth(27),
-                                        color:AppConstent().primeryColor),
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
+                              Text(
+                                '${MyHelper.reFormatDatTime(p.adData?.startDate??"")} - ${MyHelper.reFormatDatTime(p.adData?.endDate??"")}',
+                                // 'Thi sdf dssf',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey.shade700,
+                                    fontSize: SC.fromWidth(30)),
+                              ),
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {},
+                                    child: Text(
+                                      'See Detail >',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: SC.fromWidth(27),
+                                          color:AppConstent().primeryColor),
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         )
                       ],
                     ),
