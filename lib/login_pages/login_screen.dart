@@ -1,18 +1,13 @@
-import 'package:animations/animations.dart';
 
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:leadkart/component/custom_textfield.dart';
-import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
-import 'package:leadkart/them/constents.dart';
 import 'package:flutter/services.dart';
 
-import 'package:leadkart/component/custom_button.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 
-import 'package:leadkart/login_pages/otp_screen.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
 
 import '../helper/dimention.dart';
@@ -107,7 +102,7 @@ class _LogInPageState extends State<LoginScreen> {
                     'Sign in now to start creating ads for your business',
                     style: TextStyle(
                         fontSize: SC.fromWidth(28),
-                        color: Color.fromRGBO(96, 96, 96, 1),
+                        color: const Color.fromRGBO(96, 96, 96, 1),
                         fontWeight: FontWeight.w500),
                     textAlign: TextAlign.center,
                   ))),

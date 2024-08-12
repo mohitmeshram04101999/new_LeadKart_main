@@ -62,6 +62,32 @@ class Authcontroller extends GetxController
   }
 
 
+
+  Future<void> resendOtp(BuildContext context) async
+  {
+
+    var resp = await MyHelper.userApi.loginWithPhonNumber(_phonNumController.text.trim());
+
+    if(resp.statusCode==201)
+    {
+      Map<String,dynamic> _d = resp.data;
+      _otp = _d["data"].toString();
+
+    }
+    else
+    {
+      print(resp.statusCode);
+      print(resp.data);
+
+
+      //snakeBar
+      MyHelper.mySnakebar(context, "(${resp.statusCode}) ${resp.data["message"].toString()}");
+
+    }
+
+  }
+
+
   //Verifing otp
   Future<dynamic> verifyOtp(String otp, BuildContext context)async
   {
@@ -69,6 +95,7 @@ class Authcontroller extends GetxController
 
     if(_d.statusCode==200&&_d.data!=null)
     {
+      _phonNumController.clear();
       VerifyOtpModel v  = _d.data;
       CurrentUser user =  v.userCred!;
       await preference.saveUser(user).then((value)async{
