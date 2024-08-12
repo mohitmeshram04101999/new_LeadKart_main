@@ -248,27 +248,27 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
               iconSize: SC.from_width(22),
               type: BottomNavigationBarType.fixed,
               currentIndex: currentPage,
-              selectedItemColor: Color.fromRGBO(36, 238, 221, 1),
+              selectedItemColor: const Color.fromRGBO(36, 238, 221, 1),
               unselectedItemColor: Colors.grey,
-              selectedLabelStyle: TextStyle(color: Color.fromRGBO(36, 238, 221, 1)),
-              unselectedLabelStyle: TextStyle(color: Colors.black26),
+              selectedLabelStyle:const  TextStyle(color: Color.fromRGBO(36, 238, 221, 1)),
+              unselectedLabelStyle:const  TextStyle(color: Colors.black26),
               onTap: (page) {
                 if (page != currentPage) {
                   animateToPage(page);
                 }
               },
               items: [
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.home_outlined),
                   label: "Home",
                 ),
                 BottomNavigationBarItem(
-                  icon: Container(
+                  icon: SizedBox(
                     width: SC.from_width(23),
                     height: SC.from_width(23),
                     child: Image.asset(
                       'assets/bottom_nav/5.png',
-                      color: currentPage == 1 ? Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
+                      color: currentPage == 1 ? const Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
                     ),
                   ),
                   label: "Add images",
@@ -279,7 +279,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
                     height: SC.from_width(23),
                     child: Image.asset(
                       'assets/bottom_nav/2.png',
-                      color: currentPage == 2 ? Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
+                      color: currentPage == 2 ? const Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
                     ),
                   ),
                   label: "Ads",
@@ -290,7 +290,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
                     height: SC.from_width(23),
                     child: Image.asset(
                       'assets/bottom_nav/3.png',
-                      color: currentPage == 3 ? Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
+                      color: currentPage == 3 ? const Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
                     ),
                   ),
                   label: "Leads",
@@ -301,7 +301,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
                     height: SC.from_width(23),
                     child: Image.asset(
                       'assets/bottom_nav/4.png',
-                      color: currentPage == 4 ? Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
+                      color: currentPage == 4 ? const Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
                     ),
                   ),
                   label: "Busines",

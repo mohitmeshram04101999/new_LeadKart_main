@@ -64,15 +64,63 @@ String otp = '';
     });
   }
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    startCountDown();
+  }
+
+
+
+  bool resendOtp = false;
+  int _count = 30;
+
+  startCountDown() async
+  {
+
+    if(_count>0)
+      {
+        if(resendOtp)
+        {
+          resendOtp = false;
+        }
+        _count--;
+        setState(() {
+
+        });
+
+        await Future.delayed(const Duration(seconds: 1));
+
+        startCountDown();
+      }
+    else
+      {
+        resendOtp = true;
+        setState(() {
+
+        });
+      }
+
+
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
+
+
+
+
     return Scaffold(
       backgroundColor: Colors.white,
+
       appBar: AppBar(
-        foregroundColor: Colors.white,
-        title: Container(
-          // decoration: BoxDecoration(border: Border.all()),
-            width: SC.from_height(270),child: Center(child: Text('Verify OTP',style: TextStyle(fontWeight: FontWeight.w500,fontSize: SC.from_height(21)),))),
+        centerTitle: true,
+        title: const Text("Verify OTP"),
       ),
+
+
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -157,9 +205,16 @@ String otp = '';
               padding:  EdgeInsets.symmetric(horizontal: SC.from_height(20)),
               child: Row(
                 children: [
-                  Text('Please wait 00:30s',style: TextStyle(fontSize: SC.from_height(16),color: Colors.grey),),
+                  Text('Please wait 00:${_count}s',style: TextStyle(fontSize: SC.from_height(16),color: Colors.grey),),
                   Expanded(child: Container()),
-                  Text('Resend OTP',style: TextStyle(fontSize: SC.from_height(16),color: Colors.grey.shade700)),
+                  if(resendOtp)
+                    InkWell(
+                      onTap: (){
+                        _count = 30;
+                        startCountDown();
+                        Controllers.authController.resendOtp(context);
+                      },
+                        child: Text('Resend OTP',style: TextStyle(fontSize: SC.from_height(16),color: Colors.grey.shade700))),
                 ],
               ),
             ),

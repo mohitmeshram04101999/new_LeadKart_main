@@ -32,29 +32,29 @@ class MyHelper
   static Dio dio = Dio(
     BaseOptions(baseUrl: "https://server.leadkart.dsmacademy.in/api/"),
   );
-  static mySnakebar(BuildContext context,String descriptioin, {Color color = Colors.red})
+  static mySnakebar(BuildContext context,String descriptioin, {Color? color})
   {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         elevation: 0,
-        behavior:SnackBarBehavior.fixed,
+        behavior:SnackBarBehavior.floating,
         duration:const  Duration(milliseconds: 2000),
         // margin:EdgeInsets.symmetric(horizontal: 30,vertical: 8),
         backgroundColor: Colors.transparent,
 
         //Container
         content: Center(child: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 6),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(.6),
-                  blurRadius: 2,offset: Offset(1,2),
+                  color: Colors.black.withOpacity(.3),
+                  blurRadius: 2,offset:const  Offset(1,2),
                 )
               ],
-              color: color,
+              color: color??Colors.red.withOpacity(.75),
             ),
-            child: Text(descriptioin,textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w400,fontSize: SC.from_width(17)),)))));
+            child: Text(descriptioin,textAlign: TextAlign.center,style: TextStyle(height: 1,fontWeight: FontWeight.w400,fontSize: SC.from_width(17)),)))));
   }
 
   static  String titleFormate(String s)
