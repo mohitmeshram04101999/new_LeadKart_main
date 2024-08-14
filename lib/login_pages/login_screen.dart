@@ -23,7 +23,18 @@ class _LogInPageState extends State<LoginScreen> {
     final LoginResult result = await FacebookAuth.i.login(
       loginBehavior: LoginBehavior.nativeWithFallback,
       // permissions: ['email', 'public_profile'],
-      permissions: ['pages_show_list'],
+      permissions: [
+        'pages_show_list',
+        'ads_management',
+        'ads_read',
+        'business_management',
+        'leads_retrieval',
+        'page_events',
+        'pages_manage_ads',
+        'pages_manage_posts',
+        'read_insights',
+        'pages_read_engagement'
+      ],
       // loginBehavior: LoginBehavior.webOnly,
       // permissions: [
       //  'email',
