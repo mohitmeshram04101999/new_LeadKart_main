@@ -6,16 +6,9 @@ import 'package:leadkart/component/custom_textfield.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
+import 'package:logger/logger.dart';
 
 import '../helper/dimention.dart';
-
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
-import 'package:flutter/services.dart';
-
-
-import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
-import 'package:logger/logger.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -31,17 +24,17 @@ class _LogInPageState extends State<LoginScreen> {
       loginBehavior: LoginBehavior.nativeWithFallback,
       // permissions: ['email', 'public_profile'],
       permissions: ['pages_show_list'],
-        // loginBehavior: LoginBehavior.webOnly,
-        // permissions: [
-        //  'email',
-        //   'public_profile'
-        // ],
-        ); // by default we request the email and the public profile
+      // loginBehavior: LoginBehavior.webOnly,
+      // permissions: [
+      //  'email',
+      //   'public_profile'
+      // ],
+    ); // by default we request the email and the public profile
 // or FacebookAuth.i.login()
     if (result.status == LoginStatus.success) {
       // you are logged
       final AccessToken accessToken = result.accessToken!;
-      log('Access Token: ${accessToken.token}');
+      Logger().w('Access Token: ${result.status}\n ${accessToken.token}');
     } else {
       log('Error');
       log(result.status.toString());
@@ -209,9 +202,9 @@ class _LogInPageState extends State<LoginScreen> {
                         // width:  SC.from_height(150),
                         height: SC.from_height(54),
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: .5),
-      Logger().w('Access Token: ${result.status}\n ${accessToken.token}');
-        color: Colors.grey, width: 1.0), // Set enabled border color
+                            border: Border.all(
+                                color: Colors.grey,
+                                width: .5), // Set enabled border color
                             borderRadius: BorderRadius.circular(10)),
                         child: Center(
                             child: Container(
