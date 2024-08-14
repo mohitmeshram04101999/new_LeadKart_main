@@ -1,22 +1,14 @@
-import 'package:animations/animations.dart';
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:leadkart/component/custom_textfield.dart';
-import 'package:leadkart/helper/TextStyles.dart';
-import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
-import 'package:leadkart/them/constents.dart';
-import 'package:flutter/services.dart';
-
-import 'package:leadkart/component/custom_button.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
-
-import 'package:leadkart/login_pages/otp_screen.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
+import 'package:logger/logger.dart';
 
 import '../helper/dimention.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,18 +20,16 @@ class LoginScreen extends StatefulWidget {
 //login with facebook
 class _LogInPageState extends State<LoginScreen> {
   loginWithFacebook() async {
-    final LoginResult result = await FacebookAuth.instance.expressLogin(
-      // loginBehavior: LoginBehavior.webOnly,
-      // permissions: [
-      //  'email',
-      //   'public_profile'
-      // ],
+    final LoginResult result = await FacebookAuth.i.login(
+      loginBehavior: LoginBehavior.nativeWithFallback,
+      // permissions: ['email', 'public_profile'],
+      permissions: ['pages_show_list'],
     ); // by default we request the email and the public profile
 // or FacebookAuth.i.login()
     if (result.status == LoginStatus.success) {
       // you are logged
       final AccessToken accessToken = result.accessToken!;
-      log('Access Token: ${accessToken.token}');
+      Logger().w('Access Token: ${result.status}\n ${accessToken.token}');
     } else {
       log('Error');
       log(result.status.toString());
@@ -49,12 +39,10 @@ class _LogInPageState extends State<LoginScreen> {
 
   int _count = 30;
 
-
   final borderStyle = OutlineInputBorder(
     borderRadius: BorderRadius.circular(10),
     borderSide: const BorderSide(
-        color: Colors.grey,
-        width: 1.0), // Set enabled border color
+        color: Colors.grey, width: 1.0), // Set enabled border color
   );
   @override
   Widget build(BuildContext context) {
@@ -123,13 +111,13 @@ class _LogInPageState extends State<LoginScreen> {
               height: SC.from_height(40),
             ),
 
-
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: CustomTextField(controller: Controllers.authController.phonController, hintText: "Enter mobile no",labelText: "Enter mobile no"),
+              child: CustomTextField(
+                  controller: Controllers.authController.phonController,
+                  hintText: "Enter mobile no",
+                  labelText: "Enter mobile no"),
             ),
-
 
             SizedBox(
               height: SC.from_height(40),
@@ -183,11 +171,10 @@ class _LogInPageState extends State<LoginScreen> {
                 children: [
                   Expanded(
                     child: MyInkWell(
-
                       // width:  SC.fromWidth(3),
                       height: SC.from_height(54),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey,width: .5),
+                          border: Border.all(color: Colors.grey, width: .5),
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
                           child: Container(
@@ -202,8 +189,6 @@ class _LogInPageState extends State<LoginScreen> {
                   const SizedBox(
                     width: 10,
                   ),
-
-
                   Expanded(
                     child: InkWell(
                       child: MyInkWell(
@@ -212,7 +197,7 @@ class _LogInPageState extends State<LoginScreen> {
                         // width:  SC.from_height(150),
                         height: SC.from_height(54),
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey,width: .5),
+                            border: Border.all(color: Colors.grey, width: .5),
                             borderRadius: BorderRadius.circular(10)),
                         child: Center(
                             child: Container(
