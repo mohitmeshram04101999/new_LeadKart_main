@@ -195,7 +195,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
         if (backPress == 2) {
           return true;
         } else {
-          Timer(Duration(seconds: 1), () {
+          Timer(const Duration(seconds: 1), () {
             backPress = 0;
           });
         }
@@ -237,13 +237,13 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
         //   icon: Icon(Icons.logout),
         // ),
         bottomNavigationBar: BottomAppBar(
-          padding: EdgeInsets.only(top: 3),
+          padding: const EdgeInsets.only(top: 3),
           color: Colors.white,
           child: BottomAppBar(
             clipBehavior: Clip.hardEdge,
             padding: EdgeInsets.zero,
             color: Colors.transparent,
-            shape: CircularNotchedRectangle(),
+            shape: const  CircularNotchedRectangle(),
             child: BottomNavigationBar(
               iconSize: SC.from_width(22),
               type: BottomNavigationBarType.fixed,
@@ -274,7 +274,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
                   label: "Add images",
                 ),
                 BottomNavigationBarItem(
-                  icon: Container(
+                  icon: SizedBox(
                     width: SC.from_width(23),
                     height: SC.from_width(23),
                     child: Image.asset(
@@ -285,7 +285,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
                   label: "Ads",
                 ),
                 BottomNavigationBarItem(
-                  icon: Container(
+                  icon: SizedBox(
                     width: SC.from_width(23),
                     height: SC.from_width(23),
                     child: Image.asset(
@@ -296,7 +296,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with Sing
                   label: "Leads",
                 ),
                 BottomNavigationBarItem(
-                  icon: Container(
+                  icon: SizedBox(
                     width: SC.from_width(23),
                     height: SC.from_width(23),
                     child: Image.asset(

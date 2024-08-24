@@ -85,7 +85,7 @@ class GoRouterConfig {
             name: 'adsPage',
             builder: (context,state){
               final id = state.pathParameters["id"];
-              return AdsPage();
+              return  const AdsPage();
             },
           ),
 
@@ -108,14 +108,14 @@ class GoRouterConfig {
               ),
               GoRoute(
                 name: "digitalAdsPackage",
-                path: "DigitalAdsPackage",
+                path: "digitalAdsPackage",
                 builder: (context,state)=>const DigitalAdsPackage(),
               )
             ]
           ),
-          GoRoute(path: 'campaignSettings', name: 'campaignSettings', builder: (context, state) => CampaignSetting()),
-          GoRoute(path: 'growBusinessFaster', name: 'growBusinessFaster', builder: (context, state) => GrowBusinessFaster()),
-          GoRoute(path: 'imageEditor', name: 'imageEditor', builder: (context, state) => ImageEditor()),
+          GoRoute(path: 'campaignSettings', name: 'campaignSettings', builder: (context, state) => const CampaignSetting()),
+          GoRoute(path: 'growBusinessFaster', name: 'growBusinessFaster', builder: (context, state) =>const  GrowBusinessFaster()),
+          GoRoute(path: 'imageEditor', name: 'imageEditor', builder: (context, state) => const ImageEditor()),
         ],
       ),
 
