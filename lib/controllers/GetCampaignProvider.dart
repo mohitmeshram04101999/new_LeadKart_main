@@ -6,6 +6,7 @@ import 'package:leadkart/Models/addListByBussnesIdModel.dart';
 import 'package:leadkart/Models/addRepot%20Model.dart';
 import 'package:leadkart/Models/getCampaindetailModel.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:logger/logger.dart';
 
 class CampaignProvider with ChangeNotifier
 {
@@ -35,6 +36,9 @@ class CampaignProvider with ChangeNotifier
   {
     _adData = campaignAd;
     var _d = await AddDetailApi.getAddCampaignData(campaignId: _adData?.id??"");
+
+    // Logger().e(_d);
+
     if(_d!=null)
       {
         _data = _d;
