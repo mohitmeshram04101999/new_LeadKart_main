@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:leadkart/component/custom_textfield.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
@@ -130,6 +131,14 @@ class _LogInPageState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: CustomTextField(
+
+                textInputType: TextInputType.number,
+                format: [
+                  LengthLimitingTextInputFormatter(10),
+                  FilteringTextInputFormatter.digitsOnly,
+
+
+                ],
                   controller: Controllers.authController.phonController,
                   hintText: "Enter mobile no",
                   labelText: "Enter mobile no"),
@@ -152,85 +161,85 @@ class _LogInPageState extends State<LoginScreen> {
               height: SC.from_height(40),
             ),
 
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: SC.from_height(17)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      width: SC.fromWidth(4),
-                      child: Divider(
-                        thickness: 1.5,
-                        color: Colors.grey.shade300,
-                      )),
-                  Text('  or Log with  ',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: SC.fromWidth(26),
-                          fontWeight: FontWeight.w500)),
-                  Container(
-                      width: SC.fromWidth(4),
-                      child:
-                          Divider(thickness: 1.5, color: Colors.grey.shade300)),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: SC.from_height(17)),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       Container(
+            //           width: SC.fromWidth(4),
+            //           child: Divider(
+            //             thickness: 1.5,
+            //             color: Colors.grey.shade300,
+            //           )),
+            //       Text('  or Log with  ',
+            //           style: TextStyle(
+            //               color: Colors.grey,
+            //               fontSize: SC.fromWidth(26),
+            //               fontWeight: FontWeight.w500)),
+            //       Container(
+            //           width: SC.fromWidth(4),
+            //           child:
+            //               Divider(thickness: 1.5, color: Colors.grey.shade300)),
+            //     ],
+            //   ),
+            // ),
 
-            SizedBox(
-              height: SC.from_height(30),
-            ),
+            // SizedBox(
+            //   height: SC.from_height(30),
+            // ),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    child: MyInkWell(
-                      // width:  SC.fromWidth(3),
-                      height: SC.from_height(54),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: .5),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                          child: Container(
-                              width: SC.from_height(41),
-                              height: SC.from_height(41),
-                              child: Image.asset(
-                                'assets/google.png',
-                                fit: BoxFit.cover,
-                              ))),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: InkWell(
-                      child: MyInkWell(
-                        onTap: () => loginWithFacebook(),
-
-                        // width:  SC.from_height(150),
-                        height: SC.from_height(54),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.grey,
-                                width: .5), // Set enabled border color
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Center(
-                            child: Container(
-                                width: SC.from_height(32),
-                                height: SC.from_height(32),
-                                child: Image.asset(
-                                  'assets/facebook.png',
-                                  fit: BoxFit.cover,
-                                ))),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //     children: [
+            //       Expanded(
+            //         child: MyInkWell(
+            //           // width:  SC.fromWidth(3),
+            //           height: SC.from_height(54),
+            //           decoration: BoxDecoration(
+            //               border: Border.all(color: Colors.grey, width: .5),
+            //               borderRadius: BorderRadius.circular(10)),
+            //           child: Center(
+            //               child: Container(
+            //                   width: SC.from_height(41),
+            //                   height: SC.from_height(41),
+            //                   child: Image.asset(
+            //                     'assets/google.png',
+            //                     fit: BoxFit.cover,
+            //                   ))),
+            //         ),
+            //       ),
+            //       const SizedBox(
+            //         width: 10,
+            //       ),
+            //       Expanded(
+            //         child: InkWell(
+            //           child: MyInkWell(
+            //             onTap: () => loginWithFacebook(),
+            //
+            //             // width:  SC.from_height(150),
+            //             height: SC.from_height(54),
+            //             decoration: BoxDecoration(
+            //                 border: Border.all(
+            //                     color: Colors.grey,
+            //                     width: .5), // Set enabled border color
+            //                 borderRadius: BorderRadius.circular(10)),
+            //             child: Center(
+            //                 child: Container(
+            //                     width: SC.from_height(32),
+            //                     height: SC.from_height(32),
+            //                     child: Image.asset(
+            //                       'assets/facebook.png',
+            //                       fit: BoxFit.cover,
+            //                     ))),
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             SizedBox(
               height: SC.from_height(30),
             ),
