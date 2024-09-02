@@ -123,7 +123,7 @@ class _LeadScreenState extends State<LeadScreen> {
                       return LeadeTile(
                         onTap: (){
                           Controllers.leadDetailProvider(context,listen: false).loadLeadDetail(context: context, leadId: lead.id??"");
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const DigitalAdsPackage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const LeadDetails()));
 
                         },
                         lead: lead,);

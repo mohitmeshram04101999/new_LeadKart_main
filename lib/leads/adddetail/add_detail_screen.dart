@@ -188,20 +188,20 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                                     color: Colors.grey.shade700,
                                     fontSize: SC.fromWidth(30)),
                               ),
-                              Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () {},
-                                    child: Text(
-                                      'See Detail >',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: SC.fromWidth(27),
-                                          color: AppConstent().primeryColor),
-                                    ),
-                                  )
-                                ],
-                              )
+                              // Row(
+                              //   children: [
+                              //     InkWell(
+                              //       onTap: () {},
+                              //       child: Text(
+                              //         'See Detail >',
+                              //         style: TextStyle(
+                              //             fontWeight: FontWeight.w500,
+                              //             fontSize: SC.fromWidth(27),
+                              //             color: AppConstent().primeryColor),
+                              //       ),
+                              //     )
+                              //   ],
+                              // )
                             ],
                           ),
                         )
@@ -235,17 +235,17 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                 ),
                 // SEE ALL LEADS //
                 Center(
-                  child: InkWell(
-                    onTap: () {
-                      RouteTo(context, child: (a, b) => const SeeAllLeads());
-                    },
-                    child: Text(
-                      'See All Leads',
-                      style: TextStyle(
-                          fontSize: SC.from_height(17),
-                          color: AppConstent().primeryColor),
-                    ),
-                  ),
+                  // child: InkWell(
+                  //   onTap: () {
+                  //
+                  //   },
+                  //   child: Text(
+                  //     'See All Leads',
+                  //     style: TextStyle(
+                  //         fontSize: SC.from_height(17),
+                  //         color: AppConstent().primeryColor),
+                  //   ),
+                  // ),
                 ),
                 SizedBox(
                   height: SC.from_height(15),
@@ -392,12 +392,9 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                               'Device',
                               style: lableStyle,
                             ),
-                            InkWell(
-                              onTap: () {},
-                              child: Text(
-                                'Views',
-                                style: sidelabelstyle,
-                              ),
+                            Text(
+                              'Views',
+                              style: sidelabelstyle,
                             ),
                           ],
                         ),
@@ -424,12 +421,9 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                                 'Age',
                                 style: lableStyle,
                               ),
-                              InkWell(
-                                onTap: () {},
-                                child: Text(
-                                  'Views',
-                                  style: sidelabelstyle,
-                                ),
+                              Text(
+                                'Views',
+                                style: sidelabelstyle,
                               ),
                             ],
                           ),
@@ -482,9 +476,9 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              if (_data["engagements"]["data"] != null ||
-                                  _data["engagements"]["data"].length > 0)
-                                const Text("Repot is Empty"),
+                              // if (_data["engagements"]["data"] != null ||
+                              //     _data["engagements"]["data"].length > 0)
+                              //   const Text("Repot is Empty"),
 
                               if (_data["engagements"]["data"] != null &&
                                   _data["engagements"]["data"].length > 0)
@@ -558,14 +552,11 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                               'Gender',
                               style: lableStyle,
                             ),
-                            InkWell(
-                              onTap: () {},
-                              child: Text(
-                                'Views (CTR)',
-                                style: TextStyle(
-                                    fontSize: SC.from_height(18),
-                                    color: AppConstent().primeryColor),
-                              ),
+                            Text(
+                              'Views (CTR)',
+                              style: TextStyle(
+                                  fontSize: SC.from_height(18),
+                                  color: AppConstent().primeryColor),
                             ),
                           ],
                         ),
@@ -594,12 +585,9 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                                 'Top Placement ',
                                 style: lableStyle,
                               ),
-                              InkWell(
-                                onTap: () {},
-                                child: Text(
-                                  'Views',
-                                  style: sidelabelstyle,
-                                ),
+                              Text(
+                                'Views',
+                                style: sidelabelstyle,
                               ),
                             ],
                           ),

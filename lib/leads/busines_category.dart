@@ -61,12 +61,12 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
       appBar:  AppBar(
         foregroundColor: Colors.white,
         backgroundColor: AppConstent().primeryColor,
-        title: Text('Busines Category',),
-        actions: [
-
-          HelpButtonWhite(),
-           SizedBox(width: SC.from_height(20)),
-        ],
+        title: const Text('Business Category',),
+        // actions: [
+        //
+        //   HelpButtonWhite(),
+        //    SizedBox(width: SC.from_height(20)),
+        // ],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: SC.from_height(15)),
@@ -114,36 +114,36 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
             SizedBox(height: SC.from_height(15),),
 
             //  SELECT BUSINESS CATEGORY //
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: SC.from_height(0)),
-              child: TextFormField(
-
-                cursorColor: Colors.grey,
-                decoration: InputDecoration(
-                  hintText: 'Select busines category',
-                  prefixIcon: Icon(Icons.search, color: Colors.grey.shade700,), // Add search icon// Adjust padding
-                  filled: true,
-                  fillColor: Colors.white, // Optional: Set background color of the text field
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Name cannot be empty';
-                  }
-                  if (value.length < 2) {
-                    return 'Name must be at least 2 characters long';
-                  }
-                  if (value.length > 50) {
-                    return 'Name must be less than 50 characters';
-                  }
-                  final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-                  if (!nameExp.hasMatch(value)) {
-                    return 'Name contains invalid characters';
-                  }
-                  return null;
-                },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: SC.from_height(0)),
+            //   child: TextFormField(
+            //
+            //     cursorColor: Colors.grey,
+            //     decoration: InputDecoration(
+            //       hintText: 'Select busines category',
+            //       prefixIcon: Icon(Icons.search, color: Colors.grey.shade700,), // Add search icon// Adjust padding
+            //       filled: true,
+            //       fillColor: Colors.white, // Optional: Set background color of the text field
+            //     ),
+            //     validator: (value) {
+            //       if (value == null || value.isEmpty) {
+            //         return 'Name cannot be empty';
+            //       }
+            //       if (value.length < 2) {
+            //         return 'Name must be at least 2 characters long';
+            //       }
+            //       if (value.length > 50) {
+            //         return 'Name must be less than 50 characters';
+            //       }
+            //       final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
+            //       if (!nameExp.hasMatch(value)) {
+            //         return 'Name contains invalid characters';
+            //       }
+            //       return null;
+            //     },
+            //     autovalidateMode: AutovalidateMode.onUserInteraction,
+            //   ),
+            // ),
 
             SizedBox(height: SC.from_height(15),),
 
@@ -189,11 +189,6 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
               text: 'Next', onPressed: () {
                 context.pushNamed("additionalDetails");
               // Navigator.push(context, MaterialPageRoute(builder: (context)=> FollowUpDate()));
-
-              Navigator.push(
-                context,
-                CustomPageRoute(page: FollowUpDate()),
-              );
 
             },
             ),

@@ -16,6 +16,7 @@ import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/leads/select_plan.dart';
 import 'package:leadkart/them/constents.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../component/customAppBar.dart';
 
@@ -34,7 +35,10 @@ class _AdsPageState extends State<AdsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Controllers.addListByBusinessProvider(context).load(context);
+    WidgetsBinding.instance.addPostFrameCallback((t){
+      Controllers.addListByBusinessProvider(context).load(context);
+
+    });
   }
 // DEMO ADD //
 
@@ -100,7 +104,11 @@ class _AdsPageState extends State<AdsPage> {
       appBar:PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: CustomAppBar(
-            trailingButton: HelpButton(),
+            trailingButton: HelpButton(
+              onTap: (){
+                launch("tel: +917007892427");
+              },
+            ),
           )),
       //
 
@@ -191,42 +199,42 @@ class _AdsPageState extends State<AdsPage> {
             // SizedBox(height: SC.from_height(15),),
 
 
-            //  RECOMENDATION //
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: recommendations.length,
-              itemBuilder: (context, index) {
-                final recommendation = recommendations[index];
-                return Padding(
-                  padding:   EdgeInsets.symmetric(vertical: 10.0),
-                  child: RecommendationWidget(
-                    title: recommendation['title'],
-                    description: recommendation['description'],
-                    duration: recommendation['duration'],
-                    leads: recommendation['leads'],
-                    reach: recommendation['reach'],
-                    platforms: recommendation['platforms'],
-
-                    onTap: () {
-
-                      Navigator.push(
-                        context,
-                        CustomAnimation(page: SelectPlan(), transitionType: TransitionType.FadeThrough),
-                      );
-
-                    },
-
-                    // onTap: () {
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(builder: (context) => SelectPlan()),
-                    //   );
-                    // },
-                  ),
-                );
-              },
-            ),
+            // //  RECOMENDATION //
+            // ListView.builder(
+            //   shrinkWrap: true,
+            //   physics: NeverScrollableScrollPhysics(),
+            //   itemCount: recommendations.length,
+            //   itemBuilder: (context, index) {
+            //     final recommendation = recommendations[index];
+            //     return Padding(
+            //       padding:   EdgeInsets.symmetric(vertical: 10.0),
+            //       child: RecommendationWidget(
+            //         title: recommendation['title'],
+            //         description: recommendation['description'],
+            //         duration: recommendation['duration'],
+            //         leads: recommendation['leads'],
+            //         reach: recommendation['reach'],
+            //         platforms: recommendation['platforms'],
+            //
+            //         onTap: () {
+            //
+            //           Navigator.push(
+            //             context,
+            //             CustomAnimation(page: SelectPlan(), transitionType: TransitionType.FadeThrough),
+            //           );
+            //
+            //         },
+            //
+            //         // onTap: () {
+            //         //   Navigator.push(
+            //         //     context,
+            //         //     MaterialPageRoute(builder: (context) => SelectPlan()),
+            //         //   );
+            //         // },
+            //       ),
+            //     );
+            //   },
+            // ),
 
             // SizedBox(height: SC.from_height(18),),
 

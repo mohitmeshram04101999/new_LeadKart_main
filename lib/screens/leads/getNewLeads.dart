@@ -77,10 +77,10 @@ class _GetNewLeadsState extends State<GetNewLeads> {
           foregroundColor: Colors.white,
           title: const Text('Get New Leads'),
 
-          actions: [  Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: HelpButton(),
-          )],
+          // actions: [  Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: HelpButton(),
+          // )],
 
         ),
 

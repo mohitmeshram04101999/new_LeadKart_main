@@ -16,6 +16,7 @@ import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
 import 'package:leadkart/screens/helpScreen.dart';
 import 'package:leadkart/shimmers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -84,12 +85,12 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar:PreferredSize(
         preferredSize: const  Size.fromHeight(60),
           child: CustomAppBar(
-            trailingButton: HelpButton(
-              onTap: (){
-                // context.pushNamed("helpScreen");
-                RouteTo(context, child: (a,b)=>const HelpScreen());
-              },
-            ),
+            // trailingButton: HelpButton(
+            //   onTap: (){
+            //     // context.pushNamed("helpScreen");
+            //     RouteTo(context, child: (a,b)=>const HelpScreen());
+            //   },
+            // ),
           )),
 
       //Body
@@ -170,27 +171,32 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
 
-          Container(
-            clipBehavior: Clip.hardEdge,
-            // width: SC.fromWidth(50),
-            // height: SC.from_height(200),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(SC.from_height(8)),
-            ),
-            child: Image.asset(
-              'assets/home_images/img_3.png',
-              fit: BoxFit.cover,
-            ),
-          ),
+          // Container(
+          //   clipBehavior: Clip.hardEdge,
+          //   // width: SC.fromWidth(50),
+          //   // height: SC.from_height(200),
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(SC.from_height(8)),
+          //   ),
+          //   child: Image.asset(
+          //     'assets/home_images/img_3.png',
+          //     fit: BoxFit.cover,
+          //   ),
+          // ),
 
           SizedBox(
             height: SC.from_height(15),
           ),
 
-          Image.asset(
-                      'assets/home_images/4.png',
-                      fit: BoxFit.cover,
-                    ),
+          InkWell(
+            onTap: (){
+              launch("tel: +917007892427");
+            },
+            child: Image.asset(
+              'assets/home_images/4.png',
+              fit: BoxFit.cover,
+            ),
+          ),
 
           SizedBox(
             height: SC.from_height(19),
@@ -275,15 +281,15 @@ class _HomeScreenState extends State<HomeScreen> {
             height: SC.from_height(20),
           ),
 
-          Container(
-              // height: SC.from_height(134),
-              clipBehavior: Clip.hardEdge,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
-              child: Image.asset(
-                'assets/home_images/img_4.png',
-                fit: BoxFit.cover,
-              )),
+          // Container(
+          //     // height: SC.from_height(134),
+          //     clipBehavior: Clip.hardEdge,
+          //     decoration:
+          //         BoxDecoration(borderRadius: BorderRadius.circular(10)),
+          //     child: Image.asset(
+          //       'assets/home_images/img_4.png',
+          //       fit: BoxFit.cover,
+          //     )),
 
           SizedBox(
             height: SC.from_height(20),
