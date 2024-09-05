@@ -128,6 +128,12 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                           }
                       }),
                       BudgetSelecter(
+                        onChange: (s){
+                          if(s.isEmpty)
+                            {
+                              p.clearFaceBookBudget();
+                            }
+                        },
                         onDec: ()=>p.decFacebookBudget(),
                         onInc: ()=>p.incFacebookBudget(),
                         icon: 'assets/facebook_wbg.png',
@@ -154,6 +160,12 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                           }
                       }),
                       BudgetSelecter(
+                        onChange: (s){
+                          if(s.isEmpty)
+                            {
+                              p.clearInstBudget();
+                            }
+                        },
                         onInc: ()=>p.incInstBudget(),
                         onDec: ()=>p.decInstBudget(),
                         icon: 'assets/instagram_wbg.png',
