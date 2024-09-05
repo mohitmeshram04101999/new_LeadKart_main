@@ -23,9 +23,9 @@ class CreateAddProvider with ChangeNotifier{
   PlanDetail2? _plan;
   final TextEditingController _titleController = TextEditingController();
   String? _imagePath;
-  double _faceBookBudget = 0;
-  double  _instBudget = 0;
-  double _googleBudget = 0;
+  TextEditingController _faceBookBudget = TextEditingController();
+  TextEditingController  _instBudget = TextEditingController();
+  TextEditingController _googleBudget = TextEditingController();
   final TextEditingController _destinationUrlController = TextEditingController();
   final TextEditingController _captionController = TextEditingController();
   List<int> _targetGender = [1,2,3];
@@ -48,9 +48,9 @@ class CreateAddProvider with ChangeNotifier{
   String? get image => _imagePath;
   PlanDetail2? get plan => _plan;
   TextEditingController get titleController => _titleController;
-  double get faceBookBudgetController => _faceBookBudget;
-  double get instBudgetController => _instBudget;
-  double  get googleBudgetController => _googleBudget;
+  TextEditingController get faceBookBudgetController => _faceBookBudget;
+  TextEditingController get instBudgetController => _instBudget;
+  TextEditingController  get googleBudgetController => _googleBudget;
   TextEditingController get destinationUrlController => _destinationUrlController;
   TextEditingController get captionController => _captionController;
   RangeValues get ageRange => _ageRange;
@@ -81,7 +81,9 @@ class CreateAddProvider with ChangeNotifier{
   //Increase FaceBook Budget
   void incFacebookBudget()
   {
-    _faceBookBudget = _faceBookBudget+200;
+    int b = int.parse(_faceBookBudget.text.trim());
+    b = b+200;
+    _faceBookBudget.text = b.toString();
     _plan = null;
     getEstimatedPlan();
     notifyListeners();
@@ -113,8 +115,9 @@ class CreateAddProvider with ChangeNotifier{
   //Decrese Facbbo Budget
   void decFacebookBudget()
   {
-    double _d = _faceBookBudget-200;
-    _faceBookBudget = (_d<0)?0:_d;
+    int b = int.parse(_faceBookBudget.text.trim());
+    int _d = b-200;
+    _faceBookBudget.text = (_d<0)?"0":_d.toString();
     _plan = null;
     getEstimatedPlan();
     notifyListeners();
@@ -124,7 +127,9 @@ class CreateAddProvider with ChangeNotifier{
   //Increase inst Budget
   void incInstBudget()
   {
-    _instBudget = _instBudget+200;
+    int b = int.parse(_instBudget.text.trim());
+    b = b+200;
+    _instBudget.text = b.toString();
     _plan = null;
     getEstimatedPlan();
     notifyListeners();
@@ -134,8 +139,9 @@ class CreateAddProvider with ChangeNotifier{
   //dec Inst Budget
   void decInstBudget()
   {
-    double _d = _instBudget-200;
-    _instBudget = (_d<0)?0:_d;
+    int b = int.parse(_instBudget.text.trim());
+    int _d = b-200;
+    _instBudget.text = (_d<0)?"0":_d.toString();
     _plan = null;
     getEstimatedPlan();
     notifyListeners();
@@ -143,15 +149,18 @@ class CreateAddProvider with ChangeNotifier{
 
   void incGoogleBudget()
   {
-    _googleBudget = _googleBudget+200;
+    int b = int.parse(_googleBudget.text.trim());
+    b = b+200;
+    _googleBudget.text = b.toString();
     getEstimatedPlan();
     notifyListeners();
   }
 
   void decGoogleBudget()
   {
-    double _d = _googleBudget -200;
-    _googleBudget = (_d<0)?0:_d;
+    int b = int.parse(_googleBudget.text.trim());
+    int _d = b -200;
+    _googleBudget.text = (_d<0)?"0":_d.toString();
     getEstimatedPlan();
     notifyListeners();
   }
@@ -172,7 +181,7 @@ class CreateAddProvider with ChangeNotifier{
 
     if(_faceBookBudget!=0|| _instBudget !=0)
       {
-        var _d = await AdsApi().getEstimatedPlan( instaBudget: _instBudget.toInt(), facebookBudget: _faceBookBudget.toInt());
+        var _d = await AdsApi().getEstimatedPlan( instaBudget: int.parse(_instBudget.text.trim()), facebookBudget: int.parse(_faceBookBudget.text.trim()));
         if(_d!=null)
           {
             _estimatedData  = _d.data;
@@ -190,13 +199,13 @@ class CreateAddProvider with ChangeNotifier{
 
   void clearFaceBookBudget()
   {
-    _faceBookBudget = 0;
+    _faceBookBudget.text = "0";
     notifyListeners();
   }
 
   void clearInstBudget()
   {
-    _instBudget = 0;
+    _instBudget.text = "0";
     notifyListeners();
   }
 
@@ -231,8 +240,8 @@ class CreateAddProvider with ChangeNotifier{
   void setPlan(PlanDetail2? p)
   {
     _plan = p;
-    _instBudget =0;
-    _faceBookBudget = 0;
+    _instBudget.text ="0";
+    _faceBookBudget.text = "0";
     getEstimatedPlan();
     notifyListeners();
   }
@@ -348,14 +357,14 @@ class CreateAddProvider with ChangeNotifier{
       caption: _captionController.text.trim(),
       name:  _titleController.text.trim(),
       days: _days,
-      instBudget: _instBudget.toInt(),
-      googleBudget: _googleBudget.toInt(),
-      faceBookBudget: _faceBookBudget.toInt(),
+      instBudget: int.parse(_instBudget.text),
+      googleBudget: int.parse(_googleBudget.text),
+      faceBookBudget: int.parse(_faceBookBudget.text),
       destinationUrl: _destinationUrlController.text.trim(),
       file: _imagePath,
-      isFaceBookAddEnable: plan==null&&_faceBookBudget>0,
-      isInstaAddEnable: plan==null&&_instBudget>0,
-      isGoogleAddEnable: plan==null&&_googleBudget>0,
+      isFaceBookAddEnable: plan==null&&int.parse(_faceBookBudget.text)>0,
+      isInstaAddEnable: plan==null&&int.parse(_instBudget.text)>0,
+      isGoogleAddEnable: plan==null&&int.parse(_faceBookBudget.text)>0,
       planId: plan?.id,
     );
 
@@ -390,9 +399,9 @@ class CreateAddProvider with ChangeNotifier{
    _plan = null;
    _imagePath = null;
    _titleController.clear();
-   _faceBookBudget=0;
-   _instBudget = 0;
-   _googleBudget =0;
+   _faceBookBudget.text="0";
+   _instBudget.text = "0";
+   _googleBudget.text ="0";
    _destinationUrlController.clear();
    _captionController.clear();
    _ageRange = RangeValues(18, 66);
