@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/them/constents.dart';
 
 class MyactionButton extends StatefulWidget {
@@ -53,26 +54,17 @@ class _MyactionButtonState extends State<MyactionButton> {
             loding = true;
             setState(() {});
 
-            if (widget.handelError) {
-              try {
-                dynamic returnData = await widget.action();
-                if (widget.onActionComplit != null) {
-                  widget.onActionComplit!(returnData);
-                }
-              } catch (e) {
-                print("\n\nError In Action Button\n$e\n\n");
+
+            try{
+              dynamic returnData = await widget.action();
+              if (widget.onActionComplit != null) {
+                widget.onActionComplit!(returnData);
               }
+            }catch(e){
+
+              MyHelper.mySnakebar(context, e.toString());
+
             }
-
-            else
-              {
-                dynamic returnData = await widget.action();
-                if (widget.onActionComplit != null) {
-                  widget.onActionComplit!(returnData);
-                }
-              }
-
-
 
             loding = false;
             setState(() {});

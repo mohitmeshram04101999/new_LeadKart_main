@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:flutter/material.dart';
+import 'package:leadkart/ApiServices/userAPii.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/Models/MycustomResponce.dart';
@@ -12,6 +13,7 @@ import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/leads/busines_category.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,7 +40,7 @@ class Authcontroller extends GetxController
 
     var resp = await MyHelper.userApi.loginWithPhonNumber(_phonNumController.text.trim());
 
-    print(resp.statusCode);
+    Logger().e(resp.statusCode);
 
     if(resp.statusCode==201)
     {
@@ -91,7 +93,7 @@ class Authcontroller extends GetxController
   //Verifing otp
   Future<dynamic> verifyOtp(String otp, BuildContext context)async
   {
-    CustomResponce _d = await MyHelper.userApi.verifyOtp(_phonNumController.text.trim(), otp);
+    CustomResponce _d = await UserApi().verifyOtp(_phonNumController.text.trim(), otp);
 
     if(_d.statusCode==200&&_d.data!=null)
     {
@@ -129,6 +131,10 @@ context.goNamed("homePage");
     }
 
   }
+
+
+
+
 RxBool isUser= false.obs;
   //CheckUser is loggedIn or Not
  Future<bool> checkUserLogInOrNot(BuildContext context) async
