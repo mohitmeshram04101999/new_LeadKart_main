@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:leadkart/ApiServices/api%20Path.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:logger/logger.dart';
 
 import '../Models/MycustomResponce.dart';
 import '../Models/VerifyOtpModel.dart';
@@ -28,10 +29,14 @@ class UserApi
   //verify otp
   Future<CustomResponce> verifyOtp(String phonNum,String otp) async
   {
+
     var _d = await MyHelper.dio.post(ApiConst.verifyOtp,data: {
       "mobile":phonNum,
       "otp":otp,
     });
+
+
+    Logger().e('${_d.statusCode} ${_d.data}');
 
     if(_d.statusCode==200)
     {

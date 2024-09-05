@@ -133,6 +133,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                             {
                               p.clearFaceBookBudget();
                             }
+                          p.getEstimatedPlan();
                         },
                         onDec: ()=>p.decFacebookBudget(),
                         onInc: ()=>p.incFacebookBudget(),
@@ -165,6 +166,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                             {
                               p.clearInstBudget();
                             }
+                          p.getEstimatedPlan();
                         },
                         onInc: ()=>p.incInstBudget(),
                         onDec: ()=>p.decInstBudget(),

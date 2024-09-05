@@ -66,7 +66,7 @@ class _LogInPageState extends State<LoginScreen> {
     return Scaffold(
       bottomSheet: Container(
         width: double.maxFinite,
-        height: SC.from_height(450),
+        height: SC.fromContextWidth(context,.9),
         decoration: BoxDecoration(
           // border: Border.all(),
           color: Colors.white,
@@ -88,6 +88,7 @@ class _LogInPageState extends State<LoginScreen> {
           ],
         ),
         child: ListView(
+          physics: const  NeverScrollableScrollPhysics(),
 // mainAxisSize: MainAxisSize.min,
 //     mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -149,6 +150,7 @@ class _LogInPageState extends State<LoginScreen> {
             ),
 
             MyactionButton(
+
                 action: () => Controllers.authController.login(context),
                 duretion: const Duration(milliseconds: 300),
                 child: const Text(
