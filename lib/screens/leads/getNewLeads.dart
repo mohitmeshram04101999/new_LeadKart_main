@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
@@ -77,10 +79,10 @@ class _GetNewLeadsState extends State<GetNewLeads> {
           foregroundColor: Colors.white,
           title: const Text('Get New Leads'),
 
-          actions: [  Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: HelpButton(),
-          )],
+          // actions: [  Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: HelpButton(),
+          // )],
 
         ),
 
@@ -129,7 +131,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                         onDec: ()=>p.decFacebookBudget(),
                         onInc: ()=>p.incFacebookBudget(),
                         icon: 'assets/facebook_wbg.png',
-                        budget:p.faceBookBudgetController.toInt().toString(),
+                        budget:p.faceBookBudgetController,
                       ),
 
                     ],
@@ -155,7 +157,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                         onInc: ()=>p.incInstBudget(),
                         onDec: ()=>p.decInstBudget(),
                         icon: 'assets/instagram_wbg.png',
-                        budget:'${p.instBudgetController.toInt()}',
+                        budget: p.instBudgetController,
                       ),
                     ],
                   ),
@@ -280,7 +282,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
 
 
                    if(p.estimatedData!=null)
-                   ExtimateResultCard(data: p.estimatedData!,totalBudget: p.plan!=null?(p.plan?.facebookBudget??0)+(p.plan?.instaBudget??0): (p.faceBookBudgetController+p.instBudgetController).toInt(),),
+                   ExtimateResultCard(data: p.estimatedData!,totalBudget: p.plan!=null?(p.plan?.facebookBudget??0)+(p.plan?.instaBudget??0): (int.parse(p.faceBookBudgetController.text)+int.parse(p.instBudgetController.text)).toInt(),),
 
                   const SizedBox(
                     height: 5,
@@ -491,10 +493,11 @@ class PackageCards extends StatelessWidget {
 
 class BudgetSelecter extends StatelessWidget {
   String icon;
-  String budget;
+  TextEditingController budget;
   void Function()? onInc;
+  void Function(String)? onChange;
   void Function()? onDec;
-  BudgetSelecter({required this.onInc,required this.onDec,super.key, required this.icon, required this.budget});
+  BudgetSelecter({this.onChange,required this.onInc,required this.onDec,super.key, required this.icon, required this.budget});
 
   @override
   Widget build(BuildContext context) {
@@ -521,8 +524,28 @@ class BudgetSelecter extends StatelessWidget {
                   height: SC.from_width(20),
                 )),
             Expanded(child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(budget,style: Theme.of(context).textTheme.displaySmall,),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              // child: Text(budget,style: Theme.of(context).textTheme.displaySmall,),
+
+              child: SizedBox(
+                height: 30,
+                child: TextField(
+                  onChanged: onChange,
+                  controller: budget,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+
+                  decoration: const InputDecoration(
+                    enabledBorder: InputBorder.none,
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                ),
+              ),
+
             )),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),

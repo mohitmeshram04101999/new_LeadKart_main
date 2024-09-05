@@ -19,7 +19,6 @@ import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
 import 'package:provider/provider.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 
 
 class EditBusinessScreen extends StatefulWidget {
@@ -33,7 +32,6 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
 
   String? selectedOption;
 
-  SpeechToText speechToText = SpeechToText();
   bool isListening = false;
   TextEditingController textEditingController = TextEditingController();
 
@@ -50,48 +48,8 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
 
 
   // INITIALIZE SPEECH RECOGINIZER //
-  void initializeSpeechRecognizer() async {
-    bool available = await speechToText.initialize(
-      onStatus: (status) => print('Status: $status'),
-      onError: (error) => print('Error: $error'),
-    );
-    if (available) {
-      print('Speech recognizer initialized');
-    } else {
-      print('Failed to initialize speech recognizer');
-    }
-  }
 
   // VOICE START LISTINING //
-  void startListening() async {
-    if (!isListening) {
-      bool available = await speechToText.hasPermission && await speechToText.initialize();
-      if (available) {
-        setState(() {
-          isListening = true;
-        });
-
-        speechToText.listen(
-
-          listenFor: Duration(seconds: 10),
-          onResult: (result) {
-            setState(() {
-              textEditingController.text = result.recognizedWords;
-              isListening = false;
-            });
-            print('Result: ${result.recognizedWords}');
-          },
-        );
-      } else {
-        print('Microphone not available or not initialized');
-      }
-    } else {
-      speechToText.stop();
-      setState(() {
-        isListening = false;
-      });
-    }
-  }
 
   final List<String> items = [
     'Website Development',
@@ -112,11 +70,6 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
       },
       child: Scaffold(
 
-
-        floatingActionButton:FloatingActionButton(onPressed: ()async{
-          var usr = await Controllers.useraPrefrenc.getUser();
-          MyHelper.bussnissApi.getAllCity(userId: usr!.id);
-        },),
 
         appBar:  AppBar(
           foregroundColor: Colors.white,

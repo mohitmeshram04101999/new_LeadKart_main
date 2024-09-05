@@ -23,6 +23,8 @@ import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.
 import 'package:leadkart/screens/BssnesseditScreen/EditBussnesScreen.dart';
 import 'package:leadkart/screens/user/create_user.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class BusinessDetail extends StatefulWidget {
   const BusinessDetail({Key? key}) : super(key: key);
@@ -37,19 +39,18 @@ class _BusinessDetailState extends State<BusinessDetail> {
 
 
   final List<Map<String, dynamic>> items = [
-    {'name': 'Campaign Settings', 'icon': Icons.settings,"page":const AddCreation()},
-    {'name': 'Billing Details', 'icon': Icons.person,"page": const  AddDetailScreen(adId: "",)},
-    {'name': 'Payment & Invoices', 'icon': Icons.notifications,"page": const CreateUser()},
-    {'name': 'Manage Website', 'icon': Icons.web,"page": const AdditionalDetail()},
-    {'name': 'Notification', 'icon': Icons.notifications,"page": const DigitalAdsPackage()},
+    // {'name': 'Campaign Settings', 'icon': Icons.settings,"page":const AddCreation()},
+    // {'name': 'Billing Details', 'icon': Icons.person,"page": const  AddDetailScreen(adId: "",)},
+    // {'name': 'Payment & Invoices', 'icon': Icons.notifications,"page": const CreateUser()},
+    // {'name': 'Manage Website', 'icon': Icons.web,"page": const AdditionalDetail()},
+    // {'name': 'Notification', 'icon': Icons.notifications,"page": const DigitalAdsPackage()},
     {'name': 'User, Roles & Permissions', 'icon': Icons.personal_injury,"page":const ManageUserScreen()},
-    {'name': 'Terms & Conditions', 'icon': FontAwesomeIcons.compassDrafting,"page":null},
-    {'name': ' Privacy Policy', 'icon': Icons.privacy_tip,"page":null},
-    {'name': 'Support', 'icon': Icons.support_agent_outlined,"page":null},
-    {'name': ' Contact us', 'icon': Icons.call,"page":null},
-    {'name': 'Share App', 'icon': Icons.share,"page":null},
-    {'name': 'Designs', 'icon': Icons.view_carousel_outlined,"page":null},
-    {'name': 'Notifications', 'icon': Icons.notifications,"page":null},
+    // {'name': 'Terms & Conditions', 'icon': FontAwesomeIcons.compassDrafting,"page":null},
+    {'name': 'Privacy Policy', 'icon': Icons.privacy_tip,"page":null},
+    // {'name': 'Support', 'icon': Icons.support_agent_outlined,"page":null},
+    {'name': 'Contact us', 'icon': Icons.call,"page":null},
+    // {'name': 'Share App', 'icon': Icons.share,"page":null},
+    // {'name': 'Designs', 'icon': Icons.view_carousel_outlined,"page":null},
     {'name': 'Logout', 'icon': Icons.logout},
 
   ];
@@ -162,6 +163,22 @@ class _BusinessDetailState extends State<BusinessDetail> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: ReuseableBusinesContainer(
                       onTap: (){
+
+
+                        if(i["name"]=="Contact us")
+                        {
+                          String url = "tel: +917007892427";
+                          launch(url);
+                        }
+
+
+                        if(i["name"]=="Privacy Policy")
+                        {
+                          print("in");
+                          String url = "https://www.freeprivacypolicy.com/live/58f3de93-84fc-4b26-95ae-ff312f7bf298?fbclid=IwY2xjawE-bpNleHRuA2FlbQIxMAABHdHuyLGJbFqHU4ZdJeF6Hq-3qB-zxdJxLJ0SB7UVXVQA4gD_at3WtQPqjg_aem_7U9Djgx6priZoO8CsQjJ7Q ";
+                          launchUrl(Uri.parse(url));
+                        }
+
                         if(i["page"]!=null)
                         {
                           Navigator.push(context,CustomPageRoute(page: i["page"]));
@@ -185,6 +202,8 @@ class _BusinessDetailState extends State<BusinessDetail> {
                             );
                           },);
                         }
+
+
                       },
                       child: Row(
                         children: [

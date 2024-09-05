@@ -1,318 +1,145 @@
-//
-// import 'dart:async';
-// import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
-// import 'package:leadkart/add_images/add_images.dart';
-// import 'package:leadkart/business_pages/busines_detail.dart';
-// import 'package:leadkart/helper/dimention.dart';
-// import 'package:leadkart/home_pages/home_screen.dart';
-// import 'package:leadkart/leads/ads_image.dart';
-// import 'package:leadkart/leads/create_ads_page.dart';
-//
-//
-// class MyBottomNavigationBar extends StatefulWidget {
-//   int? page;
-//   MyBottomNavigationBar({this.page, super.key});
-//
-//   @override
-//   State<MyBottomNavigationBar> createState() => _MyBottomNavigationBarState();
-// }
-//
-// class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
-//   int curruntPage = 0;
-//   late PageController controller;
-//   int backPress = 0;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     if (widget.page != null) {
-//       curruntPage = widget.page!;
-//     }
-//     controller = PageController(initialPage: curruntPage);
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return WillPopScope(
-//       onWillPop: () async {
-//         backPress++;
-//         if (backPress == 2) {
-//           return true;
-//         } else {
-//           Timer(Duration(seconds: 1), () {
-//             backPress = 0;
-//           });
-//         }
-//         return false;
-//       },
-//       child: Scaffold(
-//         body: PageView(
-//           physics: NeverScrollableScrollPhysics(),
-//           controller: controller,
-//           children: [
-//             HomeScreen(),
-//             AddImages(),
-//             AdsPage(),
-//             CreateAds(),
-//             BusinessDetail(),
-//           ],
-//         ),
-//         bottomNavigationBar: BottomAppBar(
-//           padding: EdgeInsets.only(top: 3),
-//           color: Colors.white,
-//           child: BottomAppBar(
-//             clipBehavior: Clip.hardEdge,
-//             padding: EdgeInsets.zero,
-//             color: Colors.transparent,
-//             shape: CircularNotchedRectangle(),
-//             child: BottomNavigationBar(
-//               iconSize: SC.from_width(22),
-//               type: BottomNavigationBarType.fixed,
-//               currentIndex: curruntPage,
-//               selectedItemColor: Color.fromRGBO(36, 238, 221, 1),
-//               unselectedItemColor: Colors.grey,
-//               selectedLabelStyle: TextStyle(color: Color.fromRGBO(36, 238, 221, 1)),
-//               unselectedLabelStyle: TextStyle(color: Colors.black26),
-//               onTap: (page) {
-//                 setState(() {
-//                   curruntPage = page;
-//                 });
-//                 controller.jumpToPage(curruntPage);
-//               },
-//               items: [
-//                 BottomNavigationBarItem(
-//                   icon: Icon(Icons.home_outlined),
-//                   label: "Home",
-//                 ),
-//                 BottomNavigationBarItem(
-//                   icon: Container(
-//                     width: SC.from_width(23),
-//                     height: SC.from_width(23),
-//                     child: Image.asset(
-//                       'assets/bottom_nav/5.png',
-//                       color: curruntPage == 1 ? Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
-//                     ),
-//                   ),
-//                   label: "Add images",
-//                 ),
-//                 BottomNavigationBarItem(
-//                   icon: Container(
-//                     width: SC.from_width(23),
-//                     height: SC.from_width(23),
-//                     child: Image.asset(
-//                       'assets/bottom_nav/2.png',
-//                       color: curruntPage == 2 ? Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
-//                     ),
-//                   ),
-//                   label: "Ads",
-//                 ),
-//                 BottomNavigationBarItem(
-//                   icon: Container(
-//                     width: SC.from_width(23),
-//                     height: SC.from_width(23),
-//                     child: Image.asset(
-//                       'assets/bottom_nav/3.png',
-//                       color: curruntPage == 3 ? Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
-//                     ),
-//                   ),
-//                   label: "Leads",
-//                 ),
-//                 BottomNavigationBarItem(
-//                   icon: Container(
-//                     width: SC.from_width(23),
-//                     height: SC.from_width(23),
-//                     child: Image.asset(
-//                       'assets/bottom_nav/4.png',
-//                       color: curruntPage == 4 ? Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
-//                     ),
-//                   ),
-//                   label: "Busines",
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-
-import 'dart:async';
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter/material.dart';
 import 'package:leadkart/add_images/add_images.dart';
 import 'package:leadkart/business_pages/busines_detail.dart';
-import 'package:leadkart/helper/controllerInstances.dart';
-import 'package:leadkart/helper/dimention.dart';
-import 'package:leadkart/home_pages/home_screen.dart';
+import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/leads/ads_image.dart';
-import 'package:leadkart/leads/create_ads_page.dart';
-import 'package:animations/animations.dart';
 import 'package:leadkart/screens/newLead%20Screen/LeadeScreen.dart';
 
+import '../home_pages/home_screen.dart';
 
-class MyBottomNavigationBar extends StatefulWidget {
-  int? page;
-  MyBottomNavigationBar({this.page, super.key});
+
+
+
+class NavigationScreen extends StatefulWidget {
+  const NavigationScreen({super.key});
 
   @override
-  State<MyBottomNavigationBar> createState() => _MyBottomNavigationBarState();
+  State<NavigationScreen> createState() => _NavigationScreenState();
 }
 
-class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> with SingleTickerProviderStateMixin {
-  int currentPage = 0;
-  int backPress = 0;
+class _NavigationScreenState extends State<NavigationScreen> {
+
 
   final List<Widget> pages = [
     const HomeScreen(),
-    const AddImages(),
+    // const AddImages(),
     const AdsPage(),
     const LeadScreen(),
     // CreateAds(),
     const BusinessDetail(),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    if (widget.page != null) {
-      currentPage = widget.page!;
-    }
-  }
 
-  void animateToPage(int page) {
-    setState(() {
-      currentPage = page;
-    });
-  }
+  List<MyCustomNavigationItem> _items  = [
+    MyCustomNavigationItem(child: Icon(Icons.home_outlined), lable: "Home"),
+    // MyCustomNavigationItem(icon: "assets/bottom_nav/1.png", lable: "Add Image"),
+    MyCustomNavigationItem(icon: "assets/bottom_nav/2.png", lable: "Ads"),
+    MyCustomNavigationItem(icon: "assets/bottom_nav/3.png", lable: "Leads"),
+    MyCustomNavigationItem(icon: "assets/bottom_nav/4.png", lable: "Business"),
+  ];
+
+
+
+
+  final pageController = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        backPress++;
-        if (backPress == 2) {
-          return true;
-        } else {
-          Timer(const Duration(seconds: 1), () {
-            backPress = 0;
-          });
-        }
-        return false;
+    return Scaffold(
+
+
+      body: PageView(
+        controller:pageController,
+        children: pages,
+      ),
+
+
+      bottomNavigationBar: CustomBottomTile(
+    pageController: pageController,
+        item: _items,
+    onTap: (n){
+          print(pageController.page);
+          pageController.jumpToPage(n);
       },
-      child: Scaffold(
-        body: PageTransitionSwitcher(
-          duration: const Duration(milliseconds: 700),
-          transitionBuilder: (Widget child, Animation<double> animation, Animation<double> secondaryAnimation) {
-            return FadeThroughTransition(
-              animation: animation,
-              secondaryAnimation: secondaryAnimation,
-              child: child,
-            );
-          },
-          child: pages[currentPage],
-        ),
-        // floatingActionButton: FloatingActionButton.extended(
-        //   onPressed: ()async{
-        //     showDialog(context: context, builder: (context) {
-        //       return AlertDialog(
-        //         title: Text("Are you sure you want to logout?"),
-        //         actions: [
-        //           TextButton(onPressed: (){
-        //             Controllers.authController.logOut(context);
-        //             context.pop();
-        //           }, child: Text("Yes", style: TextStyle(color: Colors.redAccent, fontSize: SC.fromContextWidth(context, 20)))),
-        //           TextButton(onPressed: (){
-        //             context.pop();
-        //           }, child: Text("No", style: TextStyle(
-        //               fontSize: SC.fromContextWidth(context, 20)
-        //           ),)),
-        //         ],
-        //       );
-        //     },);
-        //   },
-        //   backgroundColor: Colors.redAccent,
-        //   label: Text("Logout"),
-        //   icon: Icon(Icons.logout),
-        // ),
-        bottomNavigationBar: BottomAppBar(
-          padding: const EdgeInsets.only(top: 3),
+      // ),
+
+    ));
+  }
+}
+
+
+
+class MyCustomNavigationItem
+{
+  final String? icon;
+  final Widget? child;
+  final String lable;
+  MyCustomNavigationItem({
+    this.icon,
+    this.child,
+    required this.lable,
+});
+}
+
+
+class CustomBottomTile extends StatefulWidget {
+  final PageController pageController;
+  final Function(int) onTap;
+  final List<MyCustomNavigationItem> item;
+  const CustomBottomTile({required this.pageController,required this.onTap,required this.item,super.key});
+
+  @override
+  State<CustomBottomTile> createState() => _CustomBottomTileState();
+}
+
+class _CustomBottomTileState extends State<CustomBottomTile> {
+  @override
+  Widget build(BuildContext context) {
+    return  Padding(
+      padding: const EdgeInsets.only(top: 5),
+      child: Ink(
+        height: 60,
+        decoration: BoxDecoration(
           color: Colors.white,
-          child: BottomAppBar(
-            clipBehavior: Clip.hardEdge,
-            padding: EdgeInsets.zero,
-            color: Colors.transparent,
-            shape: const  CircularNotchedRectangle(),
-            child: BottomNavigationBar(
-              iconSize: SC.from_width(22),
-              type: BottomNavigationBarType.fixed,
-              currentIndex: currentPage,
-              selectedItemColor: const Color.fromRGBO(36, 238, 221, 1),
-              unselectedItemColor: Colors.grey,
-              selectedLabelStyle:const  TextStyle(color: Color.fromRGBO(36, 238, 221, 1)),
-              unselectedLabelStyle:const  TextStyle(color: Colors.black26),
-              onTap: (page) {
-                if (page != currentPage) {
-                  animateToPage(page);
-                }
-              },
-              items: [
-                const BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined),
-                  label: "Home",
-                ),
-                BottomNavigationBarItem(
-                  icon: SizedBox(
-                    width: SC.from_width(23),
-                    height: SC.from_width(23),
-                    child: Image.asset(
-                      'assets/bottom_nav/5.png',
-                      color: currentPage == 1 ? const Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: Offset(-1,-1),
+              color: Colors.grey.shade300
+            )
+          ]
+        ),
+        child: Row(
+          children: List.generate(widget.item.length, (i)=>Expanded(child: InkWell(
+            onTap: (){
+              widget.onTap(i);
+              setState(() {
+
+              });
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+
+                if(widget.item[i].icon!=null)...[
+                  SizedBox(width: 22,child: Image.asset(widget.item[i].icon!,color: (widget.pageController.page?.toInt()==i)?MyHelper.appConstent.primeryColor:Colors.black),)
+                ]
+
+                else...[
+                  Theme(data: ThemeData(
+                    iconTheme: IconThemeData(
+                        color: (widget.pageController.page?.toInt()==i)?MyHelper.appConstent.primeryColor:Colors.black
                     ),
-                  ),
-                  label: "Add images",
-                ),
-                BottomNavigationBarItem(
-                  icon: SizedBox(
-                    width: SC.from_width(23),
-                    height: SC.from_width(23),
-                    child: Image.asset(
-                      'assets/bottom_nav/2.png',
-                      color: currentPage == 2 ? const Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
-                    ),
-                  ),
-                  label: "Ads",
-                ),
-                BottomNavigationBarItem(
-                  icon: SizedBox(
-                    width: SC.from_width(23),
-                    height: SC.from_width(23),
-                    child: Image.asset(
-                      'assets/bottom_nav/3.png',
-                      color: currentPage == 3 ? const Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
-                    ),
-                  ),
-                  label: "Leads",
-                ),
-                BottomNavigationBarItem(
-                  icon: SizedBox(
-                    width: SC.from_width(23),
-                    height: SC.from_width(23),
-                    child: Image.asset(
-                      'assets/bottom_nav/4.png',
-                      color: currentPage == 4 ? const Color.fromRGBO(36, 238, 221, 1) : Colors.grey,
-                    ),
-                  ),
-                  label: "Busines",
-                ),
+                  ), child: widget.item[i].child??SizedBox()),
+                  ],
+                Text(widget.item[i].lable,style: TextStyle(color: (widget.pageController.page?.toInt()==i)?MyHelper.appConstent.primeryColor:Colors.black),),
               ],
             ),
-          ),
+          ))),
         ),
       ),
     );
   }
 }
-
 

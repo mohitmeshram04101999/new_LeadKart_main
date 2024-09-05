@@ -7,6 +7,7 @@ import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/them/constents.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class LeadeTile extends StatelessWidget {
@@ -97,7 +98,9 @@ class LeadeTile extends StatelessWidget {
                         child: Text("${leadTyps[lead?.leadStatus]}",style: TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w500),),
                       ),
                       Expanded(
-                        child: ShederIcon(iconData: Icons.call_outlined,)
+                        child: ShederIcon(iconData: Icons.call_outlined,onTap: (){
+                          launch("tel: ${lead?.userContactNumber??""}");
+                        },)
                       ),
                     ],
                   ))

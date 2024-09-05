@@ -54,7 +54,7 @@ String otp = '';
       // Navigate to the next screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MyBottomNavigationBar()),
+        MaterialPageRoute(builder: (context) => const NavigationScreen()),
       ).then((_) {
         // After navigating back, set isLoading to false
         setState(() {

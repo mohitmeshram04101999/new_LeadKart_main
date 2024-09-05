@@ -62,7 +62,7 @@ class GoRouterConfig {
       GoRoute(
         name: 'homePage',
         path: '/homePage',
-        builder: (context, state) =>MyBottomNavigationBar(),
+        builder: (context, state) =>const NavigationScreen(),
 
         routes: [
           GoRoute(
@@ -109,7 +109,7 @@ class GoRouterConfig {
               GoRoute(
                 name: "digitalAdsPackage",
                 path: "digitalAdsPackage",
-                builder: (context,state)=>const DigitalAdsPackage(),
+                builder: (context,state)=>const LeadDetails(),
               )
             ]
           ),

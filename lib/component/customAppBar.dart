@@ -59,6 +59,7 @@ class CustomAppBar extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8),
                                     child: ElevatedButton(onPressed: (){
+                                      Navigator.pop(context);
                                       context.pushNamed("createBusinessScreen");
                                     }, child: const Text("Add a Business")),
                                   )),

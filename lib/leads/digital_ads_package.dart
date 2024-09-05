@@ -16,14 +16,14 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class DigitalAdsPackage extends StatefulWidget {
-  const DigitalAdsPackage({super.key});
+class LeadDetails extends StatefulWidget {
+  const LeadDetails({super.key});
 
   @override
-  State<DigitalAdsPackage> createState() => _DigitalAdsPackageState();
+  State<LeadDetails> createState() => _LeadDetailsState();
 }
 
-class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
+class _LeadDetailsState extends State<LeadDetails> {
   @override
   void initState() {
     // TODO: implement initState
@@ -36,8 +36,6 @@ class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
     thickness: 1,
     color: Colors.grey.shade400,
   );
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +53,7 @@ class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
 
           //
           appBar: AppBar(
-            title: const Text('Digital ads package'),
+            title: const Text('Lead Details'),
           ),
 
           //
@@ -255,7 +253,7 @@ class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
 
                       //
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           p.updateFollowUp(context);
                         },
                         child: Text(
@@ -288,7 +286,7 @@ class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
                           fontWeight: FontWeight.w500),
                     ),
                     subtitle: (p.loading)
-                        ? const  ContainerShimmer(height: 50)
+                        ? const ContainerShimmer(height: 50)
                         : Text(
                             // p.lead?.note??"Not is Empty \u{1F5D1}",
                             p.lead?.note ?? "Note is Empty",
@@ -297,14 +295,14 @@ class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
                     trailing: Column(
                       children: [
                         InkWell(
-                          onTap: ()=>p.updateNote(context),
-                            child:Text(
-                          'Add Notes',
-                          style: TextStyle(
-                              fontSize: SC.fromWidth(25),
-                              color: AppConstent().primeryColor,
-                              fontWeight: FontWeight.w500),
-                        )),
+                            onTap: () => p.updateNote(context),
+                            child: Text(
+                              'Add Notes',
+                              style: TextStyle(
+                                  fontSize: SC.fromWidth(25),
+                                  color: AppConstent().primeryColor,
+                                  fontWeight: FontWeight.w500),
+                            )),
                       ],
                     ),
                   ),
@@ -345,7 +343,7 @@ class _DigitalAdsPackageState extends State<DigitalAdsPackage> {
                       ? const ContainerShimmer(height: 20, width: 120)
                       : Consumer<LeadDetailProvider>(
                           builder: (a, p, c) => ListView.builder(
-                            reverse: true,
+                                reverse: true,
                                 itemCount: p.leadHistory.length,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
