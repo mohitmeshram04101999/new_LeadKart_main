@@ -52,6 +52,7 @@ class BusinessProvider with ChangeNotifier {
 
   //set Current Business
   setCurrentBusiness(BusinessModel business) {
+    _warning = true;
     _currentBusiness = business;
     notifyListeners();
     UserPreference().saveBusiness(business);
