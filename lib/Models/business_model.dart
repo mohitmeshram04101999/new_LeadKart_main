@@ -1,7 +1,8 @@
 class BusinessModel {
   final String id;
   final String businessName;
-  final String? businessImage; // nullable for cases where image might be missing
+  final String?
+      businessImage; // nullable for cases where image might be missing
   final String userId;
   final String businessCategoryId;
   final List<dynamic> servicesId;
@@ -198,7 +199,7 @@ class BusinessModel {
       userId: map['userId'].toString(),
       businessCategoryId: map['businessCategoryId'].toString(),
       servicesId: map['servicesId'] as List<dynamic>,
-      businessContact: map['businessContact'] ,
+      businessContact: map['businessContact'],
       whatsappNumber: map['whatsappNumber'],
       stateId: map['stateId'].toString(),
       cityId: map['cityId'].toString(),

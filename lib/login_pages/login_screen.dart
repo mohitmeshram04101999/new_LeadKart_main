@@ -6,7 +6,6 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:leadkart/component/custom_textfield.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
-import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
 import 'package:logger/logger.dart';
 
 import '../helper/dimention.dart';
@@ -46,7 +45,7 @@ class _LogInPageState extends State<LoginScreen> {
     if (result.status == LoginStatus.success) {
       // you are logged
       final AccessToken accessToken = result.accessToken!;
-      Logger().w('Access Token: ${result.status}\n ${accessToken.token}');
+      Logger().w('Access Token: ${result.status}\n ${accessToken.tokenString}');
     } else {
       log('Error');
       log(result.status.toString());
@@ -66,7 +65,7 @@ class _LogInPageState extends State<LoginScreen> {
     return Scaffold(
       bottomSheet: Container(
         width: double.maxFinite,
-        height: SC.fromContextWidth(context,.9),
+        height: SC.fromContextWidth(context, .9),
         decoration: BoxDecoration(
           // border: Border.all(),
           color: Colors.white,
@@ -88,7 +87,7 @@ class _LogInPageState extends State<LoginScreen> {
           ],
         ),
         child: ListView(
-          physics: const  NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
 // mainAxisSize: MainAxisSize.min,
 //     mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -132,14 +131,11 @@ class _LogInPageState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: CustomTextField(
-
-                textInputType: TextInputType.number,
-                format: [
-                  LengthLimitingTextInputFormatter(10),
-                  FilteringTextInputFormatter.digitsOnly,
-
-
-                ],
+                  textInputType: TextInputType.number,
+                  format: [
+                    LengthLimitingTextInputFormatter(10),
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   controller: Controllers.authController.phonController,
                   hintText: "Enter mobile no",
                   labelText: "Enter mobile no"),
@@ -150,7 +146,6 @@ class _LogInPageState extends State<LoginScreen> {
             ),
 
             MyactionButton(
-
                 action: () => Controllers.authController.login(context),
                 duretion: const Duration(milliseconds: 300),
                 child: const Text(

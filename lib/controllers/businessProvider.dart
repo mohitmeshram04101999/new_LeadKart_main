@@ -45,16 +45,16 @@ class BusinessProvider with ChangeNotifier {
     _currentBusiness = await Controllers.useraPrefrenc.getBusiness();
     notifyListeners();
 
-    if(_currentBusiness?.isFacebookPageLinked!=true&&!_isWarningOpen&& _warning)
-      {
-        showWarning(context);
-      }
-
+    if (_currentBusiness?.isFacebookPageLinked != true &&
+        !_isWarningOpen &&
+        _warning) {
+      showWarning(context);
+    }
   }
   //
 
   //set Current Business
-  setCurrentBusiness(BuildContext context,BusinessModel business)async{
+  setCurrentBusiness(BuildContext context, BusinessModel business) async {
     _warning = true;
     _currentBusiness = business;
     notifyListeners();
@@ -65,6 +65,8 @@ class BusinessProvider with ChangeNotifier {
   Future<LoginResult?> loginWithFacebook() async {
     final LoginResult result = await FacebookAuth.i.login(
       loginBehavior: LoginBehavior.nativeWithFallback,
+      loginTracking: LoginTracking.enabled,
+      nonce: '123',
       permissions: [
         'pages_show_list',
         'ads_management',
@@ -74,7 +76,8 @@ class BusinessProvider with ChangeNotifier {
         'page_events',
         'pages_manage_ads',
         'pages_manage_posts',
-        'pages_read_engagement'
+        'pages_read_engagement',
+        'read_insights',
       ],
     ); // by default we request the email and the public profile
     if (result.status == LoginStatus.success) {
@@ -109,11 +112,45 @@ class BusinessProvider with ChangeNotifier {
                             loginWithFacebook().then(
                               (value) {
                                 if (value != null) {
-                                  log(value.accessToken!.token);
+                                  log(value.accessToken!.tokenString);
                                   _warning = false;
                                   Navigator.pop(context);
-                                  // MyHelper.bussnissApi
-                                  //     .upDateBusiness(businessId: _currentBusiness!.id,)
+                                  MyHelper.bussnissApi.upDateBusiness(
+                                      businessId: _currentBusiness!.id,
+                                      isFacebookPageLinked: true,
+                                      serviceId: _currentBusiness!.servicesId,
+                                      address: _currentBusiness!.address,
+                                      businessName:
+                                          _currentBusiness!.businessName,
+                                      businessCategoryId:
+                                          _currentBusiness!.businessCategoryId,
+                                      businessContactNum: _currentBusiness!
+                                          .businessContact
+                                          .toString(),
+                                      cityId: _currentBusiness!.cityId,
+                                      countryId: _currentBusiness!.countryId,
+                                      faceBookLink:
+                                          _currentBusiness!.facebookLink,
+                                      instaLink:
+                                          _currentBusiness!.instagramLink,
+                                      stateId: _currentBusiness!.stateId,
+                                      tagLine: _currentBusiness!.tagline,
+                                      twitterLink:
+                                          _currentBusiness!.twitterLink,
+                                      webLink: _currentBusiness!.websiteLink,
+                                      whatAppNum: _currentBusiness!
+                                          .whatsappNumber
+                                          .toString(),
+                                      youTubeLink:
+                                          _currentBusiness!.youtubeLink,
+                                      metaAccessToken:
+                                          value.accessToken!.tokenString);
+                                  lode(context);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text("Facebook Page Linked"),
+                                    ),
+                                  );
                                 }
                               },
                             );
