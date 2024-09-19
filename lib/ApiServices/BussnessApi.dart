@@ -347,6 +347,8 @@ class BussnissApi
     String? address,
     String? tagLine,
     String? countryId,
+    bool? isFacebookPageLinked = false,
+    String? metaAccessToken,
   }) async
   {
 
@@ -374,15 +376,19 @@ class BussnissApi
       "facebookLink":faceBookLink,
       "address":address,
       "tagline":tagLine,
+      "isFacebookPageLinked":isFacebookPageLinked,
       // "disable":false,
-      // "metaAccessToken":'true',
+      "metaAccessToken":metaAccessToken,
       // "isFacebookPageLinked":'true'
       // "countryId":countryId
     };
 
 
     //
-    var formatedData = data.map((key,value)=>MapEntry(key, value.toString()));
+    var formatedData = data.map((key,value){
+
+      return MapEntry(key, value.toString());
+    });
 
 
 

@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:flutter/material.dart';
+import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/them/constents.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:leadkart/helper/dimention.dart';
@@ -37,44 +39,74 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-
-      inputFormatters:widget.format,
+      inputFormatters: widget.format,
       maxLength: widget.maxLength,
       keyboardType: widget.textInputType,
       controller: widget.controller,
       cursorColor: Colors.grey,
       decoration: InputDecoration(
         hintText: widget.hintText,
+
+        //
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(SC.from_height(7)),
           borderSide: BorderSide(color: Colors.grey.shade400),
         ),
+
+        //
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(SC.from_height(7)),
+          borderSide:
+          const BorderSide(color: Colors.red), // Set border color
+        ),
+
+        //
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(SC.from_height(7)),
+          borderSide:
+          const BorderSide(color: Colors.red), // Set border color
+        ) ,
+
+        //
+        errorStyle: TextStyle(
+            fontWeight: FontWeight.w400, fontSize: SC.from_height(12)),
+
+        //
         labelText: widget.labelText,
-        labelStyle:     TextStyle(color:Colors.grey.shade700,fontSize: SC.from_height(15.5)),
+
+        //
+        labelStyle: TextStyle(
+            color: Colors.grey.shade700, fontSize: SC.from_height(15.5)),
+
+        //
         contentPadding: EdgeInsets.symmetric(
-            vertical: SC.from_height(12),
-            horizontal: SC.from_height(10)),
+            vertical: SC.from_height(12), horizontal: SC.from_height(10)),
+
+        //
         filled: true,
+
+        //
         fillColor: Colors.white,
+
+        //
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(SC.from_height(7)),
           borderSide:
-          BorderSide(color: Colors.grey.shade400), // Set border color
+              BorderSide(color: Colors.grey.shade400), // Set border color
         ),
+
+        //
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(SC.from_height(7)),
           borderSide: BorderSide(
               color: Colors.grey.shade400), // Set border color when focused
         ),
       ),
-      onChanged: (c){
-        if(widget.onChanged!=null)
-          {
-            widget.onChanged!(c);
-          }
-        setState(() {
-
-        });
+      onChanged: (c) {
+        if (widget.onChanged != null) {
+          widget.onChanged!(c);
+        }
+        setState(() {});
       },
       validator: widget.validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,

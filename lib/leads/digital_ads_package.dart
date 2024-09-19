@@ -16,14 +16,14 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class LeadDetails extends StatefulWidget {
-  const LeadDetails({super.key});
+class LeadDetailsScreen extends StatefulWidget {
+  const LeadDetailsScreen({super.key});
 
   @override
-  State<LeadDetails> createState() => _LeadDetailsState();
+  State<LeadDetailsScreen> createState() => _LeadDetailsScreenState();
 }
 
-class _LeadDetailsState extends State<LeadDetails> {
+class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
   @override
   void initState() {
     // TODO: implement initState

@@ -55,7 +55,6 @@ class _LeadScreenState extends State<LeadScreen> {
         },
 
         child: ListView(
-
           padding: const EdgeInsets.only(top: 8,bottom: 10),
           children: [
 
@@ -96,6 +95,7 @@ class _LeadScreenState extends State<LeadScreen> {
                   );
                 }),
 
+
             SizedBox(height: SC.fromHeight(70),),
 
             FutureBuilder(
@@ -123,7 +123,7 @@ class _LeadScreenState extends State<LeadScreen> {
                       return LeadeTile(
                         onTap: (){
                           Controllers.leadDetailProvider(context,listen: false).loadLeadDetail(context: context, leadId: lead.id??"");
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const LeadDetails()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const LeadDetailsScreen()));
 
                         },
                         lead: lead,);

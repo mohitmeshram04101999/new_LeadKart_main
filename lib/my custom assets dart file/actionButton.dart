@@ -1,13 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/them/constents.dart';
+import 'package:logger/logger.dart';
 
 class MyactionButton extends StatefulWidget {
   bool handelError;
   Duration? duretion;
   Widget? child;
   double height;
+  String?customErrorMessage;
   String? lable;
   Curve? curve;
   double? width;
@@ -19,6 +23,7 @@ class MyactionButton extends StatefulWidget {
   MyactionButton(
       {this.handelError = false,
       this.lable,
+        this.customErrorMessage,
       this.curve,
       this.height = 50,
       this.width,
@@ -61,8 +66,18 @@ class _MyactionButtonState extends State<MyactionButton> {
                 widget.onActionComplit!(returnData);
               }
             }catch(e){
-
-              MyHelper.mySnakebar(context, e.toString());
+              log("${'--'*10} Responce from myActionButton ${'--'*10}\n");
+              log(e.toString());
+              log(widget.customErrorMessage.toString());
+              log("${'--'*10} Responce from myActionButton ${'--'*10}\n");
+              if(widget.customErrorMessage!=null)
+                {
+                  MyHelper.mySnakebar(context, '${widget.customErrorMessage}');
+                }
+              else
+                {
+                  MyHelper.mySnakebar(context, "Something went wrong");
+                }
 
             }
 

@@ -117,7 +117,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Checkbox(value:( p.plan==null&&p.faceBookBudgetController!=0), onChanged: (value) {
+                      Checkbox(value:( p.plan==null&&p.faceBookBudgetController.text!="0"), onChanged: (value) {
                         if(value!)
                           {
                            p.incFacebookBudget();
@@ -127,11 +127,15 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                             p.clearFaceBookBudget();
                           }
                       }),
-                      BudgetSelecter(
+                      BudgetSelector(
                         onChange: (s){
                           if(s.isEmpty)
                             {
                               p.clearFaceBookBudget();
+                            }
+                          if(s.startsWith("0"))
+                            {
+                              p.setFaceBookBudget(s);
                             }
                           p.getEstimatedPlan();
                         },
@@ -149,7 +153,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Checkbox(value: p.plan==null&&p.instBudgetController!=0, onChanged: (value) {
+                      Checkbox(value: p.plan==null&&p.instBudgetController.text!="0", onChanged: (value) {
                         if(value!)
                         {
                           p.incInstBudget();
@@ -160,11 +164,15 @@ class _GetNewLeadsState extends State<GetNewLeads> {
 
                           }
                       }),
-                      BudgetSelecter(
+                      BudgetSelector(
                         onChange: (s){
                           if(s.isEmpty)
                             {
                               p.clearInstBudget();
+                            }
+                          if(s.startsWith("0"))
+                            {
+                              p.setInstBudget(s);
                             }
                           p.getEstimatedPlan();
                         },
@@ -296,7 +304,7 @@ class _GetNewLeadsState extends State<GetNewLeads> {
 
 
                    if(p.estimatedData!=null)
-                   ExtimateResultCard(data: p.estimatedData!,totalBudget: p.plan!=null?(p.plan?.facebookBudget??0)+(p.plan?.instaBudget??0): (int.parse(p.faceBookBudgetController.text)+int.parse(p.instBudgetController.text)).toInt(),),
+                   EstimateResultCard(data: p.estimatedData!,totalBudget: p.plan!=null?(p.plan?.facebookBudget??0)+(p.plan?.instaBudget??0): (int.parse(p.faceBookBudgetController.text)+int.parse(p.instBudgetController.text)).toInt(),),
 
                   const SizedBox(
                     height: 5,
@@ -337,18 +345,23 @@ class _GetNewLeadsState extends State<GetNewLeads> {
 
                               Question question = snap.data![index];
 
-                              return ExpansionTile(
-                                childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
-                                title: Text(question.question??"",style: TextStyle(fontWeight: FontWeight.w500),),
-                                children: [
-                                  Text(question.answer??"",
-                                    style: TextStyle(
-                                      fontSize: SC.from_width(16),
-                                    ),),
-                                  // ListTile(
-                                  //   title: Text(question.answer??""),
-                                  // ),
-                                ],
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 1),
+                                child: ExpansionTile(
+                                  backgroundColor: Colors.grey.withOpacity(.08),
+                                  childrenPadding: const EdgeInsets.only(left: 25,right: 20),
+                                  title: Text(question.question??"",style: const TextStyle(fontWeight: FontWeight.w500),),
+                                  children: [
+                                    Text(question.answer??"",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: SC.from_width(15),
+                                      ),),
+                                    // ListTile(
+                                    //   title: Text(question.answer??""),
+                                    // ),
+                                  ],
+                                ),
                               );
                             },
 
@@ -505,13 +518,13 @@ class PackageCards extends StatelessWidget {
 }
 
 
-class BudgetSelecter extends StatelessWidget {
+class BudgetSelector extends StatelessWidget {
   String icon;
   TextEditingController budget;
   void Function()? onInc;
   void Function(String)? onChange;
   void Function()? onDec;
-  BudgetSelecter({this.onChange,required this.onInc,required this.onDec,super.key, required this.icon, required this.budget});
+  BudgetSelector({this.onChange,required this.onInc,required this.onDec,super.key, required this.icon, required this.budget});
 
   @override
   Widget build(BuildContext context) {
@@ -541,7 +554,8 @@ class BudgetSelecter extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               // child: Text(budget,style: Theme.of(context).textTheme.displaySmall,),
 
-              child: SizedBox(
+              child: Container(
+                alignment: Alignment.center,
                 height: 30,
                 child: TextField(
                   onChanged: onChange,
@@ -552,6 +566,7 @@ class BudgetSelecter extends StatelessWidget {
                   ],
 
                   decoration: const InputDecoration(
+                    isCollapsed: true,
                     enabledBorder: InputBorder.none,
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,

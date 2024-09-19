@@ -44,14 +44,17 @@ class BusinessProvider with ChangeNotifier {
     _loding = false;
     _currentBusiness = await Controllers.useraPrefrenc.getBusiness();
     notifyListeners();
-    if (!_isWarningOpen && _warning) {
-      showWarning(context);
-    }
+
+    if(_currentBusiness?.isFacebookPageLinked!=true&&!_isWarningOpen&& _warning)
+      {
+        showWarning(context);
+      }
+
   }
   //
 
   //set Current Business
-  setCurrentBusiness(BusinessModel business) {
+  setCurrentBusiness(BuildContext context,BusinessModel business)async{
     _warning = true;
     _currentBusiness = business;
     notifyListeners();
