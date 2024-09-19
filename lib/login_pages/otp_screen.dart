@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:leadkart/component/bottom_navigation_screen.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
+import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
 import 'package:pinput/pinput.dart';
 
@@ -13,19 +14,19 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  String otp = '';
+String otp = '';
 
   final defaultPinTheme = PinTheme(
-    width: SC.from_height(58), // Increased width
-    height: SC.from_height(58), // Increased height
+    width:  SC.from_height(58),  // Increased width
+    height:  SC.from_height(58), // Increased height
     textStyle: TextStyle(
-      fontSize: SC.from_height(18),
+      fontSize:  SC.from_height(18),
       color: Colors.black,
       fontWeight: FontWeight.w600,
     ),
     decoration: BoxDecoration(
       border: Border.all(color: Colors.grey.shade200), // Changed border color
-      borderRadius: BorderRadius.circular(SC.from_height(10)),
+      borderRadius: BorderRadius.circular( SC.from_height(10)),
     ),
   );
 
@@ -33,6 +34,7 @@ class _OtpScreenState extends State<OtpScreen> {
   FocusNode focusNode2 = FocusNode();
   FocusNode focusNode3 = FocusNode();
   FocusNode focusNode4 = FocusNode();
+
 
   bool _isLoading = false;
 
@@ -67,6 +69,8 @@ class _OtpScreenState extends State<OtpScreen> {
     );
   }
 
+
+
   bool resendOtp = false;
   int _count = 30;
 
@@ -91,50 +95,51 @@ class _OtpScreenState extends State<OtpScreen> {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
+
+
+
+
     return Scaffold(
       backgroundColor: Colors.white,
+
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Verify OTP"),
       ),
+
+
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: SC.from_height(30),
-            ),
+
+            SizedBox(height: SC.from_height(30),),
             Container(
               width: double.infinity,
               height: SC.from_height(160),
-              child: Image.asset(
-                'assets/otp.png',
-                fit: BoxFit.contain,
-              ),
+
+              child: Image.asset('assets/otp.png',fit: BoxFit.contain,),
             ),
 
-            SizedBox(
-              height: SC.from_height(30),
-            ),
+            SizedBox(height: SC.from_height(30),),
             Container(
               width: double.infinity,
               margin: EdgeInsets.symmetric(horizontal: 25),
               child: Center(
                 child: RichText(
                   text: TextSpan(
-                    style: TextStyle(
-                        fontSize: SC.fromWidth(28), color: Colors.grey),
+                    style: TextStyle(fontSize: SC.fromWidth(28), color: Colors.grey),
                     children: [
                       TextSpan(
-                          text:
-                              'We have sent you a 4 digit code to verify your\n            phone number on ',
-                          style: TextStyle(color: Colors.grey.shade600)),
+                        text: 'We have sent you a 4 digit code to verify your\n            phone number on ',
+                        style: TextStyle(color: Colors.grey.shade600)
+                      ),
                       TextSpan(
                         text: Controllers.authController.phonController.text,
-                        style: TextStyle(
-                            color: Color.fromRGBO(36, 238, 221,
-                                1)), // Change color of the phone number
+                        style: TextStyle(color: Color.fromRGBO(36, 238, 221, 1)), // Change color of the phone number
                       ),
                     ],
                   ),
@@ -142,40 +147,35 @@ class _OtpScreenState extends State<OtpScreen> {
               ),
             ),
 
-            SizedBox(
-              height: SC.fromWidth(28),
-            ),
 
-            // PINPUT OTP TEXT FIELD  //
-            SizedBox(
-              height: SC.from_height(20),
-            ),
-            Center(
+            SizedBox(height:  SC.fromWidth(28),),
+
+
+
+      // PINPUT OTP TEXT FIELD  //
+      SizedBox(height: SC.from_height(20),),
+      Center(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Pinput(
+
                   length: 4,
                   defaultPinTheme: defaultPinTheme,
                   focusedPinTheme: defaultPinTheme.copyWith(
                     decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Color.fromRGBO(36, 238, 221,
-                              1)), // Changed border color for focused state
-                      borderRadius: BorderRadius.circular(SC.from_height(10)),
+                      border: Border.all(color: Color.fromRGBO(36, 238, 221, 1)), // Changed border color for focused state
+                      borderRadius: BorderRadius.circular( SC.from_height(10)),
                     ),
                   ),
                   submittedPinTheme: defaultPinTheme.copyWith(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      border: Border.all(
-                          color: Colors.grey
-                              .shade200), // Keep the border for submitted state
-                      borderRadius: BorderRadius.circular(SC.from_height(10)),
+                      border: Border.all(color: Colors.grey.shade200), // Keep the border for submitted state
+                      borderRadius: BorderRadius.circular( SC.from_height(10)),
                     ),
                   ),
 
-                  separatorBuilder: (index) =>
-                      SizedBox(width: SC.from_height(20)),
+                  separatorBuilder: (index) => SizedBox(width:  SC.from_height(20)),
                   // Space between the PIN fields
                   onChanged: (value) {
                     setState(() {
@@ -189,44 +189,34 @@ class _OtpScreenState extends State<OtpScreen> {
               ),
             ),
 
-            SizedBox(
-              height: SC.from_height(40),
-            ),
+
+            SizedBox(height: SC.from_height(40),),
 
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: SC.from_height(20)),
+              padding:  EdgeInsets.symmetric(horizontal: SC.from_height(20)),
               child: Row(
                 children: [
-                  Text(
-                    'Please wait 00:${_count}s',
-                    style: TextStyle(
-                        fontSize: SC.from_height(16), color: Colors.grey),
-                  ),
+                  Text('Please wait 00:${_count}s',style: TextStyle(fontSize: SC.from_height(16),color: Colors.grey),),
                   Expanded(child: Container()),
-                  if (resendOtp)
+                  if(resendOtp)
                     InkWell(
-                        onTap: () {
-                          _count = 30;
-                          startCountDown();
-                          Controllers.authController.resendOtp(context);
-                        },
-                        child: Text('Resend OTP',
-                            style: TextStyle(
-                                fontSize: SC.from_height(16),
-                                color: Colors.grey.shade700))),
+                      onTap: (){
+                        _count = 30;
+                        startCountDown();
+                        Controllers.authController.resendOtp(context);
+                      },
+                        child: Text('Resend OTP',style: TextStyle(fontSize: SC.from_height(16),color: Colors.grey.shade700))),
                 ],
               ),
             ),
 
-            SizedBox(
-              height: SC.from_height(40),
-            ),
+            SizedBox(height: SC.from_height(40),),
+
 
             Center(
               child: MyactionButton(
                 lable: "Verify Otp",
-                action: () =>
-                    Controllers.authController.verifyOtp(otp, context),
+                action:()=> Controllers.authController.verifyOtp(otp, context),
               ),
             ),
           ],
@@ -235,3 +225,9 @@ class _OtpScreenState extends State<OtpScreen> {
     );
   }
 }
+
+
+
+
+
+

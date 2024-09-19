@@ -269,7 +269,7 @@ class EditBusinessProvider with ChangeNotifier
     if(responce.statusCode==200)
       {
         BusinessModel data = responce.data;
-        Controllers.businessProvider(context,listen: false).setCurrentBusiness(data);
+        Controllers.businessProvider(context,listen: false).setCurrentBusiness(context,data);
         clear();
         Controllers.businessCategoryProvider(context,listen: false).clean();
         context.pop();

@@ -93,6 +93,14 @@ class Authcontroller extends GetxController
   //Verifing otp
   Future<dynamic> verifyOtp(String otp, BuildContext context)async
   {
+
+
+    if(otp.isEmpty)
+      {
+        MyHelper.mySnakebar(context, "Enter otp");
+        return ;
+      }
+
     CustomResponce _d = await UserApi().verifyOtp(_phonNumController.text.trim(), otp);
 
     if(_d.statusCode==200&&_d.data!=null)
@@ -114,7 +122,7 @@ context.goNamed("createBusinessScreen");
             }
           else
             {
-              p.setCurrentBusiness(p.allBusiness[0]);
+              p.setCurrentBusiness(context,p.allBusiness[0]);
 context.goNamed("homePage");
             }
           // CustomResponce _d  = await MyHelper.bussnissApi.getBusinessByUserId(userId: user.id!);
@@ -127,7 +135,7 @@ context.goNamed("homePage");
     else
     {
 
-      // Get.snackbar(_d.statusCode.toString(), _d.errorMessage.toString());
+      Get.snackbar(_d.statusCode.toString(), _d.errorMessage.toString());
     }
 
   }
