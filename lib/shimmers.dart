@@ -43,8 +43,10 @@ class LeadTileShimmer extends StatelessWidget {
 
 Widget leadeTileLodingView()
 {
-  return Column(
-    mainAxisSize: MainAxisSize.min,
+  return ListView(
+    shrinkWrap: true,
+    primary: false,
+    physics: const NeverScrollableScrollPhysics(),
     children: [
       for(int i = 0;i<10;i++)
         LeadTileShimmer()

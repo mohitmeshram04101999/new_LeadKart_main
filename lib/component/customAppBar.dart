@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/component/helpButton.dart';
 import 'package:leadkart/controllers/businessProvider.dart';
@@ -36,9 +37,9 @@ class CustomAppBar extends StatelessWidget {
               onTap: () {
                 MyHelper.mybottomPanel(
                     context: context,
-                    builder: (context, d) {
+                    builder: (context3, d) {
                       return Consumer<BusinessProvider>(
-                        builder: (context, value, child) {
+                        builder: (context2, value, child) {
                           if (value.loding) {
                             return const Center(child: CircularProgressIndicator());
                           }
@@ -100,10 +101,19 @@ class CustomAppBar extends StatelessWidget {
 
                                   //onTap
                                   onTap: () {
-                                    Provider.of<BusinessProvider>(context,
-                                        listen: false)
-                                        .setCurrentBusiness(
+                                    var p = Provider.of<BusinessProvider>(context,
+                                        listen: false);
+
+                                        p.setCurrentBusiness(context,
                                         business);
+
+                                        Navigator.pop(context2);
+                                    if(business.isFacebookPageLinked!=true)
+                                      {
+                                        p.showWarning(context);
+                                      }
+
+
                                   },
                                 )
 
@@ -128,7 +138,7 @@ class CustomAppBar extends StatelessWidget {
                             .lode(context)
                       ]).then(
                             (e) {
-                          value.setCurrentBusiness(value.allBusiness[0]);
+                          value.setCurrentBusiness(context,value.allBusiness[0]);
                         },
                       );
                     }

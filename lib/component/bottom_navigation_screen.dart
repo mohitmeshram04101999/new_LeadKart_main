@@ -22,7 +22,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   final List<Widget> pages = [
     const HomeScreen(),
-    // const AddImages(),
+    const AddImages(),
     const AdsPage(),
     const LeadScreen(),
     // CreateAds(),
@@ -32,7 +32,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   List<MyCustomNavigationItem> _items  = [
     MyCustomNavigationItem(child: Icon(Icons.home_outlined), lable: "Home"),
-    // MyCustomNavigationItem(icon: "assets/bottom_nav/1.png", lable: "Add Image"),
+    MyCustomNavigationItem(icon: "assets/bottom_nav/1.png", lable: "Add Image"),
     MyCustomNavigationItem(icon: "assets/bottom_nav/2.png", lable: "Ads"),
     MyCustomNavigationItem(icon: "assets/bottom_nav/3.png", lable: "Leads"),
     MyCustomNavigationItem(icon: "assets/bottom_nav/4.png", lable: "Business"),
@@ -49,6 +49,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
 
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller:pageController,
         children: pages,
       ),

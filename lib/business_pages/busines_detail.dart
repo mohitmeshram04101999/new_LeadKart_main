@@ -63,7 +63,7 @@ class _BusinessDetailState extends State<BusinessDetail> {
      appBar:  AppBar(
         foregroundColor: Colors.white,
         backgroundColor: AppConstent().primeryColor,
-        title: Text('Business Detail',style: TextStyle(fontSize: SC.from_height(21)),),
+        title: Padding(padding: EdgeInsets.symmetric(horizontal: 10),child: Text('Business Detail',style: TextStyle(fontSize: SC.from_height(21)),)),
       ),
 
       body: SingleChildScrollView(

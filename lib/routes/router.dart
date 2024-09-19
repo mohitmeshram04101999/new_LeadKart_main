@@ -109,7 +109,7 @@ class GoRouterConfig {
               GoRoute(
                 name: "digitalAdsPackage",
                 path: "digitalAdsPackage",
-                builder: (context,state)=>const LeadDetails(),
+                builder: (context,state)=>const LeadDetailsScreen(),
               )
             ]
           ),

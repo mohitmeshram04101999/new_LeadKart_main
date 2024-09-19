@@ -81,11 +81,23 @@ class CreateAddProvider with ChangeNotifier {
   //
   //Increase FaceBook Budget
   void incFacebookBudget() {
+
+    if(_faceBookBudget.text.trim().isEmpty)
+    {
+      _faceBookBudget.clear();
+    }
+
     int b = int.parse(_faceBookBudget.text.trim());
     b = b + 200;
     _faceBookBudget.text = b.toString();
     _plan = null;
     getEstimatedPlan();
+  }
+
+  //
+  void setFaceBookBudget(String b)
+  {
+    _faceBookBudget.text = int.parse(b).toString();
   }
 
   void setTargetArea(TargetArea t) {
@@ -117,11 +129,20 @@ class CreateAddProvider with ChangeNotifier {
   //
   //Increase inst Budget
   void incInstBudget() {
+    if(_instBudget.text.trim().isEmpty)
+      {
+        _instBudget.clear();
+      }
     int b = int.parse(_instBudget.text.trim());
     b = b + 200;
     _instBudget.text = b.toString();
     _plan = null;
     getEstimatedPlan();
+  }
+
+  void setInstBudget(String b)
+  {
+    _instBudget.text = int.parse(b).toString();
   }
 
   //
@@ -140,6 +161,13 @@ class CreateAddProvider with ChangeNotifier {
     _googleBudget.text = b.toString();
     getEstimatedPlan();
   }
+
+  void setGoogleBudget(String b)
+  {
+    _googleBudget.text = int.parse(b).toString();
+  }
+
+
 
   void decGoogleBudget() {
     int b = int.parse(_googleBudget.text.trim());
