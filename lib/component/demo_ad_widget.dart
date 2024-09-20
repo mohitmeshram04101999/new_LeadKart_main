@@ -1,35 +1,29 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:leadkart/Models/addListByBussnesIdModel.dart';import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/Models/addListByBussnesIdModel.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
-import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/helper/dimention.dart';
-import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
 import 'package:leadkart/them/constents.dart';
-import 'package:logger/logger.dart';
 
 class DemoAdWidget extends StatelessWidget {
   final AddByBuinesss add;
   final bool isDemo;
-  const DemoAdWidget({this.isDemo=false,super.key, required this.add});
+  const DemoAdWidget({this.isDemo = false, super.key, required this.add});
 
   @override
   Widget build(BuildContext context) {
-
-    Logger().e("${add.toJson()}");
+    // Logger().i("${add.toJson()}");
 
     return MyInkWell(
       splasColor: Colors.grey.shade100,
-      onTap: ()async{
+      onTap: () async {
         await Future.delayed(const Duration(milliseconds: 150));
-        context.pushNamed("AddDetailScreen",extra: {"id":add.id.toString()});
-        Controllers.campaignProvider(context).load(context,campaignAd: add);
+        context.pushNamed("AddDetailScreen", extra: {"id": add.id.toString()});
+        Controllers.campaignProvider(context).load(context, campaignAd: add);
       },
-      margin: EdgeInsets.symmetric(horizontal: SC.from_height(2),vertical: 8),
+      margin: EdgeInsets.symmetric(horizontal: SC.from_height(2), vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: Colors.white,
@@ -50,17 +44,20 @@ class DemoAdWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: SC.from_height(10), top: SC.from_height(10)),
+                padding: EdgeInsets.only(
+                    left: SC.from_height(10), top: SC.from_height(10)),
                 child: Text(
                   "${add.startDate}",
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: SC.from_height(14.5)),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: SC.from_height(14.5)),
                 ),
               ),
-              if(isDemo)
+              if (isDemo)
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: SC.from_height(8)),
                   decoration: BoxDecoration(
-                    color:const Color.fromRGBO(233, 233, 233, 1),
+                    color: const Color.fromRGBO(233, 233, 233, 1),
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(SC.from_height(12)),
                       bottomLeft: Radius.circular(SC.from_height(15)),
@@ -71,7 +68,10 @@ class DemoAdWidget extends StatelessWidget {
                   child: Center(
                     child: Text(
                       "Demo ad",
-                      style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w600, fontSize: SC.fromWidth(33)),
+                      style: TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w600,
+                          fontSize: SC.fromWidth(33)),
                     ),
                   ),
                 ),
@@ -84,26 +84,38 @@ class DemoAdWidget extends StatelessWidget {
               children: [
                 Text(
                   "Get new leads",
-                  style: TextStyle(color: AppConstent().primeryColor, fontWeight: FontWeight.w600, fontSize: SC.from_height(17)),
+                  style: TextStyle(
+                      color: AppConstent().primeryColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: SC.from_height(17)),
                 ),
                 SizedBox(width: SC.fromWidth(11.5)),
-                if(add.isFacebookAdEnabled==true)
-                   ShaderMask(shaderCallback: (a){
-                    return  const LinearGradient(
-                      begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                        colors: [
-                          Colors.yellow,
-                          
-                          Color(0xfffd1d1d),
-                     Color(0xffc13584),
-                          Color(0xff405de6)
-
-                        ]).createShader(a);
-                  },child: const Icon(FontAwesomeIcons.squareInstagram,color: Colors.white,),),
-                const SizedBox(width: 5,),
-                if(add.isFacebookAdEnabled==true)
-                  const Icon(FontAwesomeIcons.facebookF,color: Color.fromRGBO(1, 101, 225, 1),),
+                if (add.isFacebookAdEnabled == true)
+                  ShaderMask(
+                    shaderCallback: (a) {
+                      return const LinearGradient(
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                          colors: [
+                            Colors.yellow,
+                            Color(0xfffd1d1d),
+                            Color(0xffc13584),
+                            Color(0xff405de6)
+                          ]).createShader(a);
+                    },
+                    child: const Icon(
+                      FontAwesomeIcons.squareInstagram,
+                      color: Colors.white,
+                    ),
+                  ),
+                const SizedBox(
+                  width: 5,
+                ),
+                if (add.isFacebookAdEnabled == true)
+                  const Icon(
+                    FontAwesomeIcons.facebookF,
+                    color: Color.fromRGBO(1, 101, 225, 1),
+                  ),
               ],
             ),
           ),
@@ -121,16 +133,20 @@ class DemoAdWidget extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   width: SC.from_width(124),
                   height: SC.from_height(124),
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(SC.from_height(10))),
-                  child: Image.network(add.image??"",fit: BoxFit.cover,),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(SC.from_height(10))),
+                  child: Image.network(
+                    add.image ?? "",
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildInfoRow('Ad Views',"${add.totalImpression??0}"),
-                    _buildInfoRow('Leads', "${add.totalLeads??0}"),
-                    _buildInfoRow('Spent', "${add.totalSpendBudget??0}"),
-                    _buildInfoRow('Clicks', "${add.totalClicks??0}"),
+                    _buildInfoRow('Ad Views', "${add.totalImpression ?? 0}"),
+                    _buildInfoRow('Leads', "${add.totalLeads ?? 0}"),
+                    _buildInfoRow('Spent', "${add.totalSpendBudget ?? 0}"),
+                    _buildInfoRow('Clicks', "${add.totalClicks ?? 0}"),
                   ],
                 ),
               ],
@@ -141,13 +157,14 @@ class DemoAdWidget extends StatelessWidget {
             child: Column(
               children: [
                 InkWell(
-                  onTap: (){
-                    context.pushNamed("AddDetailScreen",extra: {"id":add.id.toString()});
+                  onTap: () {
+                    context.pushNamed("AddDetailScreen",
+                        extra: {"id": add.id.toString()});
                   },
                   child: Text(
                     'View Reports',
                     style: TextStyle(
-                      color:const  Color.fromRGBO(36, 238, 221, 1),
+                      color: const Color.fromRGBO(36, 238, 221, 1),
                       // fontSize: SC.from_height(15),
                       fontSize: SC.fromWidth(27),
                     ),
@@ -156,7 +173,8 @@ class DemoAdWidget extends StatelessWidget {
                 SizedBox(
                   height: SC.from_height(1),
                   width: SC.from_height(85),
-                  child: Divider(thickness: 1, color: AppConstent().primeryColor),
+                  child:
+                      Divider(thickness: 1, color: AppConstent().primeryColor),
                 ),
               ],
             ),
@@ -167,9 +185,6 @@ class DemoAdWidget extends StatelessWidget {
     );
   }
 
-
-
-
   Widget _buildInfoRow(String label, String value) {
     return Padding(
       padding: EdgeInsets.only(bottom: SC.from_height(8)),
@@ -178,7 +193,10 @@ class DemoAdWidget extends StatelessWidget {
           SizedBox(width: SC.fromWidth(17)),
           Text(
             value,
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: SC.from_height(16)),
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: SC.from_height(16)),
           ),
           SizedBox(width: SC.from_height(10)),
           Text(
