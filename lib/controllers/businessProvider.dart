@@ -1,14 +1,17 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:leadkart/ApiServices/BussnessApi.dart';
 import 'package:leadkart/ApiServices/getPagesApi.dart';
+import 'package:leadkart/ApiServices/faceBook%20APi.dart';
 import 'package:leadkart/Models/BussnessdetailModel.dart';
 import 'package:leadkart/Models/MycustomResponce.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:leadkart/Models/business_model.dart';
 import 'package:leadkart/Models/getPagesModel.dart';
+import 'package:leadkart/Models/faceBook%20page%20responceMiodel.dart';
 import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -252,5 +255,62 @@ class BusinessProvider with ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+
+
+  Future<String?> showFaceBookPages(BuildContext context,{required String metaAccessToken}) async
+  {
+
+    var resp = await FacebookApi().getFacePages(metaAccessToken);
+    String message = "Responce frome FaceBook Page Api";
+
+    try{
+      Logger().i("$message \n${resp.statusCode}\n${jsonDecode(resp.body)}");
+    }
+    catch(e){
+      Logger().e("$message \n${resp.statusCode}\n${jsonDecode(resp.body)} \n Error \n $e");
+    }
+
+    if(resp.statusCode==200)
+      {
+
+        try
+            {
+
+              var decode = jsonDecode(resp.body);
+              var data = FaceBookPageResponce.fromJson(decode);
+
+
+            }
+            catch(e)
+    {
+      if(kDebugMode)
+        {
+          MyHelper.mySnakebar(context, "$e");
+        }
+      else
+        {
+          MyHelper.mySnakebar(context, "SomeThing Went Wrong");
+        }
+
+      return null;
+    }
+
+      }
+    if(resp.statusCode==404)
+      {
+        MyHelper.mySnakebar(context, "PagesNot Found");
+        return null;
+      }
+    if(resp.statusCode==500)
+      {
+        MyHelper.mySnakebar(context, "internal Server Error");
+        return null;
+      }
+
+
+    MyHelper.mySnakebar(context, "SomeThing Went Wrong");
+
   }
 }
