@@ -1,23 +1,12 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
 import 'package:leadkart/Models/ad_type_model.dart';
 import 'package:leadkart/component/addRequirmentTile.dart';
 import 'package:leadkart/component/customAppBar.dart';
 import 'package:leadkart/component/flatIconns.dart';
-
-
-import 'package:leadkart/component/helpButton.dart';
-
 import 'package:leadkart/helper/dimention.dart';
-import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
-import 'package:leadkart/screens/helpScreen.dart';
 import 'package:leadkart/shimmers.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,8 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
   final List<Map<String, String>> items = [
     {'image': 'assets/home_images/img_1.png', 'text': 'AI Meta content'},
     {'image': 'assets/img.png', 'text': 'AI created Ads'},
@@ -46,12 +33,15 @@ class _HomeScreenState extends State<HomeScreen> {
     // Add more icons as needed
   ];
 
-  Map<String,Widget> iconsfor = {
-    "667a7c6df68bde8bec7ad3a8":FlatIcon(icon:FlatIcons.whatsApp,size: 20,),
-    "667a7c6df68bde8bec7ad3aa":FlatIcon(icon:FlatIcons.web,size: 20),
-    "667a7c6df68bde8bec7ad3a7":FlatIcon(icon:FlatIcons.people,size: 20),
-    "667a7c6df68bde8bec7ad3ab":FlatIcon(icon:FlatIcons.playStore,size: 20),
-    "667a7c6df68bde8bec7ad3a9":FlatIcon(icon:FlatIcons.call,size: 20)
+  Map<String, Widget> iconsfor = {
+    "667a7c6df68bde8bec7ad3a8": FlatIcon(
+      icon: FlatIcons.whatsApp,
+      size: 20,
+    ),
+    "667a7c6df68bde8bec7ad3aa": FlatIcon(icon: FlatIcons.web, size: 20),
+    "667a7c6df68bde8bec7ad3a7": FlatIcon(icon: FlatIcons.people, size: 20),
+    "667a7c6df68bde8bec7ad3ab": FlatIcon(icon: FlatIcons.playStore, size: 20),
+    "667a7c6df68bde8bec7ad3a9": FlatIcon(icon: FlatIcons.call, size: 20)
   };
 
   String? dropdownValue;
@@ -65,12 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
-
   final _addTypeLoading = addTypeLoading();
-
 
   @override
   Widget build(BuildContext context) {
@@ -82,16 +69,16 @@ class _HomeScreenState extends State<HomeScreen> {
       //   },),
 
       //AppbBar
-      appBar:PreferredSize(
-        preferredSize: const  Size.fromHeight(60),
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
           child: CustomAppBar(
-            // trailingButton: HelpButton(
-            //   onTap: (){
-            //     // context.pushNamed("helpScreen");
-            //     RouteTo(context, child: (a,b)=>const HelpScreen());
-            //   },
-            // ),
-          )),
+              // trailingButton: HelpButton(
+              //   onTap: (){
+              //     // context.pushNamed("helpScreen");
+              //     RouteTo(context, child: (a,b)=>const HelpScreen());
+              //   },
+              // ),
+              )),
 
       //Body
       body: ListView(
@@ -170,7 +157,6 @@ class _HomeScreenState extends State<HomeScreen> {
             height: SC.from_height(15),
           ),
 
-
           // Container(
           //   clipBehavior: Clip.hardEdge,
           //   // width: SC.fromWidth(50),
@@ -189,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           InkWell(
-            onTap: (){
+            onTap: () {
               launch("tel: +917007892427");
             },
             child: Image.asset(
@@ -212,9 +198,6 @@ class _HomeScreenState extends State<HomeScreen> {
             height: SC.from_height(15),
           ),
 
-
-
-
           // CHOOSE ADD REQUIREMENT //
           FutureBuilder<dynamic>(
               future: AdsApi().getAllAdvertisementTypes(),
@@ -222,26 +205,30 @@ class _HomeScreenState extends State<HomeScreen> {
               //
               builder: (context, snapshot) {
                 //
-                if(snapshot.connectionState==ConnectionState.waiting) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return _addTypeLoading;
                 }
 
                 //
-                if(snapshot.hasError) {
-                  return Center(child: Text("Error: ${snapshot.error}") ,);
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text("Error: ${snapshot.error}"),
+                  );
                 }
 
                 //
-                if(snapshot.data==null){
-                    return const Center(child: Text("Not Data Found"),);
-                  }
+                if (snapshot.data == null) {
+                  return const Center(
+                    child: Text("Not Data Found"),
+                  );
+                }
 
                 //
                 final data = snapshot.data! as List<AdvertisementTypeModel>;
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount: data.length,
-                  physics: const  NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final item = data[index];
                     return Container(
@@ -254,26 +241,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         // border: Border.all(),
-                        borderRadius:
-                            BorderRadius.circular(SC.from_height(8)),
+                        borderRadius: BorderRadius.circular(SC.from_height(8)),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(
-                                0.10), // Shadow color with opacity
+                            color: Colors.black
+                                .withOpacity(0.10), // Shadow color with opacity
                             spreadRadius: 0.5, // Spread radius
                             blurRadius: 5, // Blur radius
-                            offset:
-                                const Offset(1, 2), // Offset in x and y directions
+                            offset: const Offset(
+                                1, 2), // Offset in x and y directions
                           ),
                         ],
                       ),
                       child: AddREquirmentTile(
                         advertisementTypeModel: item,
-                        icon: iconsfor[item.id]??const SizedBox(),
+                        icon: iconsfor[item.id] ?? const SizedBox(),
                       ),
                     );
                   },
-
                 );
               }),
 

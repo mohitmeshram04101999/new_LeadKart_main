@@ -3,10 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:leadkart/ApiServices/BussnessApi.dart';
+import 'package:leadkart/ApiServices/getPagesApi.dart';
 import 'package:leadkart/Models/BussnessdetailModel.dart';
 import 'package:leadkart/Models/MycustomResponce.dart';
 import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:leadkart/Models/business_model.dart';
+import 'package:leadkart/Models/getPagesModel.dart';
 import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -146,6 +148,58 @@ class BusinessProvider with ChangeNotifier {
                                       metaAccessToken:
                                           value.accessToken!.tokenString);
                                   lode(context);
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) {
+                                      return Dialog(
+                                        child: FutureBuilder<FacebookPageData>(
+                                          future: MetaApis.getPages(
+                                              value.accessToken!.tokenString),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return const Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            }
+                                            // if (snapshot.data == null) {
+                                            //   return const Center(
+                                            //     child: Text("No Data Found"),
+                                            //   );
+                                            // }
+                                            if (snapshot.hasData) {
+                                              log('facebook ${snapshot.data.toString()}');
+                                            }
+                                            log('facebook ${snapshot.data.toString()}');
+
+                                            return Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                ListView.builder(
+                                                  shrinkWrap: true,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return ListTile(
+                                                      title: Text(snapshot.data!
+                                                          .data[index]['name']),
+                                                      subtitle: Text(snapshot
+                                                          .data!
+                                                          .data[index]['id']),
+                                                      onTap: () {},
+                                                    );
+                                                  },
+                                                  itemCount: snapshot
+                                                      .data!.data.length,
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  );
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content: Text("Facebook Page Linked"),
