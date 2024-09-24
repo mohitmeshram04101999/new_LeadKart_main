@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -8,13 +9,7 @@ import 'package:leadkart/Models/ad_type_model.dart';
 import 'package:leadkart/component/addRequirmentTile.dart';
 import 'package:leadkart/component/customAppBar.dart';
 import 'package:leadkart/component/flatIconns.dart';
-
-
-import 'package:leadkart/component/helpButton.dart';
-
 import 'package:leadkart/helper/dimention.dart';
-import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
-import 'package:leadkart/screens/helpScreen.dart';
 import 'package:leadkart/shimmers.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -77,9 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      // floatingActionButton: FloatingActionButton(onPressed: (){
-      //   RouteTo(context, child: (a,b)=>SplashScreen());
-      //   },),
+      floatingActionButton: kDebugMode?FloatingActionButton(onPressed: (){
+
+        },):null,
 
       //AppbBar
       appBar:PreferredSize(
