@@ -46,7 +46,7 @@ class BusinessProvider with ChangeNotifier {
     _loding = false;
     _currentBusiness = await Controllers.useraPrefrenc.getBusiness();
     notifyListeners();
-
+    Logger().f(_currentBusiness);
     if (_currentBusiness?.isFacebookPageLinked != true &&
         !_isWarningOpen &&
         _warning) {
@@ -61,6 +61,7 @@ class BusinessProvider with ChangeNotifier {
     _currentBusiness = business;
     notifyListeners();
     UserPreference().saveBusiness(business);
+    await lode(context);
   }
   //
 

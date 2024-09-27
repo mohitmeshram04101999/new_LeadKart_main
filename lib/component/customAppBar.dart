@@ -80,8 +80,8 @@ class CustomAppBar extends StatelessWidget {
 
                                   //Subtitle of TIle
                                   // subtitle: SelectableText(business.id.toString(),style: TextStyle(color: Colors.grey.shade500),),
-                                  subtitle: SelectableText(
-                                    business.isFacebookPageLinked.toString(),
+                                  subtitle: Text(
+                                    business.tagline.toString(),
                                     style:
                                         TextStyle(color: Colors.grey.shade500),
                                   ),
@@ -120,15 +120,21 @@ class CustomAppBar extends StatelessWidget {
 
                                   //onTap
                                   onTap: () {
-                                    var p = Provider.of<BusinessProvider>(
-                                        context,
-                                        listen: false);
-
-                                    p.setCurrentBusiness(context, business);
-
                                     Navigator.pop(context2);
-                                    if (business.isFacebookPageLinked != true) {
-                                      p.showWarning(context);
+                                    try {
+                                      var p = Provider.of<BusinessProvider>(
+                                          context,
+                                          listen: false);
+
+                                      p.setCurrentBusiness(context, business);
+
+                                      if (business.isFacebookPageLinked !=
+                                          true) {
+                                        p.showWarning(context);
+                                      }
+                                    } catch (e) {
+                                      MyHelper.mySnakebar(
+                                          context, e.toString());
                                     }
                                   },
                                 )

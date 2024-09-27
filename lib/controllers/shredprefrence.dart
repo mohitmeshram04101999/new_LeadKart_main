@@ -5,27 +5,24 @@ import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:leadkart/Models/business_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserPreference extends GetxController{
-
-  Rxn<SharedPreferences> prefs= Rxn<SharedPreferences>();
-  Future<bool> saveUser (CurrentUser user)async{
+class UserPreference extends GetxController {
+  Rxn<SharedPreferences> prefs = Rxn<SharedPreferences>();
+  Future<bool> saveUser(CurrentUser user) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     String _data = jsonEncode(user.toJson());
     sp.setString("currentUser", _data);
     return true;
   }
 
-
   //getUser
-  Future<CurrentUser?> getUser()async{
+  Future<CurrentUser?> getUser() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     var _data = sp.getString("currentUser");
-    if(_data!=null)
-      {
-        var decode = jsonDecode(_data);
-        CurrentUser user = CurrentUser.fromJson(decode);
-        return user;
-      }
+    if (_data != null) {
+      var decode = jsonDecode(_data);
+      CurrentUser user = CurrentUser.fromJson(decode);
+      return user;
+    }
   }
 
   //removeUser
@@ -37,53 +34,43 @@ class UserPreference extends GetxController{
   }
 
   //get header
-  Future<Map<String,String>?> getHeader()async
-  {
+  Future<Map<String, String>?> getHeader() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     var _data = sp.getString("currentUser");
-    if(_data!=null)
-    {
+    if (_data != null) {
       var decode = jsonDecode(_data);
       CurrentUser user = CurrentUser.fromJson(decode);
-      return {"Authorization":user.token??""};
+      return {"Authorization": user.token ?? ""};
     }
-
   }
 
-  Future<Map<String,dynamic>?> getHeaderForDio()async
-  {
+  Future<Map<String, dynamic>?> getHeaderForDio() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     var _data = sp.getString("currentUser");
-    if(_data!=null)
-    {
+    if (_data != null) {
       var decode = jsonDecode(_data);
       CurrentUser user = CurrentUser.fromJson(decode);
-      return {"Authorization":user.token??""};
+      return {"Authorization": user.token ?? ""};
     }
-
   }
 
-
-  saveBusiness(BusinessModel business) async
-  {
+  saveBusiness(BusinessModel business) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     String d = jsonEncode(business.toMap());
     sp.setString("userBusiness", d);
+    if (business.isFacebookPageLinked != true) {
+      return false;
+    }
+    return true;
   }
 
-  Future<BusinessModel?> getBusiness() async
-  {
+  Future<BusinessModel?> getBusiness() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     var _data = sp.getString("userBusiness");
-    if(_data!=null)
-    {
+    if (_data != null) {
       var decode = jsonDecode(_data);
       BusinessModel businessModel = BusinessModel.fromMap(decode);
       return businessModel;
     }
-
   }
-
-
-
 }
