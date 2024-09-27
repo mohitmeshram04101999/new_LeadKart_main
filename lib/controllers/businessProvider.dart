@@ -173,7 +173,7 @@ class BusinessProvider with ChangeNotifier {
                                               log('facebook ${snapshot.data.toString()}');
                                             }
                                             log('facebook ${snapshot.data.toString()}');
-
+                                            final data = snapshot.data;
                                             return Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
@@ -181,13 +181,29 @@ class BusinessProvider with ChangeNotifier {
                                                   shrinkWrap: true,
                                                   itemBuilder:
                                                       (context, index) {
+                                                    final finalData =
+                                                        data!.data[index];
                                                     return ListTile(
-                                                      title: Text(snapshot.data!
-                                                          .data[index]['name']),
-                                                      subtitle: Text(snapshot
-                                                          .data!
-                                                          .data[index]['id']),
-                                                      onTap: () {},
+                                                      title: Text(
+                                                          finalData['name']),
+                                                      subtitle:
+                                                          Text(finalData['id']),
+                                                      onTap: () async {
+                                                        await Controllers
+                                                                .linkedPageProvider(
+                                                                    context)
+                                                            .setLinkedPage(
+                                                          name:
+                                                              finalData['name'],
+                                                          accessToken: finalData[
+                                                              'access_token'],
+                                                          id: finalData['id'],
+                                                        )
+                                                            .then((e) {
+                                                          Navigator.pop(
+                                                              context);
+                                                        });
+                                                      },
                                                     );
                                                   },
                                                   itemCount: snapshot

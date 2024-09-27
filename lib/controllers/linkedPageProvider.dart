@@ -1,18 +1,42 @@
 import 'package:flutter/cupertino.dart';
-import 'package:leadkart/Models/getPagesModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LinkedPageProvider with ChangeNotifier {
-  FacebookPage? _page;
+  String? _pageId;
+  String? _pageName;
+  String? _pageAccessToken;
 
-  FacebookPage? get page => _page;
-
-  setLinkedPage(FacebookPage page) {
-    _page = page;
+  setLinkedPage(
+      {required String name,
+      required String id,
+      required String accessToken}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("pageId", id);
+    prefs.setString("pageName", name);
+    prefs.setString("pageAccessToken", accessToken);
+    loadLinkedPage();
     notifyListeners();
   }
 
+  Future<void> loadLinkedPage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? pageId = prefs.getString("pageId");
+    String? pageName = prefs.getString("pageName");
+    String? pageAccessToken = prefs.getString("pageAccessToken");
+    _pageId = pageId;
+    _pageName = pageName;
+    _pageAccessToken = pageAccessToken;
+    notifyListeners();
+  }
+
+  String? get pageId => _pageId;
+  String? get pageName => _pageName;
+  String? get pageAccessToken => _pageAccessToken;
+
   void clear() {
-    _page = null;
+    _pageId = null;
+    _pageName = null;
+    _pageAccessToken = null;
     notifyListeners();
   }
 }
