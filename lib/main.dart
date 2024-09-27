@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     SC.getScreen(context);
     debugPaintLayerBordersEnabled = false;
-    debugRepaintRainbowEnabled = true;
+    debugRepaintRainbowEnabled = false;
     return GetMaterialApp.router(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,

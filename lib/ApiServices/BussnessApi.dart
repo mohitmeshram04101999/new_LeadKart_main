@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
@@ -60,13 +61,14 @@ class BussnissApi {
 
       final CurrentUser? _user =
           await Controllers.userPreferencesController.getUser();
+
       var resp = await MyHelper.dio.get(uri,
           options: Options(
             headers: {
               "Authorization": "${_user!.token}",
             },
           ));
-
+      log(resp.statusCode.toString());
       if (resp.statusCode == 200) {
         final List<BusinessModel> businessList =
             (resp.data['data'] as List).map((e) {
