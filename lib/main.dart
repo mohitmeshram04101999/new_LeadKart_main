@@ -69,6 +69,7 @@ Future<void> initializeLocalNotifications() async {
             importance: NotificationImportance.High,
             defaultPrivacy: NotificationPrivacy.Private,
             defaultColor: Colors.deepPurple,
+            enableVibration: true,
             ledColor: Colors.deepPurple)
       ],
       debug: true);
