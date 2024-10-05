@@ -6,6 +6,8 @@ import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
 import 'package:pinput/pinput.dart';
 
+import '../them/constents.dart';
+
 class OtpScreen extends StatefulWidget {
   const OtpScreen({Key? key}) : super(key: key);
 
@@ -139,7 +141,7 @@ String otp = '';
                       ),
                       TextSpan(
                         text: Controllers.authController.phonController.text,
-                        style: TextStyle(color: Color.fromRGBO(36, 238, 221, 1)), // Change color of the phone number
+                        style: TextStyle(color: AppConstent().primeryColor), // Change color of the phone number
                       ),
                     ],
                   ),
@@ -163,7 +165,7 @@ String otp = '';
                   defaultPinTheme: defaultPinTheme,
                   focusedPinTheme: defaultPinTheme.copyWith(
                     decoration: BoxDecoration(
-                      border: Border.all(color: Color.fromRGBO(36, 238, 221, 1)), // Changed border color for focused state
+                      border: Border.all(color: AppConstent().primeryColor), // Changed border color for focused state
                       borderRadius: BorderRadius.circular( SC.from_height(10)),
                     ),
                   ),

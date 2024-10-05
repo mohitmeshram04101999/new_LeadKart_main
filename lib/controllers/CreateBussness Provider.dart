@@ -197,6 +197,7 @@ void removeServiceId(String id) {_service_ids.removeWhere((v)=>v.id==id);notifyL
       MyHelper.mySnakebar(context, color: AppConstent().primeryColor,"${responce.message}");
       clear();
       Controllers.businessCategoryProvider(context,listen: false).clean();
+      Controllers.businessProvider(context).lode(context);
       context.goNamed("homePage");
     }
     else

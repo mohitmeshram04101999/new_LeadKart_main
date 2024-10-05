@@ -259,7 +259,7 @@ class AddTileLoading extends StatelessWidget {
                   child: Text(
                     'View Reports',
                     style: TextStyle(
-                      color: const  Color.fromRGBO(36, 238, 221, 1),
+                      color:  AppConstent().primeryColor,
                       // fontSize: SC.from_height(15),
                       fontSize: SC.fromWidth(27),
                     ),

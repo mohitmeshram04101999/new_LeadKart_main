@@ -196,12 +196,10 @@ class EstimateResultCard extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-                        Expanded(
-                          child: Text(
-                              amountFormate(data.totalReach),
-                              style: Theme.of(context).textTheme.bodySmall,
-                          maxLines: 1,overflow: TextOverflow.ellipsis,),
-                        ),
+                        Text(
+                            amountFormate(data.totalReach),
+                            style: Theme.of(context).textTheme.bodySmall,
+                        maxLines: 1,overflow: TextOverflow.ellipsis,),
                         const SizedBox(
                           width: 10,
                         ),
@@ -231,12 +229,10 @@ class EstimateResultCard extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-                        Expanded(
-                          child: Text(
-                              "${data.totalLeads! < 1000 ? data.totalLeads : '${(data.totalLeads ?? 0) / 1000}K'}",
-                              style: Theme.of(context).textTheme.bodySmall,
-                          maxLines: 1,overflow: TextOverflow.ellipsis,),
-                        ),
+                        Text(
+                            "${data.totalLeads! < 1000 ? data.totalLeads : '${(data.totalLeads ?? 0) / 1000}K'}",
+                            style: Theme.of(context).textTheme.bodySmall,
+                        maxLines: 1,overflow: TextOverflow.ellipsis,),
                         const SizedBox(
                           width: 10,
                         ),

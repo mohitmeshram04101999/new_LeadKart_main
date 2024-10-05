@@ -68,7 +68,7 @@ class BussnissApi {
               "Authorization": "${_user!.token}",
             },
           ));
-      log(resp.statusCode.toString());
+      log("status code ${resp.statusCode}");
       if (resp.statusCode == 200) {
         final List<BusinessModel> businessList =
             (resp.data['data'] as List).map((e) {
@@ -195,6 +195,105 @@ class BussnissApi {
 
   //Create BusinessApi
 
+  // Future<CustomResponce> createBusiness({
+  //   XFile? logo,
+  //   String? businessCategoryId,
+  //   String? businessName,
+  //   List<String>? serviceId,
+  //   String? businessContactNum,
+  //   String? whatAppNum,
+  //   String? stateId,
+  //   String? cityId,
+  //   String? webLink,
+  //   String? instaLink,
+  //   String? twitterLink,
+  //   String? youTubeLink,
+  //   String? faceBookLink,
+  //   String? address,
+  //   String? tagLine,
+  //   String? countryId,
+  // }) async {
+  //   String uri = "/business/createBussiness";
+  //
+  //   CurrentUser? user = await Controllers.useraPrefrenc.getUser();
+  //   var head = await Controllers.useraPrefrenc.getHeader();
+  //
+  //   var data = {
+  //     // "businessImage":req,
+  //     "businessName": businessName,
+  //     "userId": user!.id.toString(),
+  //     "businessCategoryId": businessCategoryId,
+  //     // "servicesId": "664482f4c7cda5618d2edede",
+  //     "businessContact": businessContactNum,
+  //     "whatsappNumber": whatAppNum,
+  //     "stateId": stateId,
+  //     "cityId": cityId,
+  //     "websiteLink": webLink,
+  //     "instagramLink": instaLink,
+  //     "twitterLink": twitterLink,
+  //     "youtubeLink": youTubeLink,
+  //     "facebookLink": faceBookLink,
+  //     "address": address,
+  //     "tagline": tagLine,
+  //     // "countryId":countryId
+  //   };
+  //
+  //   //
+  //   var formatedData =
+  //       data.map((key, value) => MapEntry(key, value.toString()));
+  //
+  //   var request =
+  //       http.MultipartRequest("POST", Uri.parse(ApiConst.baseUrl + uri));
+  //
+  //   if (logo != null) {
+  //     request.files.add(await http.MultipartFile.fromPath(
+  //       "businessImage",
+  //       logo.path ?? "",
+  //     ));
+  //   }
+  //   request.headers.addAll({"Authorization": user.token.toString()});
+  //
+  //   request.fields.addAll(formatedData);
+  //   for (int i = 0; i < serviceId!.length; i++) {
+  //     request.fields["servicesId[$i]"] = serviceId[i].toString();
+  //   }
+  //
+  //   var response = await request.send();
+  //   var d = await response.stream.bytesToString();
+  //   var mapdata = jsonDecode(d);
+  //
+  //   MyHelper.logger.i(response.statusCode);
+  //   MyHelper.logger.i(d);
+  //
+  //   //
+  //   // BusinessModel model = BusinessModel.fromMap(mapdata["data"]);
+  //
+  //   // geting datad end sending to return
+  //
+  //   MyHelper.logger.i("OK");
+  //
+  //   if (response.statusCode == 201) {
+  //     return CustomResponce(
+  //         statusCode: response.statusCode,
+  //         // data: model,
+  //         message: mapdata["message"]);
+  //   }
+  //
+  //   //returnig the data is wrong
+  //   else {
+  //     MyHelper.logger.e(response.statusCode);
+  //     var d = await response.stream.bytesToString();
+  //     MyHelper.logger.i(d);
+  //     return CustomResponce(
+  //         statusCode: response.statusCode,
+  //         data: mapdata["message"],
+  //         errorMessage: d);
+  //   }
+  // }
+
+
+
+
   Future<CustomResponce> createBusiness({
     XFile? logo,
     String? businessCategoryId,
@@ -215,6 +314,7 @@ class BussnissApi {
   }) async {
     String uri = "/business/createBussiness";
 
+    Logger().i("Hi ");
     CurrentUser? user = await Controllers.useraPrefrenc.getUser();
     var head = await Controllers.useraPrefrenc.getHeader();
 
@@ -240,10 +340,10 @@ class BussnissApi {
 
     //
     var formatedData =
-        data.map((key, value) => MapEntry(key, value.toString()));
+    data.map((key, value) => MapEntry(key, value.toString()));
 
     var request =
-        http.MultipartRequest("POST", Uri.parse(ApiConst.baseUrl + uri));
+    http.MultipartRequest("POST", Uri.parse(ApiConst.baseUrl + uri));
 
     if (logo != null) {
       request.files.add(await http.MultipartFile.fromPath(
@@ -290,6 +390,7 @@ class BussnissApi {
           errorMessage: d);
     }
   }
+
 
   Future<CustomResponce> upDateBusiness({
     required String businessId,

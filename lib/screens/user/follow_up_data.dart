@@ -28,9 +28,9 @@ class _FollowUpDateState extends State<FollowUpDate> {
         return Theme(
           data: ThemeData.light().copyWith(
 
-            primaryColor: Color.fromRGBO(36, 238, 221, 1), // Set your primary color here
+            primaryColor: AppConstent().primeryColor, // Set your primary color here
             // accentColor: Colors.redAccent, // Set your accent color here
-            colorScheme: ColorScheme.light(primary: Color.fromRGBO(36, 238, 221, 1)),
+            colorScheme: ColorScheme.light(primary: AppConstent().primeryColor),
             buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
           child: child!,

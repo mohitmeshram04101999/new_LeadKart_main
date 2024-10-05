@@ -252,7 +252,7 @@ class AdsApi {
     }
   }
 
-  getInterests({required String businessId, required String query}) async {
+  Future<Response?>getInterests({required String businessId, required String query}) async {
     try {
       final CurrentUser? _user =
           await Controllers.userPreferencesController.getUser();
@@ -264,7 +264,7 @@ class AdsApi {
           'targetingInterest?businessId=$businessId&search=$query',
           options: Options(headers: head));
       MyHelper.logger.i(resp.data['data']);
-      return resp.data;
+      return resp;
     } catch (e) {
       MyHelper.logger.e(e);
     }
