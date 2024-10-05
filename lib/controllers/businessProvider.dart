@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:leadkart/ApiServices/BussnessApi.dart';
@@ -106,7 +108,7 @@ class BusinessProvider with ChangeNotifier {
               barrierDismissible: false,
               builder: (context) => AlertDialog(
                     title: const Text(
-                      "FaceBook page is not linked,please link",
+                      "Meta account is not linked,please link",
                       textAlign: TextAlign.center,
                     ),
                     actions: [
@@ -118,37 +120,7 @@ class BusinessProvider with ChangeNotifier {
                                   log(value.accessToken!.tokenString);
                                   _warning = false;
                                   Navigator.pop(context);
-                                  MyHelper.bussnissApi.upDateBusiness(
-                                      businessId: _currentBusiness!.id,
-                                      isFacebookPageLinked: true,
-                                      serviceId: _currentBusiness!.servicesId,
-                                      address: _currentBusiness!.address,
-                                      businessName:
-                                          _currentBusiness!.businessName,
-                                      businessCategoryId:
-                                          _currentBusiness!.businessCategoryId,
-                                      businessContactNum: _currentBusiness!
-                                          .businessContact
-                                          .toString(),
-                                      cityId: _currentBusiness!.cityId,
-                                      countryId: _currentBusiness!.countryId,
-                                      faceBookLink:
-                                          _currentBusiness!.facebookLink,
-                                      instaLink:
-                                          _currentBusiness!.instagramLink,
-                                      stateId: _currentBusiness!.stateId,
-                                      tagLine: _currentBusiness!.tagline,
-                                      twitterLink:
-                                          _currentBusiness!.twitterLink,
-                                      webLink: _currentBusiness!.websiteLink,
-                                      whatAppNum: _currentBusiness!
-                                          .whatsappNumber
-                                          .toString(),
-                                      youTubeLink:
-                                          _currentBusiness!.youtubeLink,
-                                      metaAccessToken:
-                                          value.accessToken!.tokenString);
-                                  lode(context);
+
                                   showDialog(
                                     context: context,
                                     barrierDismissible: false,
@@ -170,11 +142,21 @@ class BusinessProvider with ChangeNotifier {
                                             //     child: Text("No Data Found"),
                                             //   );
                                             // }
+
+
                                             if (snapshot.hasData) {
-                                              log('facebook ${snapshot.data.toString()}');
+                                              log('facebook alpha ${snapshot.data.toString()}');
                                             }
-                                            log('facebook ${snapshot.data.toString()}');
+                                            // log('facebook ${snapshot.data.toString()}');
                                             final data = snapshot.data;
+
+
+                                            if(data?.data.length==0){
+                                              return Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
+                                                child: Text("No FaceBook Page Found"),
+                                              );
+                                            }
                                             return Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
@@ -190,6 +172,8 @@ class BusinessProvider with ChangeNotifier {
                                                       subtitle:
                                                           Text(finalData['id']),
                                                       onTap: () async {
+
+
                                                         await Controllers
                                                                 .linkedPageProvider(
                                                                     context)
@@ -201,6 +185,39 @@ class BusinessProvider with ChangeNotifier {
                                                           id: finalData['id'],
                                                         )
                                                             .then((e) {
+                                                          MyHelper.bussnissApi.upDateBusiness(
+                                                              businessId: _currentBusiness!.id,
+                                                              isFacebookPageLinked: true,
+                                                              serviceId: _currentBusiness!.servicesId,
+                                                              address: _currentBusiness!.address,
+                                                              businessName:
+                                                              _currentBusiness!.businessName,
+                                                              businessCategoryId:
+                                                              _currentBusiness!.businessCategoryId,
+                                                              businessContactNum: _currentBusiness!
+                                                                  .businessContact
+                                                                  .toString(),
+                                                              cityId: _currentBusiness!.cityId,
+                                                              countryId: _currentBusiness!.countryId,
+                                                              faceBookLink:
+                                                              _currentBusiness!.facebookLink,
+                                                              instaLink:
+                                                              _currentBusiness!.instagramLink,
+                                                              stateId: _currentBusiness!.stateId,
+                                                              tagLine: _currentBusiness!.tagline,
+                                                              twitterLink:
+                                                              _currentBusiness!.twitterLink,
+                                                              webLink: _currentBusiness!.websiteLink,
+                                                              whatAppNum: _currentBusiness!
+                                                                  .whatsappNumber
+                                                                  .toString(),
+                                                              youTubeLink:
+                                                              _currentBusiness!.youtubeLink,
+                                                              metaAccessToken:
+                                                              value.accessToken!.tokenString);
+                                                          lode(context);
+
+
                                                           Navigator.pop(
                                                               context);
                                                         });
@@ -208,7 +225,7 @@ class BusinessProvider with ChangeNotifier {
                                                     );
                                                   },
                                                   itemCount: snapshot
-                                                      .data!.data.length,
+                                                      .data?.data.length??0,
                                                 ),
                                               ],
                                             );
@@ -235,6 +252,8 @@ class BusinessProvider with ChangeNotifier {
                           child: const Text("Cancel")),
                     ],
                   ));
+
+
           return false;
         } else if (businessDetail.isMetaAccessTokenActive != true) {
           await showDialog(
@@ -270,4 +289,5 @@ class BusinessProvider with ChangeNotifier {
       return false;
     }
   }
+
 }

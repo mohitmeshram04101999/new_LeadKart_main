@@ -104,7 +104,7 @@ class _BusinessDetailState extends State<BusinessDetail> {
                         onPressed: (){
                           RouteTo(context, child:(a,b)=> EditBusinessScreen());
                         },
-                         icon:  Icon(Icons.edit,color: Color.fromRGBO(36, 238, 221, 1),size: SC.from_height(28),)
+                         icon:  Icon(Icons.edit,color: AppConstent().primeryColor,size: SC.from_height(28),)
 
                       ),
                     ],
@@ -134,7 +134,7 @@ class _BusinessDetailState extends State<BusinessDetail> {
                         TextSpan(
                           text: 'Address : ',
                           style: TextStyle(
-                            color: Color.fromRGBO(36, 238, 221, 1), // Different color for the label
+                            color: AppConstent().primeryColor, // Different color for the label
                             fontSize: SC.from_height(17),
                           ),
                         ),

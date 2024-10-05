@@ -3,9 +3,19 @@ import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyle
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leadkart/helper/dimention.dart';
 
+
+
+//AppConstent().primeryColor
+
 class AppConstent
 {
-  final Color primeryColor = const Color.fromRGBO(36, 238, 221, 1);
+
+  //New Primer Color
+  final Color primeryColor = const Color.fromRGBO(68,139,220, 1);
+
+  //Old PrimerColor
+  // final Color primeryColor = const Color.fromRGBO(36, 238, 221, 1);
+
   final Color normalTextColor =  const Color.fromRGBO(91, 91, 91, 1);
   final Color infoContainerColor = const Color.fromRGBO(236, 253, 243, 1);
   final Color leadsBannerColor = const Color.fromRGBO(199, 224, 254, 1);

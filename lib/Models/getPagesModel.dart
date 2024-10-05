@@ -123,9 +123,17 @@ class FacebookPageData {
   }
 
   factory FacebookPageData.fromMap(Map<String, dynamic> map) {
+
+    // if(map==null)
+    //   {
+    //     return FacebookPageData(
+    //       data: [],
+    //       paging: {},
+    //     ) ;
+    //   }
     return FacebookPageData(
-      data: map['data'] as List<dynamic>,
-      paging: map['paging'] as Map<String, dynamic>,
+      data: map['data']??[],
+      paging: map['paging']??{},
     );
   }
 }

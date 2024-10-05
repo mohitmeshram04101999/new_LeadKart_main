@@ -81,7 +81,7 @@ class CustomAppBar extends StatelessWidget {
                                   //Subtitle of TIle
                                   // subtitle: SelectableText(business.id.toString(),style: TextStyle(color: Colors.grey.shade500),),
                                   subtitle: Text(
-                                    business.tagline.toString(),
+                                    business.id.toString(),
                                     style:
                                         TextStyle(color: Colors.grey.shade500),
                                   ),
