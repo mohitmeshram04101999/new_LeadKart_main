@@ -486,7 +486,7 @@ class _CampaignSettingState extends State<CampaignSetting> {
                             p.ageRange.start.round().toString(),
                             p.ageRange.end.round().toString(),
                           ),
-                          activeColor: Color.fromRGBO(36, 238, 221, 1),
+                          activeColor: AppConstent().primeryColor,
                           // Set active color
                           inactiveColor: Colors.grey.shade400,
                           onChanged: (newvalues) {

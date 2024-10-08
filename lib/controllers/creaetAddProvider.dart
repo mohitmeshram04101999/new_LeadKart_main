@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:leadkart/ApiServices/addDetaL%20API.dart';
@@ -235,11 +236,18 @@ class CreateAddProvider with ChangeNotifier {
   }
 
   void setPlan(PlanDetail2? p) {
-    _plan = p;
-    _instBudget.text = "0";
-    _faceBookBudget.text = "0";
-    getEstimatedPlan();
-    notifyListeners();
+   if(p!=null)
+     {
+       _plan = p;
+       _instBudget.text = "0";
+       _faceBookBudget.text = "0";
+       getEstimatedPlan();
+       notifyListeners();
+     }
+   else
+     {
+       _plan=p;
+     }
   }
 
   Future<void> selectImage(BuildContext context) async {
@@ -349,16 +357,32 @@ class CreateAddProvider with ChangeNotifier {
     }
   }
 
-  Future<dynamic> getInterests(
+  Future<List<dynamic>?> getInterests(BuildContext context,
       {required String businessId, required String query}) async {
-    Map<String, dynamic> resp =
+    var resp =
         await AdsApi().getInterests(businessId: businessId, query: query);
-    if (resp['message'] == 'Target Serch Area Data') {
-      return resp['data'];
-    } else {
-      Logger().i("$resp");
-      return [];
-    }
+
+    if(resp?.statusCode==200)
+      {
+        if (resp?.data?['message'] == 'Target Serch Area Data') {
+          return resp?.data['data'];
+        } else {
+          Logger().i("$resp");
+          return [];
+        }
+      }
+    else
+      {
+        if(kDebugMode)
+          {
+            MyHelper.mySnakebar(context, "${resp?.statusCode}\n${resp?.data}");
+          }
+        else
+          {
+            MyHelper.mySnakebar(context, "Something went wrong ");
+          }
+      }
+
   }
 
   void clear() {

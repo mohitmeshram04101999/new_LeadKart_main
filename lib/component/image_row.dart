@@ -76,7 +76,7 @@ class CustomListTile extends StatelessWidget {
             trailingText,
             style: TextStyle(
               fontSize: SC.fromWidth(26),
-              color: Color.fromRGBO(36, 238, 221, 1),
+              color: AppConstent().primeryColor,
             ),
           ),
         ],
