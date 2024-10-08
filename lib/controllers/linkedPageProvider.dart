@@ -18,7 +18,7 @@ class LinkedPageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadLinkedPage() async {
+  Future<bool> loadLinkedPage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? pageId = prefs.getString("pageId");
     String? pageName = prefs.getString("pageName");
@@ -27,6 +27,10 @@ class LinkedPageProvider with ChangeNotifier {
     _pageName = pageName;
     _pageAccessToken = pageAccessToken;
     notifyListeners();
+    if (pageId != null && pageName != null && pageAccessToken != null) {
+      return true;
+    }
+    return false;
   }
 
   String? get pageId => _pageId;

@@ -49,8 +49,22 @@ class CustomAppBar extends StatelessWidget {
                           }
 
                           if (value.allBusiness.length == 0) {
-                            return const Center(
-                                child: Text("No Business Found"));
+                            return Center(
+                                child: ListView(
+                              children: [
+                                Text("No Business Found"),
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        context
+                                            .pushNamed("createBusinessScreen");
+                                      },
+                                      child: const Text("Add a Business")),
+                                )
+                              ],
+                            ));
                           }
 
                           return ListView(
