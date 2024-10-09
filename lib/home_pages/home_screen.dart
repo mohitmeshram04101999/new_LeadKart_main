@@ -232,6 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     final item = data[index];
                     return Container(
+
                       margin: EdgeInsets.only(
                           top: SC.from_height(15),
                           left: SC.from_height(2),
