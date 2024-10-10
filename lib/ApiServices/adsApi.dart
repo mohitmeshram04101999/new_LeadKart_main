@@ -180,14 +180,14 @@ class AdsApi {
           options: Options(headers: {
             "Authorization": "${_user!.token}",
           }));
-      MyHelper.logger.i(resp.data['data']);
+      // MyHelper.logger.i(resp.data['data']);
       List<AdvertisementTypeModel> adsTypeModel = [];
       for (var i in resp.data['data']) {
         adsTypeModel.add(AdvertisementTypeModel.fromJson(i));
       }
 
       if (resp.statusCode == 200) {
-        MyHelper.logger.i(adsTypeModel);
+        // MyHelper.logger.i(adsTypeModel);
       } else {
         MyHelper.logger.i(adsTypeModel);
       }
@@ -252,7 +252,8 @@ class AdsApi {
     }
   }
 
-  Future<Response?>getInterests({required String businessId, required String query}) async {
+  Future<Response?> getInterests(
+      {required String businessId, required String query}) async {
     try {
       final CurrentUser? _user =
           await Controllers.userPreferencesController.getUser();

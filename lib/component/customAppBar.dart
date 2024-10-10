@@ -85,12 +85,12 @@ class CustomAppBar extends StatelessWidget {
                               for (var business in value.allBusiness)
                                 ListTile(
                                   //Color
-                                  tileColor:
-                                      (business.id == value.currentBusiness?.id)
-                                          ? AppConstent()
-                                              .primeryColor
-                                              .withOpacity(.15)
-                                          : null,
+                                  tileColor: (business.id! ==
+                                          value.currentBusiness?.id!)
+                                      ? AppConstent()
+                                          .primeryColor
+                                          .withOpacity(.15)
+                                      : null,
 
                                   //Subtitle of TIle
                                   // subtitle: SelectableText(business.id.toString(),style: TextStyle(color: Colors.grey.shade500),),

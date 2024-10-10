@@ -62,38 +62,51 @@ class BussnissApi {
       final CurrentUser? _user =
           await Controllers.userPreferencesController.getUser();
 
-      var resp = await MyHelper.dio.get(uri,
-          options: Options(
-            headers: {
-              "Authorization": "${_user!.token}",
-            },
-          ));
+      if (_user == null) {
+        return CustomResponce(
+          statusCode: 401,
+          errorStatus: true,
+          errorMessage: "User not authenticated",
+        );
+      }
+      log("userId $userId");
+      log("token ${_user.token}");
+      var resp = await MyHelper.dio.get(
+        uri,
+        options: Options(
+          headers: {
+            "Authorization": "${_user.token}",
+          },
+        ),
+      );
+
       log("status code ${resp.statusCode}");
       if (resp.statusCode == 200) {
         final List<BusinessModel> businessList =
-            (resp.data['data'] as List).map((e) {
-          return BusinessModel.fromMap(e);
-        }).toList();
-        // MyHelper.logger.i(businessList);
+            (resp.data['data'] as List?)?.map((e) {
+                  return BusinessModel.fromMap(e);
+                }).toList() ??
+                [];
+
         return CustomResponce(
           statusCode: resp.statusCode!,
-          message: resp.data["message"].toString(),
+          message: resp.data["message"]?.toString() ?? "Success",
           data: businessList,
         );
       } else {
         MyHelper.logger
-            .e("${'-' * 10} Responce from allCategory api ${'-' * 10}");
+            .e("${'-' * 10} Response from allCategory api ${'-' * 10}");
         MyHelper.logger.e(resp.statusCode);
         MyHelper.logger.e(resp.data);
         return CustomResponce(
-          statusCode: resp.statusCode!,
+          statusCode: resp.statusCode ?? 500,
           errorStatus: true,
-          errorMessage: resp.data.toString(),
+          errorMessage: resp.data?.toString() ?? "Unknown error occurred",
         );
       }
     } catch (e) {
       MyHelper.logger
-          .e("${'-' * 10} Responce from allCategory api ${'-' * 10}");
+          .e("${'-' * 10} Response from allCategory api ${'-' * 10}");
       MyHelper.logger.e(e.toString());
       return CustomResponce(
         statusCode: 500,
@@ -291,9 +304,6 @@ class BussnissApi {
   //   }
   // }
 
-
-
-
   Future<CustomResponce> createBusiness({
     XFile? logo,
     String? businessCategoryId,
@@ -340,10 +350,10 @@ class BussnissApi {
 
     //
     var formatedData =
-    data.map((key, value) => MapEntry(key, value.toString()));
+        data.map((key, value) => MapEntry(key, value.toString()));
 
     var request =
-    http.MultipartRequest("POST", Uri.parse(ApiConst.baseUrl + uri));
+        http.MultipartRequest("POST", Uri.parse(ApiConst.baseUrl + uri));
 
     if (logo != null) {
       request.files.add(await http.MultipartFile.fromPath(
@@ -391,7 +401,6 @@ class BussnissApi {
     }
   }
 
-
   Future<CustomResponce> upDateBusiness({
     required String businessId,
     XFile? logo,
@@ -410,12 +419,14 @@ class BussnissApi {
     String? address,
     String? tagLine,
     String? countryId,
-    bool? isFacebookPageLinked = false,
     String? metaAccessToken,
+    String? pageAccessToken,
+    bool? isPageSubscribe,
+    String? pageId,
   }) async {
     String uri = "business/updateBussiness/$businessId";
 
-    MyHelper.logger.i(businessId);
+    // MyHelper.logger.i(businessId);
 
     CurrentUser? user = await Controllers.useraPrefrenc.getUser();
 
@@ -436,9 +447,11 @@ class BussnissApi {
       "facebookLink": faceBookLink,
       "address": address,
       "tagline": tagLine,
-      "isFacebookPageLinked": isFacebookPageLinked,
       // "disable":false,
       "metaAccessToken": metaAccessToken,
+      "pageAccessToken": pageAccessToken,
+      "isPageSubscribe": isPageSubscribe,
+      "pageId": pageId,
       // "isFacebookPageLinked":'true'
       // "countryId":countryId
     };
@@ -468,16 +481,18 @@ class BussnissApi {
       request.fields["servicesId[$i]"] = serviceId[i].toString();
     }
 
-    MyHelper.logger.i(logo?.path ?? "");
-    MyHelper.logger.i(ApiConst.baseUrl + uri);
-    MyHelper.logger.i(data);
+    // MyHelper.logger.i(logo?.path ?? "");
+    // MyHelper.logger.i(ApiConst.baseUrl + uri);
+    MyHelper.logger.f(data);
 
     var response = await request.send();
+    log("Updated business>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${response.statusCode}");
     var d = await response.stream.bytesToString();
+    log("Updated business>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${d}");
     var mapdata = jsonDecode(d);
 
-    MyHelper.logger.i(response.statusCode);
-    MyHelper.logger.i(d);
+    // MyHelper.logger.i(response.statusCode);
+    // MyHelper.logger.i(d);
     MyHelper.logger.i(mapdata);
     //
     BusinessModel model = BusinessModel.fromMap(mapdata["data"]);
@@ -485,6 +500,7 @@ class BussnissApi {
     // geting datad end sending to return
 
     if (response.statusCode == 200) {
+      // log("Updated business>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${d}");
       return CustomResponce(
           statusCode: response.statusCode,
           data: model,

@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/ApiServices/BussnessApi.dart';
 import 'package:leadkart/ApiServices/getPagesApi.dart';
@@ -43,6 +41,7 @@ class BusinessProvider with ChangeNotifier {
 
     if (responce.statusCode == 200) {
       _allBusiness = responce.data;
+      // log(_allBusiness.toString());
     }
 
     _loding = false;
@@ -116,18 +115,20 @@ class BusinessProvider with ChangeNotifier {
                                             //   );
                                             // }
 
-
                                             if (snapshot.hasData) {
                                               log('facebook alpha ${snapshot.data.toString()}');
                                             }
                                             // log('facebook ${snapshot.data.toString()}');
                                             final data = snapshot.data;
 
-
-                                            if(data?.data.length==0){
+                                            if (data?.data.length == 0) {
                                               return Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
-                                                child: Text("No FaceBook Page Found"),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 20),
+                                                child: Text(
+                                                    "No FaceBook Page Found"),
                                               );
                                             }
                                             return Column(
@@ -145,8 +146,6 @@ class BusinessProvider with ChangeNotifier {
                                                       subtitle:
                                                           Text(finalData['id']),
                                                       onTap: () async {
-
-
                                                         await Controllers
                                                                 .linkedPageProvider(
                                                                     context)
@@ -159,37 +158,56 @@ class BusinessProvider with ChangeNotifier {
                                                         )
                                                             .then((e) {
                                                           MyHelper.bussnissApi.upDateBusiness(
-                                                              businessId: _currentBusiness!.id,
-                                                              isFacebookPageLinked: true,
-                                                              serviceId: _currentBusiness!.servicesId,
-                                                              address: _currentBusiness!.address,
-                                                              businessName:
-                                                              _currentBusiness!.businessName,
+                                                              businessId:
+                                                                  _currentBusiness!
+                                                                      .id!,
+                                                              serviceId: _currentBusiness!
+                                                                  .servicesId,
+                                                              address: _currentBusiness!
+                                                                  .address,
+                                                              businessName: _currentBusiness!
+                                                                  .businessName,
                                                               businessCategoryId:
-                                                              _currentBusiness!.businessCategoryId,
-                                                              businessContactNum: _currentBusiness!
-                                                                  .businessContact
-                                                                  .toString(),
-                                                              cityId: _currentBusiness!.cityId,
-                                                              countryId: _currentBusiness!.countryId,
+                                                                  _currentBusiness!
+                                                                      .businessCategoryId,
+                                                              businessContactNum:
+                                                                  _currentBusiness!
+                                                                      .businessContact
+                                                                      .toString(),
+                                                              cityId: _currentBusiness!
+                                                                  .cityId,
+                                                              countryId:
+                                                                  _currentBusiness!
+                                                                      .countryId,
                                                               faceBookLink:
-                                                              _currentBusiness!.facebookLink,
-                                                              instaLink:
-                                                              _currentBusiness!.instagramLink,
-                                                              stateId: _currentBusiness!.stateId,
-                                                              tagLine: _currentBusiness!.tagline,
+                                                                  _currentBusiness!
+                                                                      .facebookLink,
+                                                              instaLink: _currentBusiness!
+                                                                  .instagramLink,
+                                                              stateId:
+                                                                  _currentBusiness!
+                                                                      .stateId,
+                                                              tagLine:
+                                                                  _currentBusiness!
+                                                                      .tagline,
                                                               twitterLink:
-                                                              _currentBusiness!.twitterLink,
-                                                              webLink: _currentBusiness!.websiteLink,
+                                                                  _currentBusiness!
+                                                                      .twitterLink,
+                                                              webLink: _currentBusiness!
+                                                                  .websiteLink,
                                                               whatAppNum: _currentBusiness!
                                                                   .whatsappNumber
                                                                   .toString(),
                                                               youTubeLink:
-                                                              _currentBusiness!.youtubeLink,
-                                                              metaAccessToken:
-                                                              value.accessToken!.tokenString);
+                                                                  _currentBusiness!
+                                                                      .youtubeLink,
+                                                              isPageSubscribe:
+                                                                  false,
+                                                              pageAccessToken:
+                                                                  finalData['access_token'],
+                                                              pageId: finalData['id'],
+                                                              metaAccessToken: value.accessToken!.tokenString);
                                                           lode(context);
-
 
                                                           Navigator.pop(
                                                               context);
@@ -198,7 +216,8 @@ class BusinessProvider with ChangeNotifier {
                                                     );
                                                   },
                                                   itemCount: snapshot
-                                                      .data?.data.length??0,
+                                                          .data?.data.length ??
+                                                      0,
                                                 ),
                                               ],
                                             );
@@ -225,7 +244,6 @@ class BusinessProvider with ChangeNotifier {
                           child: const Text("Cancel")),
                     ],
                   ));
-
 
           return false;
         } else if (businessDetail.isMetaAccessTokenActive != true) {
@@ -262,5 +280,4 @@ class BusinessProvider with ChangeNotifier {
       return false;
     }
   }
-
 }

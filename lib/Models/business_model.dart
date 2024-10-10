@@ -1,49 +1,55 @@
 class BusinessModel {
   final String id;
-  final String businessName;
+  final String? businessName;
   final String?
       businessImage; // nullable for cases where image might be missing
-  final String userId;
-  final String businessCategoryId;
+  final String? userId;
+  final String? businessCategoryId;
   final List<dynamic> servicesId;
   final int? businessContact;
   final int? whatsappNumber;
-  final String stateId;
-  final String cityId;
-  final String countryId;
-  final String websiteLink;
-  final String instagramLink;
-  final String twitterLink;
-  final String youtubeLink;
-  final String facebookLink;
-  final String address;
-  final String tagline;
+  final String? stateId;
+  final String? cityId;
+  final String? countryId;
+  final String? websiteLink;
+  final String? instagramLink;
+  final String? twitterLink;
+  final String? youtubeLink;
+  final String? facebookLink;
+  final String? address;
+  final bool isPageSubscribe;
+  final String? pageId;
+  final String? pageAccessToken;
+  final String? tagline;
   final bool disable;
   final bool isFacebookPageLinked;
 
 //<editor-fold desc="Data Methods">
   const BusinessModel({
-    required this.businessName,
+    required this.id,
+    this.businessName,
     this.businessImage,
-    required this.userId,
-    required this.businessCategoryId,
+    this.userId,
+    this.businessCategoryId,
     required this.servicesId,
-    required this.businessContact,
-    required this.whatsappNumber,
-    required this.stateId,
-    required this.cityId,
-    required this.countryId,
-    required this.websiteLink,
-    required this.instagramLink,
-    required this.twitterLink,
-    required this.youtubeLink,
-    required this.facebookLink,
-    required this.address,
-    required this.tagline,
+    this.businessContact,
+    this.whatsappNumber,
+    this.stateId,
+    this.cityId,
+    this.countryId,
+    this.websiteLink,
+    this.instagramLink,
+    this.twitterLink,
+    this.youtubeLink,
+    this.facebookLink,
+    this.address,
+    required this.isPageSubscribe,
+    this.pageId,
+    this.pageAccessToken,
+    this.tagline,
     required this.disable,
     required this.isFacebookPageLinked,
-    required String id,
-  }) : id = id;
+  });
 
   @override
   bool operator ==(Object other) =>
@@ -67,6 +73,9 @@ class BusinessModel {
           youtubeLink == other.youtubeLink &&
           facebookLink == other.facebookLink &&
           address == other.address &&
+          isPageSubscribe == other.isPageSubscribe &&
+          pageId == other.pageId &&
+          pageAccessToken == other.pageAccessToken &&
           tagline == other.tagline &&
           disable == other.disable &&
           isFacebookPageLinked == other.isFacebookPageLinked);
@@ -90,6 +99,9 @@ class BusinessModel {
       youtubeLink.hashCode ^
       facebookLink.hashCode ^
       address.hashCode ^
+      isPageSubscribe.hashCode ^
+      pageId.hashCode ^
+      pageAccessToken.hashCode ^
       tagline.hashCode ^
       disable.hashCode ^
       isFacebookPageLinked.hashCode;
@@ -97,7 +109,7 @@ class BusinessModel {
   @override
   String toString() {
     return 'BusinessModel{' +
-        ' _id: $id,' +
+        ' id: $id,' +
         ' businessName: $businessName,' +
         ' businessImage: $businessImage,' +
         ' userId: $userId,' +
@@ -114,6 +126,9 @@ class BusinessModel {
         ' youtubeLink: $youtubeLink,' +
         ' facebookLink: $facebookLink,' +
         ' address: $address,' +
+        ' isPageSubscribe: $isPageSubscribe,' +
+        ' pageId: $pageId,' +
+        ' pageAccessToken: $pageAccessToken,' +
         ' tagline: $tagline,' +
         ' disable: $disable,' +
         ' isFacebookPageLinked: $isFacebookPageLinked,' +
@@ -126,7 +141,7 @@ class BusinessModel {
     String? businessImage,
     String? userId,
     String? businessCategoryId,
-    List<String>? servicesId,
+    List<dynamic>? servicesId,
     int? businessContact,
     int? whatsappNumber,
     String? stateId,
@@ -138,6 +153,9 @@ class BusinessModel {
     String? youtubeLink,
     String? facebookLink,
     String? address,
+    bool? isPageSubscribe,
+    String? pageId,
+    String? pageAccessToken,
     String? tagline,
     bool? disable,
     bool? isFacebookPageLinked,
@@ -160,6 +178,9 @@ class BusinessModel {
       youtubeLink: youtubeLink ?? this.youtubeLink,
       facebookLink: facebookLink ?? this.facebookLink,
       address: address ?? this.address,
+      isPageSubscribe: isPageSubscribe ?? this.isPageSubscribe,
+      pageId: pageId ?? this.pageId,
+      pageAccessToken: pageAccessToken ?? this.pageAccessToken,
       tagline: tagline ?? this.tagline,
       disable: disable ?? this.disable,
       isFacebookPageLinked: isFacebookPageLinked ?? this.isFacebookPageLinked,
@@ -185,6 +206,9 @@ class BusinessModel {
       'youtubeLink': this.youtubeLink,
       'facebookLink': this.facebookLink,
       'address': this.address,
+      'isPageSubscribe': this.isPageSubscribe,
+      'pageId': this.pageId,
+      'pageAccessToken': this.pageAccessToken,
       'tagline': this.tagline,
       'disable': this.disable,
       'isFacebookPageLinked': this.isFacebookPageLinked,
@@ -193,26 +217,29 @@ class BusinessModel {
 
   factory BusinessModel.fromMap(Map<String, dynamic> map) {
     return BusinessModel(
-      id: map['_id'].toString(),
-      businessName: map['businessName'].toString(),
-      businessImage: map['businessImage'].toString(),
-      userId: map['userId'].toString(),
-      businessCategoryId: map['businessCategoryId'].toString(),
-      servicesId: map['servicesId'] as List<dynamic>,
-      businessContact: map['businessContact'],
-      whatsappNumber: map['whatsappNumber'],
-      stateId: map['stateId'].toString(),
-      cityId: map['cityId'].toString(),
-      countryId: map['countryId'].toString(),
-      websiteLink: map['websiteLink'].toString(),
-      instagramLink: map['instagramLink'].toString(),
-      twitterLink: map['twitterLink'].toString(),
-      youtubeLink: map['youtubeLink'].toString(),
-      facebookLink: map['facebookLink'].toString(),
-      address: map['address'].toString(),
-      tagline: map['tagline'].toString(),
-      disable: map['disable'] as bool,
-      isFacebookPageLinked: map['isFacebookPageLinked'] as bool,
+      id: map['_id'] as String,
+      businessName: map['businessName'] as String?,
+      businessImage: map['businessImage'] as String?,
+      userId: map['userId'] as String?,
+      businessCategoryId: map['businessCategoryId'] as String?,
+      servicesId: map['servicesId'] as List<dynamic>? ?? [],
+      businessContact: map['businessContact'] as int?,
+      whatsappNumber: map['whatsappNumber'] as int?,
+      stateId: map['stateId'] as String?,
+      cityId: map['cityId'] as String?,
+      countryId: map['countryId'] as String?,
+      websiteLink: map['websiteLink'] as String?,
+      instagramLink: map['instagramLink'] as String?,
+      twitterLink: map['twitterLink'] as String?,
+      youtubeLink: map['youtubeLink'] as String?,
+      facebookLink: map['facebookLink'] as String?,
+      address: map['address'] as String?,
+      isPageSubscribe: map['isPageSubscribe'] as bool? ?? false,
+      pageId: map['pageId'] as String?,
+      pageAccessToken: map['pageAccessToken'] as String?,
+      tagline: map['tagline'] as String?,
+      disable: map['disable'] as bool? ?? false,
+      isFacebookPageLinked: map['isFacebookPageLinked'] as bool? ?? false,
     );
   }
 
