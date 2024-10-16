@@ -73,7 +73,7 @@ class BusinessProvider with ChangeNotifier {
       BusinessDetailModel? businessDetail = await MyHelper.bussnissApi
           .getFullDetailOfBusiness(_currentBusiness?.id ?? "");
       if (businessDetail != null) {
-        _log.i("in");
+        // _log.i("in");
         if (businessDetail.isFacebookPageLinked != true) {
           await showDialog(
               context: context,
@@ -86,7 +86,7 @@ class BusinessProvider with ChangeNotifier {
                     actions: [
                       ElevatedButton(
                           onPressed: () async {
-                            Methods().loginWithFacebook().then(
+                            Methods().loginWithFacebook(context).then(
                               (value) {
                                 if (value != null) {
                                   log(value.accessToken!.tokenString);

@@ -3,9 +3,11 @@ import 'dart:developer';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:leadkart/controllers/creaetAddProvider.dart';
 import 'package:leadkart/generated/assets.dart';
 import 'package:logger/logger.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
+import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 enum PaymentMethod {
@@ -182,15 +184,28 @@ class PaymentMethods {
           "Code: ${response.code}\nDescription: ${response.message}\nMetadata:${response.error.toString()}");
     }
 
-    void handlePaymentSuccessResponse(PaymentSuccessResponse response) {
+    void handlePaymentSuccessResponse(PaymentSuccessResponse response) async {
       /*
     * Payment Success Response contains three values:
     * 1. Order ID
     * 2. Payment ID
     * 3. Signature
     * */
-      showAlertDialog(
-          context, "Payment Successful", "Payment ID: ${response.paymentId}");
+      showAlertDialog(context, "Payment Successful",
+          "Order ID: ${response.orderId}\nPayment ID: ${response.paymentId}\nSignature: ${response.signature}");
+      await Provider.of<CreateAddProvider>(context, listen: false)
+          .createAdd(context)
+          .then(
+        (value) {
+          if (value != null) {
+            showAlertDialog(context, "$value",
+                "Order ID: ${response.orderId}\nPayment ID: ${response.paymentId}\nSignature: ${response.signature}");
+          } else {
+            showAlertDialog(context, "Something went wrong: $value",
+                "Order ID: ${response.orderId}\nPayment ID: ${response.paymentId}\nSignature: ${response.signature}");
+          }
+        },
+      );
     }
 
     void handleExternalWalletSelected(ExternalWalletResponse response) {

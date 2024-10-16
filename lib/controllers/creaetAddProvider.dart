@@ -1,23 +1,19 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:leadkart/ApiServices/addDetaL%20API.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
 import 'package:leadkart/ApiServices/plansApi.dart';
 import 'package:leadkart/Models/PlanBYTypIdModel.dart';
-import 'package:leadkart/Models/ad_interests.dart';
 import 'package:leadkart/Models/estimateddataModel.dart';
-import 'package:leadkart/Models/offeringResponceModel.dart';
-import 'package:leadkart/Models/plansModel.dart';
 import 'package:leadkart/Models/targetAreaResponceModel.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:logger/logger.dart';
 
 import '../Models/ad_type_model.dart';
+import '../Models/offeringResponceModel.dart';
 
 class CreateAddProvider with ChangeNotifier {
   AdvertisementTypeModel? _addType;
@@ -82,9 +78,7 @@ class CreateAddProvider with ChangeNotifier {
   //
   //Increase FaceBook Budget
   void incFacebookBudget() {
-
-    if(_faceBookBudget.text.trim().isEmpty)
-    {
+    if (_faceBookBudget.text.trim().isEmpty) {
       _faceBookBudget.clear();
     }
 
@@ -96,8 +90,7 @@ class CreateAddProvider with ChangeNotifier {
   }
 
   //
-  void setFaceBookBudget(String b)
-  {
+  void setFaceBookBudget(String b) {
     _faceBookBudget.text = int.parse(b).toString();
   }
 
@@ -130,10 +123,9 @@ class CreateAddProvider with ChangeNotifier {
   //
   //Increase inst Budget
   void incInstBudget() {
-    if(_instBudget.text.trim().isEmpty)
-      {
-        _instBudget.clear();
-      }
+    if (_instBudget.text.trim().isEmpty) {
+      _instBudget.clear();
+    }
     int b = int.parse(_instBudget.text.trim());
     b = b + 200;
     _instBudget.text = b.toString();
@@ -141,8 +133,7 @@ class CreateAddProvider with ChangeNotifier {
     getEstimatedPlan();
   }
 
-  void setInstBudget(String b)
-  {
+  void setInstBudget(String b) {
     _instBudget.text = int.parse(b).toString();
   }
 
@@ -163,12 +154,9 @@ class CreateAddProvider with ChangeNotifier {
     getEstimatedPlan();
   }
 
-  void setGoogleBudget(String b)
-  {
+  void setGoogleBudget(String b) {
     _googleBudget.text = int.parse(b).toString();
   }
-
-
 
   void decGoogleBudget() {
     int b = int.parse(_googleBudget.text.trim());
@@ -236,18 +224,15 @@ class CreateAddProvider with ChangeNotifier {
   }
 
   void setPlan(PlanDetail2? p) {
-   if(p!=null)
-     {
-       _plan = p;
-       _instBudget.text = "0";
-       _faceBookBudget.text = "0";
-       getEstimatedPlan();
-       notifyListeners();
-     }
-   else
-     {
-       _plan=p;
-     }
+    if (p != null) {
+      _plan = p;
+      _instBudget.text = "0";
+      _faceBookBudget.text = "0";
+      getEstimatedPlan();
+      notifyListeners();
+    } else {
+      _plan = p;
+    }
   }
 
   Future<void> selectImage(BuildContext context) async {
@@ -323,37 +308,46 @@ class CreateAddProvider with ChangeNotifier {
     captionController.text = caption;
   }
 
-  Future<void> createAdd(BuildContext context) async {
-    var api = AdsApi();
-    var d = await api.createAdd(
-      location: _targetArea,
-      businessId: Controllers.businessProvider(context, listen: false)
-              .currentBusiness
-              ?.id ??
-          "",
-      adTypeId: _addType?.id ?? "",
-      startDate: _startDate?.toIso8601String(),
-      endDate: _endDate?.toIso8601String(),
-      dayEndTime: "${_dayEndTime?.hour}:${_dayEndTime?.minute}",
-      dayStartTime: "${_dayStartTime?.hour}:${_dayStartTime?.minute}",
-      ageRangeFrom: _ageRange?.start.toInt(),
-      ageRangeTo: _ageRange?.end.toInt(),
-      caption: _captionController.text.trim(),
-      name: _titleController.text.trim(),
-      days: _days,
-      instBudget: int.parse(_instBudget.text),
-      googleBudget: int.parse(_googleBudget.text),
-      faceBookBudget: int.parse(_faceBookBudget.text),
-      destinationUrl: _destinationUrlController.text.trim(),
-      file: _imagePath,
-      isFaceBookAddEnable: plan == null && int.parse(_faceBookBudget.text) > 0,
-      isInstaAddEnable: plan == null && int.parse(_instBudget.text) > 0,
-      isGoogleAddEnable: plan == null && int.parse(_faceBookBudget.text) > 0,
-      planId: plan?.id,
-    );
+  Future<dynamic> createAdd(BuildContext context) async {
+    try {
+      var api = AdsApi();
+      var d = await api.createAdd(
+        location: _targetArea,
+        businessId: Controllers.businessProvider(context, listen: false)
+                .currentBusiness
+                ?.id ??
+            "",
+        adTypeId: _addType?.id ?? "",
+        startDate: _startDate?.toIso8601String(),
+        endDate: _endDate?.toIso8601String(),
+        dayEndTime: "${_dayEndTime?.hour}:${_dayEndTime?.minute}",
+        dayStartTime: "${_dayStartTime?.hour}:${_dayStartTime?.minute}",
+        ageRangeFrom: _ageRange?.start.toInt(),
+        ageRangeTo: _ageRange?.end.toInt(),
+        caption: _captionController.text.trim(),
+        name: _titleController.text.trim(),
+        days: _days,
+        instBudget: int.parse(_instBudget.text),
+        googleBudget: int.parse(_googleBudget.text),
+        faceBookBudget: int.parse(_faceBookBudget.text),
+        destinationUrl: _destinationUrlController.text.trim(),
+        file: _imagePath,
+        isFaceBookAddEnable:
+            plan == null && int.parse(_faceBookBudget.text) > 0,
+        isInstaAddEnable: plan == null && int.parse(_instBudget.text) > 0,
+        isGoogleAddEnable: plan == null && int.parse(_faceBookBudget.text) > 0,
+        planId: plan?.id,
+      );
 
-    if (d is Map) {
-      MyHelper.mySnakebar(context, "${d["message"]}");
+      if (d is Map) {
+        if (kDebugMode) {
+          MyHelper.mySnakebar(context, "${d["message"]}");
+        }
+      }
+      return d;
+    } catch (e) {
+      Logger().e(e);
+      MyHelper.mySnakebar(context, "Something went wrong ");
     }
   }
 
@@ -362,27 +356,20 @@ class CreateAddProvider with ChangeNotifier {
     var resp =
         await AdsApi().getInterests(businessId: businessId, query: query);
 
-    if(resp?.statusCode==200)
-      {
-        if (resp?.data?['message'] == 'Target Serch Area Data') {
-          return resp?.data['data'];
-        } else {
-          Logger().i("$resp");
-          return [];
-        }
+    if (resp?.statusCode == 200) {
+      if (resp?.data?['message'] == 'Target Serch Area Data') {
+        return resp?.data['data'];
+      } else {
+        Logger().i("$resp");
+        return [];
       }
-    else
-      {
-        if(kDebugMode)
-          {
-            MyHelper.mySnakebar(context, "${resp?.statusCode}\n${resp?.data}");
-          }
-        else
-          {
-            MyHelper.mySnakebar(context, "Something went wrong ");
-          }
+    } else {
+      if (kDebugMode) {
+        MyHelper.mySnakebar(context, "${resp?.statusCode}\n${resp?.data}");
+      } else {
+        MyHelper.mySnakebar(context, "Something went wrong ");
       }
-
+    }
   }
 
   void clear() {
