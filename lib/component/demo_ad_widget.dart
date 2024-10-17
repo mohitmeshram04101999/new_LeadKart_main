@@ -20,11 +20,10 @@ class DemoAdWidget extends StatelessWidget {
       splasColor: Colors.grey.shade100,
       onTap: () async {
         await Future.delayed(const Duration(milliseconds: 150));
-        if (!isDemo) {
-          context
-              .pushNamed("AddDetailScreen", extra: {"id": add.id.toString()});
-          Controllers.campaignProvider(context).load(context, campaignAd: add);
-        }
+        // if (!isDemo) {
+        context.pushNamed("AddDetailScreen", extra: {"id": add.id.toString()});
+        Controllers.campaignProvider(context).load(context, campaignAd: add);
+        // }
       },
       margin: EdgeInsets.symmetric(horizontal: SC.from_height(2), vertical: 8),
       decoration: BoxDecoration(
