@@ -1,34 +1,38 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:leadkart/Models/business_model.dart';
-import 'package:leadkart/component/flatIconns.dart';import 'package:leadkart/helper/TextStyles.dart';
-import 'package:leadkart/helper/controllerInstances.dart';
-import 'package:leadkart/helper/helper.dart';import 'package:leadkart/them/constents.dart';
 import 'package:go_router/go_router.dart';
 import 'package:leadkart/Models/ad_type_model.dart';
+import 'package:leadkart/component/flatIconns.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
+import 'package:logger/logger.dart';
 
 import '../helper/dimention.dart';
-
 
 class AddREquirmentTile extends StatelessWidget {
   Widget icon;
   AdvertisementTypeModel advertisementTypeModel;
-  AddREquirmentTile({required this.icon, required this.advertisementTypeModel,super.key});
+  AddREquirmentTile(
+      {required this.icon, required this.advertisementTypeModel, super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: SC.from_width(8)),
       onTap: () async {
-        bool create = await  Controllers.businessProvider(context,listen: false).currentBusiness?.isFacebookPageLinked==true;
-        if(create)
-          {
-            Controllers.allPlansProvider(context).selectAddPlane(advertisementTypeModel);
-            GoRouter.of(context).pushNamed('getNewLeads');
-          }else
-            {
-              Controllers.businessProvider(context,listen: false).showWarning(context);
-            }
+        bool create = await Controllers.businessProvider(context, listen: false)
+                .currentBusiness
+                ?.pageAccessToken !=
+            null;
+        if (create) {
+          Controllers.allPlansProvider(context)
+              .selectAddPlane(advertisementTypeModel);
+          GoRouter.of(context).pushNamed('getNewLeads');
+          Logger().t(
+              "Add Type Selected ${advertisementTypeModel.title} & ${advertisementTypeModel.id}");
+        } else {
+          Controllers.businessProvider(context, listen: false)
+              .showWarning(context);
+        }
       },
       leading: CircleAvatar(
         backgroundColor: const Color.fromRGBO(241, 241, 241, 1),

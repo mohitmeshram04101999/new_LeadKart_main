@@ -18,7 +18,7 @@ class AddListByBusinessProvider with ChangeNotifier {
   }
 
   Future<void> load(BuildContext context) async {
-    Logger().e("YOYOYOYOYOYOYOY");
+    Logger().i("Loading business data...");
     _loding = true;
     notifyListeners();
     var business = Controllers.businessProvider(context).currentBusiness;

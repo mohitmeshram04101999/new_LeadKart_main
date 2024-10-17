@@ -20,8 +20,11 @@ class DemoAdWidget extends StatelessWidget {
       splasColor: Colors.grey.shade100,
       onTap: () async {
         await Future.delayed(const Duration(milliseconds: 150));
-        context.pushNamed("AddDetailScreen", extra: {"id": add.id.toString()});
-        Controllers.campaignProvider(context).load(context, campaignAd: add);
+        if (!isDemo) {
+          context
+              .pushNamed("AddDetailScreen", extra: {"id": add.id.toString()});
+          Controllers.campaignProvider(context).load(context, campaignAd: add);
+        }
       },
       margin: EdgeInsets.symmetric(horizontal: SC.from_height(2), vertical: 8),
       decoration: BoxDecoration(
@@ -156,18 +159,12 @@ class DemoAdWidget extends StatelessWidget {
             padding: EdgeInsets.only(right: SC.from_height(12)),
             child: Column(
               children: [
-                InkWell(
-                  onTap: () {
-                    context.pushNamed("AddDetailScreen",
-                        extra: {"id": add.id.toString()});
-                  },
-                  child: Text(
-                    'View Reports',
-                    style: TextStyle(
-                      color: AppConstent().primeryColor,
-                      // fontSize: SC.from_height(15),
-                      fontSize: SC.fromWidth(27),
-                    ),
+                Text(
+                  'View Reports',
+                  style: TextStyle(
+                    color: AppConstent().primeryColor,
+                    // fontSize: SC.from_height(15),
+                    fontSize: SC.fromWidth(27),
                   ),
                 ),
                 SizedBox(

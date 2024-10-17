@@ -13,8 +13,6 @@ import 'package:leadkart/leads/adddetail/devicerachebiew.dart';
 import 'package:leadkart/leads/adddetail/genderandCtr%20view.dart';
 import 'package:leadkart/leads/adddetail/tableview.dart';
 import 'package:leadkart/leads/adddetail/topPlacement%20view.dart';
-import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
-import 'package:leadkart/screens/seeAllLeads/seeAllLeads.dart';
 import 'package:leadkart/shimmers.dart';
 import 'package:leadkart/them/constents.dart';
 import 'package:provider/provider.dart';
@@ -113,6 +111,7 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                       height: 150,
                     );
                   }
+
                   return Container(
                     padding: const EdgeInsets.all(10),
                     width: double.infinity,
@@ -235,18 +234,18 @@ class _AddDetailScreenState extends State<AddDetailScreen> {
                 ),
                 // SEE ALL LEADS //
                 Center(
-                  // child: InkWell(
-                  //   onTap: () {
-                  //
-                  //   },
-                  //   child: Text(
-                  //     'See All Leads',
-                  //     style: TextStyle(
-                  //         fontSize: SC.from_height(17),
-                  //         color: AppConstent().primeryColor),
-                  //   ),
-                  // ),
-                ),
+                    // child: InkWell(
+                    //   onTap: () {
+                    //
+                    //   },
+                    //   child: Text(
+                    //     'See All Leads',
+                    //     style: TextStyle(
+                    //         fontSize: SC.from_height(17),
+                    //         color: AppConstent().primeryColor),
+                    //   ),
+                    // ),
+                    ),
                 SizedBox(
                   height: SC.from_height(15),
                 ),

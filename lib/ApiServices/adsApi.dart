@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
@@ -55,91 +56,92 @@ class AdsApi {
       //static
       "optimization_goal": "REACH",
       "billing_event": "IMPRESSIONS",
-      "start_time": "2024-10-06T04:45:17+0000",
-      "status": "PAUSED",
+      // "start_time": "2024-10-06T04:45:17+0000",
+      // "status": "PAUSED",
       // "file":file
       "dailySpendBudget": 10000,
       // "externalCampiagnId": "66879f2b9cc7c8273dfd0901",
       "isFacebookAdEnabled": isFaceBookAddEnable,
-      "isInstaAdEnabled": isInstaAddEnable,
-      "isGoogleAdEnabledokAdSetId": isGoogleAddEnable,
+      // "isInstaAdEnabled": isInstaAddEnable,
+      // "isGoogleAdEnabledokAdSetId": isGoogleAddEnable,
       // "facebookBudget": faceBookBudget,
       "facebookBudget": 145400,
-      "instaBudget": instBudget,
-      "googleBudget": googleBudget,
+      // "instaBudget": instBudget,
+      // "googleBudget": googleBudget,
       "destinationUrl": destinationUrl,
       // "audienceId": null,
       // "location": location!=null? location.toJson().toString() :null,
       "location": {
         "countries": ["IN"]
       },
+      "days": 1,
       "interest": {"id": 6018341976753, "name": "Movies"},
-      // "audienceGender": audienceGender,
+      "audienceGender": "1",
       "ageRangeFrom": ageRangeFrom,
       "ageRangeTo": ageRangeTo,
       "dayStartTime": "0",
       // "dayStartTime": dayStartTime?.toString(),
       "dayEndTime": "23:59",
       // "dayEndTime": dayEndTime?.toString(),
-      "addTypeId": adTypeId,
-      "caption": caption,
-      "startDate": 1723186321,
+      "addTypeId": "667a7c6df68bde8bec7ad3a7",
+      // "caption": caption,
+      "startDate": 1729228487,
       // "startDate":startDate,
-      "endDate": 1723359121,
+      "endDate": 1729314887,
       // "endDate":endDate,
     };
 
-    Map<String, String> fakeData = {
-      "businessId": businessId,
-//planId:6656cf2e1302350b8be0af21
-      "name": "bhupendra",
-      "optimization_goal": "REACH",
-      "billing_event": "IMPRESSIONS",
-//status:PAUSED
-      "dailySpendBudget": "100000",
-//externalCampiagnId:66879f2b9cc7c8273dfd0901
-      "isFacebookAdEnabled": "true",
-//isInstaAdEnabled:true
-//isGoogleAdEnabledokAdSetId:false
-      "facebookBudget": "145400",
-//instaBudget:200000
-//googleBudget:
-      "destinationUrl": "jhghjjkhghjhj.com",
-//audienceId:
-      "location": "{countries:['IN']}",
-      "interest": "{id: '6018341976753', name: 'Movies'}",
-      "audienceGender": "1",
-      "ageRangeFrom": "18",
-      "ageRangeTo": "50",
-      "days": "1",
-      "dayStartTime": "0",
-      "dayEndTime": "23:59",
-      "addTypeId": "667a7c6df68bde8bec7ad3a7",
-//caption:
-      "startDate": "1723186321",
-      "endDate": "1723359121",
-      "days": "2",
-      "audienceGender": "2",
-//filename:
-    };
+//     Map<String, String> fakeData = {
+//       "businessId": businessId,
+// //planId:6656cf2e1302350b8be0af21
+//       "name": "bhupendra",
+//       "optimization_goal": "REACH",
+//       "billing_event": "IMPRESSIONS",
+// //status:PAUSED
+//       "dailySpendBudget": "100000",
+// //externalCampiagnId:66879f2b9cc7c8273dfd0901
+//       "isFacebookAdEnabled": "true",
+// //isInstaAdEnabled:true
+// //isGoogleAdEnabledokAdSetId:false
+//       "facebookBudget": "145400",
+// //instaBudget:200000
+// //googleBudget:
+//       "destinationUrl": "jhghjjkhghjhj.com",
+// //audienceId:
+//       "location": "{countries:['IN']}",
+//       "interest": "{id: '6018341976753', name: 'Movies'}",
+//       "audienceGender": "1",
+//       "ageRangeFrom": "18",
+//       "ageRangeTo": "50",
+//       "days": "1",
+//       "dayStartTime": "0",
+//       "dayEndTime": "23:59",
+//       "addTypeId": "667a7c6df68bde8bec7ad3a7",
+// //caption:
+//       "startDate": "1723186321",
+//       "endDate": "1723359121",
+//       "days": "2",
+//       "audienceGender": "2",
+// //filename:
+//     };
 
     String uri = "/adsDetails/createAdsDetails";
-
-    var head = await UserPreference().getHeader() as Map<String, String>;
-    Map<String, String> dataToSend = {};
-    data.forEach((key, value) {
-      if (value != null && value != "") {
-        dataToSend[key] = value.toString();
-      }
-    });
+    log(data.toString());
+    // var head = await UserPreference().getHeader() as Map<String, String>;
+    var dataToSend = data.map((key, value) => MapEntry(key, value.toString()));
+    // data.forEach((key, value) {
+    //   if (value != null && value != "") {
+    //     dataToSend[key] = value.toString();
+    //   }
+    // });
 
     _log.e(dataToSend);
 
     var request =
         http.MultipartRequest("POST", Uri.parse(ApiConst.baseUrl + uri));
-
+    CurrentUser? user = await Controllers.useraPrefrenc.getUser();
     request.fields.addAll(dataToSend);
-    request.headers.addAll(head);
+    request.headers.addAll({"Authorization": user!.token.toString()});
 
     if (audienceGender != null) {
       for (int i = 0; i < audienceGender.length; i++) {
@@ -156,9 +158,10 @@ class AdsApi {
     if (file != null) {
       request.files.add(await http.MultipartFile.fromPath(
         "filename",
-        file.toString() ?? "",
+        file ?? "",
       ));
     }
+    _log.e(file.toString());
 
     var resp = await request.send();
     Logger().i(resp.statusCode);
@@ -166,7 +169,7 @@ class AdsApi {
     Logger().i(responceBody);
     var j = jsonDecode(responceBody);
 
-    _log.e("${resp.statusCode}\n${j}");
+    _log.e("${resp.statusCode}\n$j");
 
     return j;
   }
@@ -232,7 +235,7 @@ class AdsApi {
       EstimetedDataResponce data = EstimetedDataResponce.fromJson(resp.data);
       return data;
     } else {
-      Logger().i("THis Resp\n${resp.statusCode}\n${resp}");
+      Logger().i("THis Resp\n${resp.statusCode}\n$resp");
     }
   }
 

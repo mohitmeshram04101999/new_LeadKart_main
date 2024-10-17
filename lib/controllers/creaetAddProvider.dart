@@ -41,6 +41,7 @@ class CreateAddProvider with ChangeNotifier {
   List<OfferDetail> _offers = [];
   List<String> _adInterests = [];
   TargetArea? _targetArea;
+  bool _isAdCreationInProgress = false;
 
   AdvertisementTypeModel? get addType => _addType;
   String? get image => _imagePath;
@@ -67,7 +68,7 @@ class CreateAddProvider with ChangeNotifier {
   List<OfferDetail> get offers => _offers;
   TargetArea? get targetArea => _targetArea;
   List<String> get adInterests => _adInterests;
-
+  bool get isAdCreationInProgress => _isAdCreationInProgress;
   //
   //addType
   void setAddType(AdvertisementTypeModel add) {
@@ -310,6 +311,7 @@ class CreateAddProvider with ChangeNotifier {
 
   Future<dynamic> createAdd(BuildContext context) async {
     try {
+      _isAdCreationInProgress = true;
       var api = AdsApi();
       var d = await api.createAdd(
         location: _targetArea,
@@ -338,7 +340,8 @@ class CreateAddProvider with ChangeNotifier {
         isGoogleAddEnable: plan == null && int.parse(_faceBookBudget.text) > 0,
         planId: plan?.id,
       );
-
+      _isAdCreationInProgress = false;
+      notifyListeners();
       if (d is Map) {
         if (kDebugMode) {
           MyHelper.mySnakebar(context, "${d["message"]}");
@@ -346,6 +349,7 @@ class CreateAddProvider with ChangeNotifier {
       }
       return d;
     } catch (e) {
+      _isAdCreationInProgress = false;
       Logger().e(e);
       MyHelper.mySnakebar(context, "Something went wrong ");
     }

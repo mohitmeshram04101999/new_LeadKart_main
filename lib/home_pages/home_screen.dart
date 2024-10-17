@@ -4,6 +4,7 @@ import 'package:leadkart/Models/ad_type_model.dart';
 import 'package:leadkart/component/addRequirmentTile.dart';
 import 'package:leadkart/component/customAppBar.dart';
 import 'package:leadkart/component/flatIconns.dart';
+import 'package:leadkart/component/helpButton.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/shimmers.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -72,13 +73,18 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: CustomAppBar(
-              // trailingButton: HelpButton(
-              //   onTap: (){
-              //     // context.pushNamed("helpScreen");
-              //     RouteTo(context, child: (a,b)=>const HelpScreen());
-              //   },
-              // ),
-              )),
+            trailingButton: HelpButton(
+              onTap: () {
+                launch("tel: +917007892427");
+              },
+            ),
+            // trailingButton: HelpButton(
+            //   onTap: (){
+            //     // context.pushNamed("helpScreen");
+            //     RouteTo(context, child: (a,b)=>const HelpScreen());
+            //   },
+            // ),
+          )),
 
       //Body
       body: ListView(
@@ -232,7 +238,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     final item = data[index];
                     return Container(
-
                       margin: EdgeInsets.only(
                           top: SC.from_height(15),
                           left: SC.from_height(2),

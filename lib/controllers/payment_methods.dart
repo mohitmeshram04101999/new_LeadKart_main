@@ -191,18 +191,22 @@ class PaymentMethods {
     * 2. Payment ID
     * 3. Signature
     * */
-      showAlertDialog(context, "Payment Successful",
-          "Order ID: ${response.orderId}\nPayment ID: ${response.paymentId}\nSignature: ${response.signature}");
+      showAlertDialog(
+          context, "Payment Successful", "Payment ID: ${response.paymentId}");
       await Provider.of<CreateAddProvider>(context, listen: false)
           .createAdd(context)
           .then(
         (value) {
           if (value != null) {
-            showAlertDialog(context, "$value",
-                "Order ID: ${response.orderId}\nPayment ID: ${response.paymentId}\nSignature: ${response.signature}");
+            showAlertDialog(
+                context,
+                value["status"] == "Created"
+                    ? "Add Created"
+                    : "Something went wrong: $value",
+                "Payment ID: ${response.paymentId}\nPayment Successful");
           } else {
             showAlertDialog(context, "Something went wrong: $value",
-                "Order ID: ${response.orderId}\nPayment ID: ${response.paymentId}\nSignature: ${response.signature}");
+                "Payment ID: ${response.paymentId}");
           }
         },
       );

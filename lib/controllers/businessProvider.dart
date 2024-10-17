@@ -48,7 +48,7 @@ class BusinessProvider with ChangeNotifier {
     _currentBusiness = await Controllers.useraPrefrenc.getBusiness();
     notifyListeners();
     Logger().f(_currentBusiness);
-    if (_currentBusiness?.isFacebookPageLinked != true &&
+    if (_currentBusiness?.pageAccessToken == null &&
         !_isWarningOpen &&
         _warning) {
       showWarning(context);
@@ -63,6 +63,7 @@ class BusinessProvider with ChangeNotifier {
     notifyListeners();
     UserPreference().saveBusiness(business);
     await lode(context);
+    Controllers.addListByBusinessProvider(context).load(context);
   }
   //
 
@@ -74,7 +75,8 @@ class BusinessProvider with ChangeNotifier {
           .getFullDetailOfBusiness(_currentBusiness?.id ?? "");
       if (businessDetail != null) {
         // _log.i("in");
-        if (businessDetail.isFacebookPageLinked != true) {
+        if (businessDetail.pageAccessToken == null ||
+            businessDetail.pageAccessToken == "") {
           await showDialog(
               context: context,
               barrierDismissible: false,
