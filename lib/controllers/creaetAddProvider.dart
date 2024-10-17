@@ -312,6 +312,8 @@ class CreateAddProvider with ChangeNotifier {
   Future<dynamic> createAdd(BuildContext context) async {
     try {
       _isAdCreationInProgress = true;
+      notifyListeners();
+
       var api = AdsApi();
       var d = await api.createAdd(
         location: _targetArea,
@@ -350,6 +352,7 @@ class CreateAddProvider with ChangeNotifier {
       return d;
     } catch (e) {
       _isAdCreationInProgress = false;
+      notifyListeners();
       Logger().e(e);
       MyHelper.mySnakebar(context, "Something went wrong ");
     }

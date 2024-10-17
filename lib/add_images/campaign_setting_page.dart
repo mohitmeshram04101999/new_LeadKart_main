@@ -45,24 +45,24 @@ class _CampaignSettingState extends State<CampaignSetting> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            AnimatedContainer(
-                duration: Duration(
-                  milliseconds: 300,
-                ),
-                color: Colors.lightGreen.shade400,
-                child: Center(
-                    child: Text(
-                  "Ad Creation in Progress...",
-                  style: TextStyle(
-                      color: Colors.black,
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 17),
-                )),
-                height: Provider.of<CreateAddProvider>(context, listen: true)
-                            .isAdCreationInProgress ==
-                        true
-                    ? 45
-                    : 0),
+            Consumer<CreateAddProvider>(
+              builder: (context, value, child) {
+                return AnimatedContainer(
+                    duration: Duration(
+                      milliseconds: 300,
+                    ),
+                    color: Colors.lightGreen.shade400,
+                    child: Center(
+                        child: Text(
+                      "Ad Creation in Progress...",
+                      style: TextStyle(
+                          color: Colors.black,
+                          // fontWeight: FontWeight.bold,
+                          fontSize: 17),
+                    )),
+                    height: value.isAdCreationInProgress == true ? 45 : 0);
+              },
+            ),
             Expanded(
               child: Scaffold(
                 appBar: AppBar(
