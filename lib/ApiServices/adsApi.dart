@@ -85,9 +85,9 @@ class AdsApi {
       // "dayEndTime": dayEndTime?.toString(),
       "addTypeId": "667a7c6df68bde8bec7ad3a7",
       // "caption": caption,
-      "startDate": 1729228487,
+      "startDate": startDate,
       // "startDate":startDate,
-      "endDate": 1729314887,
+      "endDate": endDate,
       // "endDate":endDate,
     };
 
@@ -164,9 +164,9 @@ class AdsApi {
     _log.e(file.toString());
 
     var resp = await request.send();
-    Logger().i(resp.statusCode);
+    Logger().e(resp.statusCode);
     String responceBody = await resp.stream.bytesToString();
-    Logger().i(responceBody);
+    Logger().e(responceBody);
     var j = jsonDecode(responceBody);
 
     _log.e("${resp.statusCode}\n$j");
@@ -241,17 +241,21 @@ class AdsApi {
 
   Future<AddListByBusinessResponce?> getAddListByBusiness(
       {String businessId = "664483cb34434c7cec80d6ed"}) async {
-    String uri = "/getAllMyAdsListApi?businessId=$businessId";
+    try {
+      String uri = "/getAllMyAdsListApi?businessId=$businessId";
 
-    var head = await UserPreference().getHeader();
+      var head = await UserPreference().getHeader();
 
-    var resp = await MyHelper.dio.get(uri, options: Options(headers: head));
+      var resp = await MyHelper.dio.get(uri, options: Options(headers: head));
 
-    if (resp.statusCode == 200) {
-      var _d = await AddListByBusinessResponce.fromJson(resp.data);
-      return _d;
-    } else {
-      _log.e("Responce From\n${resp.statusCode}\n${resp.data}");
+      if (resp.statusCode == 200) {
+        var _d = await AddListByBusinessResponce.fromJson(resp.data);
+        return _d;
+      } else {
+        _log.e("Responce From\n${resp.statusCode}\n${resp.data}");
+      }
+    } catch (e) {
+      _log.e(e);
     }
   }
 

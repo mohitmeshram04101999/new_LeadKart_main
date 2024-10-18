@@ -322,8 +322,8 @@ class CreateAddProvider with ChangeNotifier {
                 ?.id ??
             "",
         adTypeId: _addType?.id ?? "",
-        startDate: _startDate?.toIso8601String(),
-        endDate: _endDate?.toIso8601String(),
+        startDate: "${_startDate!.millisecondsSinceEpoch ~/ 1000}",
+        endDate: "${_endDate!.millisecondsSinceEpoch ~/ 1000}",
         dayEndTime: "${_dayEndTime?.hour}:${_dayEndTime?.minute}",
         dayStartTime: "${_dayStartTime?.hour}:${_dayStartTime?.minute}",
         ageRangeFrom: _ageRange?.start.toInt(),
