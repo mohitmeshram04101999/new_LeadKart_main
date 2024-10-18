@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:leadkart/component/optioChip.dart';
+import 'package:leadkart/component/sheder%20Iocn.dart';
 import 'package:leadkart/controllers/LeadeDetaileProvider.dart';
 import 'package:leadkart/function/flunction.dart';
-import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
-import 'package:leadkart/shimmers.dart';
-import 'package:leadkart/them/constents.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:leadkart/component/sheder%20Iocn.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/shimmers.dart';
 import 'package:leadkart/them/constents.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class LeadDetailsScreen extends StatefulWidget {
   const LeadDetailsScreen({super.key});
@@ -365,7 +361,7 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8),
                                         child: Text(
-                                          "${MyHelper.formatDateTime(history.createdAt!)}",
+                                          "${MyHelper.formatDateTime(history.updatedAt!)}",
                                           style: const TextStyle(
                                               color: Colors.grey),
                                         ),

@@ -35,27 +35,21 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          body: Column(mainAxisSize: MainAxisSize.min, children: [
-            Expanded(
-              child: PageView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: pageController,
-                children: pages,
-              ),
-            ),
-          ]),
-          bottomNavigationBar: CustomBottomTile(
-            pageController: pageController,
-            item: _items,
-            onTap: (n) {
-              print(pageController.page);
-              pageController.jumpToPage(n);
-            },
-            // ),
-          )),
-    );
+    return Scaffold(
+        body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
+          children: pages,
+        ),
+        bottomNavigationBar: CustomBottomTile(
+          pageController: pageController,
+          item: _items,
+          onTap: (n) {
+            print(pageController.page);
+            pageController.jumpToPage(n);
+          },
+          // ),
+        ));
   }
 }
 
