@@ -79,9 +79,9 @@ class AdsApi {
       "audienceGender": "1",
       "ageRangeFrom": ageRangeFrom,
       "ageRangeTo": ageRangeTo,
-      "dayStartTime": "0",
+      "dayStartTime": dayStartTime,
       // "dayStartTime": dayStartTime?.toString(),
-      "dayEndTime": "23:59",
+      "dayEndTime": dayEndTime,
       // "dayEndTime": dayEndTime?.toString(),
       "addTypeId": "667a7c6df68bde8bec7ad3a7",
       // "caption": caption,
@@ -240,9 +240,10 @@ class AdsApi {
   }
 
   Future<AddListByBusinessResponce?> getAddListByBusiness(
-      {String businessId = "664483cb34434c7cec80d6ed"}) async {
+      {String businessId = "664483cb34434c7cec80d6ed",
+      required int page}) async {
     try {
-      String uri = "/getAllMyAdsListApi?businessId=$businessId";
+      String uri = "/getAllMyAdsListApi?businessId=$businessId&page=$page";
 
       var head = await UserPreference().getHeader();
 

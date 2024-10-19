@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -252,20 +253,22 @@ class CreateAddProvider with ChangeNotifier {
 
   Future<void> setDayStartTime(BuildContext context) async {
     _dayStartTime = await showTimePicker(
-        context: context, initialTime: const TimeOfDay(hour: 0, minute: 0));
+        context: context, initialTime: TimeOfDay.now().replacing(hour: 1));
     notifyListeners();
   }
 
   Future<void> setEndTime(BuildContext context) async {
+    log(_dayStartTime.toString());
     _dayEndTime = await showTimePicker(
-        context: context, initialTime: const TimeOfDay(hour: 0, minute: 0));
+        context: context, initialTime: _dayStartTime!.replacing(hour: 23));
+    log(_dayStartTime!.replacing(hour: 23).toString());
     notifyListeners();
   }
 
   Future<void> setStartDay(BuildContext context) async {
     _startDate = await showDatePicker(
       context: context,
-      firstDate: DateTime.now(),
+      firstDate: DateTime.now().add(const Duration(hours: 24)),
       lastDate: DateTime(2800),
     );
     notifyListeners();
@@ -299,7 +302,7 @@ class CreateAddProvider with ChangeNotifier {
   Future<void> setEndDay(BuildContext context) async {
     _endDate = await showDatePicker(
       context: context,
-      firstDate: DateTime.now(),
+      firstDate: _startDate!.add(const Duration(hours: 24)),
       lastDate: DateTime(2800),
     );
     notifyListeners();
@@ -389,7 +392,7 @@ class CreateAddProvider with ChangeNotifier {
     _googleBudget.text = "0";
     _destinationUrlController.clear();
     _captionController.clear();
-    _ageRange = RangeValues(18, 66);
+    _ageRange = const RangeValues(18, 66);
     _days = [];
     _offers = [];
     _dayStartTime = null;

@@ -458,7 +458,7 @@ class _CampaignSettingState extends State<CampaignSetting> {
                                 Expanded(
                                   child: CustomPicker(
                                       onTap: () => p.setDayStartTime(context),
-                                      label: "StartTime",
+                                      label: "Start Time",
                                       child: Text(p.dayStartTime == null
                                           ? "Set Start Time"
                                           : "${MyHelper.formatTime(p.dayStartTime!)}")),
@@ -466,7 +466,7 @@ class _CampaignSettingState extends State<CampaignSetting> {
                                 Expanded(
                                   child: CustomPicker(
                                       onTap: () => p.setEndTime(context),
-                                      label: "StartTime",
+                                      label: "End Time",
                                       child: Text(p.dayEndTime == null
                                           ? "Set End Time"
                                           : "${MyHelper.formatTime(p.dayEndTime!)}")),

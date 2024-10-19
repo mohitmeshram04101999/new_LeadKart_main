@@ -62,8 +62,9 @@ class BusinessProvider with ChangeNotifier {
     _currentBusiness = business;
     notifyListeners();
     UserPreference().saveBusiness(business);
+    Controllers.addListByBusinessProvider(context).clear();
     await lode(context);
-    Controllers.addListByBusinessProvider(context).load(context);
+    Controllers.addListByBusinessProvider(context).load(context, page: 1);
   }
   //
 
