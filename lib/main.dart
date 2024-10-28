@@ -108,9 +108,9 @@ void main() async {
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     // showFlutterNotification(message);
   });
-  await FirebaseMessaging.instance.getToken().then((value) {
-    log(value!);
-  });
+  // await FirebaseMessaging.instance.getToken().then((value) {
+  //   log(value!);
+  // });
   final userPreferenceController = Controllers.userPreferencesController;
   SharedPreferences preferences = await SharedPreferences.getInstance();
   userPreferenceController.prefs.value = preferences;
