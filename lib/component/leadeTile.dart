@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:leadkart/Models/LeadsApiresponce.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
-import 'package:leadkart/component/HelpButtonWhite.dart';
+import 'package:leadkart/Models/LeadsApiresponce.dart';
 import 'package:leadkart/component/sheder%20Iocn.dart';
 import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/dimention.dart';
@@ -9,45 +7,49 @@ import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/them/constents.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class LeadeTile extends StatelessWidget {
   final Lead? lead;
   double elevation;
   bool demo;
   void Function()? onTap;
-  LeadeTile({this.demo=false,this.lead,this.onTap,this.elevation = .5,super.key});
+  LeadeTile(
+      {this.demo = false,
+      this.lead,
+      this.onTap,
+      this.elevation = .5,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return Card(
-      elevation:elevation,
+      elevation: elevation,
       surfaceTintColor: Colors.transparent,
       color: Colors.white,
       clipBehavior: Clip.hardEdge,
-      margin: EdgeInsets.symmetric(horizontal: SC.from_width(12),vertical:5),
+      margin: EdgeInsets.symmetric(horizontal: SC.from_width(6), vertical: 5),
       child: InkWell(
         splashColor: AppConstent().leadsBannerColor,
         onTap: onTap,
         child: Container(
           height: SC.from_width(80),
+          width: double.maxFinite,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
               //Leading
               Container(
                 clipBehavior: Clip.hardEdge,
                 margin: EdgeInsets.all(SC.from_width(8)),
-
                 width: SC.from_width(69),
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300,width: 2),
+                    border: Border.all(color: Colors.grey.shade300, width: 2),
                     borderRadius: BorderRadius.circular(5)),
                 child: Stack(
                   children: [
-                    Image.asset("assets/onBording2/leadTileImage.png",fit: BoxFit.cover,),
-
+                    Image.asset(
+                      "assets/onBording2/leadTileImage.png",
+                      fit: BoxFit.cover,
+                    ),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
@@ -55,13 +57,16 @@ class LeadeTile extends StatelessWidget {
                         color: Colors.black.withOpacity(.5),
                         width: double.infinity,
                         alignment: Alignment.center,
-                        child: Text("See detail",
-                        style: TextStyle(fontSize: SC.from_width(8.7),color: Colors.white),),
+                        child: Text(
+                          "See detail",
+                          style: TextStyle(
+                              fontSize: SC.from_width(8.7),
+                              color: Colors.white),
+                        ),
                       ),
                     )
                   ],
                 ),
-
               ),
 
               Expanded(
@@ -70,20 +75,32 @@ class LeadeTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     //title
-                    Text(lead?.name??"Demo Lead",overflow: TextOverflow.ellipsis,maxLines: 1,style: TextStyles().leadTileTitle),
+                    Text(lead?.name ?? "Demo Lead",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyles().leadTileTitle),
 
                     //subtitle
-                    Text(lead?.userContactNumber??lead?.whatsappNumber??"${demo?"+91 7470765984":"No Contact number"}",maxLines: 1,overflow: TextOverflow.ellipsis,style:TextStyles().leadTileSubTitle),
+                    Text(
+                        lead?.userContactNumber ??
+                            lead?.whatsappNumber ??
+                            "${demo ? "+91 7470765984" : "No Contact number"}",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyles().leadTileSubTitle),
 
-                    Text("Added - ${MyHelper.formatDateTime(lead?.createdTime??DateTime.now())}",maxLines: 1,overflow: TextOverflow.ellipsis,style:TextStyles().leadTileSubTitle),
-
+                    Text(
+                        "Added - ${MyHelper.formatDateTime(lead?.createdTime ?? DateTime.now())}",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyles().leadTileSubTitle),
                   ],
                 ),
               ),
 
-              AspectRatio(aspectRatio: 1.3,
+              AspectRatio(
+                  aspectRatio: 1.3,
                   child: Column(
                     children: [
                       Container(
@@ -91,20 +108,25 @@ class LeadeTile extends StatelessWidget {
                         width: double.infinity,
                         decoration: BoxDecoration(
                             color: AppConstent().leadTiletagColor,
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(32)
-                          )
+                            borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(32))),
+                        child: Text(
+                          "${leadTyps[lead?.leadStatus]}",
+                          style: TextStyle(
+                              fontSize: SC.from_width(12),
+                              fontWeight: FontWeight.w500),
                         ),
-                        child: Text("${leadTyps[lead?.leadStatus]}",style: TextStyle(fontSize: SC.from_width(12),fontWeight: FontWeight.w500),),
                       ),
                       Expanded(
-                        child: ShederIcon(iconData: Icons.call_outlined,onTap: (){
-                          launch("tel: ${lead?.userContactNumber??""}");
-                        },)
-                      ),
+                          child: ShederIcon(
+                        iconData: Icons.call_outlined,
+                        onTap: () {
+                          launch("tel: ${lead?.userContactNumber ?? ""}");
+                        },
+                      )),
                     ],
                   ))
-             ],
+            ],
           ),
         ),
       ),
