@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCFsq6Y4XLeYqnLQbrEEqumBbbu352y2Rg',
-    appId: '1:351577286503:android:82285067f7ecdd1c9e31c2',
+    appId: '1:351577286503:android:ec608d20c22a595c9e31c2',
     messagingSenderId: '351577286503',
     projectId: 'leadkart-ai',
     storageBucket: 'leadkart-ai.appspot.com',
