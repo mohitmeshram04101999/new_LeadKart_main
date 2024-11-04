@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/component/messageText.dart';
 import 'package:leadkart/component/optioChip.dart';
@@ -30,11 +31,11 @@ class _LeadScreenState extends State<LeadScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      // //floting Action Button for Testing
-      // floatingActionButton: FloatingActionButton(onPressed: (){
-      //   Controllers.leadsProvider(context,listen: false).getLeads(context);
-      //
-      // },),
+      //floting Action Button for Testing
+      floatingActionButton:(kDebugMode)? FloatingActionButton(onPressed: (){
+        Controllers.leadsProvider(context,listen: false).getLeads(context);
+
+      },):null,
 
       //AppBar
       appBar: AppBar(
