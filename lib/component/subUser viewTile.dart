@@ -1,123 +1,194 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:leadkart/Models/getAllsubUsersResonceModel.dart';
-import 'package:leadkart/them/constents.dart';
 
 class SubUserTile extends StatelessWidget {
-  final SubUsers user;
+  final dynamic user;
   final void Function()? onTap;
-  const SubUserTile({this.onTap,required this.user,super.key});
+  const SubUserTile({this.onTap, required this.user, super.key});
+
+  String formatPermissionText(String text) {
+    return text
+        .split('_')
+        .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
+        .join(' ');
+  }
+
+  Map<String, List<String>> parsePermissions(dynamic permissions) {
+    if (permissions is String) {
+      // Parse the string if it's a JSON string
+      log('permissions: $permissions');
+      try {
+        List<dynamic> parsedList = jsonDecode(permissions);
+        Map<String, List<String>> result = {};
+
+        for (var item in parsedList) {
+          if (item is Map) {
+            item.forEach((key, value) {
+              if (value is List) {
+                result[key] = List<String>.from(value);
+              }
+            });
+          }
+        }
+        return result;
+      } catch (e) {
+        debugPrint('Error parsing permissions: $e');
+        return {};
+      }
+    } else if (permissions is List) {
+      // Handle case where permissions is already a List
+      Map<String, List<String>> result = {};
+      for (var item in permissions) {
+        if (item is Map) {
+          item.forEach((key, value) {
+            if (value is List) {
+              result[key] = List<String>.from(value);
+            }
+          });
+        }
+      }
+      return result;
+    }
+    return {};
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    TextStyle titleStyle = const  TextStyle();
+    TextStyle titleStyle = const TextStyle();
     TextStyle subTitleStyle = TextStyle(color: Colors.grey.shade700);
+    final permissionsMap = parsePermissions(user["permissions"]);
 
-    if(user.roleId?["permissions"]==null)
-      {
-        return ListTile(
-
-          leading:Container(
-            width: 35,
-            height: 35,
-            clipBehavior: Clip.hardEdge,
-            decoration : BoxDecoration(
-                shape: BoxShape.circle
-            ),
-            child: CachedNetworkImage(
-              imageUrl: user.image??"",
-              fit: BoxFit.cover,
-              errorWidget: (context, url, error) => const CircleAvatar(child:Icon(Icons.person),),
+    // Check if permissions is empty or null
+    if (user["permissions"] == null ||
+        (user["permissions"] is List &&
+            (user["permissions"] as List).isEmpty) ||
+        (user["permissions"] is String && user["permissions"].isEmpty)) {
+      return ListTile(
+        leading: Container(
+          width: 35,
+          height: 35,
+          clipBehavior: Clip.hardEdge,
+          decoration: const BoxDecoration(shape: BoxShape.circle),
+          child: CachedNetworkImage(
+            imageUrl: user['userId']['image'] ?? "",
+            fit: BoxFit.cover,
+            errorWidget: (context, url, error) => const CircleAvatar(
+              child: Icon(Icons.person),
             ),
           ),
+        ),
+        title: Text(
+          user['userId']['name'] ?? "Unknown",
+          style: titleStyle,
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Mobile - ${user['userId']['mobile'] ?? ""}",
+              style: subTitleStyle,
+            ),
+            Text(
+              "Role - No permissions assigned",
+              style: subTitleStyle,
+            ),
+          ],
+        ),
+      );
+    }
 
-          title: Text(user.name??"Unknown",style: titleStyle,),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Email - ${user.email??""}",style: subTitleStyle,),
-              Text("Role name - ${user.roleId?["roleName"]??"No Role assign"}",style: subTitleStyle,),
-            ],
-          ),
-        );
-      }
-
-    String? roleNames;
-    for(var i in user.roleId?["permissions"]??[])
-      {
-        for(var j in i.keys)
-          {
-            roleNames ??= "";
-            roleNames += "$j, ";
-          }
-      }
+    // Parse permissions
 
     return ExpansionTile(
-
-      childrenPadding:const  EdgeInsets.symmetric(horizontal: 20),
-
-      leading:Container(
+      childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
+      leading: Container(
         width: 35,
         height: 35,
         clipBehavior: Clip.hardEdge,
-        decoration : BoxDecoration(
-          shape: BoxShape.circle
-        ),
+        decoration: const BoxDecoration(shape: BoxShape.circle),
         child: CachedNetworkImage(
-          imageUrl: user.image??"",
+          imageUrl: user['userId']['image'] ?? "",
           fit: BoxFit.cover,
-          errorWidget: (context, url, error) => const CircleAvatar(child:Icon(Icons.person),),
+          errorWidget: (context, url, error) => const CircleAvatar(
+            child: Icon(Icons.person),
+          ),
         ),
       ),
-
-      title: Text(user.name??"Unknown",style: titleStyle,),
+      onExpansionChanged: (expanded) {
+        if (expanded) {
+          log('Expanded');
+          log('permissions: $permissionsMap');
+        } else {
+          log('Collapsed');
+        }
+      },
+      title: Text(
+        user['userId']['name'] ?? "Unknown",
+        style: titleStyle,
+      ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Email - ${user.email??""}",style: subTitleStyle,overflow: TextOverflow.ellipsis,),
-          Text("Role name - ${user.roleId?["roleName"]??"No Role assign"}",style: subTitleStyle,),
+          Text(
+            "Mobile - ${user['userId']['mobile'] ?? ""}",
+            style: subTitleStyle,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            "Role - ${user['roleName'] ?? "Custom Permissions"}",
+            style: subTitleStyle,
+          ),
         ],
       ),
-
       children: [
-        if(user.roleId?["permissions"]!=null)
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: DataTable(
-            columns: [
-              DataColumn(label: Text("Permissions")),
-              DataColumn(label: Text("Read")),
-              DataColumn(label: Text("Write")),
-            ],
-
-            rows: [
-              for(var per in user.roleId?["permissions"]??[])
-                for(String name in per.keys)
-                  DataRow(
-                      cells: [
-                        DataCell(Text(name),),
-                        DataCell(Center(child: (per[name].contains("read"))?Icon(Icons.check,color: AppConstent().primeryColor,):Icon(Icons.close,color: Colors.red,))),
-                        DataCell(Center(child: (per[name].contains("write"))?Icon(Icons.check,color: AppConstent().primeryColor,):Icon(Icons.close,color: Colors.red,))),
-                      ]
-                  ),
-            ],
-
+        if (permissionsMap.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: permissionsMap.length,
+              itemBuilder: (context, index) {
+                final sectionName = permissionsMap.keys.elementAt(index);
+                final permissions = permissionsMap[sectionName] ?? [];
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        sectionName.toUpperCase(),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                    Wrap(
+                      spacing: 8,
+                      children: permissions.map((permission) {
+                        return Chip(
+                          label: Text(
+                            formatPermissionText(permission),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                            ),
+                          ),
+                          backgroundColor: Colors.blue.shade700,
+                        );
+                      }).toList(),
+                    ),
+                    const Divider(),
+                  ],
+                );
+              },
+            ),
           ),
-        ),
-        // if(user.roleId?["permissions"]!=null)
-        //   for(var pr in user.roleId?["permissions"])
-        //     for(var i in pr.keys)
-        //       Row(children: [
-        //         Text(i,style: TextStyle(
-        //           color: AppConstent().primeryColor
-        //         ),),
-        //         const Text(" - "),
-        //         for(String role in pr[i])
-        //           Text("${role.capitalizeFirst.toString()},"),
-        //       ],),
       ],
     );
   }
