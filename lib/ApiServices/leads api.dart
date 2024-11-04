@@ -8,11 +8,16 @@ class LeadsApi {
 
   //
   //get Lead for bussinessID
-  Future<Response> getAllLeads(
-      {String businessId = "664483cb34434c7cec80d6ed", String? stage}) async {
-    String uri =
-        "/getLeadOfYourBussinessByMemberId?businessId=671cc3bef39c726dd9ff519b&userId=6670116523cab593bbffda08";
-    var toc = await UserPreference().getUser();
+
+  Future<Response> getAllLeads({
+    String businessId = "664483cb34434c7cec80d6ed",
+    String userId = "66446389926d794e368c8f6c",
+    String? stage
+  })async
+  {
+    String uri = "/getLeadOfYourBussiness?userId=$userId${(stage!=null)?"&stage=$stage":""}";
+    var toc= await UserPreference().getUser();
+
 
     var head = {"Authorization": toc?.token ?? ""};
     var resp = await MyHelper.dio.get(uri, options: Options(headers: head));

@@ -31,6 +31,7 @@ class LeadsProvider with ChangeNotifier{
   //get Leads by BusinessId;
   Future<void> getLeads(BuildContext context) async
   {
+    
     var currutBusiness = Controllers.businessProvider(context).currentBusiness;
     var resp = await _leadsApi.getAllLeads(stage: _filterType=="ALL"?null:_filterType);
 
@@ -47,6 +48,10 @@ class LeadsProvider with ChangeNotifier{
     }
 
       }
+   else if(resp.statusCode==400)
+      {
+        MyHelper.mySnakebar(context, "Clint Error");
+    }
     else
       {
         MyHelper.mySnakebar(context, "${resp.statusCode} ${resp.data}");
