@@ -1,5 +1,4 @@
-
-
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:leadkart/ApiServices/leads%20api.dart';
@@ -7,12 +6,10 @@ import 'package:leadkart/Models/LeadsApiresponce.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
 
-class LeadsProvider with ChangeNotifier{
-
-
+class LeadsProvider with ChangeNotifier {
   //const var
 
-  final _leadsApi =  LeadsApi();
+  final _leadsApi = LeadsApi();
 
   bool _isLoad = false;
   List<Lead> _allLeads = [];
@@ -21,68 +18,71 @@ class LeadsProvider with ChangeNotifier{
 
   List<Lead> get allLeads => _allLeads;
   bool get isLoad => _isLoad;
-  String get filterType =>_filterType;
+  String get filterType => _filterType;
   bool get filterIsOn => _filterOn;
 
-
-
-
-
   //get Leads by BusinessId;
-  Future<void> getLeads(BuildContext context) async
-  {
-    
+  Future<void> getLeads(BuildContext context) async {
     var currutBusiness = Controllers.businessProvider(context).currentBusiness;
-    var resp = await _leadsApi.getAllLeads(stage: _filterType=="ALL"?null:_filterType);
+    var resp = await _leadsApi.getAllLeads(
+        stage: _filterType == "ALL" ? null : _filterType);
 
-    if(resp.statusCode==200)
-      {
-        try
-            {
-              var d = LeadsApiResponce.fromJson(resp.data);
-              _allLeads = d.data??[];
-            }
-            catch(e)
-    {
-      MyHelper.mySnakebar(context, "$e");
-    }
-
+    if (resp.statusCode == 200) {
+      try {
+        // log(resp.data.toString());
+        var d = LeadsApiResponce.fromJson(resp.data);
+        _allLeads = d.data ?? [];
+        // for (var item in _allLeads) {
+        //   log(item.assignUser.toString());
+        // }
+      } catch (e) {
+        log("$e");
+        MyHelper.mySnakebar(context, "$e");
       }
-   else if(resp.statusCode==400)
-      {
-        MyHelper.mySnakebar(context, "Clint Error");
+    } else if (resp.statusCode == 400) {
+      MyHelper.mySnakebar(context, "Clint Error");
+    } else {
+      MyHelper.mySnakebar(context, "${resp.statusCode} ${resp.data}");
     }
-    else
-      {
-        MyHelper.mySnakebar(context, "${resp.statusCode} ${resp.data}");
-      }
     _filterOn = false;
     _isLoad = true;
     notifyListeners();
-
   }
 
-  Future<void> filter(BuildContext context,String type)async
-  {
+  Future<dynamic> listOfLeadAssignUser(
+      BuildContext context, String leadid) async {
+    var currutBusiness = Controllers.businessProvider(context).currentBusiness;
+    var resp = await _leadsApi.listOfLeadAssignUser(leadId: leadid);
+
+    if (resp.statusCode == 200) {
+      try {
+        return resp.data;
+      } catch (e) {
+        log("$e");
+        MyHelper.mySnakebar(context, "$e");
+      }
+    } else if (resp.statusCode == 400) {
+      MyHelper.mySnakebar(context, "Clint Error");
+    } else {
+      MyHelper.mySnakebar(context, "${resp.statusCode} ${resp.data}");
+    }
+    _filterOn = false;
+    _isLoad = true;
+    notifyListeners();
+  }
+
+  Future<void> filter(BuildContext context, String type) async {
     _filterType = type;
     _filterOn = true;
     notifyListeners();
     getLeads(context);
-
   }
 
-
-  clear()
-  {
+  clear() {
     _isLoad = true;
     _allLeads = [];
-    _filterType ="All";
+    _filterType = "All";
     _filterOn = false;
     notifyListeners();
   }
-
-
-
-
-
 }

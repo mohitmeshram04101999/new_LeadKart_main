@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:leadkart/component/optioChip.dart';
 import 'package:leadkart/component/sheder%20Iocn.dart';
 import 'package:leadkart/controllers/LeadeDetaileProvider.dart';
+import 'package:leadkart/controllers/leadeProvider.dart';
 import 'package:leadkart/function/flunction.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
@@ -301,6 +302,30 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                             )),
                       ],
                     ),
+                  ),
+                  FutureBuilder<dynamic>(
+                    future: Provider.of<LeadsProvider>(context)
+                        .listOfLeadAssignUser(context, p.lead?.id ?? ""),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      }
+                      if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      dynamic data = snapshot.data!['data'];
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(
+                              "Assigned to: ${data[index]['userId']['name']} on ",
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                   SizedBox(
                     height: SC.from_height(5),

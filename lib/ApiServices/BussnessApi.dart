@@ -57,7 +57,7 @@ class BussnissApi {
     required String userId,
   }) async {
     try {
-      String uri = "/business/getAllBussinessByUserId/$userId";
+      String uri = "/business/getUsersAllBusinessList?userId=$userId";
 
       final CurrentUser? _user =
           await Controllers.userPreferencesController.getUser();

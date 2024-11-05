@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/component/leadeTile.dart';
 import 'package:leadkart/component/messageText.dart';
@@ -33,14 +32,11 @@ class _LeadScreenState extends State<LeadScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
- 
-
       //floting Action Button for Testing
-      floatingActionButton:(kDebugMode)? FloatingActionButton(onPressed: (){
-        Controllers.leadsProvider(context,listen: false).getLeads(context);
-
-      },):null,
-
+      // floatingActionButton:(kDebugMode)? FloatingActionButton(onPressed: (){
+      //   Controllers.leadsProvider(context,listen: false).getLeads(context);
+      //
+      // },):null,
 
       //AppBar
       appBar: AppBar(
@@ -158,7 +154,7 @@ class _LeadScreenState extends State<LeadScreen> {
                                           selectedLeads.contains(lead.id ?? ""),
                                       onChanged: (value) {
                                         setState(() {
-                                          if (value!) {
+                                          if (value ?? false) {
                                             selectedLeads.add(lead.id ?? "");
                                           } else {
                                             selectedLeads.remove(lead.id ?? "");

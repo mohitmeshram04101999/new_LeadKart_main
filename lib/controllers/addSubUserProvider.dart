@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -123,7 +124,7 @@ class AddSubUserProvider with ChangeNotifier {
                         otp: _otp ?? "",
                         businessId: bId);
 
-                    _log.i(resp.body);
+                    // _log.i(resp.body);
                     print(resp.body);
                     if (resp.statusCode == 200) {
                       var decode = jsonDecode(resp.body);
@@ -133,7 +134,7 @@ class AddSubUserProvider with ChangeNotifier {
                       Navigator.pop(context, true);
                     } else {
                       var decode = jsonDecode(resp.body);
-                      _log.i("${resp.statusCode} \n ${resp.body}");
+                      // _log.i("${resp.statusCode} \n ${resp.body}");
                       MyHelper.mySnakebar(context, "${decode["message"]}");
                     }
                   } else {
@@ -189,7 +190,7 @@ class AddSubUserProvider with ChangeNotifier {
                       height: 10,
                     ),
                     SizedBox(
-                        height: 300,
+                        height: 400,
                         child:
                             BusinessPermissionsUI(permissionsData: snap.data!)),
                     const SizedBox(
@@ -202,11 +203,11 @@ class AddSubUserProvider with ChangeNotifier {
                               MyHelper.mySnakebar(context, "Select Role");
                               return;
                             }
-
+                            log(rolePermissions.toString());
                             var resp = await _roleApi.assignPermssionsToUser(
                                 businessId: currentBusiness?.id ?? "",
                                 memberId: subUserData?.memberId ?? "",
-                                permissions: [rolePermissions] ?? "");
+                                permissions: rolePermissions ?? "");
 
                             if (resp.statusCode == 200) {
                               MyHelper.mySnakebar(
@@ -242,7 +243,7 @@ class AddSubUserProvider with ChangeNotifier {
 }
 
 // Global variable to store permissions
-Map<String, List<String>> rolePermissions = {};
+List<Map<String, dynamic>> rolePermissions = [];
 
 class BusinessPermissionsUI extends StatefulWidget {
   final List<dynamic> permissionsData;
@@ -254,12 +255,76 @@ class BusinessPermissionsUI extends StatefulWidget {
 }
 
 class _BusinessPermissionsUIState extends State<BusinessPermissionsUI> {
-  final Map<String, List<String>> selectedPermissions = {};
+  // Map to store available permissions per section
+  Map<String, List<String>> availablePermissions = {};
 
   @override
   void initState() {
     super.initState();
-    // Initialize the selected permissions and role permissions
+    // Initialize rolePermissions with the same structure as input data
+    // rolePermissions = List.from(widget.permissionsData);
+    // Process the permissions data to build availablePermissions map
+    _processPermissionsData();
+  }
+
+  void _processPermissionsData() {
+    // Clear existing permissions
+    availablePermissions.clear();
+
+    // Process each permission entry
+    for (var permissionMap in widget.permissionsData) {
+      permissionMap.forEach((section, permissions) {
+        if (permissions is List) {
+          // Convert each permission to string and store in the map
+          availablePermissions[section] =
+              permissions.map((p) => p.toString()).toList();
+        }
+      });
+    }
+  }
+
+  // Helper function to check if a permission is selected for a section
+  bool isPermissionSelected(String section, String permission) {
+    final sectionMap = rolePermissions.firstWhere(
+      (element) => element.containsKey(section),
+      orElse: () => {section: []},
+    );
+    return sectionMap[section]?.contains(permission) ?? false;
+  }
+
+  // Helper function to get selected permission for a section
+  String? getSelectedPermissionForSection(String section) {
+    final sectionMap = rolePermissions.firstWhere(
+      (element) => element.containsKey(section),
+      orElse: () => {section: []},
+    );
+    final permissions = sectionMap[section] ?? [];
+    return permissions.isNotEmpty ? permissions.first : null;
+  }
+
+  // Function to update permissions with toggle functionality
+  void updatePermission(String section, String permission) {
+    setState(() {
+      var sectionIndex =
+          rolePermissions.indexWhere((element) => element.containsKey(section));
+
+      if (sectionIndex == -1) {
+        // If section doesn't exist, create it
+        rolePermissions.add({section: []});
+        sectionIndex = rolePermissions.length - 1;
+      }
+
+      // Check if the permission is already selected
+      bool isCurrentlySelected = isPermissionSelected(section, permission);
+
+      if (isCurrentlySelected) {
+        // If selected, remove it (deselect)
+        rolePermissions[sectionIndex][section] = [];
+      } else {
+        // If not selected, set it as the only permission
+        rolePermissions[sectionIndex][section] = [permission];
+      }
+    });
   }
 
   String formatPermissionText(String text) {
@@ -273,14 +338,47 @@ class _BusinessPermissionsUIState extends State<BusinessPermissionsUI> {
     return index.isEven ? Colors.grey.withOpacity(0.1) : Colors.white;
   }
 
+  Widget _buildCustomRadio(String section, String permission) {
+    bool isSelected = isPermissionSelected(section, permission);
+    return InkWell(
+      onTap: () => updatePermission(section, permission),
+      child: Container(
+        width: 24,
+        height: 24,
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          border: Border.all(
+            color: isSelected ? Colors.blue : Colors.grey,
+            width: 2,
+          ),
+        ),
+        child: isSelected
+            ? Center(
+                child: Container(
+                  // width: 12,
+                  // height: 12,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: Colors.blue,
+                  ),
+                  child: const Icon(
+                    Icons.check,
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                ),
+              )
+            : null,
+      ),
+    );
+  }
+
   List<DataRow> _buildDataRows() {
     List<DataRow> rows = [];
     int index = 0;
 
-    for (var section in widget.permissionsData) {
-      String sectionName = section.keys.first;
-      List<dynamic> permissions = section[sectionName] ?? [];
-
+    for (var section in availablePermissions.keys) {
+      // Add section header
       rows.add(
         DataRow(
           color: MaterialStateProperty.resolveWith(
@@ -289,40 +387,21 @@ class _BusinessPermissionsUIState extends State<BusinessPermissionsUI> {
           cells: [
             DataCell(
               Text(
-                sectionName.toUpperCase(),
+                section.toUpperCase(),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                 ),
               ),
             ),
-            DataCell(
-              Checkbox(
-                value: selectedPermissions[sectionName]?.length ==
-                    permissions.length,
-                tristate: true,
-                onChanged: (bool? value) {
-                  setState(() {
-                    if (value ?? false) {
-                      selectedPermissions[sectionName] =
-                          List<String>.from(permissions);
-                      rolePermissions[sectionName] =
-                          List<String>.from(permissions);
-                    } else {
-                      selectedPermissions[sectionName]?.clear();
-                      rolePermissions[sectionName]?.clear();
-                    }
-                  });
-                },
-                activeColor: Colors.blue,
-              ),
-            ),
+            const DataCell(SizedBox()), // Empty cell for header
           ],
         ),
       );
       index++;
 
-      for (var permission in permissions) {
+      // Add permission rows
+      for (var permission in availablePermissions[section]!) {
         rows.add(
           DataRow(
             color: MaterialStateProperty.resolveWith(
@@ -339,22 +418,8 @@ class _BusinessPermissionsUIState extends State<BusinessPermissionsUI> {
                 ),
               ),
               DataCell(
-                Checkbox(
-                  value:
-                      selectedPermissions[sectionName]?.contains(permission) ??
-                          false,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      if (value ?? false) {
-                        selectedPermissions[sectionName]?.add(permission);
-                        rolePermissions[sectionName]?.add(permission);
-                      } else {
-                        selectedPermissions[sectionName]?.remove(permission);
-                        rolePermissions[sectionName]?.remove(permission);
-                      }
-                    });
-                  },
-                  activeColor: Colors.blue,
+                Center(
+                  child: _buildCustomRadio(section, permission),
                 ),
               ),
             ],
@@ -372,8 +437,6 @@ class _BusinessPermissionsUIState extends State<BusinessPermissionsUI> {
       elevation: 2,
       margin: const EdgeInsets.all(8),
       child: SizedBox(
-        height: 300,
-        width: 300,
         child: SingleChildScrollView(
           child: DataTable(
             headingRowHeight: 50,

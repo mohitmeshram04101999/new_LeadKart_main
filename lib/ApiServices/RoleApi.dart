@@ -65,7 +65,7 @@ class RoleApi {
 
     var resp = await MyHelper.dio.get(uri, options: Options(headers: head));
 
-    _log.i("$businessId\n${resp.statusCode} \n${resp.data}");
+    // _log.i("$businessId\n${resp.statusCode} \n${resp.data}");
 
     if (resp.statusCode == 200) {
       BusinessPermissionsResponse d =
@@ -86,7 +86,7 @@ class RoleApi {
 
     var resp = await MyHelper.dio.get(uri, options: Options(headers: head));
 
-    _log.i("$businessId\n${resp.statusCode} \n${resp.data}");
+    // _log.i("$businessId\n${resp.statusCode} \n${resp.data}");
 
     if (resp.statusCode == 200) {
       BusinessPermissionsResponse d =
@@ -109,7 +109,7 @@ class RoleApi {
     var data = {
       "businessId": businessId,
       "memberId": memberId,
-      "permissions": "$permissions"
+      "permissions": permissions
     };
 
     var resp = await MyHelper.dio

@@ -9,18 +9,28 @@ class LeadsApi {
   //
   //get Lead for bussinessID
 
-  Future<Response> getAllLeads({
-    String businessId = "664483cb34434c7cec80d6ed",
-    String userId = "66446389926d794e368c8f6c",
-    String? stage
-  })async
-  {
-    String uri = "/getLeadOfYourBussiness?userId=$userId${(stage!=null)?"&stage=$stage":""}";
-    var toc= await UserPreference().getUser();
-
+  Future<Response> getAllLeads(
+      {String businessId = "671cc3bef39c726dd9ff519b",
+      String userId = "6670116523cab593bbffda08",
+      String? stage}) async {
+    String uri =
+        "/getLeadOfYourBussinessByMemberId?businessId=$businessId&userId=$userId${(stage != null) ? "&stage=$stage" : ""}";
+    var toc = await UserPreference().getUser();
 
     var head = {"Authorization": toc?.token ?? ""};
     var resp = await MyHelper.dio.get(uri, options: Options(headers: head));
+    // log(resp.data.toString());
+    return resp;
+  }
+
+  Future<Response> listOfLeadAssignUser({required String leadId}) async {
+    final userId = await UserPreference().getUser();
+    String uri = "/listOfLeadAssignUser?userId=${userId!.id}&leadId=$leadId";
+    var toc = await UserPreference().getUser();
+
+    var head = {"Authorization": toc?.token ?? ""};
+    var resp = await MyHelper.dio.get(uri, options: Options(headers: head));
+    // log(resp.data.toString());
     return resp;
   }
 

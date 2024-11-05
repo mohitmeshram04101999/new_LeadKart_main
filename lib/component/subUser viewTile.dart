@@ -62,10 +62,11 @@ class SubUserTile extends StatelessWidget {
     final permissionsMap = parsePermissions(user["permissions"]);
 
     // Check if permissions is empty or null
-    if (user["permissions"] == null ||
-        (user["permissions"] is List &&
-            (user["permissions"] as List).isEmpty) ||
-        (user["permissions"] is String && user["permissions"].isEmpty)) {
+    // if (user["permissions"] == null ||
+    //     (user["permissions"] is List &&
+    //         (user["permissions"] as List).isEmpty) ||
+    //     (user["permissions"] is String && user["permissions"].isEmpty)) {
+    if (permissionsMap.isEmpty) {
       return ListTile(
         leading: Container(
           width: 35,
@@ -99,6 +100,7 @@ class SubUserTile extends StatelessWidget {
         ),
       );
     }
+    // }
 
     // Parse permissions
 
