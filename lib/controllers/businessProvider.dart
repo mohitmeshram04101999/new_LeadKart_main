@@ -159,17 +159,19 @@ class BusinessProvider with ChangeNotifier {
                                                               'access_token'],
                                                           id: finalData['id'],
                                                         )
-                                                            .then((e) {
-                                                          MyHelper.bussnissApi.upDateBusiness(
+                                                            .then((e) async {
+                                                          CustomResponce res = await MyHelper.bussnissApi.upDateBusiness(
                                                               businessId:
                                                                   _currentBusiness!
                                                                       .id!,
                                                               serviceId: _currentBusiness!
                                                                   .servicesId,
-                                                              address: _currentBusiness!
-                                                                  .address,
-                                                              businessName: _currentBusiness!
-                                                                  .businessName,
+                                                              address:
+                                                                  _currentBusiness!
+                                                                      .address,
+                                                              businessName:
+                                                                  _currentBusiness!
+                                                                      .businessName,
                                                               businessCategoryId:
                                                                   _currentBusiness!
                                                                       .businessCategoryId,
@@ -177,39 +179,32 @@ class BusinessProvider with ChangeNotifier {
                                                                   _currentBusiness!
                                                                       .businessContact
                                                                       .toString(),
-                                                              cityId: _currentBusiness!
-                                                                  .cityId,
+                                                              cityId:
+                                                                  _currentBusiness!
+                                                                      .cityId,
                                                               countryId:
                                                                   _currentBusiness!
                                                                       .countryId,
                                                               faceBookLink:
                                                                   _currentBusiness!
                                                                       .facebookLink,
-                                                              instaLink: _currentBusiness!
-                                                                  .instagramLink,
+                                                              instaLink:
+                                                                  _currentBusiness!
+                                                                      .instagramLink,
                                                               stateId:
                                                                   _currentBusiness!
                                                                       .stateId,
-                                                              tagLine:
-                                                                  _currentBusiness!
-                                                                      .tagline,
-                                                              twitterLink:
-                                                                  _currentBusiness!
-                                                                      .twitterLink,
-                                                              webLink: _currentBusiness!
-                                                                  .websiteLink,
-                                                              whatAppNum: _currentBusiness!
-                                                                  .whatsappNumber
-                                                                  .toString(),
-                                                              youTubeLink:
-                                                                  _currentBusiness!
-                                                                      .youtubeLink,
-                                                              isPageSubscribe:
-                                                                  false,
-                                                              pageAccessToken:
-                                                                  finalData['access_token'],
+                                                              tagLine: _currentBusiness!.tagline,
+                                                              twitterLink: _currentBusiness!.twitterLink,
+                                                              webLink: _currentBusiness!.websiteLink,
+                                                              whatAppNum: _currentBusiness!.whatsappNumber.toString(),
+                                                              youTubeLink: _currentBusiness!.youtubeLink,
+                                                              isPageSubscribe: false,
+                                                              pageAccessToken: finalData['access_token'],
                                                               pageId: finalData['id'],
                                                               metaAccessToken: value.accessToken!.tokenString);
+                                                          // setCurrentBusiness(context, _currentBusiness!);
+
                                                           lode(context);
 
                                                           Navigator.pop(

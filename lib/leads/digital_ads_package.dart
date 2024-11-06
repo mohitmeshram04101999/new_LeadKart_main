@@ -313,12 +313,120 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                       if (snapshot.hasError) {
                         return Text("${snapshot.error}");
                       }
+
                       dynamic data = snapshot.data!['data'];
                       return ListView.builder(
                         shrinkWrap: true,
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           return ListTile(
+                            onTap: () {
+                              Provider.of<LeadDetailProvider>(context,
+                                      listen: false)
+                                  .getAssignHistory(context, p.lead!.id!,
+                                      data[index]['userId']['_id']);
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                        "Assign to: ${data[index]['userId']['name']}"),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        (p.loading)
+                                            ? const ContainerShimmer(
+                                                height: 20, width: 120)
+                                            : Consumer<LeadDetailProvider>(
+                                                builder: (a, p, c) => SizedBox(
+                                                      height: 300,
+                                                      width: 300,
+                                                      child: ListView.builder(
+                                                        reverse: false,
+                                                        itemCount: p
+                                                            .leadAssignHistory
+                                                            .length,
+                                                        shrinkWrap: true,
+                                                        // physics:
+                                                        //     const NeverScrollableScrollPhysics(),
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          var history =
+                                                              p.leadAssignHistory[
+                                                                  index];
+
+                                                          return Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Container(
+                                                                margin: EdgeInsets.only(
+                                                                    left: SC
+                                                                        .fromWidth(
+                                                                            20),
+                                                                    bottom: 5),
+                                                                width: 1,
+                                                                height: SC
+                                                                    .fromHeight(
+                                                                        15),
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade400,
+                                                              ),
+                                                              Padding(
+                                                                padding: const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        8),
+                                                                child: Text(
+                                                                  "${MyHelper.formatDateTime(history.updatedAt!)}",
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .grey),
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding: const EdgeInsets
+                                                                    .symmetric(
+                                                                    vertical: 3,
+                                                                    horizontal:
+                                                                        8),
+                                                                child: Text(
+                                                                  translate[history
+                                                                      .statusChange],
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize: SC
+                                                                        .fromWidth(
+                                                                            26),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .shade700,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      ),
+                                                    ))
+                                      ],
+                                    ),
+                                    actions: [
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("Close"))
+                                    ],
+                                  );
+                                },
+                              );
+                            },
                             title: Text(
                               "Assigned to: ${data[index]['userId']['name']} on ",
                             ),

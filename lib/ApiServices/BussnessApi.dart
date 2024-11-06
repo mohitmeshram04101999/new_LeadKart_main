@@ -483,7 +483,7 @@ class BussnissApi {
 
     // MyHelper.logger.i(logo?.path ?? "");
     // MyHelper.logger.i(ApiConst.baseUrl + uri);
-    MyHelper.logger.f(data);
+    MyHelper.logger.f(formatedData);
 
     var response = await request.send();
     log("Updated business>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${response.statusCode}");

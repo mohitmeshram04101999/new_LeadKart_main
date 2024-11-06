@@ -205,9 +205,8 @@ class _AdsPageState extends State<AdsPage> {
 
                       // Check if new data was loaded, otherwise mark it as reached max
                       if (provider.currentPage > page) {
-                        setState(() {
-                          page++; // Increment the page number after successful data fetch
-                        });
+                        page++; // Increment the page number after successful data fetch
+                        setState(() {});
                       }
                     }
                   },

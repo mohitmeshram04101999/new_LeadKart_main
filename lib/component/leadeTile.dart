@@ -102,8 +102,7 @@ class LeadeTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyles().leadTileSubTitle),
                     lead?.assignUser != null
-                        ? Text(
-                            "Assigned to - ${lead?.assignUser?.name ?? "No User"}",
+                        ? Text("Assigned to - ${lead?.assignUser?.name}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyles().leadTileSubTitle)
@@ -115,7 +114,7 @@ class LeadeTile extends StatelessWidget {
                 ),
                 Spacer(),
                 AspectRatio(
-                    aspectRatio: 1.3,
+                    aspectRatio: 1,
                     child: Column(
                       children: [
                         Container(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -19,6 +21,26 @@ class LeadsApi {
 
     var head = {"Authorization": toc?.token ?? ""};
     var resp = await MyHelper.dio.get(uri, options: Options(headers: head));
+    // log(resp.data.toString());
+    return resp;
+  }
+
+  Future<dynamic> assignLeads(
+      {required List<String> leadIds,
+      String userId = "6670116523cab593bbffda08",
+      required String transferId}) async {
+    var toc = await UserPreference().getUser();
+
+    String uri = "/createLeadHistoryWithTransferAndRevolked?userId=${toc!.id}";
+
+    var head = {"Authorization": toc?.token ?? ""};
+    var resp = await MyHelper.dio.post(uri,
+        options: Options(headers: head),
+        data: {
+          "leadId": leadIds,
+          "transferId": transferId,
+          "assignLead": true
+        });
     // log(resp.data.toString());
     return resp;
   }
@@ -83,10 +105,14 @@ class LeadsApi {
   }
 
 //get Lead History
-  Future<Response> getLeadHistory(String leadId) async {
+  Future<Response> getLeadHistory(String leadId, String? specificUser) async {
+    log('leadId $leadId');
+    log('specificUser $specificUser');
     var user = await UserPreference().getUser();
     var head = await UserPreference().getHeaderForDio();
-    String uri = "/getAllLeadHistoryByLeadId?userId=${user?.id}&leadId=$leadId";
+    String uri =
+        "/getAllLeadHistoryByLeadId?userId=${user?.id}&leadId=$leadId${specificUser != '' ? "&specificUserId=$specificUser" : ""}";
+    log(uri);
     var resp = await MyHelper.dio.get(uri, options: Options(headers: head));
     return resp;
   }

@@ -182,6 +182,23 @@ class AddSubUserProvider with ChangeNotifier {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    CustomTextField(
+                      labelText: "Name",
+                      validator: (v) {
+                        if (nameController.text.isEmpty) {
+                          return null;
+                        }
+                        if (nameController.text.trim().isNotEmpty) {
+                          return null;
+                        } else {
+                          return "Enter proper name";
+                        }
+                      },
+                      controller: nameController,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Text(
                       _phoneController.text,
                       style: const TextStyle(color: Colors.grey),
@@ -199,6 +216,10 @@ class AddSubUserProvider with ChangeNotifier {
                     Center(
                       child: ElevatedButton(
                           onPressed: () async {
+                            if (nameController.text.isEmpty) {
+                              MyHelper.mySnakebar(context, "Enter Name");
+                              return;
+                            }
                             if (rolePermissions.isEmpty) {
                               MyHelper.mySnakebar(context, "Select Role");
                               return;
