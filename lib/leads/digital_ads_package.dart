@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,8 @@ import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/shimmers.dart';
 import 'package:leadkart/them/constents.dart';
 import 'package:provider/provider.dart';
+
+import '../controllers/SubUserProvider.dart';
 
 class LeadDetailsScreen extends StatefulWidget {
   const LeadDetailsScreen({super.key});
@@ -34,6 +38,7 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
     color: Colors.grey.shade400,
   );
 
+  String selectedLeadId = '';
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -65,6 +70,66 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
               return ListView(
                 padding: EdgeInsets.symmetric(horizontal: SC.fromWidth(18)),
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            showDialog<void>(
+                              context: context,
+                              barrierDismissible: false,
+                              // false = user must tap button, true = tap outside dialog
+                              builder: (BuildContext dialogContext) {
+                                return AlertDialog(
+                                  title: Text('Assign Leads'),
+                                  content: SizedBox(
+                                      // height: 300,
+                                      // width: 300,
+                                      child: Consumer<SubUserProvider>(
+                                          builder: (a, p, c) {
+                                    log('ggfgf${p.subUsers}');
+                                    return DropdownMenu(
+                                      dropdownMenuEntries: [
+                                        for (var i in p.subUsers)
+                                          DropdownMenuEntry(
+                                              value: i['userId']['_id'],
+                                              label: i['userId']['mobile']
+                                                  .toString())
+                                      ],
+                                      onSelected: (value) {
+                                        setState(() {
+                                          selectedLeadId = value;
+                                        });
+                                      },
+                                    );
+                                  })),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text('Assign'),
+                                      onPressed: () {
+                                        Provider.of<LeadDetailProvider>(context,
+                                                listen: false)
+                                            .assignLeads(
+                                                context: context,
+                                                leadId: selectedLeadId,
+                                                leadIds: [p.lead!.id!]);
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text('Cancel'),
+                                      onPressed: () {
+                                        Navigator.of(dialogContext)
+                                            .pop(); // Dismiss alert dialog
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Text("Assign Lead"))
+                    ],
+                  ),
                   SizedBox(
                     height: SC.fromHeight(35),
                   ),

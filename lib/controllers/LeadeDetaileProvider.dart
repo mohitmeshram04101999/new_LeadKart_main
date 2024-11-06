@@ -57,6 +57,7 @@ class LeadDetailProvider with ChangeNotifier {
       // var _d = Lead.fromJson(resp.data["data"]);
       // _lead = _d;
       log("${resp.data}");
+      Navigator.pop(context);
       return resp;
     } else {
       log('assignLeads ${resp.data}');

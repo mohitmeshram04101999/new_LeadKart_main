@@ -144,8 +144,8 @@ class CustomAppBar extends StatelessWidget {
 
                                       p.setCurrentBusiness(context, business);
 
-                                      if (business.pageAccessToken == null ||
-                                          business.pageAccessToken == "") {
+                                      if (business.isFacebookPageLinked ==
+                                          false) {
                                         p.showWarning(context);
                                       }
                                     } catch (e) {

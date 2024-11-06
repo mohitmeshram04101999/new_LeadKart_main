@@ -76,8 +76,8 @@ class BusinessProvider with ChangeNotifier {
           .getFullDetailOfBusiness(_currentBusiness?.id ?? "");
       if (businessDetail != null) {
         // _log.i("in");
-        if (businessDetail.pageAccessToken == null ||
-            businessDetail.pageAccessToken == "") {
+        if (businessDetail.isFacebookPageLinked == false ||
+            businessDetail.isFacebookPageLinked == null) {
           await showDialog(
               context: context,
               barrierDismissible: false,
