@@ -102,7 +102,7 @@ class LeadeTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyles().leadTileSubTitle),
                     lead?.assignUser != null
-                        ? Text("Assigned to - ${lead?.assignUser?.name}",
+                        ? Text("Assigned to - ${lead?.assignUser?.mobile}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyles().leadTileSubTitle)

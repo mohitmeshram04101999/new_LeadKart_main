@@ -395,7 +395,7 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                                 builder: (context) {
                                   return AlertDialog(
                                     title: Text(
-                                        "Assign to: ${data[index]['userId']['name']}"),
+                                        "Assign to: ${data[index]['userId']['mobile']}"),
                                     content: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -493,7 +493,7 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                               );
                             },
                             title: Text(
-                              "Assigned to: ${data[index]['userId']['name']} on ",
+                              "Assigned to: ${data[index]['userId']['mobile']} on ",
                             ),
                           );
                         },
