@@ -32,6 +32,7 @@ import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/routes/router.dart';
 import 'package:leadkart/them/theme.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -152,16 +153,44 @@ class _MyAppState extends State<MyApp> {
     SC.getScreen(context);
     debugPaintLayerBordersEnabled = false;
     debugRepaintRainbowEnabled = false;
-    return GetMaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.light,
-      theme: Theme.of(context).brightness == Brightness.light
-          ? AppTheme()
-          : AppTheme(),
-      routeInformationProvider: GoRouterConfig.router.routeInformationProvider,
-      routerDelegate: GoRouterConfig.router.routerDelegate,
-      backButtonDispatcher: GoRouterConfig.router.backButtonDispatcher,
-      routeInformationParser: GoRouterConfig.router.routeInformationParser,
+    return WillPopScope(
+      onWillPop: ()async{
+        Logger().t("THis is Will Pop ");
+
+        bool satet  = await  showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text("Are you sure?"),
+              content: const Text("Do you want to exit an App"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(true);
+                    },
+                    child: const Text("Yes")),
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
+                    },
+                    child: const Text("No")),
+              ],
+            );
+          },
+        );
+        return satet;
+      },
+      child: GetMaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        themeMode: ThemeMode.light,
+        theme: Theme.of(context).brightness == Brightness.light
+            ? AppTheme()
+            : AppTheme(),
+        routeInformationProvider: GoRouterConfig.router.routeInformationProvider,
+        routerDelegate: GoRouterConfig.router.routerDelegate,
+        backButtonDispatcher: GoRouterConfig.router.backButtonDispatcher,
+        routeInformationParser: GoRouterConfig.router.routeInformationParser,
+      ),
     );
     // return
     //  DevicePreview(builder: (context)=>GetMaterialApp.router(

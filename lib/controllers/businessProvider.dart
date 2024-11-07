@@ -45,7 +45,17 @@ class BusinessProvider with ChangeNotifier {
     }
 
     _loding = false;
-    _currentBusiness = await Controllers.useraPrefrenc.getBusiness();
+    BusinessModel? CB = await Controllers.useraPrefrenc.getBusiness();
+
+
+    _allBusiness.forEach((e){
+      if(CB?.id==e.id)
+        {
+          _currentBusiness = e;
+        }
+    });
+
+    // _currentBusiness = await Controllers.useraPrefrenc.getBusiness();
     notifyListeners();
     Logger().f(_currentBusiness);
     if (_currentBusiness?.pageAccessToken == null &&
@@ -203,6 +213,13 @@ class BusinessProvider with ChangeNotifier {
                                                               pageAccessToken: finalData['access_token'],
                                                               pageId: finalData['id'],
                                                               metaAccessToken: value.accessToken!.tokenString);
+
+                                                          if(res.statusCode==200)
+                                                            {
+                                                              BusinessModel business = res.data;
+                                                              setCurrentBusiness(context, business);
+                                                            }
+
                                                           // setCurrentBusiness(context, _currentBusiness!);
 
                                                           lode(context);

@@ -278,5 +278,14 @@ class EditBusinessProvider with ChangeNotifier
   }
 
 
+  updateFacebookPage() async
+  {
+
+
+
+
+  }
+
+
 //
 }

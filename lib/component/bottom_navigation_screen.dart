@@ -3,6 +3,7 @@ import 'package:leadkart/business_pages/busines_detail.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/leads/ads_image.dart';
 import 'package:leadkart/screens/newLead%20Screen/LeadeScreen.dart';
+import 'package:logger/logger.dart';
 
 import '../home_pages/home_screen.dart';
 
@@ -35,47 +36,21 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text("Are you sure?"),
-              content: const Text("Do you want to exit an App"),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(true);
-                    },
-                    child: const Text("Yes")),
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
-                    },
-                    child: const Text("No")),
-              ],
-            );
+    return Scaffold(
+        body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
+          children: pages,
+        ),
+        bottomNavigationBar: CustomBottomTile(
+          pageController: pageController,
+          item: _items,
+          onTap: (n) {
+            print(pageController.page);
+            pageController.jumpToPage(n);
           },
-        );
-        return Future.value(false);
-      },
-      child: Scaffold(
-          body: PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: pageController,
-            children: pages,
-          ),
-          bottomNavigationBar: CustomBottomTile(
-            pageController: pageController,
-            item: _items,
-            onTap: (n) {
-              print(pageController.page);
-              pageController.jumpToPage(n);
-            },
-            // ),
-          )),
-    );
+          // ),
+        ));
   }
 }
 
