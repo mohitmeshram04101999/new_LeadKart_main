@@ -10,7 +10,7 @@
 <!--        <provider android:authorities="com.facebook.orca.provider.PlatformProvider" /> &lt;!&ndash; allows sharing to Messenger app &ndash;&gt;-->
 <!--    </queries>-->
     <application
-        android:label="leadkart"
+        android:label="LeadKart"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

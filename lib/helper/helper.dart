@@ -30,7 +30,8 @@ class MyHelper
 
 
   static Dio dio = Dio(
-    BaseOptions(baseUrl: "https://server.leadkart.dsmacademy.in/api/"),
+    // BaseOptions(baseUrl: "https://server.leadkart.dsmacademy.in/api/"),
+    BaseOptions(baseUrl: "https://leadkartv2.dsmacademy.in/api/"),
   );
   static mySnakebar(BuildContext context,String descriptioin, {Color? color})
   {

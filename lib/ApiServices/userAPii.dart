@@ -12,7 +12,8 @@ import '../Models/VerifyOtpModel.dart';
 
 class UserApi
 {
-  String _baseUrl = "https://server.leadkart.dsmacademy.in/api/";
+  // String _baseUrl = "https://server.leadkart.dsmacademy.in/api/";
+  String _baseUrl = "https://leadkartv2.dsmacademy.in/api/";
 
 
   //Log in with PhonNumber
