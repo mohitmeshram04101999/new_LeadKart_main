@@ -1,23 +1,23 @@
-import 'package:animations/animations.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:getwidget/components/button/gf_button.dart';
 
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:leadkart/component/BussneCategoryTile.dart';
-import 'package:leadkart/component/HelpButtonWhite.dart';
-import 'package:leadkart/component/addRequirmentTile.dart';
-import 'package:leadkart/component/custom_button.dart';
-import 'package:leadkart/component/custom_page_route.dart';
-import 'package:leadkart/component/custom_textfield.dart';
+import 'package:leadkart/component/customBackground.dart';
 import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
-import 'package:leadkart/helper/controllerInstances.dart';
-import 'package:leadkart/helper/dimention.dart';
+
+import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
 import 'package:leadkart/helper/helper.dart';
-import 'package:leadkart/screens/user/follow_up_data.dart';
-import 'package:leadkart/them/constents.dart';
+import 'package:leadkart/leads/crateAdd%20Tab/tab1.dart';
+import 'package:leadkart/leads/crateAdd%20Tab/tab2.dart';
+import 'package:leadkart/leads/crateAdd%20Tab/tab3.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';import 'package:leadkart/them/constents.dart';
+
+import 'package:leadkart/helper/controllerInstances.dart';
+import 'package:logger/logger.dart';
+
 import 'package:provider/provider.dart';
+
+import 'crateAdd Tab/tab4.dart';
 
 class CreateBusinessScreen extends StatefulWidget {
   const CreateBusinessScreen({Key? key}) : super(key: key);
@@ -53,150 +53,128 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
     Controllers.businessCategoryProvider(context,listen: false).lode(context);
   }
 
+  final pageController = PageController(initialPage: 0);
+  int curruntPAge = 0;
+
   @override
   Widget build(BuildContext context) {
 
 
-    return Scaffold(
-      appBar:  AppBar(
-        foregroundColor: Colors.white,
-        backgroundColor: AppConstent().primeryColor,
-        title: const Text('Business Category',),
-        // actions: [
-        //
-        //   HelpButtonWhite(),
-        //    SizedBox(width: SC.from_height(20)),
-        // ],
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: SC.from_height(15)),
-        child: ListView(
-          children: [
-            SizedBox(height: SC.from_height(15),),
+    return WillPopScope(
+      onWillPop: ()async{
+        Provider.of<CreateBusinessProvider>(context,listen: false).clear();
+        return true;
+      },
 
-            Padding(
-              padding:   EdgeInsets.symmetric(horizontal:SC.from_height(0) ),
-              child: Text('What’s your Business',style: TextStyle(fontSize: SC.from_height(19.5),fontWeight: FontWeight.w500,color: Colors.grey.shade700),),
-            ),
-            SizedBox(height: SC.from_height(7),),
-            Padding(
-              padding:   EdgeInsets.symmetric(horizontal:SC.from_height(0) ),
-              child: Text('Let us know which of the following describe the  business',style: TextStyle(fontSize: SC.from_height(17),color: Colors.grey.shade700),),
-            ),
+      child: CustomBackground(
+        child: Scaffold(
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+            child: Consumer<BussnissCategoryProvider>(
+              builder: (context, p1, child) =>
+                  Consumer<CreateBusinessProvider>(
+                builder: (context, p, child) => MyactionButton(
+                  action: () async{
 
-            SizedBox(
-              height: SC.from_height(18),
-            ),
+                    if(curruntPAge==0)
+                    {
+                      if(p.businessNameController.text.trim().isNotEmpty)
+                      {
+                        pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.linear);
+                      }
+                    }
+                    if(curruntPAge==1)
+                    {
+                      if(p.businessCategoryId!=null)
+                      {
+                        pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.linear);
+                      }
+                    }
 
-            // Busines Name //
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: SC.from_height(0)),
-              child:     CustomTextField(
-                controller: Controllers.createBusinessProvider(context,listen: false).businessNameController,
-                labelText: 'Busines Name',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Business Contact No. cannot be empty';
-                  }
-                  // Additional validation logic if needed
-                  return null;
-                },
+                    if(curruntPAge==2)
+                    {
+                      Logger().i("${p1.allSrvices},${p.cityId},${p.stateId!=null}");
+                      if(p1.allSrvices.isNotEmpty&&p.cityId!=null&&p.stateId!=null)
+                        {
+                          pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.linear);
+                        }
+                      else
+                        {
+                          MyHelper.mySnakebar(context, 'Select AtLeast 1 Service, and State and City');
+                        }
+                    }
+
+
+                    if(curruntPAge==3)
+                      {
+                        await p.createBusiness(context);
+                      }
+                  },
+                  lable: "Continue",
+                ),
+              ),
+
+            ),
+          ),
+
+
+          //
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.black,
+            leading: SizedBox(),
+            leadingWidth: 0,
+            title: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: Row(
+                children: [
+                  for(int i=0;i<4;i++)
+                    Expanded(child: AnimatedContainer(
+                      height:5 ,
+                      width: double.infinity,
+                      // child: kDebugMode?Text("${curruntPAge} $i"):null,
+                      decoration: BoxDecoration(
+                        color: (curruntPAge>=i)?AppConstent().primeryColor:Colors.white,
+                        // color: Colors.white,
+                        borderRadius: BorderRadius.circular(5)
+                      ),
+                      margin: EdgeInsets.symmetric(horizontal: 5),
+                      duration: Duration(milliseconds: 300),
+                    ))
+                ],
               ),
             ),
-            SizedBox(height: SC.from_height(18),),
+          ),
 
-            // Select business category //
-            Padding(
-              padding:   EdgeInsets.symmetric(horizontal:SC.from_height(0) ),
-              child: Text('Select business category',style: TextStyle(fontSize: SC.from_height(18),fontWeight: FontWeight.w600),),
-            ),
+          backgroundColor:Colors.transparent,
+          body: PageView(
+            physics: NeverScrollableScrollPhysics(),
+            controller: pageController,
+            onPageChanged: (i){
+              curruntPAge = i;
+              setState(() {
 
-            SizedBox(height: SC.from_height(15),),
-
-            //  SELECT BUSINESS CATEGORY //
-            // Padding(
-            //   padding: EdgeInsets.symmetric(horizontal: SC.from_height(0)),
-            //   child: TextFormField(
-            //
-            //     cursorColor: Colors.grey,
-            //     decoration: InputDecoration(
-            //       hintText: 'Select busines category',
-            //       prefixIcon: Icon(Icons.search, color: Colors.grey.shade700,), // Add search icon// Adjust padding
-            //       filled: true,
-            //       fillColor: Colors.white, // Optional: Set background color of the text field
-            //     ),
-            //     validator: (value) {
-            //       if (value == null || value.isEmpty) {
-            //         return 'Name cannot be empty';
-            //       }
-            //       if (value.length < 2) {
-            //         return 'Name must be at least 2 characters long';
-            //       }
-            //       if (value.length > 50) {
-            //         return 'Name must be less than 50 characters';
-            //       }
-            //       final nameExp = RegExp(r"^[a-zA-Z\s\-']+$");
-            //       if (!nameExp.hasMatch(value)) {
-            //         return 'Name contains invalid characters';
-            //       }
-            //       return null;
-            //     },
-            //     autovalidateMode: AutovalidateMode.onUserInteraction,
-            //   ),
-            // ),
-
-            SizedBox(height: SC.from_height(15),),
-
-
-            // Grid of containers
-            Consumer<BussnissCategoryProvider>(builder: (a,p,c){
-              if(p.loding)
-                {
-                  return Center(child: CircularProgressIndicator());
-                }
-              return GridView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisExtent: SC.fromHeight(8),
-                  crossAxisSpacing: SC.from_height(15),
-                  mainAxisSpacing: SC.from_height(15),
-                  // childAspectRatio: (SC.from_width(50) / SC.from_height(80)), // Adjust the aspect ratio as needed
-                ),
-
-                //Childredn
-                children: [
-
-                  for(var i in p.allCategory)
-                    BussneCategoryTile(category: i,onTap: (){
-                      Controllers.createBusinessProvider(context,listen: false).setCategoryId(i,context);
-                      p.upDate();
-                      },)
-
-                ],
-
-              );
-            }),
-
-            SizedBox(height: SC.from_height(25),),
-
-
-
-            // GFBUTTON //
-
-            CustomButton(
-              text: 'Next', onPressed: () {
-                context.pushNamed("additionalDetails");
-              // Navigator.push(context, MaterialPageRoute(builder: (context)=> FollowUpDate()));
-
+              });
             },
-            ),
+            children: [
+
+              //tab 1
+              CreateBusinessTab1(),
+
+              //tab2
+              CreateBusinessTab2(),
+
+              //tab3
+              CreateBusinessTab3(),
+
+              //tab 4
+              CreateBusinessTab4()
 
 
-            SizedBox(height: SC.from_height(20),),
 
-          ],
+            ],
+          ),
         ),
       ),
     );

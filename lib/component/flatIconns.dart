@@ -13,6 +13,7 @@ class FlatIcons
   static String instagram = "assets/instagram_wbg.png";
   static String google = "assets/google.png";
   static String faceBook = "assets/facebook.png";
+  static String callOutline = "assets/flatiocns/call_outLine.png";
 }
 
 

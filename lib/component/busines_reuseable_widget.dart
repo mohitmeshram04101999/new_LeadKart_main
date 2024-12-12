@@ -12,7 +12,7 @@ class ReuseableBusinesContainer extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.only(top: SC.fromWidth(30),bottom: SC.fromWidth(30)),
+        padding: EdgeInsets.symmetric(vertical: SC.from_width(28)),
         // width: double.infinity,
         // height: SC.from_height(50),
         decoration: BoxDecoration(

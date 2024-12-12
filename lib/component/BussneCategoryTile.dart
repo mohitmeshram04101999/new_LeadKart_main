@@ -23,7 +23,7 @@ class BussneCategoryTile extends StatelessWidget {
       onTap: onTap,
       padding: EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: Controllers.createBusinessProvider(context,listen:false).businessCategoryId?.id==category.id?AppConstent().primeryColor.withOpacity(.2):null,
+        color: Controllers.createBusinessProvider(context,listen:false).businessCategoryId?.id==category.id?AppConstent().primeryColor.withOpacity(.2):Colors.white,
         border: Border.all(color: Controllers.createBusinessProvider(context,listen:false).businessCategoryId?.id==category.id?AppConstent().primeryColor:Colors.grey.shade400,width: .5),
         borderRadius: BorderRadius.circular(10),
       ),

@@ -17,15 +17,18 @@ class BudgetSelector extends StatelessWidget {
     return Expanded(
       child: Container(
         // width: SC.fromContextWidth(context, 1.25),
+        height: SC.from_width(72),
         decoration: BoxDecoration(
-          border: Border.all(color:Colors.grey),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
-        padding: const EdgeInsets.symmetric(
-            horizontal: 0, vertical: 0),
+        padding: EdgeInsets.symmetric(
+            horizontal: SC.from_width(8), vertical: 0),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+
+            //Icon
             Container(
                 decoration:  BoxDecoration(
                     border: Border(
@@ -34,16 +37,38 @@ class BudgetSelector extends StatelessWidget {
                     horizontal: 10, vertical: 10),
                 child: Image.asset(
                   icon,
-                  height: SC.from_width(20),
+                  height: SC.from_width(30),
                 )),
+
+
+            GestureDetector(
+              onTap:onDec,
+              child: Container(
+                decoration: const BoxDecoration(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
+                  child: Image.asset(
+                    'assets/minus.png',
+                    width: SC.from_width(15),
+                  ),
+                ),
+              ),
+            ),
+
+
             Expanded(child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               // child: Text(budget,style: Theme.of(context).textTheme.displaySmall,),
-
               child: Container(
                 alignment: Alignment.center,
                 height: 30,
                 child: TextField(
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: SC.from_width(20),
+                    color: Color.fromRGBO(83, 83, 83, 1)
+                  ),
+                  textAlign: TextAlign.center,
                   onChanged: onChange,
                   controller: budget,
                   keyboardType: TextInputType.number,
@@ -60,60 +85,20 @@ class BudgetSelector extends StatelessWidget {
                   ),
                 ),
               ),
-
             )),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  height: SC.from_width(27),
-                  decoration:  BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.grey)),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 0, vertical: 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      GestureDetector(
-                        onTap:onDec,
-                        child: Container(
-                          decoration: const BoxDecoration(),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
-                            child: Image.asset(
-                              'assets/minus.png',
-                              width: SC.from_width(15),
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: onInc,
-                        child: Container(
-                          decoration:  BoxDecoration(
-                              color: Theme.of(context).colorScheme.onSecondary,
-                              border: Border(
-                                  left: BorderSide(color: Colors.grey))),
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Center(
-                                child: Image.asset(
-                                  'assets/add.png',
-                                  width: SC.from_width(15),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+
+            GestureDetector(
+              onTap: onInc,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Center(
+                    child: Icon(Icons.add),
                   ),
                 ),
               ),
-            )
+            ),
+
           ],
         ),
       ),

@@ -16,9 +16,12 @@ class CustomTextField extends StatefulWidget {
   final FormFieldValidator<String>? validator;
   final double paddingHeight;
   final double borderRadiusHeight;
+  final Widget? icon;
+  final bool isTransparent;
 
   const CustomTextField({
     Key? key,
+    this.icon,
     this.hintText,
     this.format,
     this.maxLength,
@@ -29,6 +32,7 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.paddingHeight = 12.0,
     this.borderRadiusHeight = 7.0,
+    this.isTransparent = false,
   }) : super(key: key);
 
   @override
@@ -44,8 +48,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.textInputType,
       controller: widget.controller,
       cursorColor: Colors.grey,
+      style: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: SC.from_width(18)
+      ),
       decoration: InputDecoration(
         hintText: widget.hintText,
+
+        prefixIcon: (widget.icon!=null)? Container(
+          height: SC.from_width(30),
+          width: SC.from_width(30),
+            child: Center(child: widget.icon)):null,
+
 
         //
         border: OutlineInputBorder(
@@ -80,13 +94,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
         //
         contentPadding: EdgeInsets.symmetric(
-            vertical: SC.from_height(12), horizontal: SC.from_height(10)),
+            vertical: SC.from_height(20), horizontal: SC.from_height(10)),
 
         //
-        filled: true,
+        filled: !widget.isTransparent,
 
         //
         fillColor: Colors.white,
+
+        prefixStyle: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: SC.from_width(18)
+        ),
 
         //
         enabledBorder: OutlineInputBorder(

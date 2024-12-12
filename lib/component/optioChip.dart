@@ -21,6 +21,7 @@ class OptionChip extends StatelessWidget {
     return Card(
       clipBehavior: Clip.hardEdge,
       elevation: 0,
+      color: Colors.transparent,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(50)
@@ -29,12 +30,13 @@ class OptionChip extends StatelessWidget {
         onTap: onTap,
         child: Chip(
             shape:RoundedRectangleBorder(
-              side: BorderSide(color: AppConstent().primeryColor),
+
+              side: BorderSide(color: active? AppConstent().primeryColor:Color.fromRGBO(217, 217, 217, 1),width: 2),
               borderRadius: BorderRadius.circular(50),
             ),
-            backgroundColor:active?AppConstent().primeryColor.withOpacity(.3):null,
+            backgroundColor:active?AppConstent().primeryColor:Color.fromRGBO(255, 255, 255, .2),
             label:
-            Text(label,style: TextStyle(fontSize: SC.fromWidth(28),color: AppConstent().primeryColor),)),
+            Text(label,style: TextStyle(fontSize: SC.fromWidth(28),color: active ?Colors.white:Colors.black),)),
       ),
     );
   }

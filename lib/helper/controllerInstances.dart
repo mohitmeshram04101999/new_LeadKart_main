@@ -16,6 +16,7 @@ import 'package:leadkart/controllers/editBussnessProvider.dart';
 import 'package:leadkart/controllers/imageEditorController.dart';
 import 'package:leadkart/controllers/leadeProvider.dart';
 import 'package:leadkart/controllers/linkedPageProvider.dart';
+import 'package:leadkart/controllers/locationsegationController.dart';
 import 'package:leadkart/controllers/profileProvider.dart';
 import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/controllers/targetAreaSearchAreaController.dart';
@@ -74,4 +75,7 @@ class Controllers {
   static LinkedPageProvider linkedPageProvider(BuildContext context,
           {bool listen = true}) =>
       Provider.of<LinkedPageProvider>(context, listen: false);
+  static LocationSelecterProvider locationSelecterProvider(BuildContext context,
+      {bool listen = true}) =>
+      Provider.of<LocationSelecterProvider>(context, listen: false);
 }

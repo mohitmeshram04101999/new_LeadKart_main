@@ -2,7 +2,8 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
+import 'package:flutter/material.dart';
+import 'package:leadkart/ApiServices/api%20Path.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:leadkart/ApiServices/BussnessApi.dart';
@@ -30,8 +31,10 @@ class MyHelper
 
 
   static Dio dio = Dio(
+
+
     // BaseOptions(baseUrl: "https://server.leadkart.dsmacademy.in/api/"),
-    BaseOptions(baseUrl: "https://leadkartv2.dsmacademy.in/api/"),
+    BaseOptions(baseUrl: "${ApiConst.baseUrl}"),
   );
   static mySnakebar(BuildContext context,String descriptioin, {Color? color})
   {

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/business_pages/busines_detail.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -15,6 +16,7 @@ class NavigationScreen extends StatefulWidget {
 }
 
 class _NavigationScreenState extends State<NavigationScreen> {
+  late var pageController;
   final List<Widget> pages = [
     const HomeScreen(),
     // const AddImages(),
@@ -25,24 +27,39 @@ class _NavigationScreenState extends State<NavigationScreen> {
   ];
 
   List<MyCustomNavigationItem> _items = [
-    MyCustomNavigationItem(child: Icon(Icons.home_outlined), lable: "Home"),
+    MyCustomNavigationItem(icon: "assets/bottom_nav/home.png", lable: "Home"),
     // MyCustomNavigationItem(icon: "assets/bottom_nav/1.png", lable: "Add Image"),
-    MyCustomNavigationItem(icon: "assets/bottom_nav/2.png", lable: "Ads"),
-    MyCustomNavigationItem(icon: "assets/bottom_nav/3.png", lable: "Leads"),
-    MyCustomNavigationItem(icon: "assets/bottom_nav/4.png", lable: "Business"),
+    MyCustomNavigationItem(icon: "assets/bottom_nav/add.png", lable: "Ads"),
+    MyCustomNavigationItem(icon: "assets/bottom_nav/lead.png", lable: "Leads"),
+    MyCustomNavigationItem(icon: "assets/bottom_nav/business.png", lable: "Business"),
   ];
 
-  final pageController = PageController(initialPage: 0);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    pageController = PageController(initialPage: 0);
+
+  }
+  int curruntPAge = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
         body: PageView(
+          onPageChanged: (v){
+            curruntPAge = v;
+            setState(() {
+
+            });
+          },
           physics: const NeverScrollableScrollPhysics(),
           controller: pageController,
           children: pages,
         ),
         bottomNavigationBar: CustomBottomTile(
+          curruntIndex: curruntPAge,
           pageController: pageController,
           item: _items,
           onTap: (n) {
@@ -66,11 +83,13 @@ class MyCustomNavigationItem {
 }
 
 class CustomBottomTile extends StatefulWidget {
+  final int curruntIndex;
   final PageController pageController;
   final Function(int) onTap;
   final List<MyCustomNavigationItem> item;
   const CustomBottomTile(
       {required this.pageController,
+        required this.curruntIndex,
       required this.onTap,
       required this.item,
       super.key});
@@ -80,62 +99,78 @@ class CustomBottomTile extends StatefulWidget {
 }
 
 class _CustomBottomTileState extends State<CustomBottomTile> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // widget.pageController.jumpToPage(0);
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5),
-      child: Ink(
-        height: 60,
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
-          BoxShadow(
-              spreadRadius: 1,
-              blurRadius: 3,
-              offset: Offset(-1, -1),
-              color: Colors.grey.shade300)
-        ]),
-        child: Row(
-          children: List.generate(
-              widget.item.length,
-              (i) => Expanded(
-                      child: InkWell(
-                    onTap: () {
-                      widget.onTap(i);
-                      setState(() {});
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (widget.item[i].icon != null) ...[
-                          SizedBox(
-                            width: 22,
-                            child: Image.asset(widget.item[i].icon!,
-                                color:
-                                    (widget.pageController.page?.toInt() == i)
-                                        ? MyHelper.appConstent.primeryColor
-                                        : Colors.black),
-                          )
-                        ] else ...[
-                          Theme(
-                              data: ThemeData(
-                                iconTheme: IconThemeData(
-                                    color:
-                                        (widget.pageController.page?.toInt() ==
-                                                i)
-                                            ? MyHelper.appConstent.primeryColor
-                                            : Colors.black),
-                              ),
-                              child: widget.item[i].child ?? SizedBox()),
+      padding: const EdgeInsets.only(),
+      child: BottomAppBar(
+        shadowColor: Colors.grey,
+        elevation: 5,
+        color: Colors.white,
+        padding: EdgeInsets.zero,
+        child: Ink(
+          height: 60,
+          decoration: BoxDecoration(color: Colors.white, boxShadow: [
+
+            BoxShadow(
+                spreadRadius: 2,
+                blurRadius: 2,
+                color: Colors.grey)
+          ]),
+          child: Row(
+            children: List.generate(
+                widget.item.length,
+                (i) => Expanded(
+                        child: InkWell(
+                      onTap: () {
+                        widget.onTap(i);
+                        setState(() {});
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if(kDebugMode)
+                            Text("${widget.pageController.page?.toInt()} $i"),
+                          if (widget.item[i].icon != null) ...[
+                            SizedBox(
+                              width: 22,
+                              child: Image.asset(widget.item[i].icon!,
+                                  color:
+                                      (widget.curruntIndex == i)
+                                          ? MyHelper.appConstent.primeryColor
+                                          : Colors.black),
+                            )
+                          ] else ...[
+                            Theme(
+                                data: ThemeData(
+                                  iconTheme: IconThemeData(
+                                      color:
+                                          (widget.curruntIndex ==
+                                                  i)
+                                              ? MyHelper.appConstent.primeryColor
+                                              : Colors.black),
+                                ),
+                                child: widget.item[i].child ?? SizedBox()),
+                          ],
+                          Text(
+                            widget.item[i].lable,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                                color: (widget.curruntIndex == i)
+                                    ? MyHelper.appConstent.primeryColor
+                                    : Colors.black),
+                          ),
                         ],
-                        Text(
-                          widget.item[i].lable,
-                          style: TextStyle(
-                              color: (widget.pageController.page?.toInt() == i)
-                                  ? MyHelper.appConstent.primeryColor
-                                  : Colors.black),
-                        ),
-                      ],
-                    ),
-                  ))),
+                      ),
+                    ))),
+          ),
         ),
       ),
     );

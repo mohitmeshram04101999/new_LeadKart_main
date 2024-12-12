@@ -12,6 +12,7 @@ import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/actionButton.dart';
 import 'package:leadkart/my%20custom%20assets%20dart%20file/animated%20dilog.dart';
+import 'package:leadkart/them/constents.dart';
 import 'package:logger/logger.dart';
 import 'package:pinput/pinput.dart';
 
@@ -21,6 +22,7 @@ class AddSubUserProvider with ChangeNotifier {
 
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _roleNameController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   String? _otp;
   List<Role> _role = [];
@@ -28,6 +30,7 @@ class AddSubUserProvider with ChangeNotifier {
   TextEditingController get phoneController => _phoneController;
   TextEditingController get passController => _passController;
   TextEditingController get nameController => _nameController;
+  TextEditingController get roleNameController => _roleNameController;
   List<Role> get roles => _role;
 
   Future<void> addUser(BuildContext context) async {
@@ -51,44 +54,57 @@ class AddSubUserProvider with ChangeNotifier {
         dailog: AlertDialog(
           icon: cancelButton,
           title: const Text("Enter Phone Number"),
-          content: CustomTextField(
-            labelText: "Phone",
-            format: [
-              LengthLimitingTextInputFormatter(10),
-              FilteringTextInputFormatter.digitsOnly
-            ],
-            textInputType: TextInputType.numberWithOptions(),
-            validator: (v) {
-              if (phoneController.text.isEmpty) {
-                return null;
-              }
-              if (phoneController.text.trim().isNotEmpty) {
-                return null;
-              } else {
-                return "Enter proper number";
-              }
-            },
-            controller: phoneController,
-          ),
-          actions: [
-            MyactionButton(
-              action: () async {
-                if (phoneController.text.trim().isNotEmpty) {
-                  var resp = await _roleApi
-                      .sendOtpToEmail(phoneController.text.trim());
-                  if (resp.statusCode == 200) {
-                    Navigator.pop(context, true);
-                  } else {
-                    MyHelper.mySnakebar(
-                        context, "${resp.statusCode} ${resp.body}");
+          content:Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+
+              CustomTextField(
+                labelText: "Name*",
+                controller: nameController,
+              ),
+              SizedBox(height: SC.from_width(8),),
+              CustomTextField(
+                labelText: "Phone",
+                format: [
+                  LengthLimitingTextInputFormatter(10),
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                textInputType: TextInputType.numberWithOptions(),
+                validator: (v) {
+                  if (phoneController.text.isEmpty) {
+                    return null;
                   }
-                } else {
-                  MyHelper.mySnakebar(context, "Invalid Phone NUmber");
-                }
-              },
-              lable: "Next",
-            )
-          ],
+                  if (phoneController.text.trim().isNotEmpty) {
+                    return null;
+                  } else {
+                    return "Enter proper number";
+                  }
+                },
+                controller: phoneController,
+              ),
+              SizedBox(height: 10,),
+
+              MyactionButton(
+                color: AppConstent().secondaryColor,
+                action: () async {
+                  // await Future.delayed(Duration(seconds: 5));
+                  if (phoneController.text.trim().isNotEmpty) {
+                    var resp = await _roleApi
+                        .sendOtpToEmail(phoneController.text.trim());
+                    if (resp.statusCode == 200) {
+                      Navigator.pop(context, true);
+                    } else {
+                      MyHelper.mySnakebar(
+                          context, "${resp.statusCode} ${resp.body}");
+                    }
+                  } else {
+                    MyHelper.mySnakebar(context, "Invalid Phone NUmber");
+                  }
+                },
+                lable: "Next",
+              )
+            ],
+          ),
         ));
 
     //get Otp
@@ -100,49 +116,60 @@ class AddSubUserProvider with ChangeNotifier {
             icon: cancelButton,
             title: const Text("Verify Otp"),
             content: SizedBox(
-              height: SC.from_width(60),
-              child: Pinput(
-                length: 4,
-                onChanged: (b) {
-                  _otp = b;
-                },
-                onCompleted: (b) {
-                  _otp = b;
-                },
+              // height:
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+
+                  Pinput(
+                    length: 4,
+                    onChanged: (b) {
+                      _otp = b;
+                    },
+                    onCompleted: (b) {
+                      _otp = b;
+                    },
+                  ),
+
+
+                  MyactionButton(
+                    color: AppConstent().secondaryColor,
+                    action: () async {
+                      if (_otp?.length == 4) {
+                        String bId = Controllers.businessProvider(context)
+                            .currentBusiness
+                            ?.id ??
+                            "";
+                        var resp = await _roleApi.verifyOtp(
+                            name: _nameController.text.trim(),
+                            phone: _phoneController.text.trim(),
+                            otp: _otp ?? "",
+                            businessId: bId);
+
+                        // _log.i(resp.body);
+                        print(resp.body);
+                        if (resp.statusCode == 200) {
+                          var decode = jsonDecode(resp.body);
+                          var d = VerifySubUsersOtpApiResponse.fromJson(decode);
+                          subUserData = d.message;
+
+                          Navigator.pop(context, true);
+                        } else {
+                          var decode = jsonDecode(resp.body);
+                          // _log.i("${resp.statusCode} \n ${resp.body}");
+                          MyHelper.mySnakebar(context, "${decode["message"]}");
+                        }
+                      } else {
+                        MyHelper.mySnakebar(context, "Enter Velid Otp");
+                      }
+                    },
+                    lable: "Verify",
+                  ),
+                ],
               ),
             ),
             actions: [
-              MyactionButton(
-                action: () async {
-                  if (_otp?.length == 4) {
-                    String bId = Controllers.businessProvider(context)
-                            .currentBusiness
-                            ?.id ??
-                        "";
-                    var resp = await _roleApi.verifyOtp(
-                        phone: _phoneController.text.trim(),
-                        otp: _otp ?? "",
-                        businessId: bId);
 
-                    // _log.i(resp.body);
-                    print(resp.body);
-                    if (resp.statusCode == 200) {
-                      var decode = jsonDecode(resp.body);
-                      var d = VerifySubUsersOtpApiResponse.fromJson(decode);
-                      subUserData = d.message;
-
-                      Navigator.pop(context, true);
-                    } else {
-                      var decode = jsonDecode(resp.body);
-                      // _log.i("${resp.statusCode} \n ${resp.body}");
-                      MyHelper.mySnakebar(context, "${decode["message"]}");
-                    }
-                  } else {
-                    MyHelper.mySnakebar(context, "Enter Velid Otp");
-                  }
-                },
-                lable: "Verify",
-              )
             ],
           ));
     }
@@ -154,6 +181,8 @@ class AddSubUserProvider with ChangeNotifier {
           dailog: AlertDialog(
             icon: cancelButton,
             title: const Text("Add a Member"),
+
+            //
             content: FutureBuilder<List<dynamic>?>(
               future: _roleApi.getUserRoleAndPermissons(
                   businessId: currentBusiness?.id ?? ""),
@@ -178,73 +207,78 @@ class AddSubUserProvider with ChangeNotifier {
                   );
                 }
 
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CustomTextField(
-                      labelText: "Name",
-                      validator: (v) {
-                        if (nameController.text.isEmpty) {
-                          return null;
-                        }
-                        if (nameController.text.trim().isNotEmpty) {
-                          return null;
-                        } else {
-                          return "Enter proper name";
-                        }
-                      },
-                      controller: nameController,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      _phoneController.text,
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                        height: 400,
-                        child:
-                            BusinessPermissionsUI(permissionsData: snap.data!)),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Center(
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            if (nameController.text.isEmpty) {
-                              MyHelper.mySnakebar(context, "Enter Name");
-                              return;
-                            }
-                            if (rolePermissions.isEmpty) {
-                              MyHelper.mySnakebar(context, "Select Role");
-                              return;
-                            }
-                            log(rolePermissions.toString());
-                            var resp = await _roleApi.assignPermssionsToUser(
-                                businessId: currentBusiness?.id ?? "",
-                                memberId: subUserData?.memberId ?? "",
-                                permissions: rolePermissions ?? "");
-
-                            if (resp.statusCode == 200) {
-                              MyHelper.mySnakebar(
-                                  context, "${resp.data["message"]}");
-                              // Navigator.pop(context);
-                              clear();
-                              Controllers.subUserProvider(context)
-                                  .lode(context);
-                            } else {
-                              MyHelper.mySnakebar(
-                                  context, "${resp.statusCode}\n${resp.data}");
-                            }
-                          },
-                          child: const Text("Add Member")),
-                    ),
-                  ],
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CustomTextField(
+                        labelText: "Role Name",
+                        validator: (v) {
+                          if (nameController.text.isEmpty) {
+                            return null;
+                          }
+                          if (nameController.text.trim().isNotEmpty) {
+                            return null;
+                          } else {
+                            return "Enter proper name";
+                          }
+                        },
+                        controller: _roleNameController,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        _phoneController.text,
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                          height: 400,
+                          child:
+                              BusinessPermissionsUI(permissionsData: snap.data!)),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Center(
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              if (nameController.text.isEmpty) {
+                                MyHelper.mySnakebar(context, "Enter Name");
+                                return;
+                              }
+                              if (rolePermissions.isEmpty) {
+                                MyHelper.mySnakebar(context, "Select Role");
+                                return;
+                              }
+                              log(rolePermissions.toString());
+                  
+                              //
+                              var resp = await _roleApi.assignPermssionsToUser(
+                                  businessId: currentBusiness?.id ?? "",
+                                  memberId: subUserData?.memberId ?? "",
+                                  permissions: rolePermissions ?? "");
+                  
+                              if (resp.statusCode == 200) {
+                                MyHelper.mySnakebar(
+                                    context, "${resp.data["message"]}");
+                                // Navigator.pop(context);
+                                clear();
+                                Controllers.subUserProvider(context)
+                                    .lode(context);
+                                Navigator.pop(context);
+                              } else {
+                                MyHelper.mySnakebar(
+                                    context, "${resp.statusCode}\n${resp.data}");
+                              }
+                            },
+                            child: const Text("Add Member")),
+                      ),
+                    ],
+                  ),
                 );
               },
             ),

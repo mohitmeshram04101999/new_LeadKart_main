@@ -108,7 +108,9 @@ Future<void> selectbusinessImage (BuildContext context) async
   }
 }
 
-void upDate()=>notifyListeners();
+void upDate(){
+    notifyListeners();
+}
 
 //set CategoryId
  void setCategoryId(BCategory category,BuildContext context) async {

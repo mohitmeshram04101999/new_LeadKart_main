@@ -16,19 +16,20 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-String otp = '';
+  String otp = '';
 
   final defaultPinTheme = PinTheme(
-    width:  SC.from_height(58),  // Increased width
-    height:  SC.from_height(58), // Increased height
+    width: SC.from_height(58), // Increased width
+    height: SC.from_height(58), // Increased height
     textStyle: TextStyle(
-      fontSize:  SC.from_height(18),
+      fontSize: SC.from_height(18),
       color: Colors.black,
       fontWeight: FontWeight.w600,
     ),
     decoration: BoxDecoration(
-      border: Border.all(color: Colors.grey.shade200), // Changed border color
-      borderRadius: BorderRadius.circular( SC.from_height(10)),
+      border: Border.all(color: Colors.black, width: 1),
+      // Changed border color
+      borderRadius: BorderRadius.circular(SC.from_height(10)),
     ),
   );
 
@@ -36,7 +37,6 @@ String otp = '';
   FocusNode focusNode2 = FocusNode();
   FocusNode focusNode3 = FocusNode();
   FocusNode focusNode4 = FocusNode();
-
 
   bool _isLoading = false;
 
@@ -71,8 +71,6 @@ String otp = '';
     );
   }
 
-
-
   bool resendOtp = false;
   int _count = 30;
 
@@ -97,139 +95,180 @@ String otp = '';
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Container(
+        decoration: BoxDecoration(gradient: AppConstent().themeGradiant),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: SC.from_height(30),
+                ),
 
+                SizedBox(
+                  height: SC.from_height(30),
+                ),
 
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(horizontal: 25),
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                            fontSize: SC.from_width(18),
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w500),
+                        children: [
+                          TextSpan(
+                              text: 'Verify OTP\n\n',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black,
+                                  fontSize: SC.from_width(24))),
+                          TextSpan(
+                              text:
+                                  'We have sent you a 4 digit code to verify your phone number on ',
+                              style: TextStyle(color: Colors.grey.shade600)),
+                          TextSpan(
+                            text:
+                                Controllers.authController.phonController.text,
+                            style: TextStyle(
+                                color: AppConstent()
+                                    .primeryColor), // Change color of the phone number
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
 
+                SizedBox(
+                  height: SC.fromWidth(28),
+                ),
 
-    return Scaffold(
-      backgroundColor: Colors.white,
+                // PINPUT OTP TEXT FIELD  //
+                SizedBox(
+                  height: SC.from_height(20),
+                ),
 
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Verify OTP"),
-      ),
+                SizedBox(
+                  height: SC.from_height(40),
+                ),
 
-
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-
-            SizedBox(height: SC.from_height(30),),
-            Container(
-              width: double.infinity,
-              height: SC.from_height(160),
-
-              child: Image.asset('assets/otp.png',fit: BoxFit.contain,),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: SC.from_height(20)),
+                  child: Row(
+                    children: [],
+                  ),
+                ),
+              ],
             ),
-
-            SizedBox(height: SC.from_height(30),),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.symmetric(horizontal: 25),
-              child: Center(
-                child: RichText(
-                  text: TextSpan(
-                    style: TextStyle(fontSize: SC.fromWidth(28), color: Colors.grey),
+          ),
+          bottomSheet: Container(
+            height: SC.from_width(240),
+            width: double.infinity,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30))),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: SC.from_width(20),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
                     children: [
-                      TextSpan(
-                        text: 'We have sent you a 4 digit code to verify your\n            phone number on ',
-                        style: TextStyle(color: Colors.grey.shade600)
+                      Text(
+                        "Enter OTP",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: SC.from_width(20)),
                       ),
-                      TextSpan(
-                        text: Controllers.authController.phonController.text,
-                        style: TextStyle(color: AppConstent().primeryColor), // Change color of the phone number
-                      ),
+
+                      // Text('Please wait 00:${_count}s',style: TextStyle(fontSize: SC.from_height(16),color: Colors.grey),),
+                      Expanded(child: Container()),
+                      if (resendOtp)
+                        InkWell(
+                            onTap: () {
+                              _count = 30;
+                              startCountDown();
+                              Controllers.authController.resendOtp(context);
+                            },
+                            child: Text('Resend',
+                                style: TextStyle(
+                                    fontSize: SC.from_height(16),
+                                    color: Colors.blue))),
                     ],
                   ),
                 ),
-              ),
-            ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Pinput(
+                      length: 4,
+                      defaultPinTheme: defaultPinTheme,
+                      focusedPinTheme: defaultPinTheme.copyWith(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: AppConstent().primeryColor,
+                              width:
+                                  2), // Changed border color for focused state
+                          borderRadius:
+                              BorderRadius.circular(SC.from_height(10)),
+                        ),
+                      ),
+                      submittedPinTheme: defaultPinTheme.copyWith(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                              color: Colors
+                                  .black), // Keep the border for submitted state
+                          borderRadius:
+                              BorderRadius.circular(SC.from_height(10)),
+                        ),
+                      ),
 
-
-            SizedBox(height:  SC.fromWidth(28),),
-
-
-
-      // PINPUT OTP TEXT FIELD  //
-      SizedBox(height: SC.from_height(20),),
-      Center(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Pinput(
-
-                  length: 4,
-                  defaultPinTheme: defaultPinTheme,
-                  focusedPinTheme: defaultPinTheme.copyWith(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppConstent().primeryColor), // Changed border color for focused state
-                      borderRadius: BorderRadius.circular( SC.from_height(10)),
-                    ),
-                  ),
-                  submittedPinTheme: defaultPinTheme.copyWith(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.grey.shade200), // Keep the border for submitted state
-                      borderRadius: BorderRadius.circular( SC.from_height(10)),
-                    ),
-                  ),
-
-                  separatorBuilder: (index) => SizedBox(width:  SC.from_height(20)),
-                  // Space between the PIN fields
-                  onChanged: (value) {
-                    setState(() {
-                      otp = value;
-                    });
-                  },
-                  onCompleted: (pin) {
-                    print('PIN completed: $pin');
-                  },
-                ),
-              ),
-            ),
-
-
-            SizedBox(height: SC.from_height(40),),
-
-            Padding(
-              padding:  EdgeInsets.symmetric(horizontal: SC.from_height(20)),
-              child: Row(
-                children: [
-                  Text('Please wait 00:${_count}s',style: TextStyle(fontSize: SC.from_height(16),color: Colors.grey),),
-                  Expanded(child: Container()),
-                  if(resendOtp)
-                    InkWell(
-                      onTap: (){
-                        _count = 30;
-                        startCountDown();
-                        Controllers.authController.resendOtp(context);
+                      separatorBuilder: (index) =>
+                          SizedBox(width: SC.from_height(20)),
+                      // Space between the PIN fields
+                      onChanged: (value) {
+                        setState(() {
+                          otp = value;
+                        });
                       },
-                        child: Text('Resend OTP',style: TextStyle(fontSize: SC.from_height(16),color: Colors.grey.shade700))),
-                ],
-              ),
+                      onCompleted: (pin) {
+                        print('PIN completed: $pin');
+                      },
+                    ),
+                  ),
+                ),
+
+                //
+                SizedBox(
+                  height: SC.from_height(10),
+                ),
+
+                Center(
+                  child: MyactionButton(
+                    lable: "Verify Otp",
+                    action: () =>
+                        Controllers.authController.verifyOtp(otp, context),
+                  ),
+                ),
+              ],
             ),
-
-            SizedBox(height: SC.from_height(40),),
-
-
-            Center(
-              child: MyactionButton(
-                lable: "Verify Otp",
-                action:()=> Controllers.authController.verifyOtp(otp, context),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
-
-
-
-
-
-

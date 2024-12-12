@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:leadkart/ApiServices/adsApi.dart';
 import 'package:leadkart/ApiServices/plansApi.dart';
@@ -41,7 +43,7 @@ class CreateAddProvider with ChangeNotifier {
   bool _lodingOffer = false;
   List<OfferDetail> _offers = [];
   List<String> _adInterests = [];
-  TargetArea? _targetArea;
+  List<TargetArea> _targetArea = [];
   bool _isAdCreationInProgress = false;
 
   AdvertisementTypeModel? get addType => _addType;
@@ -67,7 +69,7 @@ class CreateAddProvider with ChangeNotifier {
   bool get loadingOffer => _lodingOffer;
   List<int> get targetGenders => _targetGender;
   List<OfferDetail> get offers => _offers;
-  TargetArea? get targetArea => _targetArea;
+  List<TargetArea> get targetArea => _targetArea;
   List<String> get adInterests => _adInterests;
   bool get isAdCreationInProgress => _isAdCreationInProgress;
   //
@@ -97,7 +99,13 @@ class CreateAddProvider with ChangeNotifier {
   }
 
   void setTargetArea(TargetArea t) {
-    _targetArea = t;
+    _targetArea.add(t) ;
+    notifyListeners();
+  }
+
+  void removeTargetAreA(TargetArea t)
+  {
+    _targetArea.removeWhere((element) => t.key==element.key,);
     notifyListeners();
   }
 
@@ -172,6 +180,7 @@ class CreateAddProvider with ChangeNotifier {
       var _d = await AdsApi().getEstimatedPlan(
           instaBudget: _plan?.facebookBudget ?? 0,
           facebookBudget: _plan?.facebookBudget ?? 0);
+      Logger().i(_d?.toJson());
       if (_d != null) {
         _estimatedData = _d.data;
         notifyListeners();
@@ -319,6 +328,7 @@ class CreateAddProvider with ChangeNotifier {
 
       var api = AdsApi();
       var d = await api.createAdd(
+
         location: _targetArea,
         businessId: Controllers.businessProvider(context, listen: false)
                 .currentBusiness
@@ -334,6 +344,7 @@ class CreateAddProvider with ChangeNotifier {
         caption: _captionController.text.trim(),
         name: _titleController.text.trim(),
         days: _days,
+        audienceGender: _targetGender,
         instBudget: int.parse(_instBudget.text),
         googleBudget: int.parse(_googleBudget.text),
         faceBookBudget: int.parse(_faceBookBudget.text),
@@ -401,7 +412,7 @@ class CreateAddProvider with ChangeNotifier {
     _endDate = null;
     _estimatedData = null;
     _targetGender = [1, 2, 3];
-    _targetArea = null;
+    _targetArea = [];
 
     notifyListeners();
     Logger().i("create add provider is clear ");

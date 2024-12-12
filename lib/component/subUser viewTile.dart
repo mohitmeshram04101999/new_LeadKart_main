@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:leadkart/them/constents.dart';
 
 class SubUserTile extends StatelessWidget {
   final dynamic user;
@@ -76,7 +77,8 @@ class SubUserTile extends StatelessWidget {
           child: CachedNetworkImage(
             imageUrl: user['userId']['image'] ?? "",
             fit: BoxFit.cover,
-            errorWidget: (context, url, error) => const CircleAvatar(
+            errorWidget: (context, url, error) => CircleAvatar(
+              backgroundColor: AppConstent().secondaryColor,
               child: Icon(Icons.person),
             ),
           ),
@@ -114,7 +116,8 @@ class SubUserTile extends StatelessWidget {
         child: CachedNetworkImage(
           imageUrl: user['userId']['image'] ?? "",
           fit: BoxFit.cover,
-          errorWidget: (context, url, error) => const CircleAvatar(
+          errorWidget: (context, url, error) =>  CircleAvatar(
+            backgroundColor: AppConstent().secondaryColor,
             child: Icon(Icons.person),
           ),
         ),
@@ -160,13 +163,13 @@ class SubUserTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Text(
                         sectionName.toUpperCase(),
-                        style: const TextStyle(
+                        style:TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
-                          color: Colors.blue,
+                          color: AppConstent().secondaryColor,
                         ),
                       ),
                     ),
@@ -174,18 +177,27 @@ class SubUserTile extends StatelessWidget {
                       spacing: 8,
                       children: permissions.map((permission) {
                         return Chip(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            side: BorderSide(
+                              color: Colors.transparent
+                            )
+                          ),
+                          color: WidgetStateProperty.resolveWith((states) => Colors.grey.shade100,),
                           label: Text(
                             formatPermissionText(permission),
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color:AppConstent().secondaryColor,
                             ),
                           ),
                           backgroundColor: Colors.blue.shade700,
                         );
                       }).toList(),
                     ),
-                    const Divider(),
+                     Divider(
+                      color: Colors.grey.withOpacity(.3),
+                    ),
                   ],
                 );
               },

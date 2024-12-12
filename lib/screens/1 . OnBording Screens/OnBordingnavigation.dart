@@ -26,59 +26,27 @@ class _OnBordingMainState extends State<OnBordingMain> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: Stack(
+      body: PageView(
 
+        physics: NeverScrollableScrollPhysics(),
+
+        onPageChanged: (pageIndex){
+          curruntPage= pageIndex;
+          setState(() {
+
+          });
+        },
+        controller: pageController,
         children: [
 
-          //Page view
-          PageView(
+          //1
+          On1(pageController:  pageController,),
 
-            physics: NeverScrollableScrollPhysics(),
+          // On2(pageController: pageController),
 
-            onPageChanged: (pageIndex){
-              curruntPage= pageIndex;
-              setState(() {
-
-              });
-            },
-            controller: pageController,
-            children: [
-
-              //1
-              On1(pageController:  pageController,),
-
-              On2(pageController: pageController),
-
-              On3(pageController: pageController),
-
-              On4(pageController: pageController),
-
-            ],
-          ),
-
-          //Page Index Indicator
-          Positioned(
-            top: SC.from_width(530),
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for(int i =0;i<4;i++)
-                  AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                    margin: EdgeInsets.all(3),
-                    height: 6,
-                    width: 6,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: curruntPage ==i?AppConstent().primeryColor:Colors.grey,
-                    ),
-                  )
-              ],
-            ),
-          )
-
+          // On3(pageController: pageController),
+          //
+          // On4(pageController: pageController),
 
         ],
       ),

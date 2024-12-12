@@ -69,7 +69,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
           return ListView(
             padding: EdgeInsets.symmetric(horizontal: SC.from_height(15)),
             children: [
-              SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(20),),
               Row(
                 children: [
 
@@ -147,7 +147,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   )
                 ],),
 
-              SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(20),),
 
               if(p.businessCategoryId!=null)
               Container(
@@ -228,7 +228,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
               ),
 
 
-              SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(20),),
 
 
 
@@ -254,7 +254,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                 },
               ),
 
-              SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(20),),
 
               // Add WhatsApp No.. //
               CustomTextField(
@@ -274,7 +274,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   return null;
                 },
               ),
-              SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(20),),
 
               // State //
 
@@ -295,7 +295,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                           ));
                     });
               }),
-              SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(20),),
 
               // City //
               Consumer<BussnissCategoryProvider>(builder: (a,p2,c){
@@ -316,7 +316,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                     });
               }),
 
-              SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(20),),
               // Website Link //
               CustomTextField(
                 controller: p.webLinkController,
@@ -331,7 +331,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
               ),
 
 
-              SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(20),),
 
 
               // Instagram Link //
@@ -346,7 +346,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   return null;
                 },
               ),
-              SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(20),),
 
               // Twitter Link //
               CustomTextField(
@@ -360,7 +360,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   return null;
                 },
               ),
-              SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(20),),
 
               // Youtube Link //
               CustomTextField(
@@ -374,7 +374,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   return null;
                 },
               ),
-              SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(20),),
 
               // Facebook Link //
               CustomTextField(
@@ -388,7 +388,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   return null;
                 },
               ),
-              SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(20),),
 
               // Address //
               CustomTextField(
@@ -402,7 +402,7 @@ class _AdditionalDetailState extends State<AdditionalDetail> {
                   return null;
                 },
               ),
-              SizedBox(height: SC.from_height(15),),
+              SizedBox(height: SC.from_height(20),),
 
               // Tagline //
               CustomTextField(

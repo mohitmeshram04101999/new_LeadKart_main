@@ -37,6 +37,7 @@ class ManageSubUserTab extends StatelessWidget {
                     //returnWidget
                     return Card(
                       elevation: 3,
+
                       margin: const EdgeInsets.symmetric(
                           horizontal: 5, vertical: 7),
                       child: SubUserTile(user: p.subUsers.reversed.toList()[i]),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:leadkart/ApiServices/RoleApi.dart';
 import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
@@ -23,6 +24,8 @@ class SubUserProvider with ChangeNotifier {
     var resp = await _roleApi.getAllSubUserByBusinessId(
         userId: user?.id ?? "",
         businessId: _businessProvider.currentBusiness?.id ?? "");
+
+    Logger().e(resp);
 
     // if (resp.statusCode == 200) {
     // _log.i(resp.body);

@@ -56,7 +56,7 @@ class _AddCreationState extends State<AddCreation> {
         padding: EdgeInsets.symmetric(horizontal: SC.from_height(15)),
         children: [
 
-          SizedBox(height: SC.from_height(15),),
+          SizedBox(height: SC.from_height(20),),
 
           Padding(
             padding:   EdgeInsets.symmetric(horizontal:SC.from_height(0) ),
@@ -178,7 +178,7 @@ class _AddCreationState extends State<AddCreation> {
             ),
           ),
 
-          SizedBox(height: SC.from_height(15),),
+          SizedBox(height: SC.from_height(20),),
 
           // Select business category //
           Padding(
@@ -186,7 +186,7 @@ class _AddCreationState extends State<AddCreation> {
             child: Text('Select business category',style: TextStyle(fontSize: SC.from_height(18),fontWeight: FontWeight.w500),),
           ),
 
-          SizedBox(height: SC.from_height(15),),
+          SizedBox(height: SC.from_height(20),),
 
           //  SELECT BUSINESS CATEGORY //
           Padding(
@@ -236,7 +236,7 @@ class _AddCreationState extends State<AddCreation> {
             ),
           ),
 
-          SizedBox(height: SC.from_height(15),),
+          SizedBox(height: SC.from_height(20),),
 
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -271,7 +271,7 @@ class _AddCreationState extends State<AddCreation> {
             ),
           ),
 
-          SizedBox(height: SC.from_height(15),),
+          SizedBox(height: SC.from_height(20),),
 
           // GFBUTTON //
           Container(

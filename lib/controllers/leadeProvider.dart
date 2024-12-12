@@ -1,10 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:leadkart/ApiServices/leads%20api.dart';
 import 'package:leadkart/Models/LeadsApiresponce.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:logger/logger.dart';
 
 class LeadsProvider with ChangeNotifier {
   //const var
@@ -24,8 +26,10 @@ class LeadsProvider with ChangeNotifier {
   //get Leads by BusinessId;
   Future<void> getLeads(BuildContext context) async {
     var currutBusiness = Controllers.businessProvider(context).currentBusiness;
+
     var resp = await _leadsApi.getAllLeads(
         stage: _filterType == "ALL" ? null : _filterType);
+    Logger().i("${resp.statusCode}\n${resp.data}");
 
     if (resp.statusCode == 200) {
       try {
@@ -51,6 +55,8 @@ class LeadsProvider with ChangeNotifier {
 
   Future<dynamic> listOfLeadAssignUser(
       BuildContext context, String leadid) async {
+
+    Logger().i("THis is lead id $leadid");
     var currutBusiness = Controllers.businessProvider(context).currentBusiness;
     var resp = await _leadsApi.listOfLeadAssignUser(leadId: leadid);
 

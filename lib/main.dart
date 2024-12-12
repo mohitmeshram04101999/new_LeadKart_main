@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:leadkart/component/bottom_navigation_screen.dart';
 import 'package:leadkart/controllers/AllPlansProvider.dart';
 import 'package:leadkart/controllers/BussnissCategoryProvider.dart';
 import 'package:leadkart/controllers/CreateBussness%20Provider.dart';
@@ -23,6 +24,7 @@ import 'package:leadkart/controllers/creaetAddProvider.dart';
 import 'package:leadkart/controllers/editBussnessProvider.dart';
 import 'package:leadkart/controllers/leadeProvider.dart';
 import 'package:leadkart/controllers/linkedPageProvider.dart';
+import 'package:leadkart/controllers/locationsegationController.dart';
 import 'package:leadkart/controllers/profileProvider.dart';
 import 'package:leadkart/controllers/targetAreaSearchAreaController.dart';
 import 'package:leadkart/controllers/terestProvider.dart';
@@ -30,6 +32,8 @@ import 'package:leadkart/firebase_options.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/home_pages/home_screen.dart';
+import 'package:leadkart/login_pages/otp_screen.dart';
 import 'package:leadkart/routes/router.dart';
 import 'package:leadkart/them/theme.dart';
 import 'package:logger/logger.dart';
@@ -135,6 +139,7 @@ void main() async {
     ChangeNotifierProvider(create: (context) => FaqProvider()),
     ChangeNotifierProvider(create: (context) => InterestProvider()),
     ChangeNotifierProvider(create: (context) => LinkedPageProvider()),
+    ChangeNotifierProvider(create: (context) => LocationSelecterProvider()),
   ], child: const MyApp()));
 }
 
@@ -180,6 +185,12 @@ class _MyAppState extends State<MyApp> {
         );
         return satet;
       },
+
+      // child: GetMaterialApp(
+      //   home: NavigationScreen(),
+      // ),
+
+      // ------------ this is real code -----------------
       child: GetMaterialApp.router(
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
@@ -191,6 +202,9 @@ class _MyAppState extends State<MyApp> {
         backButtonDispatcher: GoRouterConfig.router.backButtonDispatcher,
         routeInformationParser: GoRouterConfig.router.routeInformationParser,
       ),
+      // ------------ this is real code -------------------
+      //
+      //
     );
     // return
     //  DevicePreview(builder: (context)=>GetMaterialApp.router(

@@ -11,7 +11,16 @@ class AppConstent
 {
 
   //New Primer Color
-  final Color primeryColor = const Color.fromRGBO(68,139,220, 1);
+  final Color primeryColor = const Color.fromRGBO(123, 110, 228, 1);
+
+  final themeGradiant =  LinearGradient(
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
+      colors: [
+        Color.fromRGBO(123, 110, 228, .1),
+        Colors.white
+      ]
+  );
 
   //Old PrimerColor
   // final Color primeryColor = const Color.fromRGBO(36, 238, 221, 1);
@@ -25,8 +34,29 @@ class AppConstent
   final Color checkBoxColor = const Color.fromRGBO(87, 42, 200, 1);
   final Color dottedBorderColor = const Color.fromRGBO(217, 217, 217, 1);
   final Duration offset = const Duration(minutes: 165);
- final Color secondaryColor = const Color.fromRGBO(235, 240, 253, 1);
+ final Color secondaryColor = const Color.fromRGBO(254, 76, 28, 1);
   final EdgeInsets horizontalPedding = EdgeInsets.symmetric(horizontal: SC.fromWidth(20),vertical: SC.from_width(10));
+  
+  static TextStyle labelStyle(BuildContext context) =>TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: SC.from_width(20)
+  );
+
+  static TextStyle labelStyle2(BuildContext context) => TextStyle(
+      fontSize: SC.from_height(18),
+      fontWeight: FontWeight.w500);
+
+  static TextStyle labelStyleBig(BuildContext context) => TextStyle(
+      fontSize: SC.from_height(24),
+      fontWeight: FontWeight.w700);
+
+  static TextStyle heading(BuildContext context,{Color? color}) => TextStyle(
+    color: color,
+      fontSize: SC.from_height(16),
+      fontWeight: FontWeight.w700
+  );
+
+
 }
 
 
@@ -42,15 +72,15 @@ final Map leadTyps = {
 };
 
 final Map translate = {
-  "INTERESTED":"Status Changed: Interested",
-  "NOT_INTERESTED":"Status Changed: Not Interested",
-  "CONVERTED":"Status Changed: Converted",
-  "LOST":"Status Changed: Lost",
-  "VISITED":"Status Changed: Visited",
-  "NOT_ANSWERED":"Status Changed: Not Answered",
-  "IN_PROGRESS":"Status Changed: In-Progress",
-  "UNQUALIFIED":"Status Changed: Unqualified",
-  "NOT_CONNECTED":"Status Changed: Not Connected",
+  "INTERESTED":"Interested",
+  "NOT_INTERESTED":"Not Interested",
+  "CONVERTED":"Converted",
+  "LOST":"Lost",
+  "VISITED":"Visited",
+  "NOT_ANSWERED":"Not Answered",
+  "IN_PROGRESS":"In-Progress",
+  "UNQUALIFIED":"Unqualified",
+  "NOT_CONNECTED":"Not Connected",
   "NEW":"Lead is Added",
   "NOTE_ADDED":"Note Added",
   "OFFER_SENT":"Offer Sent",

@@ -37,7 +37,7 @@ class AdsApi {
     int? instBudget,
     int? googleBudget,
     String? destinationUrl,
-    TargetArea? location,
+    List<TargetArea>? location,
     List<int>? audienceGender,
     int? ageRangeFrom,
     List<int>? days,
@@ -49,6 +49,16 @@ class AdsApi {
     String? startDate,
     String? endDate,
   }) async {
+
+    List<Map<String,String>> locationData = [];
+
+    if(location!=null)
+      {
+        location.forEach((area) {
+          locationData.add({"key":"${area.key}"});
+        },);
+      }
+
     var data = {
       "businessId": businessId,
       // "planId": planId,
@@ -65,15 +75,13 @@ class AdsApi {
       // "isInstaAdEnabled": isInstaAddEnable,
       // "isGoogleAdEnabledokAdSetId": isGoogleAddEnable,
       // "facebookBudget": faceBookBudget,
-      "facebookBudget": 145400,
+      "facebookBudget": faceBookBudget,
       // "instaBudget": instBudget,
       // "googleBudget": googleBudget,
       "destinationUrl": destinationUrl,
       // "audienceId": null,
       // "location": location!=null? location.toJson().toString() :null,
-      "location": {
-        "countries": ["IN"]
-      },
+
       "days": 1,
       "interest": {"id": 6018341976753, "name": "Movies"},
       "audienceGender": "1",
@@ -90,6 +98,9 @@ class AdsApi {
       "endDate": endDate,
       // "endDate":endDate,
     };
+
+
+    Logger().t(data);
 
 //     Map<String, String> fakeData = {
 //       "businessId": businessId,
@@ -126,7 +137,6 @@ class AdsApi {
 //     };
 
     String uri = "/adsDetails/createAdsDetails";
-    log(data.toString());
     // var head = await UserPreference().getHeader() as Map<String, String>;
     var dataToSend = data.map((key, value) => MapEntry(key, value.toString()));
     // data.forEach((key, value) {
@@ -135,7 +145,6 @@ class AdsApi {
     //   }
     // });
 
-    _log.e(dataToSend);
 
     var request =
         http.MultipartRequest("POST", Uri.parse(ApiConst.baseUrl + uri));
@@ -143,17 +152,31 @@ class AdsApi {
     request.fields.addAll(dataToSend);
     request.headers.addAll({"Authorization": user!.token.toString()});
 
+
+    Logger().t(" gender ${audienceGender}");
+
     if (audienceGender != null) {
       for (int i = 0; i < audienceGender.length; i++) {
         request.fields["audienceGender[$i]"] = audienceGender[i].toString();
       }
     }
 
+    Logger().t(" days ${days}");
     if (days != null) {
       for (int i = 0; i < days.length; i++) {
+
         request.fields["days[$i]"] = days[i].toString();
       }
     }
+
+    Logger().t(" Location ${location?[0].key}");
+
+    if(location!=null)
+      {
+        for (int i = 0; i < location.length; i++) {
+          request.fields["location[$i]"] = location[i].key.toString();
+        }
+      }
 
     if (file != null) {
       request.files.add(await http.MultipartFile.fromPath(
@@ -164,12 +187,12 @@ class AdsApi {
     _log.e(file.toString());
 
     var resp = await request.send();
-    Logger().e(resp.statusCode);
+    Logger().e("frome create add ${resp.statusCode}");
     String responceBody = await resp.stream.bytesToString();
     Logger().e(responceBody);
     var j = jsonDecode(responceBody);
 
-    _log.e("${resp.statusCode}\n$j");
+    _log.e("${resp.statusCode}\n$j}");
 
     return j;
   }
@@ -277,5 +300,16 @@ class AdsApi {
     } catch (e) {
       MyHelper.logger.e(e);
     }
+  }
+
+
+  Future<http.Response> getLocationData(String location,{String businessId = "664483cb34434c7cec80d6ed"}) async
+  {
+
+    final String uri =  ApiConst.baseUrl+"/searchTargetArea?businessId=$businessId&search=Bhopal";
+    var resp = await http.get(Uri.parse(uri));
+    Logger().i("Location area api\n${resp.statusCode}\n${jsonDecode(resp.body)}");
+    return resp;
+    
   }
 }

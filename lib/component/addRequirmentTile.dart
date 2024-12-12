@@ -19,10 +19,8 @@ class AddREquirmentTile extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: SC.from_width(8)),
       onTap: () async {
-        bool create = await Controllers.businessProvider(context, listen: false)
-                .currentBusiness
-                ?.pageAccessToken !=
-            null;
+        var crBusiness = Controllers.businessProvider(context, listen: false).currentBusiness;
+        bool create = crBusiness?.pageAccessToken!=null&&crBusiness?.isFacebookPageLinked==true;
         if (create) {
           Controllers.allPlansProvider(context)
               .selectAddPlane(advertisementTypeModel);
@@ -48,58 +46,67 @@ class AddREquirmentTile extends StatelessWidget {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style:
-            TextStyle(fontSize: SC.from_width(13), fontWeight: FontWeight.w500),
+            TextStyle(fontSize: SC.from_width(16), fontWeight: FontWeight.w700),
       ),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            advertisementTypeModel.description,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                fontSize: SC.from_width(13),
-                fontWeight: FontWeight.w500,
-                color: Colors.grey),
-          ),
-          SizedBox(
-            height: SC.from_height(5),
-          ),
-          Row(
-            children: [
-              //
-              //
-              if (advertisementTypeModel.isFacebook)
-                FlatIcon(
-                  icon: FlatIcons.faceBook,
-                  size: 15,
-                ),
-              const SizedBox(
-                width: 5,
-              ),
-
-              if (advertisementTypeModel.isInstagram)
-                FlatIcon(
-                  icon: FlatIcons.instagram,
-                  size: 15,
-                ),
-              const SizedBox(
-                width: 5,
-              ),
-
-              //
-              //
-              if (advertisementTypeModel.isGoogle)
-                FlatIcon(
-                  icon: FlatIcons.google,
-                  size: 20,
-                ),
-            ],
-          )
-        ],
+      subtitle: Text(
+        advertisementTypeModel.description,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+            fontSize: SC.from_width(14),
+            fontWeight: FontWeight.w700,
+            color: Color.fromRGBO(188, 188, 188, 1)),
       ),
-      trailing: Icon(Icons.arrow_forward_ios_rounded),
+      // subtitle: Column(
+      //   crossAxisAlignment: CrossAxisAlignment.start,
+      //   mainAxisSize: MainAxisSize.min,
+      //   children: [
+      //     Text(
+      //       advertisementTypeModel.description,
+      //       maxLines: 1,
+      //       overflow: TextOverflow.ellipsis,
+      //       style: TextStyle(
+      //           fontSize: SC.from_width(13),
+      //           fontWeight: FontWeight.w500,
+      //           color: Colors.grey),
+      //     ),
+      //     SizedBox(
+      //       height: SC.from_height(5),
+      //     ),
+      //     Row(
+      //       children: [
+      //         //
+      //         //
+      //         if (advertisementTypeModel.isFacebook)
+      //           FlatIcon(
+      //             icon: FlatIcons.faceBook,
+      //             size: 15,
+      //           ),
+      //         const SizedBox(
+      //           width: 5,
+      //         ),
+      //
+      //         if (advertisementTypeModel.isInstagram)
+      //           FlatIcon(
+      //             icon: FlatIcons.instagram,
+      //             size: 15,
+      //           ),
+      //         const SizedBox(
+      //           width: 5,
+      //         ),
+      //
+      //         //
+      //         //
+      //         if (advertisementTypeModel.isGoogle)
+      //           FlatIcon(
+      //             icon: FlatIcons.google,
+      //             size: 20,
+      //           ),
+      //       ],
+      //     )
+      //   ],
+      // ),
+      // trailing: Icon(Icons.arrow_forward_ios_rounded),
     );
   }
 }

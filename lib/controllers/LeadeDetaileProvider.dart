@@ -18,12 +18,14 @@ class LeadDetailProvider with ChangeNotifier {
   List<LeadeHistory> _leadeHestory = [];
   List<LeadeHistory> _leadAssignHestory = [];
   final TextEditingController _noteController = TextEditingController();
+  bool _editNote = false;
 
   Lead? get lead => _lead;
   bool get loading => _loading;
   List<LeadeHistory> get leadHistory => _leadeHestory;
   List<LeadeHistory> get leadAssignHistory => _leadAssignHestory;
   TextEditingController get noteController => _noteController;
+  bool get editNote => _editNote;
 
   //
   //lodeLead Detail
@@ -150,44 +152,54 @@ class LeadDetailProvider with ChangeNotifier {
 
   Future<void> updateNote(BuildContext context) async {
     _noteController.text = _lead?.note ?? "";
-    bool? save = await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => AlertDialog(
-              title: const Text("Add Note"),
-              content: TextFormField(
-                controller: _noteController,
-                decoration: InputDecoration(
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                        color: AppConstent().primeryColor, width: 10),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: AppConstent().primeryColor,
-                  )),
-                ),
-              ),
-              actions: [
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context, true);
-                    },
-                    child: const Text("Save"))
-              ],
-            ));
 
-    if (_noteController.text.trim().isNotEmpty && save == true) {
-      _lead?.note = _noteController.text.trim();
-      notifyListeners();
-      var resp = await _leadApi.updateLeads(_lead?.id ?? "",
-          note: _noteController.text.trim());
-      MyHelper.mySnakebar(context, resp.data["message"].toString(),
-          color: Colors.green);
-      loadLeadDetail(context: context, leadId: _lead?.id ?? "");
-    }
+    if(_editNote)
+      {
+        _lead?.note = _noteController.text.trim();
+        notifyListeners();
+        var resp = await _leadApi.updateLeads(_lead?.id ?? "",
+            note: _noteController.text.trim());
+        _editNote=false;
+        MyHelper.mySnakebar(context, resp.data["message"].toString(),
+            color: Colors.green);
+        loadLeadDetail(context: context, leadId: _lead?.id ?? "");
+      }
+    else
+      {
+        _editNote = true;
+        false;
+      }
+
+    // bool? save = await showDialog(
+    //     context: context,
+    //     barrierDismissible: false,
+    //     builder: (context) => AlertDialog(
+    //           title: const Text("Add Note"),
+    //           content: TextFormField(
+    //             controller: _noteController,
+    //             decoration: InputDecoration(
+    //               contentPadding:
+    //                   const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+    //               border: UnderlineInputBorder(
+    //                 borderSide: BorderSide(
+    //                     color: AppConstent().primeryColor, width: 10),
+    //               ),
+    //               focusedBorder: UnderlineInputBorder(
+    //                   borderSide: BorderSide(
+    //                 color: AppConstent().primeryColor,
+    //               )),
+    //             ),
+    //           ),
+    //           actions: [
+    //             ElevatedButton(
+    //                 onPressed: () {
+    //                   Navigator.pop(context, true);
+    //                 },
+    //                 child: const Text("Save"))
+    //           ],
+    //         ));
+
+
   }
 
   //

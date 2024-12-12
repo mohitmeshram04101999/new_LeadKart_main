@@ -41,6 +41,11 @@ class BussnissCategoryProvider with ChangeNotifier
     _allState = [];
   }
 
+  void update()
+  {
+    notifyListeners();
+  }
+
   Future<void> lode(BuildContext context)async{
 
     CurrentUser? user = await Controllers.useraPrefrenc.getUser();

@@ -29,7 +29,7 @@ class TargateAreaProvider with ChangeNotifier
     _loading = true;
     notifyListeners();
     var currentBus = Controllers.businessProvider(context).currentBusiness;
-    String uri  =  "/searchTargetArea?businessId=664483cb34434c7cec80d6ed&search=$data";
+    String uri  =  "/searchTargetArea?businessId=${currentBus?.id}&search=$data";
     Logger().e(uri);
     var head = await UserPreference().getHeaderForDio();
     var resp = await MyHelper.dio.get(uri,options: Options(headers: head));

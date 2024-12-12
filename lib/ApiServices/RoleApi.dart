@@ -42,6 +42,7 @@ class RoleApi {
   //
   //verify Otp
   Future<http.Response> verifyOtp({
+    required String name,
     required String phone,
     required String otp,
     required String businessId,
@@ -49,9 +50,12 @@ class RoleApi {
     const String uri = "${ApiConst.baseUrl}/user/V2/verifyMobileOtpV2";
     var head = await UserPreference().getHeader();
 
+
+    Logger().t("$name , $phone  , $otp  ,$businessId");
+
     var resp = await http.post(Uri.parse(uri),
         headers: head,
-        body: {"mobile": phone, "otp": otp, "businessId": businessId});
+        body: {"name":name,"mobile": phone, "otp": otp, "businessId": businessId});
 
     return resp;
   }
@@ -86,7 +90,7 @@ class RoleApi {
 
     var resp = await MyHelper.dio.get(uri, options: Options(headers: head));
 
-    // _log.i("$businessId\n${resp.statusCode} \n${resp.data}");
+    _log.i("$businessId\n${resp.statusCode} \n${resp.data}");
 
     if (resp.statusCode == 200) {
       BusinessPermissionsResponse d =

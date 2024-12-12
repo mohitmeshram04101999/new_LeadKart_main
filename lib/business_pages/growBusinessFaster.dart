@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:leadkart/Models/estimateddataModel.dart';
 import 'package:leadkart/helper/TextStyles.dart';
 import 'package:leadkart/helper/TextStyles.dart';
+import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/them/constents.dart';
 import 'package:flutter/widgets.dart';
 import 'package:leadkart/helper/helper.dart';
@@ -161,109 +162,147 @@ class EstimateResultCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
-                children: [
-                  Text("Estimated Result", style:TextStyle(fontWeight: FontWeight.w500,fontSize: 14)),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Icon(Icons.info_outline_rounded, color: Colors.blue),
-                ],
-              ),
+              Text("Estimated Result", style:TextStyle(fontWeight: FontWeight.w500,fontSize: SC.from_width(16))),
+
+
               const SizedBox(
                 height: 10,
               ),
-              
-              //
+
               Row(
                 children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 35,
-                          height: 35,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(3.0),
-                            child: Icon(Icons.remove_red_eye_outlined),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                            amountFormate(data.totalReach),
-                            style: Theme.of(context).textTheme.bodySmall,
+
+                  //views
+                  Expanded(child: Column(
+                    children: [
+                      //
+                      Text(
+                        amountFormate(data.totalReach),
+                        style: AppConstent.labelStyle(context),
                         maxLines: 1,overflow: TextOverflow.ellipsis,),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text("VIEWS",
-                            style: Theme.of(context).textTheme.displaySmall),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 35,
-                          height: 35,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(3.0),
-                            child: Icon(Icons.people_outline),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                            "${data.totalLeads! < 1000 ? data.totalLeads : '${(data.totalLeads ?? 0) / 1000}K'}",
-                            style: Theme.of(context).textTheme.bodySmall,
+                      const SizedBox(
+                        width: 10,
+                      ),
+
+                      //
+                      Text("Ad View",
+                          style: TextStyle(
+                            fontSize: SC.from_width(14),
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromRGBO(189, 189, 189, 1),
+                          ))
+
+                  ],)),
+                  Container(width: 2,height: SC.from_width(60),color: Colors.grey.withOpacity(.5),),
+
+                  //leads
+                  Expanded(child: Column(
+                    children: [
+                      //
+                      Text(
+                        "${data.totalLeads! < 1000 ? data.totalLeads : '${(data.totalLeads ?? 0) / 1000}K'}",
+                        style: AppConstent.labelStyle(context),
                         maxLines: 1,overflow: TextOverflow.ellipsis,),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text("Leads",
-                            style: Theme.of(context).textTheme.displaySmall),
-                      ],
-                    ),
-                  )
+
+                      //
+                      Text("Leads",
+                          style: TextStyle(
+                            fontSize: SC.from_width(14),
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromRGBO(189, 189, 189, 1),
+                          ))
+
+                    ],)),
+                  Container(width: 2,height: SC.from_width(60),color: Colors.grey.withOpacity(.5),),
+
+
+                  //spent
+                  Expanded(child: Column(
+                    children: [
+                      //
+                      Text(
+                        "₹${amountFormate(totalBudget)}",
+                        style: AppConstent.labelStyle(context),
+                        maxLines: 1,overflow: TextOverflow.ellipsis,),
+
+                      //
+                      Text("Spend",
+                          style: TextStyle(
+                            fontSize: SC.from_width(14),
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromRGBO(189, 189, 189, 1),
+                          ))
+
+                    ],)),
+                  Container(width: 2,height: SC.from_width(60),color: Colors.grey.withOpacity(.5),),
+
+
+                  //click
+                  Expanded(child: Column(
+                    children: [
+                      //
+                      Text(
+                        amountFormate(data.totalReach),
+                        style: AppConstent.labelStyle(context),
+                        maxLines: 1,overflow: TextOverflow.ellipsis,),
+                      const SizedBox(
+                        width: 10,
+                      ),
+
+                      //
+                      Text("Clicks",
+                          style: TextStyle(
+                            fontSize: SC.from_width(14),
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromRGBO(189, 189, 189, 1),
+                          ))
+
+                    ],))
+
+
                 ],
               ),
+
+              SizedBox(height: 10,),
               
               
-              RichText(
-                  text: TextSpan(children: [
-                TextSpan(
-                    text: "You will spend only ",
-                    style: Theme.of(context).textTheme.displaySmall),
-                TextSpan(
-                    text: "₹${amountFormate(totalBudget)}",
-                    style: TextStyles()
-                        .mediumText
-                        .copyWith(fontWeight: FontWeight.bold)),
-                TextSpan(
-                    text: " in total and ad will run for ",
-                    style: Theme.of(context).textTheme.displaySmall),
-                TextSpan(
-                    text: "6 days",
-                    style: TextStyles()
-                        .mediumText
-                        .copyWith(fontWeight: FontWeight.bold))
-              ]))
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 40,),
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(227, 230, 252, 1),
+                  borderRadius: BorderRadius.all(Radius.circular(SC.from_width(50)))
+                ),
+                child: Center(
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontSize: SC.from_width(12),
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black
+                        ),
+                          children: [
+                    TextSpan(
+                        text: "You will spend only ",),
+                    TextSpan(
+                        text: "₹${amountFormate(totalBudget)}",
+                        style: TextStyles()
+                            .mediumText
+                            .copyWith(fontWeight: FontWeight.bold)),
+                    TextSpan(
+                        text: " in total and ad\nwill run for ",
+                    ),
+                    TextSpan(
+                        text: "6 days",
+                        style: TextStyles()
+                            .mediumText
+                            .copyWith(fontWeight: FontWeight.bold))
+                  ])),
+                ),
+              )
             ],
           ),
         ),

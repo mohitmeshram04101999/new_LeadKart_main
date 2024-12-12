@@ -16,20 +16,26 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: const SizedBox(),
+      backgroundColor: Colors.transparent,
       leadingWidth: 0,
+      // flexibleSpace: Container(
+      //   decoration: BoxDecoration(
+      //     gradient: AppConstent().themeGradiant
+      //   ),
+      // ),
       title: Row(
         children: [
           const SizedBox(
             width: 10,
           ),
-          Consumer<BusinessProvider>(
-              builder: (a, p, c) => CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(p.currentBusiness?.businessImage ?? ""),
-                    child: p.currentBusiness?.businessImage != "null"
-                        ? null
-                        : const Icon(Icons.image),
-                  )),
+          // Consumer<BusinessProvider>(
+          //     builder: (a, p, c) => CircleAvatar(
+          //           backgroundImage:
+          //               NetworkImage(p.currentBusiness?.businessImage ?? ""),
+          //           child: p.currentBusiness?.businessImage != "null"
+          //               ? null
+          //               : const Icon(Icons.image),
+          //         )),
           const SizedBox(
             width: 10,
           ),
@@ -45,7 +51,7 @@ class CustomAppBar extends StatelessWidget {
                         builder: (context2, value, child) {
                           if (value.loding) {
                             return const Center(
-                                child: CircularProgressIndicator());
+                                child:Text("Loading..."));
                           }
 
                           if (value.allBusiness.length == 0) {
@@ -163,7 +169,7 @@ class CustomAppBar extends StatelessWidget {
               child:
                   Consumer<BusinessProvider>(builder: (context, value, child) {
                 if (value.currentBusiness == null && value.loding) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: Text("Loading...."));
                 }
                 if (value.allBusiness.length == 0)
                   return const Text("No Business Found");
@@ -178,18 +184,27 @@ class CustomAppBar extends StatelessWidget {
                     },
                   );
                 }
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      height: SC.from_height(30),
-                      child: Text(
-                        "${value.currentBusiness == null ? "No Business Selected" : value.currentBusiness!.businessName}",
-                        style: TextStyle(
-                            color: Colors.white, fontSize: SC.from_height(18)),
-                      ),
+                    Text("Let's Grow",style: TextStyle(fontSize: SC.from_width(16,),fontWeight: FontWeight.w700,color: Colors.black),),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          height: SC.from_height(30),
+                          child: Text(
+                            "${value.currentBusiness == null ? "No Business Selected" : value.currentBusiness!.businessName}",
+                            style: TextStyle(
+                              fontSize: SC.from_height(18),
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        const Icon(Icons.arrow_drop_down,color: Colors.black,),
+                      ],
                     ),
-                    const Icon(Icons.arrow_drop_down, color: Colors.white),
                   ],
                 );
               }),
@@ -198,10 +213,10 @@ class CustomAppBar extends StatelessWidget {
           const Spacer(),
           // SizedBox(width: SC.from_width(50)),
 
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: trailingButton,
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: trailingButton,
+          // ),
         ],
       ),
     );
