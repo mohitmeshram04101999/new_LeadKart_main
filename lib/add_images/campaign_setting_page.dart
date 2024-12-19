@@ -76,18 +76,9 @@ class _CampaignSettingState extends State<CampaignSetting> {
                   
                     //floating actio
                     floatingActionButton: kDebugMode?FloatingActionButton(onPressed: ()async{
-                  
-                       await Controllers.locationSelecterProvider(context).load(context);
-                  
-                      showDialog(context: context, builder: (context) => AlertDialog(
-                        content: Column(
-                          children: [
-                            Text(Controllers.locationSelecterProvider(context).areas.length.toString()),
-                            for(Area area in Controllers.locationSelecterProvider(context).areas )
-                              Text("sadfa")
-                          ],
-                        ),
-                      ),);
+
+                      Provider.of<CreateAddProvider>(context,listen: false).createAdd(context);
+
                     }):null,
                   
                     appBar: AppBar(

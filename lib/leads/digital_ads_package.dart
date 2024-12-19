@@ -41,6 +41,9 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
   );
 
   String selectedLeadId = '';
+  final gap = SizedBox(
+    height: SC.from_width(20),
+  );
   @override
   Widget build(BuildContext context) {
     return CustomBackground(
@@ -143,167 +146,158 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                             child: Text("Assign Lead"))
                       ],
                     ),
-                    SizedBox(
-                      height: SC.fromHeight(35),
-                    ),
+
+                    gap,
 
                     // IMAGE //
-                    SizedBox(
-                      // decoration: BoxDecoration(border: Border.all()),
-                      width: double.infinity,
+                    Card(
+                      margin: EdgeInsets.zero,
+                      clipBehavior: Clip.hardEdge,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            right: 8, top: 16, bottom: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                // padding: EdgeInsets.all(value),
+                                clipBehavior: Clip.hardEdge,
+                                width: SC.from_width(120),
+                                decoration: BoxDecoration(
+                                    color: Colors.red, shape: BoxShape.circle),
+                                // height: SC.fromHeight(10),
+                                child: (p.loading)
+                                    ? const ContainerShimmer()
+                                    : Image.asset(
+                                        'assets/img_12.png',
+                                        fit: BoxFit.cover,
+                                      )),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                (p.loading)
+                                    ? const ContainerShimmer(
+                                        height: 15,
+                                        width: 120,
+                                      )
+                                    : Text(
+                                        p.lead?.name ?? "Unknown",
+                                        style: TextStyle(
+                                            fontSize: SC.from_width(16),
+                                            fontWeight: FontWeight.w700),
+                                      ),
 
-                      child: Card(
-                        margin: EdgeInsets.zero,
-                        clipBehavior: Clip.hardEdge,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              right: 8, top: 16, bottom: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                  // padding: EdgeInsets.all(value),
-                                  clipBehavior: Clip.hardEdge,
-                                  width: SC.from_width(120),
-                                  decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      shape: BoxShape.circle),
-                                  // height: SC.fromHeight(10),
-                                  child: (p.loading)
-                                      ? const ContainerShimmer()
-                                      : Image.asset(
-                                          'assets/img_12.png',
-                                          fit: BoxFit.cover,
-                                        )),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  (p.loading)
-                                      ? const ContainerShimmer(
-                                          height: 15,
-                                          width: 120,
-                                        )
-                                      : Text(
-                                          p.lead?.name ?? "Unknown",
-                                          style: TextStyle(
-                                              fontSize: SC.from_width(16),
-                                              fontWeight: FontWeight.w700),
-                                        ),
+                                //
 
-                                  //
+                                (p.loading)
+                                    ? const ContainerShimmer(
+                                        height: 15,
+                                        width: 120,
+                                      )
+                                    : Text(
+                                        p.lead?.userContactNumber ??
+                                            "Contact Number is not available",
+                                        style: TextStyle(
+                                            fontSize: SC.from_width(16),
+                                            color: Colors.grey.shade700,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
 
-                                  (p.loading)
-                                      ? const ContainerShimmer(
-                                          height: 15,
-                                          width: 120,
-                                        )
-                                      : Text(
-                                          p.lead?.userContactNumber ??
-                                              "Contact Number is not available",
-                                          style: TextStyle(
-                                              fontSize: SC.from_width(16),
-                                              color: Colors.grey.shade700,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-
-                                  //
-                                  (p.loading)
-                                      ? const ContainerShimmer(
-                                          height: 15,
-                                          width: 120,
-                                        )
-                                      : Row(
-                                          children: [
-                                            Text(
-                                              "Status : ",
+                                //
+                                (p.loading)
+                                    ? const ContainerShimmer(
+                                        height: 15,
+                                        width: 120,
+                                      )
+                                    : Row(
+                                        children: [
+                                          Text(
+                                            "Status : ",
+                                            style: TextStyle(
+                                                fontSize: SC.from_width(16),
+                                                color: Color.fromRGBO(
+                                                    119, 119, 119, 119),
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 3),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                color: Color.fromRGBO(
+                                                    141, 141, 141, 1)),
+                                            child: Text(
+                                              p.lead?.leadStatus != null
+                                                  ? p.lead!.leadStatus!
+                                                      .capitalizeFirst
+                                                      .toString()
+                                                      .replaceAll("_", " ")
+                                                  : "No Data",
                                               style: TextStyle(
-                                                  fontSize: SC.from_width(16),
-                                                  color: Color.fromRGBO(
-                                                      119, 119, 119, 119),
+                                                  fontSize: SC.from_width(12),
+                                                  color: Colors.white,
                                                   fontWeight: FontWeight.w500),
                                             ),
-                                            Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 8, vertical: 3),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  color: Color.fromRGBO(
-                                                      141, 141, 141, 1)),
-                                              child: Text(
-                                                p.lead?.leadStatus != null
-                                                    ? p.lead!.leadStatus!
-                                                        .capitalizeFirst
-                                                        .toString()
-                                                        .replaceAll("_", " ")
-                                                    : "No Data",
-                                                style: TextStyle(
-                                                    fontSize: SC.from_width(12),
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
+                                      ),
 
-                                  //
+                                //
 
-                                  // (p.loading)
-                                  //     ? const ContainerShimmer(
-                                  //         height: 50, width: 120)
-                                  //     : Row(
-                                  //         children: [
-                                  //           ShederIcon(
-                                  //               onTap: () async {
-                                  //                 String? number =
-                                  //                     p.lead?.userContactNumber;
-                                  //                 if (number != null) {
-                                  //                   makePhoneCall(number);
-                                  //                 } else {
-                                  //                   MyHelper.mySnakebar(
-                                  //                       context, "Can't Call");
-                                  //                 }
-                                  //               },
-                                  //               iconData: Icons.call),
-                                  //           const SizedBox(
-                                  //             width: 8,
-                                  //           ),
-                                  //           ShederIcon(
-                                  //               onTap: () {
-                                  //                 String? number =
-                                  //                     p.lead?.whatsappNumber ??
-                                  //                         p.lead?.userContactNumber;
-                                  //                 if (number != null) {
-                                  //                   openWhatsAppChat(number);
-                                  //                 } else {
-                                  //                   MyHelper.mySnakebar(context,
-                                  //                       "Can't open Chat number is not available");
-                                  //                 }
-                                  //               },
-                                  //               iconData:
-                                  //                   FontAwesomeIcons.whatsapp),
-                                  //           const SizedBox(
-                                  //             width: 8,
-                                  //           ),
-                                  //           ShederIcon(
-                                  //               iconData: FontAwesomeIcons.message),
-                                  //         ],
-                                  //       )
-                                ],
-                              ),
-                            ],
-                          ),
+                                // (p.loading)
+                                //     ? const ContainerShimmer(
+                                //         height: 50, width: 120)
+                                //     : Row(
+                                //         children: [
+                                //           ShederIcon(
+                                //               onTap: () async {
+                                //                 String? number =
+                                //                     p.lead?.userContactNumber;
+                                //                 if (number != null) {
+                                //                   makePhoneCall(number);
+                                //                 } else {
+                                //                   MyHelper.mySnakebar(
+                                //                       context, "Can't Call");
+                                //                 }
+                                //               },
+                                //               iconData: Icons.call),
+                                //           const SizedBox(
+                                //             width: 8,
+                                //           ),
+                                //           ShederIcon(
+                                //               onTap: () {
+                                //                 String? number =
+                                //                     p.lead?.whatsappNumber ??
+                                //                         p.lead?.userContactNumber;
+                                //                 if (number != null) {
+                                //                   openWhatsAppChat(number);
+                                //                 } else {
+                                //                   MyHelper.mySnakebar(context,
+                                //                       "Can't open Chat number is not available");
+                                //                 }
+                                //               },
+                                //               iconData:
+                                //                   FontAwesomeIcons.whatsapp),
+                                //           const SizedBox(
+                                //             width: 8,
+                                //           ),
+                                //           ShederIcon(
+                                //               iconData: FontAwesomeIcons.message),
+                                //         ],
+                                //       )
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: SC.fromHeight(35),
-                    ),
+
+                    gap,
 
                     //Lead Status Card
                     Card(
@@ -313,7 +307,6 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-
                             //
                             Text(
                               'Choose Ads and Digital',
@@ -322,10 +315,11 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                                   fontWeight: FontWeight.w500),
                             ),
 
-                            SizedBox(height: SC.from_width(15),),
+                            SizedBox(
+                              height: SC.from_width(15),
+                            ),
 
                             //
-
 
                             //
                             p.loading
@@ -333,40 +327,44 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                                     height: 30,
                                   )
                                 : DropdownButtonFormField(
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: SC.from_width(16)),
-                                  value: p.lead?.leadStatus,
-                                  decoration: InputDecoration(
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: SC.from_width(16)),
+                                    value: p.lead?.leadStatus,
+                                    decoration: InputDecoration(
 
-                                    //
-                                      fillColor: Color.fromRGBO(232, 232, 232, .5),
+                                        //
+                                        fillColor:
+                                            Color.fromRGBO(232, 232, 232, .5),
 
-                                      //
-                                      filled: true,
+                                        //
+                                        filled: true,
 
-                                      //
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                          borderRadius: BorderRadius.circular(10)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                          borderRadius: BorderRadius.circular(10)),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                          borderRadius: BorderRadius.circular(10))),
-                                  onChanged: (d) {
-                                    if (d != null) {
-                                      p.updateLeadStatus(context, d);
-                                    }
-                                  },
-                                  items: [
-                                    for (String i in leadTyps.keys)
-                                      DropdownMenuItem(value: i, child: Text(i)),
-                                  ],
-                                ),
-
+                                        //
+                                        border: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                            borderRadius:
+                                                BorderRadius.circular(10))),
+                                    onChanged: (d) {
+                                      if (d != null) {
+                                        p.updateLeadStatus(context, d);
+                                      }
+                                    },
+                                    items: [
+                                      for (String i in leadTyps.keys)
+                                        DropdownMenuItem(
+                                            value: i, child: Text(i)),
+                                    ],
+                                  ),
 
                             // p.loading
                             //     ? const ContainerShimmer(
@@ -393,20 +391,19 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                       ),
                     ),
                     // CHOOSE ADS DIGITAL //
-                    
-                    SizedBox(
-                      height: SC.fromHeight(75),
-                    ),
+
+                    gap,
+
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 16),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 16),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             //
-                            Text(
-                              'Next Follow Up?',
-                              style: AppConstent.heading(context)),
+                            Text('Next Follow Up?',
+                                style: AppConstent.heading(context)),
 
                             //
                             InkWell(
@@ -416,12 +413,12 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                               child: Ink(
                                 padding: EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: AppConstent().secondaryColor,
-                                  borderRadius: BorderRadius.circular(10)
-                                ),
+                                    color: AppConstent().secondaryColor,
+                                    borderRadius: BorderRadius.circular(10)),
                                 child: Text(
                                   'Set Follow UP',
-                                  style: AppConstent.heading(context,color: Colors.white),
+                                  style: AppConstent.heading(context,
+                                      color: Colors.white),
                                 ),
                               ),
                             ),
@@ -431,10 +428,6 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                     ),
 
                     //
-                    SizedBox(
-                      height: SC.fromHeight(75),
-                    ),
-
 
                     Text("${p.noteController.text}"),
 
@@ -442,187 +435,180 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                     Card(
                       margin: EdgeInsets.zero,
                       child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 10),
                         title: Row(
                           children: [
                             Text(
                               'Notes ',
                               style: AppConstent.heading(context),
                             ),
-                            Text( "(Write down the Imp things)",style:TextStyle(
-                              fontSize: SC.from_width(14),
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(126, 126, 126, 1),
-                            ),)
+                            Text(
+                              "(Write down the Imp things)",
+                              style: TextStyle(
+                                fontSize: SC.from_width(14),
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromRGBO(126, 126, 126, 1),
+                              ),
+                            )
                           ],
                         ),
-                        
+
                         //
                         subtitle: (p.loading)
                             ? const ContainerShimmer(height: 50)
-                            : Text(
-                          // p.lead?.note??"Not is Empty \u{1F5D1}",
-                          p.lead?.note ?? "Note is Empty",
-                          style: TextStyle(color: Colors.grey.shade700),
-                        ),
+                            : Container(
+                                height: 60,
+                                child: TextField(
+                                  expands: true,
+                                  maxLines: null,
+                                  controller: p.noteController,
+                                ),
+                              ),
 
                         trailing: IconButton(
-                          onPressed: (){
-                            p.updateNote(context);
-                          },
+                            onPressed: () {
+                              p.updateNote(context);
+                            },
                             icon: Icon(Icons.edit)),
+                      ),
+                    ),
 
+                    SizedBox(
+                      height: SC.from_height(20),
+                    ),
+
+                    //Lead Assign History
+                    Card(
+                      margin: EdgeInsets.zero,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Lead assign history',
+                              style: AppConstent.heading(context),
+                            ),
+                            if (p.loading)
+                              const ContainerShimmer(height: 20, width: 120)
+                            else
+                              Consumer<LeadDetailProvider>(
+                                  builder: (a, p, c) => ListView.builder(
+                                        itemCount: p.leadAssignHistory.length,
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          var history =
+                                              p.leadAssignHistory[index];
+
+                                          return Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              //
+                                              Container(
+                                                margin:
+                                                    EdgeInsets.only(left: 20),
+                                                width: 2,
+                                                height: SC.from_width(110),
+                                                color:
+                                                    Colors.grey.withOpacity(.5),
+                                                child: Stack(
+                                                  clipBehavior: Clip.none,
+                                                  children: [
+                                                    Positioned(
+                                                      left: -40,
+                                                      right: -40,
+                                                      bottom: SC.from_width(35),
+                                                      child: Container(
+                                                          height:
+                                                              SC.from_width(13),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: Border.all(
+                                                                width: 1,
+                                                                color: Colors
+                                                                    .grey),
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    223,
+                                                                    223,
+                                                                    223,
+                                                                    1),
+                                                          )),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+
+                                              //
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  //
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 8),
+                                                    child: Text(
+                                                      "${MyHelper.formatDateTime(history.updatedAt!)}",
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        fontSize:
+                                                            SC.from_width(16),
+                                                      ),
+                                                    ),
+                                                  ),
+
+                                                  //
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        vertical: 3,
+                                                        horizontal: 8),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          "Assign to : ${history.userId?.name ?? "User"}",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              fontSize:
+                                                                  SC.from_width(
+                                                                      16),
+                                                              color:
+                                                                  Colors.grey),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          );
+                                        },
+                                      ))
+                          ],
+                        ),
                       ),
                     ),
 
                     //
-                    FutureBuilder<dynamic>(
-                      future: Provider.of<LeadsProvider>(context)
-                          .listOfLeadAssignUser(context, p.lead?.id ?? ""),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Text("Loading...");
-                        }
-                        if (snapshot.hasError) {
-                          return Text("${snapshot.error}");
-                        }
-
-                        dynamic data = snapshot.data!['data'];
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: data.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              onTap: () {
-                                Provider.of<LeadDetailProvider>(context,
-                                        listen: false)
-                                    .getAssignHistory(context, p.lead!.id!,
-                                        data[index]['userId']['_id']);
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                          "Assign to: ${data[index]['userId']['mobile']}"),
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          (p.loading)
-                                              ? const ContainerShimmer(
-                                                  height: 20, width: 120)
-                                              : Consumer<LeadDetailProvider>(
-                                                  builder: (a, p, c) =>
-                                                      SizedBox(
-                                                        height: 300,
-                                                        width: 300,
-                                                        child: ListView.builder(
-                                                          reverse: false,
-                                                          itemCount: p
-                                                              .leadAssignHistory
-                                                              .length,
-                                                          shrinkWrap: true,
-                                                          // physics:
-                                                          //     const NeverScrollableScrollPhysics(),
-                                                          itemBuilder:
-                                                              (context, index) {
-                                                            var history =
-                                                                p.leadAssignHistory[
-                                                                    index];
-
-                                                            return Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      left: SC
-                                                                          .fromWidth(
-                                                                              20),
-                                                                      bottom:
-                                                                          5),
-                                                                  width: 1,
-                                                                  height: SC
-                                                                      .fromHeight(
-                                                                          15),
-                                                                  color: Colors
-                                                                      .grey
-                                                                      .shade400,
-                                                                ),
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          8),
-                                                                  child: Text(
-                                                                    "${MyHelper.formatDateTime(history.updatedAt!)}",
-                                                                    style: const TextStyle(
-                                                                        color: Colors
-                                                                            .grey),
-                                                                  ),
-                                                                ),
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      vertical:
-                                                                          3,
-                                                                      horizontal:
-                                                                          8),
-                                                                  child: Text(
-                                                                    translate[
-                                                                        history
-                                                                            .statusChange],
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          SC.fromWidth(
-                                                                              26),
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color: Colors
-                                                                          .grey
-                                                                          .shade700,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
-                                                        ),
-                                                      ))
-                                        ],
-                                      ),
-                                      actions: [
-                                        ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text("Close"))
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              title: Text(
-                                "Assigned to: ${data[index]['userId']['mobile']} on ",
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
                     SizedBox(
-                      height: SC.from_height(5),
+                      height: SC.from_height(20),
                     ),
 
-                    //
-                    SizedBox(
-                      height: SC.from_height(10),
-                    ),
-
-
+                    //Lead status History
                     Card(
                       margin: EdgeInsets.zero,
                       child: Padding(
@@ -634,119 +620,153 @@ class _LeadDetailsScreenState extends State<LeadDetailsScreen> {
                               'Timeline',
                               style: AppConstent.heading(context),
                             ),
-                            if (p.loading) const ContainerShimmer(height: 20, width: 120) else Consumer<LeadDetailProvider>(
-                                builder: (a, p, c) => ListView.builder(
-                                  reverse: true,
-                                  itemCount: p.leadHistory.length,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    var history = p.leadHistory[index];
+                            if (p.loading)
+                              const ContainerShimmer(height: 20, width: 120)
+                            else
+                              Consumer<LeadDetailProvider>(
+                                  builder: (a, p, c) => ListView.builder(
+                                        itemCount: p.leadHistory.length,
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          var history = p.leadHistory[index];
 
-                                    return Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-
-                                            //
-                                            Container(
-                                              margin: EdgeInsets.only(left: 20),
-                                              width: 2,
-                                              height: SC.from_width(110),
-                                              color: Colors.grey.withOpacity(.5),
-                                              child: Stack(
-                                                clipBehavior: Clip.none,
-                                                children: [
-                                                  Positioned(
-                                                    left: -40,
-                                                    right: -40,
-                                                    bottom: SC.from_width(40),
-                                                    child: Container(
-                                                      height: SC.from_width(13),
-
-                                                      decoration: BoxDecoration(
-                                                        border:Border.all(width: 1,color: Colors.grey),
-                                                        shape: BoxShape.circle,
-                                                        color: Color.fromRGBO(223, 223, 223, 1),)
-                                                    
-                                                      ),
-                                                  ),
-                                                ],
+                                          return Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              //
+                                              Container(
+                                                margin:
+                                                    EdgeInsets.only(left: 20),
+                                                width: 2,
+                                                height: SC.from_width(110),
+                                                color:
+                                                    Colors.grey.withOpacity(.5),
+                                                child: Stack(
+                                                  clipBehavior: Clip.none,
+                                                  children: [
+                                                    Positioned(
+                                                      left: -40,
+                                                      right: -40,
+                                                      bottom: SC.from_width(40),
+                                                      child: Container(
+                                                          height:
+                                                              SC.from_width(13),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: Border.all(
+                                                                width: 1,
+                                                                color: Colors
+                                                                    .grey),
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    223,
+                                                                    223,
+                                                                    223,
+                                                                    1),
+                                                          )),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(width: 5,),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
 
-                                            //
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-
-                                                //
-                                                Padding(
-                                                  padding: const EdgeInsets.symmetric(
-                                                      horizontal: 8),
-                                                  child: Text(
-                                                    "${MyHelper.formatDateTime(history.updatedAt!)}",
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: SC.from_width(16),
-
+                                              //
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  //
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 8),
+                                                    child: Text(
+                                                      "${MyHelper.formatDateTime(history.updatedAt!)}",
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        fontSize:
+                                                            SC.from_width(16),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
 
-                                                //
-                                                Padding(
-                                                  padding: const EdgeInsets.symmetric(
-                                                      vertical: 3, horizontal: 8),
-                                                  child: Row(
-                                                    children: [
-                                                      Text("Status : ",
-                                                      style: TextStyle(
-                                                        fontWeight: FontWeight.w700,
-                                                        fontSize: SC.from_width(16),
-                                                        color: Colors.grey
-                                                      ),),
-                                                      Container(
-                                                        padding: EdgeInsets.symmetric(horizontal: 8,vertical: 5),
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(10),
-                                                          color: Color.fromRGBO(141, 141, 141, 1)
-                                                        ),
-                                                        child: Text(
-                                                          translate[history.statusChange],
+                                                  //
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        vertical: 3,
+                                                        horizontal: 8),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          "Status : ",
                                                           style: TextStyle(
-                                                            fontSize: SC.fromWidth(26),
-                                                            fontWeight: FontWeight.w500,
-                                                            color: Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              fontSize:
+                                                                  SC.from_width(
+                                                                      16),
+                                                              color:
+                                                                  Colors.grey),
+                                                        ),
+                                                        Container(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal: 8,
+                                                                  vertical: 5),
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      141,
+                                                                      141,
+                                                                      141,
+                                                                      1)),
+                                                          child: Text(
+                                                            translate[history
+                                                                .statusChange],
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  SC.fromWidth(
+                                                                      26),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    );
-                                  },
-                                ))
+                                                ],
+                                              )
+                                            ],
+                                          );
+                                        },
+                                      ))
                           ],
                         ),
                       ),
                     ),
 
-                    
-                    SizedBox(height: SC.from_width(20),)
+                    SizedBox(
+                      height: SC.from_width(20),
+                    )
                     //History
-
                   ],
                 );
               },

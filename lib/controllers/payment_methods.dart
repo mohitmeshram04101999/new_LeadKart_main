@@ -193,8 +193,7 @@ class PaymentMethods {
     * */
       showAlertDialog(
           context, "Payment Successful", "Payment ID: ${response.paymentId}");
-      await Provider.of<CreateAddProvider>(context, listen: false)
-          .createAdd(context)
+      await Provider.of<CreateAddProvider>(context, listen: false).createAdd(context)
           .then(
         (value) {
           if (value != null) {

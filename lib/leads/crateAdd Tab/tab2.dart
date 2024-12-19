@@ -10,10 +10,23 @@ import 'package:provider/provider.dart';
 
 import '../../controllers/BussnissCategoryProvider.dart';
 
-class CreateBusinessTab2 extends StatelessWidget {
+class CreateBusinessTab2 extends StatefulWidget {
   CreateBusinessTab2({super.key});
 
+  @override
+  State<CreateBusinessTab2> createState() => _CreateBusinessTab2State();
+}
+
+class _CreateBusinessTab2State extends State<CreateBusinessTab2> {
   TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<BussnissCategoryProvider>(context,listen: false).lode(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(

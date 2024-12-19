@@ -107,6 +107,7 @@ class SubUserTile extends StatelessWidget {
     // Parse permissions
 
     return ExpansionTile(
+      iconColor: AppConstent().secondaryColor,
       childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
       leading: Container(
         width: 35,

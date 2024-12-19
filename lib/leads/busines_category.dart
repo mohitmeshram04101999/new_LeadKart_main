@@ -149,7 +149,7 @@ class _CreateBusinessScreenState extends State<CreateBusinessScreen> {
 
           backgroundColor:Colors.transparent,
           body: PageView(
-            physics: NeverScrollableScrollPhysics(),
+            // physics: NeverScrollableScrollPhysics(),
             controller: pageController,
             onPageChanged: (i){
               curruntPAge = i;

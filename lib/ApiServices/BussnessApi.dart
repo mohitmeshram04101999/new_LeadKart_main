@@ -15,41 +15,30 @@ import 'package:leadkart/Models/getAllCityModelREsponce.dart';
 import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 import 'package:logger/logger.dart';
+import 'package:http/http.dart' as http;
 
 class BussnissApi {
   //get add Category Api
-  Future<CustomResponce> getAllCategory({
+  Future<http.Response> getAllCategory({
     String userId = "66446389926d794e368c8f6c",
     int page = 1,
     String? title,
     String? categoryId,
   }) async {
-    // /category/getAllCategory?userId=66446389926d794e368c8f6c&title=category&categoryId=&page=1
-    String uri =
-        "/category/getAllCategory?userId=$userId&page=$page${title != null ? "&title=$title" : ""}${categoryId != null ? "&categoryId=$categoryId" : ""}";
 
-    var resp = await MyHelper.dio.get(uri);
+   String  uri = '${ApiConst.baseUrl}/category/getAllCategory?userId=$userId${(categoryId!=null)?'&categoryId=${categoryId}':""}';
+   var user = await UserPreference().getUser();
 
-    if (resp.statusCode == 200) {
-      BussnissCategoryApiModel _d =
-          BussnissCategoryApiModel.fromJson(resp.data);
-      return CustomResponce(
-        statusCode: resp.statusCode!,
-        message: _d.message.toString(),
-        data: _d,
-      );
-    } else {
-      MyHelper.logger
-          .i("${'-' * 10} Responce from allCategory api ${'-' * 10}");
-      MyHelper.logger.i(resp.statusCode);
-      MyHelper.logger.i(resp.data);
-    }
-    return CustomResponce(
-      statusCode: resp.statusCode!,
-      errorStatus: true,
-      errorMessage: resp.data.toString(),
-    );
+    var head = {
+      "Authorization":'Bearer ${user?.token??""}',
+    };
+    Logger().i('$uri  \n$head');
+    var resp  = await http.get(Uri.parse(uri),headers: head);
+
+    return resp;
+
   }
 
   //get business by user id
@@ -75,7 +64,7 @@ class BussnissApi {
         uri,
         options: Options(
           headers: {
-            "Authorization": "${_user.token}",
+            "Authorization": "Bearer ${_user.token}",
           },
         ),
       );
@@ -328,6 +317,8 @@ class BussnissApi {
     CurrentUser? user = await Controllers.useraPrefrenc.getUser();
     var head = await Controllers.useraPrefrenc.getHeader();
 
+
+
     var data = {
       // "businessImage":req,
       "businessName": businessName,
@@ -348,6 +339,8 @@ class BussnissApi {
       // "countryId":countryId
     };
 
+
+
     //
     var formatedData =
         data.map((key, value) => MapEntry(key, value.toString()));
@@ -361,7 +354,8 @@ class BussnissApi {
         logo.path ?? "",
       ));
     }
-    request.headers.addAll({"Authorization": user.token.toString()});
+    Logger().i({"Authorization": user.token.toString()});
+    request.headers.addAll({"Authorization": 'Bearer ${user.token.toString()}'});
 
     request.fields.addAll(formatedData);
     for (int i = 0; i < serviceId!.length; i++) {
@@ -371,6 +365,8 @@ class BussnissApi {
     var response = await request.send();
     var d = await response.stream.bytesToString();
     var mapdata = jsonDecode(d);
+    Logger().w(formatedData);
+
 
     MyHelper.logger.i(response.statusCode);
     MyHelper.logger.i(d);
@@ -474,7 +470,7 @@ class BussnissApi {
         logo.path ?? "",
       ));
     }
-    request.headers.addAll({"Authorization": user.token.toString()});
+    request.headers.addAll({"Authorization": 'Bearer ${user.token.toString()}'});
 
     request.fields.addAll(formatedData);
     for (int i = 0; i < serviceId!.length; i++) {
@@ -530,15 +526,16 @@ class BussnissApi {
   }) async {
     String uri = "/city/getAllCity?userId=${userId}";
     var head = await Controllers.useraPrefrenc.getHeader();
-    var resp = await MyHelper.dio.get(uri, options: Options(headers: head));
+    var resp  = await http.get(Uri.parse(ApiConst.baseUrl+uri),headers: head);
+    // var resp = await MyHelper.dio.get(uri, options: Options(headers: head));
 
     if (resp.statusCode == 200) {
       GetAllCityResponceModel _mod =
-          GetAllCityResponceModel.fromJson(resp.data);
+          GetAllCityResponceModel.fromJson(jsonDecode(resp.body));
       MyHelper.logger.i("Get ALl City");
       return _mod;
     } else {
-      MyHelper.logger.e(resp.data);
+      MyHelper.logger.e(resp.body);
     }
   }
 

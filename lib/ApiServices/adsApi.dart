@@ -19,6 +19,7 @@ class AdsApi {
 
   //create Add Api
   Future<dynamic> createAdd({
+    required String userId,
     required String businessId,
     String? planId,
     String? name,
@@ -136,7 +137,7 @@ class AdsApi {
 // //filename:
 //     };
 
-    String uri = "/adsDetails/createAdsDetails";
+    String uri = "/adsDetails/createAdsDetails?userId=$userId";
     // var head = await UserPreference().getHeader() as Map<String, String>;
     var dataToSend = data.map((key, value) => MapEntry(key, value.toString()));
     // data.forEach((key, value) {
@@ -148,9 +149,19 @@ class AdsApi {
 
     var request =
         http.MultipartRequest("POST", Uri.parse(ApiConst.baseUrl + uri));
+
+
     CurrentUser? user = await Controllers.useraPrefrenc.getUser();
+
     request.fields.addAll(dataToSend);
-    request.headers.addAll({"Authorization": user!.token.toString()});
+    request.headers.addAll({"Authorization": 'Bearer ${user!.token.toString()}'});
+
+    if (file != null) {
+      request.files.add(await http.MultipartFile.fromPath(
+        "filename",
+        file ?? "",
+      ));
+    }
 
 
     Logger().t(" gender ${audienceGender}");
@@ -169,7 +180,7 @@ class AdsApi {
       }
     }
 
-    Logger().t(" Location ${location?[0].key}");
+    // Logger().t(" Location ${location?[0].key}");
 
     if(location!=null)
       {
@@ -178,12 +189,7 @@ class AdsApi {
         }
       }
 
-    if (file != null) {
-      request.files.add(await http.MultipartFile.fromPath(
-        "filename",
-        file ?? "",
-      ));
-    }
+
     _log.e(file.toString());
 
     var resp = await request.send();
@@ -204,7 +210,7 @@ class AdsApi {
           await Controllers.userPreferencesController.getUser();
       var resp = await MyHelper.dio.get('advertisement/getAllAdvertisment',
           options: Options(headers: {
-            "Authorization": "${_user!.token}",
+            "Authorization": "Bearer ${_user!.token}",
           }));
       // MyHelper.logger.i(resp.data['data']);
       List<AdvertisementTypeModel> adsTypeModel = [];

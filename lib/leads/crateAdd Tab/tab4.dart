@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/component/CustomTextField2.dart';
 import 'package:leadkart/component/custom_textfield.dart';
@@ -127,9 +128,17 @@ class CreateBusinessTab4 extends StatelessWidget {
             },
           ),
 
+
+          if(kDebugMode)
+            ElevatedButton(onPressed: ()=>p.createBusiness(context), child:Text("run") ),
+
+
           SizedBox(height: SC.from_height(20),),
           // MyactionButton(lable: "Create Business",action:()=> p.createBusiness(context)),
           SizedBox(height: SC.from_height(80),),
+
+
+
 
 
         ],

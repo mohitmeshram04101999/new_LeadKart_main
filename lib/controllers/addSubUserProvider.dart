@@ -130,8 +130,8 @@ class AddSubUserProvider with ChangeNotifier {
                       _otp = b;
                     },
                   ),
-
-
+                  
+                  SizedBox(height: SC.from_height(10),),
                   MyactionButton(
                     color: AppConstent().secondaryColor,
                     action: () async {

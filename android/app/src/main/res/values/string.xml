@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="facebook_app_id">1569095363786954</string>
-    <string name="fb_login_protocol_scheme">fb1569095363786954</string>
-    <string name="app_name">leadKart</string>
-    <string name="facebook_client_token">1dc2bf7bb991e7030114dbbe2ae906c6</string>
+    <string name="facebook_app_id">1250128162704175</string>
+    <string name="fb_login_protocol_scheme">fb1250128162704175</string>
+    <string name="app_name">TEST</string>
+    <string name="facebook_client_token">fb6f0eedb477da55094c88b616ad83f7</string>
 </resources>

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -31,20 +32,26 @@ class Authcontroller extends GetxController {
         .loginWithPhonNumber(_phonNumController.text.trim());
 
     Logger().e(resp.statusCode);
+    Map<String, dynamic> _d;
 
     if (resp.statusCode == 201) {
-      Map<String, dynamic> _d = resp.data;
+      _d = jsonDecode(resp.body);
       _otp = _d["data"].toString();
       context.pushNamed("otpScreen");
-    } else {
+    }
+    else if(resp.statusCode==404)
+    {
+
+
+      MyHelper.mySnakebar(context,'Resource not Found');
+    }else {
       print("${"--" * 10}Responce from Log In Api${"--" * 10}");
       print(resp.statusCode);
-      print(resp.data);
       print("${"--" * 10}Responce from Log In Api${"--" * 10}");
 
       //snakebArr
-      MyHelper.mySnakebar(
-          context, "(${resp.statusCode}) ${resp.data["message"].toString()}");
+      MyHelper.mySnakebar( 
+          context, "(${resp.statusCode}) ${jsonDecode(resp.body)["message"].toString()}");
     }
     return resp;
   }
@@ -52,17 +59,17 @@ class Authcontroller extends GetxController {
   Future<void> resendOtp(BuildContext context) async {
     var resp = await MyHelper.userApi
         .loginWithPhonNumber(_phonNumController.text.trim());
-
+    Map<String, dynamic> _d;
     if (resp.statusCode == 201) {
-      Map<String, dynamic> _d = resp.data;
+       _d = jsonDecode(resp.body);
       _otp = _d["data"].toString();
     } else {
       print(resp.statusCode);
-      print(resp.data);
+       
 
       //snakeBar
       MyHelper.mySnakebar(
-          context, "(${resp.statusCode}) ${resp.data["message"].toString()}");
+          context, "(${resp.statusCode}) ${jsonDecode(resp.body)["message"].toString()}");
     }
   }
 

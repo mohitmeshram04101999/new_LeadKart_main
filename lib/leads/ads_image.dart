@@ -7,6 +7,7 @@ import 'package:leadkart/component/helpButton.dart';
 import 'package:leadkart/controllers/addListByBussnessProvider.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/dimention.dart';
+import 'package:leadkart/my%20custom%20assets%20dart%20file/myast%20dart%20file.dart';
 import 'package:leadkart/shimmers.dart';
 import 'package:leadkart/them/constents.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,11 @@ class _AdsPageState extends State<AdsPage> {
   int _selectedValue = 1;
   int page = 1; // Initial page
   bool localHasReachedMax =
-      false; // Local flag to track whether the max has been reached
+      false;
+
+
+
+  double value = 0;// Local flag to track whether the max has been reached
   @override
   void initState() {
     // TODO: implement initState
@@ -221,6 +226,25 @@ class _AdsPageState extends State<AdsPage> {
               SizedBox(
                 height: SC.from_height(20),
               ),
+
+
+
+              WaveSlider(
+                height: 70,
+                color: Colors.deepPurple,
+                shadowColor: Colors.blue,
+                blur: 5,
+                inactiveHeight: 40,
+                thumbColor: Colors.purple,
+                value: value,
+                onDrag: (d){
+                  value = d;
+                  setState(() {
+
+                  });
+
+                },
+              )
       
               // Row(
               //   children: [

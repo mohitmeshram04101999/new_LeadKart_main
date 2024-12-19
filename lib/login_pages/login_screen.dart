@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -132,14 +133,20 @@ class _LogInPageState extends State<LoginScreen> {
                   height: SC.from_height(40),
                 ),
 
-                MyactionButton(
-                    action: () => Controllers.authController.login(context),
-                    duretion: const Duration(milliseconds: 300),
-                    lable: "Let's LogIn",
-                    // child: const Text(
-                    //     "Let's LogIn",
-                    //   style: TextStyle(color: Colors.white),
-                    // )
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Center(
+                    child: MyactionButton(
+                      handelError: !kDebugMode,
+                        action: () => Controllers.authController.login(context),
+                        duretion: const Duration(milliseconds: 300),
+                        lable: "Let's LogIn",
+                        // child: const Text(
+                        //     "Let's LogIn",
+                        //   style: TextStyle(color: Colors.white),
+                        // )
+                    ),
+                  ),
                 ),
 
                 // ROW //

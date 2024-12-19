@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';import 'package:leadkart/helper/TextStyles.dart';import 'package:leadkart/them/constents.dart';
 import 'package:leadkart/Models/AllStateMosel.dart';
@@ -9,6 +11,7 @@ import 'package:leadkart/Models/VerifyOtpModel.dart';
 import 'package:leadkart/Models/getAllCityModelREsponce.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:logger/logger.dart';
 
 class BussnissCategoryProvider with ChangeNotifier
 {
@@ -52,28 +55,22 @@ class BussnissCategoryProvider with ChangeNotifier
 
     _loding = true;
     notifyListeners();
-    CustomResponce responce =  await MyHelper.bussnissApi.getAllCategory(userId: user!.id!,);
+    var resp =  await MyHelper.bussnissApi.getAllCategory(userId: user!.id!,);
     var cityResp = await  MyHelper.bussnissApi.getAllCity(userId: user.id);
     var stateResp = await  MyHelper.bussnissApi.getAllState();
 
-    if(responce.data!=null)
+    Logger().i('${resp.statusCode}\n${resp.body}');
+
+    if(resp.statusCode==200)
       {
-        BussnissCategoryApiModel _d = responce.data;
-        _allCategiry = _d.data??[];
-      }
-    else
-      {
-        MyHelper.mySnakebar(context, "${responce.errorMessage}");
+        var _data = BussnissCategoryApiModel.fromJson(jsonDecode(resp.body));
+        _allCategiry = _data.data??[];
       }
 
-    if(cityResp!=null)
-      {
-        _allCity = cityResp.data??[];
-      }
-    if(stateResp !=null)
-      {
-        _allState = stateResp.data??[];
-      }
+    _allCity =cityResp?.data??[];
+
+    _allState=stateResp?.data??[];
+
 
     _loding  = false;
     notifyListeners();
@@ -86,20 +83,32 @@ Future<void> lodeService(String categoryId,BuildContext context) async
   notifyListeners();
 
   CurrentUser? user = await Controllers.useraPrefrenc.getUser();
-  CustomResponce _d = await MyHelper.bussnissApi.getAllCategory(userId:user!.id!,categoryId: categoryId);
-  if(_d.data!=null)
+  var _d = await MyHelper.bussnissApi.getAllCategory(userId:user!.id!,categoryId: categoryId);
+
+  if(_d.statusCode==200)
     {
-      BussnissCategoryApiModel _model = _d.data!;
-      _allService = _model.data??[];
+      var data_decode = BussnissCategoryApiModel.fromJson(jsonDecode(_d.body));
+       _allService = data_decode.data??[];
+      _lodingSevics = false;
+       notifyListeners();
+       return ;
     }
-  else if(_d.statusCode==404)
+  else if(_d.statusCode==401)
     {
-      MyHelper.mySnakebar(context, "No Data Found");
+      _allCategiry = [];
+      MyHelper.mySnakebar(context, "same Dude");
+    }
+  else if(_d.statusCode==500)
+    {
+      _allCategiry = [];
+      MyHelper.mySnakebar(context, "Server Error");
     }
   else
     {
-      MyHelper.mySnakebar(context, "(${_d.statusCode}) ${_d.errorMessage}");
+      _allCategiry = [];
+      MyHelper.mySnakebar(context, "same Dude");
     }
+
   _lodingSevics = false;
   notifyListeners();
 }

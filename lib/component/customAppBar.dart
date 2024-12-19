@@ -18,11 +18,7 @@ class CustomAppBar extends StatelessWidget {
       leading: const SizedBox(),
       backgroundColor: Colors.transparent,
       leadingWidth: 0,
-      // flexibleSpace: Container(
-      //   decoration: BoxDecoration(
-      //     gradient: AppConstent().themeGradiant
-      //   ),
-      // ),
+
       title: Row(
         children: [
           const SizedBox(
@@ -49,6 +45,8 @@ class CustomAppBar extends StatelessWidget {
                     builder: (context3, d) {
                       return Consumer<BusinessProvider>(
                         builder: (context2, value, child) {
+
+
                           if (value.loding) {
                             return const Center(
                                 child:Text("Loading..."));

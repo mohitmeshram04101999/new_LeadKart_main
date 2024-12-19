@@ -53,10 +53,26 @@ class _HomeScreenState extends State<HomeScreen> {
   };
 
   List<Map<String, String>> newAdd = [
-    {"scImage":"assets/add_images/lead2.png","addMAinImage":"assets/add_images/add0.png", "title": "Ai Meta content"},
-    {"scImage":"assets/add_images/aiGen.gif","addMAinImage":"assets/add_images/add01.png", "title": "Ai Ad Generation "},
-    {"scImage":"assets/add_images/lead.gif","addMAinImage":"assets/add_images/add1.png", "title": "Leads "},
-    {"scImage":"assets/add_images/AD.gif","addMAinImage":"assets/add_images/add4.png", "title": "Ad Report"},
+    {
+      "scImage": "assets/add_images/lead2.png",
+      "addMAinImage": "assets/add_images/add0.png",
+      "title": "Ai Meta content"
+    },
+    {
+      "scImage": "assets/add_images/aiGen.gif",
+      "addMAinImage": "assets/add_images/add01.png",
+      "title": "Ai Ad Generation "
+    },
+    {
+      "scImage": "assets/add_images/lead.gif",
+      "addMAinImage": "assets/add_images/add1.png",
+      "title": "Leads "
+    },
+    {
+      "scImage": "assets/add_images/AD.gif",
+      "addMAinImage": "assets/add_images/add4.png",
+      "title": "Ad Report"
+    },
   ];
 
   String? dropdownValue;
@@ -106,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: CustomBackground(
         child: Scaffold(
           backgroundColor: Colors.transparent,
-        
+
           floatingActionButton: (kDebugMode)
               ? FloatingActionButton(
                   onPressed: () {
@@ -116,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 )
               : null,
-        
+
           //AppbBar
           appBar: PreferredSize(
               preferredSize: const Size.fromHeight(60),
@@ -133,17 +149,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 //   },
                 // ),
               )),
-        
+
           //Body
           body: ListView(
             padding: EdgeInsets.symmetric(horizontal: SC.from_height(18)),
             children: [
               // SelectPlanTile(),
-        
+
               SizedBox(
                 height: SC.from_height(15),
               ),
-        
+
               // Text(
               //   'Introducing AI-powered ads with Leadkart',
               //   style: TextStyle(
@@ -151,67 +167,113 @@ class _HomeScreenState extends State<HomeScreen> {
               //     fontWeight: FontWeight.w500,
               //   ),
               // ),
-        
+
               SizedBox(
                 height: SC.from_height(8),
               ),
-        
-              // GRIDVIEW BUILDER //
-              GridView.builder(
-                primary: false,
-                physics: const NeverScrollableScrollPhysics(),
+
+
+
+              GridView(
                 shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: SC.from_width(7),
-                  crossAxisSpacing:SC.from_width(13),
-                  mainAxisExtent: SC.from_width(150),
-                ),
-                itemCount: newAdd.length,
-                itemBuilder: (context, index) {
-                  final _item = newAdd[index];
-        
-                  return Expanded(
-                      child: Column(
-                    children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 6,top: 8),
-                            // alignment: Alignment.bottomLeft,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8)),
-                            width: double.infinity,
+                physics: NeverScrollableScrollPhysics(),
+                primary: false,
+                gridDelegate:SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
+                mainAxisExtent: SC.from_width(150)),
+
+                children: [
+
+                  for(var i in newAdd)
+                    Column(
+                      children: [
+                        Card(
+                          child: SizedBox(
+                            width: double.maxFinite ,
                             height: SC.from_width(111),
                             child: Stack(
                               children: [
-                                Expanded(child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                    child: Image.asset(_item["addMAinImage"]??""))),
-                                Align(
-                                  alignment: Alignment.topRight ,
-                                    child: Container(height: 60,width: 60,
-                                    child: Image.asset(_item["scImage"]??""),))
+                                Image.asset('${i['addMAinImage']}'),
+                                 Positioned(
+                                   right: 0,
+                                   top: SC.from_width(10),
+                                   bottom: SC.from_width(32),
+                                   left: SC.from_width(85),
+                                     child: Image.asset('${i['scImage']}'))
+
                               ],
                             ),
                           ),
-                          SizedBox(height: 8,),
-                          Text("${_item["title"]}",style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: SC.from_width(16)
-                          ),)
-                        ],
-                      )
-                    ],
-                  ));
-                },
+                        ),
+                        Text("${i['title']}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: SC.from_width(16)
+                        ),)
+                      ],
+                    ),
+
+
+                ],
               ),
+
+              // GRIDVIEW BUILDER //
+              // GridView.builder(
+              //   primary: false,
+              //   physics: const NeverScrollableScrollPhysics(),
+              //   shrinkWrap: true,
+              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //     crossAxisCount: 2,
+              //     mainAxisSpacing: SC.from_width(7),
+              //     crossAxisSpacing:SC.from_width(13),
+              //     mainAxisExtent: SC.from_width(150),
+              //   ),
+              //   itemCount: newAdd.length,
+              //   itemBuilder: (context, index) {
+              //     final _item = newAdd[index];
+              //
+              //     return Column(
+              //                         children: [
+              //     Column(
+              //       mainAxisSize: MainAxisSize.min,
+              //       children: [
+              //         Container(
+              //           padding: EdgeInsets.only(left: 6,top: 8),
+              //           // alignment: Alignment.bottomLeft,
+              //           decoration: BoxDecoration(
+              //               color: Colors.white,
+              //               borderRadius: BorderRadius.circular(8)),
+              //           width: double.infinity,
+              //           height: SC.from_width(111),
+              //           child: Stack(
+              //             children: [
+              //               Expanded(child: Align(
+              //                 alignment: Alignment.bottomLeft,
+              //                   child: Image.asset(_item["addMAinImage"]??""))),
+              //               Align(
+              //                 alignment: Alignment.topRight ,
+              //                   child: Container(height: 60,width: 60,
+              //                   child: Image.asset(_item["scImage"]??""),))
+              //             ],
+              //           ),
+              //         ),
+              //         SizedBox(height: 8,),
+              //         Text("${_item["title"]}",style: TextStyle(
+              //           fontWeight: FontWeight.w700,
+              //           fontSize: SC.from_width(16)
+              //         ),)
+              //       ],
+              //     )
+              //                         ],
+              //                       );
+              //   },
+              // ),
+
+              //
+
               SizedBox(
                 height: SC.from_height(15),
               ),
-        
+
               // Container(
               //   clipBehavior: Clip.hardEdge,
               //   // width: SC.fromWidth(50),
@@ -224,11 +286,11 @@ class _HomeScreenState extends State<HomeScreen> {
               //     fit: BoxFit.cover,
               //   ),
               // ),
-        
+
               SizedBox(
                 height: SC.from_height(15),
               ),
-        
+
               InkWell(
                 onTap: () {
                   launch("tel: +917007892427");
@@ -238,86 +300,103 @@ class _HomeScreenState extends State<HomeScreen> {
                   fit: BoxFit.cover,
                 ),
               ),
-        
-        
+
               // Assesmeng Container
               Container(
-                height: 132,
+                height: SC.from_width(132),
                 padding: EdgeInsets.all(8),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: Color.fromRGBO(199, 224 , 254, 1)
-                ),
+                    borderRadius: BorderRadius.circular(16),
+                    color: Color.fromRGBO(199, 224, 254, 1)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Need assistance with lead generation?",style: TextStyle(fontWeight: FontWeight.w700,fontSize: SC.from_width(16)),),
-                    Text("Need assistance with lead generation?",style: TextStyle(fontWeight: FontWeight.w700,fontSize: SC.from_width(14),color: Color.fromRGBO(129, 129, 129, .7)),),
-                    SizedBox(height: SC.from_width(24),),
-                    ElevatedButton(onPressed: (){},
+                    Text(
+                      "Need assistance with lead generation?",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: SC.from_width(16)),
+                    ),
+                    Text(
+                      "Need assistance with lead generation?",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: SC.from_width(14),
+                          color: Color.fromRGBO(129, 129, 129, .7)),
+                    ),
+                    SizedBox(
+                      height: SC.from_width(24),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {},
                         style: ButtonStyle(
-                          backgroundColor:WidgetStateProperty.resolveWith((states) => Colors.white,),
-                          foregroundColor:WidgetStateProperty.resolveWith((states) => Colors.black,),
-                          padding: WidgetStateProperty.resolveWith((states) => EdgeInsets.symmetric(horizontal: 8),),
-                          shape: WidgetStateProperty.resolveWith((states) =>RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),)
-                        ),
+                            backgroundColor: WidgetStateProperty.resolveWith(
+                              (states) => Colors.white,
+                            ),
+                            foregroundColor: WidgetStateProperty.resolveWith(
+                              (states) => Colors.black,
+                            ),
+                            padding: WidgetStateProperty.resolveWith(
+                              (states) => EdgeInsets.symmetric(horizontal: 8),
+                            ),
+                            shape: WidgetStateProperty.resolveWith(
+                              (states) => RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            )),
                         child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.call_outlined),
-                        Text("Call Now"),
-                      ],
-                    ))
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.call_outlined),
+                            Text("Call Now"),
+                          ],
+                        ))
                   ],
                 ),
               ),
-        
+
               SizedBox(
                 height: SC.from_height(19),
               ),
-        
+
               Text(
                 'Choose your Ad requirement',
                 style: TextStyle(
-                    fontSize: SC.from_height(18),
-                    fontWeight: FontWeight.w500),
+                    fontSize: SC.from_height(18), fontWeight: FontWeight.w500),
               ),
-        
+
               SizedBox(
                 height: SC.from_height(15),
               ),
-        
+
               // CHOOSE ADD REQUIREMENT //
               FutureBuilder<dynamic>(
                   future: AdsApi().getAllAdvertisementTypes(),
-        
+
                   //
                   builder: (context, snapshot) {
                     //
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return _addTypeLoading;
                     }
-        
+
                     //
                     if (snapshot.hasError) {
                       return Center(
                         child: Text("Error: ${snapshot.error}"),
                       );
                     }
-        
+
                     //
                     if (snapshot.data == null) {
                       return const Center(
                         child: Text("Not Data Found"),
                       );
                     }
-        
+
                     //
-                    final data =
-                        snapshot.data! as List<AdvertisementTypeModel>;
+                    final data = snapshot.data! as List<AdvertisementTypeModel>;
                     return ListView.builder(
                       shrinkWrap: true,
                       itemCount: data.length,
@@ -347,11 +426,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     );
                   }),
-        
+
               SizedBox(
                 height: SC.from_height(20),
               ),
-        
+
               // Container(
               //     // height: SC.from_height(134),
               //     clipBehavior: Clip.hardEdge,
@@ -361,11 +440,11 @@ class _HomeScreenState extends State<HomeScreen> {
               //       'assets/home_images/img_4.png',
               //       fit: BoxFit.cover,
               //     )),
-        
+
               SizedBox(
                 height: SC.from_height(20),
               ),
-        
+
               SizedBox(
                 height: SC.from_height(10),
               ),

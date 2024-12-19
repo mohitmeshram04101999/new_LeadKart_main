@@ -1,12 +1,14 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:leadkart/helper/dimention.dart';
 import 'package:leadkart/helper/helper.dart';
+import 'package:leadkart/them/constents.dart';
 
 class MyactionButton extends StatefulWidget {
   Color? color;
-  bool handelError;
+  bool? handelError;
   Duration? duretion;
   Widget? child;
   double height ;
@@ -20,7 +22,7 @@ class MyactionButton extends StatefulWidget {
   BoxDecoration? decoration;
   BoxDecoration? activeDecoration;
   MyactionButton(
-      {this.handelError = false,
+      {this.handelError,
         this.lable,
         this.color,
         this.customErrorMessage,
@@ -58,23 +60,37 @@ class _MyactionButtonState extends State<MyactionButton> {
           loding = true;
           setState(() {});
 
-          try {
-            dynamic returnData = await widget.action();
-            log(widget.onActionComplit.toString());
-            if (widget.onActionComplit != null) {
-              widget.onActionComplit!(returnData);
+
+          if(widget.handelError??kDebugMode)
+            {
+              dynamic returnData = await widget.action();
+              log(widget.onActionComplit.toString());
+              if (widget.onActionComplit != null) {
+                widget.onActionComplit!(returnData);
+              }
             }
-          } catch (e) {
-            log("${'--' * 10} Error from myActionButton ${'--' * 10}\n");
-            log(e.toString());
-            log(widget.customErrorMessage.toString());
-            log("${'--' * 10} Error from myActionButton ${'--' * 10}\n");
-            if (widget.customErrorMessage != null) {
-              MyHelper.mySnakebar(context, '${widget.customErrorMessage}');
-            } else {
-              MyHelper.mySnakebar(context, "Something went wrong");
+          else
+            {
+              try {
+                dynamic returnData = await widget.action();
+                log(widget.onActionComplit.toString());
+                if (widget.onActionComplit != null) {
+                  widget.onActionComplit!(returnData);
+                }
+              } catch (e) {
+                log("${'--' * 10} Error from myActionButton ${'--' * 10}\n");
+                log(e.toString());
+                log(widget.customErrorMessage.toString());
+                log("${'--' * 10} Error from myActionButton ${'--' * 10}\n");
+                if (widget.customErrorMessage != null) {
+                  MyHelper.mySnakebar(context, '${widget.customErrorMessage}');
+                } else {
+                  MyHelper.mySnakebar(context, "Something went wrong");
+                }
+              }
             }
-          }
+
+
 
           loding = false;
           setState(() {});
@@ -118,7 +134,7 @@ class _MyactionButtonState extends State<MyactionButton> {
                           spreadRadius: 1)
                     ])
             : BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: widget.color??Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(widget.height),
                 boxShadow: [
                     BoxShadow(

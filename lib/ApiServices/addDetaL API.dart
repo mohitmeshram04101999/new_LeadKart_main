@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:leadkart/ApiServices/api%20Path.dart';
 import 'package:leadkart/Models/addRepot%20Model.dart';
@@ -8,6 +10,7 @@ import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/them/constents.dart';
 import 'package:logger/logger.dart';
+import 'package:http/http.dart' as http;
 
 class AddDetailApi
 {
@@ -20,11 +23,16 @@ class AddDetailApi
 }) async
   {
 
-    String uri = "/getInternalCampiagnDataById/?internalCampaignId=$campaignId";
+    String uri = "${ApiConst.baseUrl}/getInternalCampiagnDataById/?internalCampaignId=$campaignId";
 
 
     var head = await UserPreference().getHeaderForDio();
-    var resp = await MyHelper.dio.get(uri,options: Options(headers: head));
+    Map<String,String> filterHeader = {};
+
+    head!.forEach((key, value){
+      filterHeader[key]= value.toString();
+    });
+    var resp = await http.get(Uri.parse(uri),headers: filterHeader);
 
     _log.e(resp);
 
@@ -32,12 +40,13 @@ class AddDetailApi
 
     if(resp.statusCode ==200)
       {
-        GetCampaignDetailModel model = GetCampaignDetailModel.fromJson(resp.data);
+        var decode = jsonDecode(resp.body);
+        GetCampaignDetailModel model = GetCampaignDetailModel.fromJson(decode);
         return model;
       }
     else
       {
-        _log.i("Resp From Campaign Report APi \n${resp.statusCode} \n${resp.data}");
+        _log.i("Resp From Campaign Report APi \n${resp.statusCode} \n${resp.body}");
       }
     return null;
 

@@ -40,7 +40,7 @@ class UserPreference extends GetxController {
     if (_data != null) {
       var decode = jsonDecode(_data);
       CurrentUser user = CurrentUser.fromJson(decode);
-      return {"Authorization": user.token ?? ""};
+      return {"Authorization": 'Bearer ${user.token ?? ""}'};
     }
   }
 

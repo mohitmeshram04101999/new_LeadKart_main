@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +10,7 @@ import 'package:leadkart/ApiServices/plansApi.dart';
 import 'package:leadkart/Models/PlanBYTypIdModel.dart';
 import 'package:leadkart/Models/estimateddataModel.dart';
 import 'package:leadkart/Models/targetAreaResponceModel.dart';
+import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:logger/logger.dart';
@@ -20,6 +20,9 @@ import '../Models/offeringResponceModel.dart';
 
 class CreateAddProvider with ChangeNotifier {
   AdvertisementTypeModel? _addType;
+
+
+  // Var It
   PlanDetail2? _plan;
   final TextEditingController _titleController = TextEditingController();
   String? _imagePath;
@@ -46,6 +49,8 @@ class CreateAddProvider with ChangeNotifier {
   List<TargetArea> _targetArea = [];
   bool _isAdCreationInProgress = false;
 
+
+  //Getters
   AdvertisementTypeModel? get addType => _addType;
   String? get image => _imagePath;
   PlanDetail2? get plan => _plan;
@@ -72,6 +77,8 @@ class CreateAddProvider with ChangeNotifier {
   List<TargetArea> get targetArea => _targetArea;
   List<String> get adInterests => _adInterests;
   bool get isAdCreationInProgress => _isAdCreationInProgress;
+
+
   //
   //addType
   void setAddType(AdvertisementTypeModel add) {
@@ -98,14 +105,17 @@ class CreateAddProvider with ChangeNotifier {
     _faceBookBudget.text = int.parse(b).toString();
   }
 
+  //
   void setTargetArea(TargetArea t) {
-    _targetArea.add(t) ;
+    _targetArea.add(t);
     notifyListeners();
   }
 
-  void removeTargetAreA(TargetArea t)
-  {
-    _targetArea.removeWhere((element) => t.key==element.key,);
+  //
+  void removeTargetAreA(TargetArea t) {
+    _targetArea.removeWhere(
+      (element) => t.key == element.key,
+    );
     notifyListeners();
   }
 
@@ -143,6 +153,7 @@ class CreateAddProvider with ChangeNotifier {
     getEstimatedPlan();
   }
 
+  //
   void setInstBudget(String b) {
     _instBudget.text = int.parse(b).toString();
   }
@@ -157,6 +168,8 @@ class CreateAddProvider with ChangeNotifier {
     getEstimatedPlan();
   }
 
+
+//
   void incGoogleBudget() {
     int b = int.parse(_googleBudget.text.trim());
     b = b + 200;
@@ -164,10 +177,12 @@ class CreateAddProvider with ChangeNotifier {
     getEstimatedPlan();
   }
 
+//
   void setGoogleBudget(String b) {
     _googleBudget.text = int.parse(b).toString();
   }
 
+  //
   void decGoogleBudget() {
     int b = int.parse(_googleBudget.text.trim());
     int _d = b - 200;
@@ -175,6 +190,7 @@ class CreateAddProvider with ChangeNotifier {
     getEstimatedPlan();
   }
 
+  //
   void getEstimatedPlan() async {
     if (_plan != null) {
       var _d = await AdsApi().getEstimatedPlan(
@@ -203,15 +219,20 @@ class CreateAddProvider with ChangeNotifier {
     }
   }
 
+
+  //
   void clearFaceBookBudget() {
     _faceBookBudget.text = "0";
     notifyListeners();
   }
 
+  //
   void clearInstBudget() {
     _instBudget.text = "0";
     notifyListeners();
   }
+
+
 
   Future<void> getOffering(BuildContext context, String typeId) async {
     _lodingOffer = true;
@@ -246,6 +267,7 @@ class CreateAddProvider with ChangeNotifier {
     }
   }
 
+  //
   Future<void> selectImage(BuildContext context) async {
     var _d = await ImagePicker.platform
         .getImageFromSource(source: ImageSource.gallery);
@@ -255,17 +277,20 @@ class CreateAddProvider with ChangeNotifier {
     }
   }
 
+  //
   void setAgeRange(RangeValues range) {
     _ageRange = range;
     notifyListeners();
   }
 
+  //
   Future<void> setDayStartTime(BuildContext context) async {
     _dayStartTime = await showTimePicker(
         context: context, initialTime: TimeOfDay.now().replacing(hour: 1));
     notifyListeners();
   }
 
+  //
   Future<void> setEndTime(BuildContext context) async {
     log(_dayStartTime.toString());
     _dayEndTime = await showTimePicker(
@@ -274,6 +299,7 @@ class CreateAddProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //
   Future<void> setStartDay(BuildContext context) async {
     _startDate = await showDatePicker(
       context: context,
@@ -283,6 +309,7 @@ class CreateAddProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //
   void setDay(int i) {
     if (_days.contains(i)) {
       _days.removeWhere((e) => i == e);
@@ -321,57 +348,6 @@ class CreateAddProvider with ChangeNotifier {
     captionController.text = caption;
   }
 
-  Future<dynamic> createAdd(BuildContext context) async {
-    try {
-      _isAdCreationInProgress = true;
-      notifyListeners();
-
-      var api = AdsApi();
-      var d = await api.createAdd(
-
-        location: _targetArea,
-        businessId: Controllers.businessProvider(context, listen: false)
-                .currentBusiness
-                ?.id ??
-            "",
-        adTypeId: _addType?.id ?? "",
-        startDate: "${_startDate!.millisecondsSinceEpoch ~/ 1000}",
-        endDate: "${_endDate!.millisecondsSinceEpoch ~/ 1000}",
-        dayEndTime: "${_dayEndTime?.hour}:${_dayEndTime?.minute}",
-        dayStartTime: "${_dayStartTime?.hour}:${_dayStartTime?.minute}",
-        ageRangeFrom: _ageRange?.start.toInt(),
-        ageRangeTo: _ageRange?.end.toInt(),
-        caption: _captionController.text.trim(),
-        name: _titleController.text.trim(),
-        days: _days,
-        audienceGender: _targetGender,
-        instBudget: int.parse(_instBudget.text),
-        googleBudget: int.parse(_googleBudget.text),
-        faceBookBudget: int.parse(_faceBookBudget.text),
-        destinationUrl: _destinationUrlController.text.trim(),
-        file: _imagePath,
-        isFaceBookAddEnable:
-            plan == null && int.parse(_faceBookBudget.text) > 0,
-        isInstaAddEnable: plan == null && int.parse(_instBudget.text) > 0,
-        isGoogleAddEnable: plan == null && int.parse(_faceBookBudget.text) > 0,
-        planId: plan?.id,
-      );
-      _isAdCreationInProgress = false;
-      notifyListeners();
-      if (d is Map) {
-        if (kDebugMode) {
-          MyHelper.mySnakebar(context, "${d["message"]}");
-        }
-      }
-      return d;
-    } catch (e) {
-      _isAdCreationInProgress = false;
-      notifyListeners();
-      Logger().e(e);
-      MyHelper.mySnakebar(context, "Something went wrong ");
-    }
-  }
-
   Future<List<dynamic>?> getInterests(BuildContext context,
       {required String businessId, required String query}) async {
     var resp =
@@ -390,6 +366,71 @@ class CreateAddProvider with ChangeNotifier {
       } else {
         MyHelper.mySnakebar(context, "Something went wrong ");
       }
+    }
+  }
+
+  Future<dynamic> createAdd(BuildContext context) async {
+
+
+    _isAdCreationInProgress = true;
+    notifyListeners();
+
+
+    var user = await UserPreference().getUser();
+
+    Logger().w("${user?.id}\n${Controllers.businessProvider(context, listen: false)
+        .currentBusiness
+        ?.id}");
+
+
+
+    var api = AdsApi();
+    var d = await api.createAdd(
+      userId: user?.id??"",
+      location: _targetArea,
+      businessId: Controllers.businessProvider(context, listen: false)
+          .currentBusiness
+          ?.id ??
+          "",
+      adTypeId: _addType?.id ?? "",
+      startDate: "${_startDate?.millisecondsSinceEpoch}",
+      endDate: "${_endDate?.millisecondsSinceEpoch }",
+      dayEndTime: "${_dayEndTime?.hour}:${_dayEndTime?.minute}",
+      dayStartTime: "${_dayStartTime?.hour}:${_dayStartTime?.minute}",
+      ageRangeFrom: _ageRange?.start.toInt(),
+      ageRangeTo: _ageRange?.end.toInt(),
+      caption: _captionController.text.trim(),
+      name: _titleController.text.trim(),
+      days: _days,
+      audienceGender: _targetGender,
+      instBudget: int.parse(_instBudget.text),
+      googleBudget: int.parse(_googleBudget.text),
+      faceBookBudget: int.parse(_faceBookBudget.text),
+      destinationUrl: _destinationUrlController.text.trim(),
+      file: _imagePath,
+      isFaceBookAddEnable:
+      plan == null && int.parse(_faceBookBudget.text) > 0,
+      isInstaAddEnable: plan == null && int.parse(_instBudget.text) > 0,
+      isGoogleAddEnable: plan == null && int.parse(_faceBookBudget.text) > 0,
+      planId: plan?.id,
+    );
+
+
+    _isAdCreationInProgress = false;
+    notifyListeners();
+    if (d is Map) {
+      if (kDebugMode) {
+        MyHelper.mySnakebar(context, "${d["message"]}");
+      }
+    }
+    return d;
+    try {
+
+    } catch (e) {
+      _isAdCreationInProgress = false;
+      notifyListeners();
+      Logger().e(e);
+      MyHelper.mySnakebar(context, "Something went wrong ");
     }
   }
 

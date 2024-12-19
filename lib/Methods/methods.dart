@@ -24,7 +24,9 @@ class Methods {
         'pages_read_engagement',
         'read_insights',
       ],
-    ); // by default we request the email and the public profile
+    );
+
+    // by default we request the email and the public profile
     if (result.status == LoginStatus.success) {
       final _currentBusiness =
           Provider.of<BusinessProvider>(context, listen: false).currentBusiness;

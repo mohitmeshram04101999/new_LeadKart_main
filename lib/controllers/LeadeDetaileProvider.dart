@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:leadkart/ApiServices/leads%20api.dart';
 import 'package:leadkart/Models/LeadHisteryDataModel.dart';
 import 'package:leadkart/Models/LeadsApiresponce.dart';
+import 'package:leadkart/Models/lead_assign_history_model.dart';
+import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/them/constents.dart';
 import 'package:logger/logger.dart';
@@ -15,15 +18,18 @@ class LeadDetailProvider with ChangeNotifier {
   //Variables
   Lead? _lead;
   bool _loading = true;
+  int _leadHistoryPage = 0;
   List<LeadeHistory> _leadeHestory = [];
-  List<LeadeHistory> _leadAssignHestory = [];
+  // List<LeadeHistory> _leadAssignHestory = [];
+  List<LeadAssignHistory> _leadAssignHistory = [];
   final TextEditingController _noteController = TextEditingController();
   bool _editNote = false;
 
   Lead? get lead => _lead;
   bool get loading => _loading;
   List<LeadeHistory> get leadHistory => _leadeHestory;
-  List<LeadeHistory> get leadAssignHistory => _leadAssignHestory;
+  // List<LeadeHistory> get leadAssignHistory => _leadAssignHestory;
+  List<LeadAssignHistory> get leadAssignHistory =>_leadAssignHistory;
   TextEditingController get noteController => _noteController;
   bool get editNote => _editNote;
 
@@ -35,6 +41,9 @@ class LeadDetailProvider with ChangeNotifier {
     if (resp.statusCode == 200) {
       var _d = Lead.fromJson(resp.data["data"]);
       _lead = _d;
+      _noteController.text = _lead?.note??'';
+      await listOfLeadAssignUser(context, _lead?.id??"");
+
     } else {
       _log.e(
           "responce from leadeDetail api \n${resp.statusCode}\n${resp.data}");
@@ -134,21 +143,61 @@ class LeadDetailProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getAssignHistory(
-      BuildContext context, String id, String? specificUser) async {
-    var resp = await _leadApi.getLeadHistory(id ?? "", specificUser);
 
-    if (resp.statusCode == 200) {
-      List _d = resp.data["data"];
-      _log.e(resp.data);
-      _leadAssignHestory = _d.map((e) => LeadeHistory.fromJson(e)).toList();
-    } else {
-      MyHelper.mySnakebar(context, "${resp.statusCode} - \n${resp.data}");
-      _log.e("Responce from getHistry api\n${resp.statusCode}\n${resp.data}");
+  Future<dynamic> listOfLeadAssignUser(
+      BuildContext context, String leadid) async {
+
+    Logger().i("THis is lead id $leadid");
+    var currutBusiness = Controllers.businessProvider(context).currentBusiness;
+    var resp = await LeadsApi().listOfLeadAssignUser(leadId: leadid);
+
+    switch(resp.statusCode){
+
+    //if Suc
+      case 200:
+        var decode = jsonDecode(resp.body);
+        var data = LeadAssignUserHistoryResponce.fromJson(decode);
+        _leadAssignHistory = data.data??[];
+        notifyListeners();
+        return;
+
+
+      case 404:
+        MyHelper.mySnakebar(context, "Lead assign history not find");
+        break;
+
+      case 500:
+        MyHelper.mySnakebar(context, "Server Error");
+        break;
+
+      default:
+        MyHelper.mySnakebar(context, "Unexpected Error");
+        break;
+
+
+
     }
 
     notifyListeners();
   }
+
+
+
+  // Future<void> getAssignHistory(
+  //     BuildContext context, String id, String? specificUser) async {
+  //   var resp = await _leadApi.getLeadHistory(id ?? "", specificUser);
+  //
+  //   if (resp.statusCode == 200) {
+  //     List _d = resp.data["data"];
+  //     _log.e(resp.data);
+  //     // _leadAssignHestory = _d.map((e) => LeadeHistory.fromJson(e)).toList();
+  //   } else {
+  //     MyHelper.mySnakebar(context, "${resp.statusCode} - \n${resp.data}");
+  //     _log.e("Responce from getHistry api\n${resp.statusCode}\n${resp.data}");
+  //   }
+  //
+  //   notifyListeners();
+  // }
 
   Future<void> updateNote(BuildContext context) async {
     _noteController.text = _lead?.note ?? "";
@@ -167,7 +216,7 @@ class LeadDetailProvider with ChangeNotifier {
     else
       {
         _editNote = true;
-        false;
+        notifyListeners();
       }
 
     // bool? save = await showDialog(
@@ -209,7 +258,11 @@ class LeadDetailProvider with ChangeNotifier {
     _lead = null;
     _loading = true;
     _leadeHestory = [];
+    _leadAssignHistory = [];
     _noteController.clear();
     _log.i("Lead detailProvider is clear");
   }
+}
+
+class _leadsApi {
 }

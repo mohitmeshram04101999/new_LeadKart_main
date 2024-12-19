@@ -6,6 +6,7 @@ import 'package:leadkart/controllers/shredprefrence.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:leadkart/them/constents.dart';
 import 'package:logger/logger.dart';
+import 'package:http/http.dart' as http;
 
 class LeadsApi {
   final _log = Logger();
@@ -47,19 +48,19 @@ class LeadsApi {
     return resp;
   }
 
-  Future<Response> listOfLeadAssignUser({required String leadId}) async {
+  Future<http.Response> listOfLeadAssignUser({required String leadId}) async {
 
     final userId = await UserPreference().getUser();
 
-    Logger().w("${ApiConst.baseUrl}/listOfLeadAssignUser?userId=${userId!.id}&leadId=$leadId");
-    String uri = "/listOfLeadAssignUser?userId=${userId!.id}&leadId=$leadId";
+    Logger().w("${ApiConst.baseUrl}listOfLeadAssignUser?userId=${userId!.id}&leadId=$leadId");
+    String uri = "${ApiConst.baseUrl}listOfLeadAssignUser?userId=${userId!.id}&leadId=$leadId";
     var toc = await UserPreference().getUser();
     Logger().w("${toc?.token}");
 
 
     var head = {"Authorization": toc?.token ?? ""};
-    var resp = await MyHelper.dio.get(uri, options: Options(headers: head));
-    // log(resp.data.toString());
+    var resp = await http.get(Uri.parse(uri),headers: head);
+    Logger().i("Response from Lead assign History\n${resp.statusCode}\n${resp.body}") ;
     return resp;
   }
 

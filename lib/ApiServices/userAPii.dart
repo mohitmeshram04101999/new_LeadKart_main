@@ -6,22 +6,24 @@ import 'package:leadkart/ApiServices/api%20Path.dart';
 import 'package:leadkart/helper/controllerInstances.dart';
 import 'package:leadkart/helper/helper.dart';
 import 'package:logger/logger.dart';
-
+import 'package:http/http.dart' as http;
 import '../Models/MycustomResponce.dart';
 import '../Models/VerifyOtpModel.dart';
 
 class UserApi
 {
   // String _baseUrl = "https://server.leadkart.dsmacademy.in/api/";
-  String _baseUrl = "https://leadkartv2.dsmacademy.in/api/";
+  String _baseUrl = "https://api.leadkart.in/";
 
 
   //Log in with PhonNumber
-  Future<Response<dynamic>> loginWithPhonNumber(String phonNum) async
+  Future<http.Response> loginWithPhonNumber(String phonNum) async
   {
-    var resp = await MyHelper.dio.post(ApiConst.loginWithPhon+phonNum,data: {
+    var data = {
       "mobile":phonNum
-    });
+    };
+    var resp = await http.post(Uri.parse(ApiConst.baseUrl+ApiConst.loginWithPhon+phonNum),body:data );
+    Logger().e('${resp.statusCode}\n${resp.body}');
 
     return resp;
 
